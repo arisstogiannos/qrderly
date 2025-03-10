@@ -1,0 +1,197 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum BillingType {
+  MONTHLY
+  YEARLY
+  FREETRIAL
+}
+
+enum TokenType {
+  VALIDATION
+  RESET_PASSWORD
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  INVIEW
+}
+
+enum Product {
+  QR_MENU
+  SMART_QR_MENU
+  ONLINE_ORDER
+  RESERVATION_SYSTEM
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  image         String?
+  role          UserRole       @default(USER)
+  emailVerified DateTime?      @map("email_verified")
+  business      Business[]
+  password      String?
+  // settings   Settings?
+  accounts      Account[]
+  subscriptions Subscription[]
+}
+
+model Business {
+  id            String         @id @default(uuid())
+  name          String @unique
+  type          String
+  location      String
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Restrict)
+  menu          Menu?
+  orders        Order[]
+  qrs           QR[]
+  subscriptions Subscription[]
+  // Settings Settings[]
+}
+
+model Subscription {
+  id         String      @id @default(uuid())
+  product    Product
+  businessId String
+  business   Business    @relation(fields: [businessId], references: [id], onDelete: Restrict)
+  userId     String
+  user       User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  billing     BillingType
+  purchasedAt DateTime    @default(now())
+  renewedAt   DateTime    @updatedAt
+  expiresAt   DateTime
+}
+
+model Menu {
+  id         String     @id @default(uuid())
+  businessId String     @unique
+  business   Business   @relation(fields: [businessId], references: [id])
+  menuItems  MenuItem[]
+  theme      String
+  languages  String
+  noScans    Int        @default(0)
+  categories Category[]
+  // qrs        QR[]
+}
+
+model QR {
+  id         String   @id @default(uuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+  menuId     String
+  // menu       Menu     @relation(fields: [menuId], references: [id])
+  link       String
+  table      String
+  noScans    Int      @default(0)
+  type       String
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  businessId String
+  business   Business    @relation(fields: [businessId], references: [id])
+  orderItems OrderItem[]
+  price      Float
+  table      String
+  status     OrderStatus
+}
+
+model OrderItem {
+  id         String   @id @default(uuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity   Int
+}
+
+model MenuItem {
+  id           String      @id @default(uuid())
+  menuId       String
+  menu         Menu        @relation(fields: [menuId], references: [id])
+  orderItems   OrderItem[]
+  name         String
+  description  String?
+  preferences  String?
+  priceInCents Int
+  categoryId   String
+  category     Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  isAvailable  Boolean     @default(true)
+  imagePath    String?
+  stock        Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  menuId      String
+  menu        Menu     @relation(fields: [menuId], references: [id])
+
+  menuItems MenuItem[]
+}
+
+model Token {
+  id        String    @id @default(uuid())
+  email     String
+  token     String
+  type      TokenType
+  password String?
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+
+  @@unique([email, token])
+}
+
+// model Settings {
+//   id         String    @id @default(uuid())
+//   businessId String?
+//   business   Business? @relation(fields: [businessId], references: [id])
+//   userId     String?   @unique
+//   user       User?     @relation(fields: [userId], references: [id])
+// }
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
