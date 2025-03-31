@@ -19,6 +19,7 @@ export async function getMenuItems(businessName: string) {
     where: { menu: { business: { name: businessName } } },
     include: { category: { select: { name: true } } },
   });
+  console.log(menuItems)
   return menuItems;
 }
 export async function getMenuItemsByMenuId(id: string) {

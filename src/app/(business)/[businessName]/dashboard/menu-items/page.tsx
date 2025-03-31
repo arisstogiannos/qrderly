@@ -21,7 +21,7 @@ export default async function page({
 
   const menuitems = await getMenuItmesCached(businessName);
   const getCategoriesCached = cache(getCategoriesWithItemCount, ["categories"+businessName], {
-    tags: ["menu-items"+businessName],
+    tags: ["categories"+businessName],
   });
 
   const categories = await getCategoriesCached(businessName);
