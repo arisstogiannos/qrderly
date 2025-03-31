@@ -1,0 +1,43 @@
+import MenuSettingsForm from "@/app/(website)/get-started/_components/MenuSettings/MenuSettingsForm";
+import Mockup from "@/app/(website)/get-started/_components/mockup/Mockup";
+import React from "react";
+import { checkUserAuthorized } from "../../_actions/authorization";
+import {
+  getSupportedLanguages,
+  getSupportedSrcLanguagesDeepL,
+  getSupportedTargetLanguagesDeepL,
+} from "@/app/translation";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+
+export default async function page({
+  params,
+}: {
+  params: Promise<{ businessName: string }>;
+}) {
+  const businessName = (await params).businessName?.replaceAll("-", " ");
+  const { business } = await checkUserAuthorized(businessName);
+
+  const srcLanguages = await getSupportedSrcLanguagesDeepL();
+  const trgtLanguages = await getSupportedTargetLanguagesDeepL();
+
+  return (
+    <div className="space-y-16">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-medium">Menu Settings</h1>
+        <SidebarTrigger className="xl:hidden" />
+      </div>
+      <form className="flex lg:w-fit lg:flex-row gap-x-40 flex-col min-h-[600px] gap-y-20">
+        <div className="flex flex-col gap-6 2xl:min-w-sm lg:max-w-lg max-h-full overflow-y-auto ">
+          <MenuSettingsForm
+            businessId={business.id}
+            product={business.product}
+            srcLanguages={srcLanguages}
+            targetLanguages={trgtLanguages}
+            menu={business.menu}
+          />
+        </div>
+        <Mockup initialTemplate={business.menu.template} />
+      </form>
+    </div>
+  );
+}

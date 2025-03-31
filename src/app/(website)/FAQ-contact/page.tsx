@@ -1,0 +1,37 @@
+import Background from "@/components/Background";
+
+import React from "react";
+import FAQAccordition from "./_components/FAQAccordition";
+import ContactForm from "./_components/ContactForm";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
+export default function page() {
+  return (
+    <div className="gap-y-20 flex flex-col mt-20">
+      <Background />
+      <section className="grid lg:grid-cols-2 grid-rows-[auto_auto] lg:grid-rows-1 xl:mx-28 bg-primary/100 p-4 sm:p-10 gap-10 rounded-3xl ">
+      <div className="space-y-5 xl:pr-40">
+
+        <h1 className="text-6xl sm:text-7xl font-semibold leading-20">Frequently Asked Questions</h1>
+        <p className="text-2xl">Can't find the answer you are looking for? Reach out to us</p>
+        <Button
+            className="text-lg md:text-2xl xl:text-xl rounded-full p-6 px-10 gap-x-4 mt-3 bg-foreground "
+            asChild
+          >
+            <Link href={"#contact-form"} >
+              Get In Touch <ArrowRight className="size-6 rotate-90" />
+            </Link>
+          </Button>
+      </div>
+        <FAQAccordition />
+      </section>
+      <section id="contact-form" className="gap-y-2 text-center mx-auto flex flex-col items-center scroll-mt-40">
+        <h2 className="text-4xl font-medium">Contact</h2>
+        <p className="text-2xl mb-6 max-w-lg">Feel free to reach out to us for any questions and we will get back to you as soon as possible!</p>
+        <ContactForm/>
+      </section>
+    </div>
+  );
+}

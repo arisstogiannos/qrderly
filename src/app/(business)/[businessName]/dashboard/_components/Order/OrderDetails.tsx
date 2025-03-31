@@ -1,0 +1,99 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useOrdersContext } from "@/context/OrdersProvider";
+import { OrderWithItems } from "@/types";
+import React, { useEffect, useState } from "react";
+import { completeOrder } from "../../../_actions/orders";
+
+export default function OrderDetails({
+  withAction = false,
+  selectedOrder,
+}: {
+  withAction?: boolean;
+  selectedOrder?: OrderWithItems;
+}) {
+  const { currOrder, setCurrOrder, orders,setOrders } = useOrdersContext();
+  const [order, setOrder] = useState(selectedOrder || currOrder);
+
+  useEffect(() => {
+    setOrder(currOrder);
+  }, [currOrder]);
+  
+  useEffect(() => {
+    if (orders&&orders.length > 0) {
+      setCurrOrder(orders.at(0));
+    }else{
+      setCurrOrder(undefined);
+    }
+  }, [orders]);
+  
+  if (!order) {
+    return <div>No order selected</div>;
+  }
+  
+  function handleComplete() {
+    if (order) {
+      setOrders(prev=>prev?.filter(o=>o.id!==order?.id));
+      completeOrder(order.id);
+    }
+  }
+
+  return (
+    <section
+      className={`${withAction ? "bg-accent p-4 rounded-2xl" : ""} flex justify-between gap-10  h-[300]`}
+    >
+      <div className="flex flex-col gap-10 justify-between">
+        <div className="flex gap-20">
+          <p>Table: {order.table}</p>
+          <p>Time: {order.createdAt.toLocaleTimeString()}</p>
+        </div>
+        {/* <div className="flex gap-20 md:hidden">
+          <p>Price: {order.price}</p>
+          <p>Time: {order.status}</p>
+        </div> */}
+
+        <ItemsTable order={order} />
+      </div>
+      {withAction && (
+        <div className="flex items-end justify-end">
+          <Button onClick={handleComplete}>Complete</Button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ItemsTable({ order }: { order: OrderWithItems }) {
+  return (
+    <Table className="text-base  grow w-fit  overflow-x-visible overflow-y-hidden">
+      <TableHeader className="text-lg">
+        <TableRow className="lg:lg:hover:bg-transparent">
+          <TableHead>Product</TableHead>
+          <TableHead>Preferances</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody >
+        {order.orderItems.map((item) => (
+          <TableRow  key={item.id}>
+            <TableCell>{item.menuItem.name}</TableCell>
+            <TableCell className="flex gap-5">
+              {item.preferences.split(", ").map((pr) => (
+                <span key={pr} className="p-2 bg-secondary rounded-lg">
+                  {pr}
+                </span>
+              ))}
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}

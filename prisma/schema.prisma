@@ -22,6 +22,11 @@ enum BillingType {
   FREETRIAL
 }
 
+enum Template {
+  T1
+  T2
+}
+
 enum TokenType {
   VALIDATION
   RESET_PASSWORD
@@ -36,8 +41,7 @@ enum OrderStatus {
 enum Product {
   QR_MENU
   SMART_QR_MENU
-  ONLINE_ORDER
-  RESERVATION_SYSTEM
+  SELF_SERVICE_QR_MENU
 }
 
 model User {
@@ -55,80 +59,91 @@ model User {
 }
 
 model Business {
-  id            String         @id @default(uuid())
-  name          String @unique
-  type          String
-  location      String
-  userId        String
-  user          User           @relation(fields: [userId], references: [id], onDelete: Restrict)
-  menu          Menu?
-  orders        Order[]
-  qrs           QR[]
-  subscriptions Subscription[]
+  id           String        @id @default(uuid())
+  name         String        @unique
+  type         String
+  location     String
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menu         Menu?
+  orders       Order[]
+  qr           QR?
+  subscription Subscription?
+  product      Product       @default(QR_MENU)
+  tables       String?
   // Settings Settings[]
 }
 
 model Subscription {
-  id         String      @id @default(uuid())
-  product    Product
-  businessId String
-  business   Business    @relation(fields: [businessId], references: [id], onDelete: Restrict)
-  userId     String
-  user       User        @relation(fields: [userId], references: [id], onDelete: Restrict)
-
+  id          String      @id @default(uuid())
+  product     Product
+  businessId  String?     @unique
+  business    Business?   @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeSubId String?     @unique
   billing     BillingType
+  hasExpired  Boolean     @default(false)
   purchasedAt DateTime    @default(now())
   renewedAt   DateTime    @updatedAt
-  expiresAt   DateTime
+  expiresAt   DateTime?
+
+  @@unique([businessId, product])
 }
 
 model Menu {
   id         String     @id @default(uuid())
   businessId String     @unique
-  business   Business   @relation(fields: [businessId], references: [id])
+  business   Business   @relation(fields: [businessId], references: [id], onDelete: Cascade)
   menuItems  MenuItem[]
   theme      String
   languages  String
   noScans    Int        @default(0)
   categories Category[]
+  published  Boolean    @default(false)
+  type       Product    @default(QR_MENU)
+  template   Template   @default(T1)
   // qrs        QR[]
 }
 
 model QR {
-  id         String   @id @default(uuid())
-  businessId String
-  business   Business @relation(fields: [businessId], references: [id])
-  menuId     String
+  id         String    @id @default(uuid())
+  businessId String?   @unique
+  business   Business? @relation(fields: [businessId], references: [id],onDelete: Cascade)
+  // menuId     String
   // menu       Menu     @relation(fields: [menuId], references: [id])
   link       String
-  table      String
-  noScans    Int      @default(0)
-  type       String
+  qrOptions  String    @default("")
+  text       String    @default("")
 }
 
 model Order {
   id         String      @id @default(uuid())
   businessId String
-  business   Business    @relation(fields: [businessId], references: [id])
+  business   Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
   orderItems OrderItem[]
   price      Float
   table      String
   status     OrderStatus
+
+  createdAt   DateTime  @default(now())
+  completedAt DateTime?
 }
 
 model OrderItem {
-  id         String   @id @default(uuid())
-  orderId    String
-  order      Order    @relation(fields: [orderId], references: [id])
-  menuItemId String
-  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
-  quantity   Int
+  id          String   @id @default(uuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItemId  String
+  menuItem    MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  quantity    Int
+  preferences String
 }
 
 model MenuItem {
   id           String      @id @default(uuid())
   menuId       String
-  menu         Menu        @relation(fields: [menuId], references: [id])
+  menu         Menu        @relation(fields: [menuId], references: [id],onDelete: Cascade)
   orderItems   OrderItem[]
   name         String
   description  String?
@@ -139,19 +154,21 @@ model MenuItem {
   isAvailable  Boolean     @default(true)
   imagePath    String?
   stock        Int?
+  translations String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  menuId      String
-  menu        Menu     @relation(fields: [menuId], references: [id])
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  menuId       String
+  menu         Menu     @relation(fields: [menuId], references: [id],onDelete: Cascade)
+  translations String?
 
   menuItems MenuItem[]
 }
@@ -161,7 +178,7 @@ model Token {
   email     String
   token     String
   type      TokenType
-  password String?
+  password  String?
   expiresAt DateTime
   createdAt DateTime  @default(now())
 

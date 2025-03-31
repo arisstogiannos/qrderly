@@ -1,0 +1,27 @@
+
+
+
+
+
+4 all orders filtering 
+
+design better product pages
+design emails
+design publish page
+
+
+
+DONE multiple prefernce/ extras + price
+DONE dashboard translates edit
+DONE table recognition - qr creation for each table - 
+DONE qr customization
+DONE D&D business settings
+DONE fix hero mockups
+DONE finish preview
+DONE profile dropdown
+DONE check active menu and generate static menus work
+DONE check revalidating works fine + add reval on delete 
+DONE clean code
+DONE listen to all stripe events
+        canceled sub
+        expired sub 

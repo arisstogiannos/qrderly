@@ -6,17 +6,19 @@ const { auth } = NextAuth(authConfig);
 export default  auth((req) => {
   const isLoggedin = !!req.auth;
 
+
+
   const isSignRoute = req.nextUrl.pathname.includes("/sign");
   const isAdminRoute = req.nextUrl.pathname.includes("/admin");
-
+  const isProtectedRoute = req.nextUrl.pathname.includes("/get-started");
 
   if (isLoggedin) {
     if (isSignRoute) {
       return Response.redirect(new URL("/", req.nextUrl));
     }
   } else {
-    if (isAdminRoute) {
-      return Response.redirect(new URL("/sign-in", req.nextUrl));
+    if (isAdminRoute || isProtectedRoute) {
+      return Response.redirect(new URL("/sign-up", req.nextUrl));
     }
   }
 });

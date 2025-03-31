@@ -1,0 +1,101 @@
+"use server"
+import { getMenu } from "@/app/(business)/[businessName]/_actions/menu";
+import { getMenuItemsByMenuId } from "@/app/(business)/[businessName]/_actions/menu-items";
+import { auth } from "@/auth";
+import { db } from "@/db";
+import { BusinessExtended, ExtendedUser, ProductURL } from "@/types";
+import { Product } from "@prisma/client";
+import { User } from "next-auth";
+import { redirect } from "next/navigation";
+
+const productMap = {
+  "qr-menu": Product.QR_MENU,
+  "smart-ordering-qr-menu": Product.SMART_QR_MENU,
+  "self-service-qr-menu": Product.SELF_SERVICE_QR_MENU,
+};
+
+export async function checkUser(product: ProductURL): Promise<{
+  business:BusinessExtended;
+  redirect: "businessWithoutMenu" | "unpublishedMenu"  | "noUnsetBusiness"|"emptyMenu" | "noQR";
+  user:ExtendedUser
+} | null> {
+  const session = await auth();
+
+  const user = session?.user;
+
+  if (!user) {
+    redirect("/unauthorized?msg=You need to login to access this page.");
+  }
+
+  const businesses = user.business.filter(
+    (b) => b.product === productMap[product]
+  );
+
+  if(businesses.length===0){
+    return null;
+
+  }
+
+  for (const b of businesses) {
+    if (!b.menu) {
+      return { business:b, redirect: "businessWithoutMenu",user:user };
+    }
+    if (!b.menu.published) {
+      const menuItems = await getMenuItemsByMenuId(b.menu.id)
+      console.log(b.qr)
+      if (!b.qr) {
+        return { business:b, redirect: "noQR",user:user };
+      }
+      // if(menuItems.length===0) return { business:b,redirect: "emptyMenu",user:user }
+
+      return { business:b, redirect: "unpublishedMenu",user:user };
+    }
+  }
+
+  const publishedBusinesses = businesses.filter((b)=>b.menu.published)
+  console.log(publishedBusinesses)
+
+  const latestBusiness = publishedBusinesses.reduce((latest, business) =>
+    business.subscription?.purchasedAt > (latest?.subscription?.purchasedAt ?? 0)
+      ? business
+      : latest
+  );
+
+  return {business:latestBusiness, redirect: "noUnsetBusiness",user:user };
+}
+
+// export default async function isAllowed() {
+//   const session = await auth();
+//   const user = await db.user.findUnique({
+//     where: { id: session?.user.id },
+//     include: {
+//       business: {
+//         select: { subscriptions: true, menu: true },
+//       },
+//     },
+//   });
+
+//   if (!user) {
+//     redirect("/unauthorized?msg=You need to login to access this page.")
+//   }
+
+//   let isAllowed = false;
+//   let businessIndex = -1;
+
+//   let subIndex;
+//   user.business.forEach((b, bIndex) => {
+//     b.subscriptions.forEach((s, prIndex) => {
+//       if (s && !b.menu) {
+//         businessIndex = bIndex;
+//         subIndex = prIndex;
+//         isAllowed = true;
+//       }
+//     });
+//   });
+
+//   if (!isAllowed) {
+//     redirect("/unauthorized?msg=You have no subscription with unset businesses.")
+//   }
+
+//   return null
+// }

@@ -3,13 +3,16 @@ import NextAuth, { type DefaultSession } from "next-auth";
 import authConfig from "./auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
-import { UserRole } from "@prisma/client";
+import { Business, Subscription, UserRole } from "@prisma/client";
 import { db } from "./db";
+import { BusinessExtended, ExtendedSubscription } from "./types";
 
 declare module "next-auth" {
   interface Session {
     user: {
       role: UserRole;
+      business: BusinessExtended[];
+      subscriptions: ExtendedSubscription[];
     } & DefaultSession["user"];
   }
 }
@@ -38,7 +41,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token, trigger, session }) {
-      
       if (trigger === "update") {
         return { ...token, ...session.user };
       }
@@ -49,13 +51,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const existingUser = await db.user.findUnique({
         where: { id: token.sub },
+        select: {
+          id: true,
+          business: {
+            select: {
+              menu: true,
+              id: true,
+              name: true,
+              product: true,
+              tables:true,
+              location:true,
+              type:true,
+              qr:true,
+              subscription: {
+                include: { business: { include: { menu: true } } },
+              },
+            },
+          },
+          
+          role: true,
+          subscriptions: true,
+        },
       });
 
       if (!existingUser) {
         return token;
       }
       token.role = existingUser.role;
-
+      token.business = existingUser.business;
+      token.subscriptions = existingUser.subscriptions;
 
       return token;
     },
@@ -65,9 +89,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (token.sub) {
           session.user.id = token.sub;
         }
+        if (token.business) {
+          session.user.business = token.business as BusinessExtended[];
+        }
 
         if (token.role) {
           session.user.role = token.role as UserRole;
+        }
+        if (token.subscriptions) {
+          session.user.subscriptions =
+            token.subscriptions as ExtendedSubscription[];
         }
       }
       return session;

@@ -1,0 +1,48 @@
+"use client"
+import TablesSetup from "@/app/(website)/get-started/_components/Business/TablesSetup";
+import { Button } from "@/components/ui/button";
+import { BusinessExtended } from "@/types";
+import React, { useActionState, useEffect } from "react";
+import { saveTables } from "../../_actions/business";
+import Loader from "@/components/Loader";
+import { Save } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+export default function TablesForm({
+  business,
+}: {
+  business: BusinessExtended;
+}) {
+  const [state, action, isPending] = useActionState(
+    saveTables.bind(null, business.id),
+    null
+  );
+  const router = useRouter()
+
+  useEffect(()=>{
+
+      if(state?.success){
+        router.refresh()
+      }
+  },[state])
+  return (
+    <form className="max-w-xl flex flex-col gap-y-5">
+      <p>Tables</p>
+      <TablesSetup initialTables={business.tables?.split(",")} />
+      <Button
+        disabled={isPending}
+        type="submit"
+        className="bg-foreground w-fit ml-auto text-lg rounded-full p-1 min-w-24 mt-20"
+        formAction={action}
+      >
+        {isPending ? (
+          <Loader />
+        ) : (
+          <>
+            Save <Save className="size-5" />
+          </>
+        )}
+      </Button>
+    </form>
+  );
+}

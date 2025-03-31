@@ -1,0 +1,205 @@
+"use server";
+
+import {
+  translateTextToMultiple,
+  translateTextToMultipleDeepL,
+} from "@/app/translation";
+import { db } from "@/db";
+import { Translation } from "@/types";
+import { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
+import { revalidateTag } from "next/cache";
+import { z } from "zod";
+
+export async function getCategories(businessName: string) {
+  const categories = await db.category.findMany({
+    where: { menu: { business: { name: businessName } } },
+  });
+  console.log("categories");
+
+  return categories;
+}
+export async function getCategoriesWithItemCount(businessName: string) {
+  const categories = await db.category.findMany({
+    where: { menu: { business: { name: businessName } } },
+    include: { _count: { select: { menuItems: true } } },
+  });
+  console.log("categories");
+  return categories;
+}
+
+const CategorySchema = z.object({
+  name: z.string().min(1),
+  translateName: z.string().min(1).max(3),
+  description: z.string().optional(),
+  translateDescription: z.string().min(1).max(3),
+  id: z.string().optional(),
+});
+type Category = z.infer<typeof CategorySchema>;
+
+export async function upsertCategory(
+  businessName: string,
+  prev: any,
+  formData: FormData
+) {
+  const result = CategorySchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    const rawData = Object.fromEntries(formData) as Partial<Category>;
+
+    return {
+      data: rawData,
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+  const { description, name, id, translateName, translateDescription } =
+    result.data;
+
+  try {
+    const menu = await db.menu.findFirst({
+      where: { business: { name: businessName } },
+    });
+    const translations: Translation = {};
+
+    if (menu) {
+      const languages = menu.languages.split(",");
+      const srcLang = languages.reverse().pop();
+
+      if (srcLang) {
+        const textToTranslate =
+          (translateName === "yes" ? name : "") +
+          "_" +
+          (translateDescription === "yes" ? description : "");
+
+        if (textToTranslate !== "_") {
+          const translationResult = await translateTextToMultiple(
+            textToTranslate,
+            srcLang,
+            languages
+          );
+
+          for (let i = 0; i < translationResult.length; i++) {
+            const translationArr = translationResult[i].split("_");
+            const nameTranslation = translationArr[0];
+            const descTranslation = translationArr[1];
+
+            translations[languages[i]] = {
+              name: nameTranslation !== "" ? nameTranslation : name,
+              description:
+                descTranslation !== "" ? descTranslation : description,
+            };
+          }
+        }
+      }
+      await db.category.upsert({
+        where: { id: id ?? "" },
+        create: {
+          name,
+          description,
+          menuId: menu.id,
+          translations: JSON.stringify(translations),
+        },
+        update: {
+          name,
+          description,
+          translations: JSON.stringify(translations),
+        },
+      });
+    }
+  } catch (error) {
+    console.error("upsert category er: " + error);
+
+    return {
+      data: result.data,
+      error: "Something went wrong!",
+    };
+  }
+
+  revalidateTag("categories" + businessName);
+  return { success: true };
+  // redirect("/test/dashboard/menu-items");
+}
+
+
+export async function createCategories(
+  businessName: string,
+  categories: {name:string,description:string}[]
+) {
+  try {
+    const menu = await db.menu.findFirst({
+      where: { business: { name: businessName } },
+    });
+
+    const translations: { [index: number]: Translation } = {};
+
+    if (menu) {
+      const languages = menu.languages.split(",");
+      const srcLang = languages.reverse().pop();
+
+      if (srcLang) {
+        for (let index = 0; index < categories.length; index++) {
+          const category = categories[index];
+
+          try {
+            const translationResult = await translateTextToMultipleDeepL(
+              category.name,
+              srcLang as SourceLanguageCode,
+              languages as TargetLanguageCode[],
+              category.description
+            );
+
+            translations[index] = translations[index] || {};
+
+            for (let i = 0; i < translationResult.length; i++) {
+              translations[index][languages[i]] = {
+                name:
+                  translationResult[i] !== ""
+                    ? translationResult[i]
+                    : category.name,
+                description: null,
+              };
+            }
+          } catch (error) {
+            console.error(`Error translating item "${category.name}":`, error);
+          }
+        }
+      }
+
+      const data = categories.map((category, i) => {
+
+        return {
+          name: category.name,
+          menuId: menu.id,
+          translations: JSON.stringify(translations[i]),
+        };
+      });
+
+     const result =  await db.category.createManyAndReturn({
+        data: data,
+      });
+      revalidateTag("categories" + businessName);
+      return {data:result}
+    } else {
+      return {
+        error: "Something went wrong!",
+      };
+    }
+  } catch (error) {
+    console.error("create item er: " + error);
+
+    return {
+      error: "Something went wrong!",
+    };
+  }
+
+  // return categoriesNames;
+  // redirect("/test/dashboard/menu-items");
+}
+
+export async function deleteCategory(id: string, businessName: string) {
+  const category = await db.category.delete({ where: { id } });
+
+  if (!category) return { success: false, error: "Something went wrong" };
+
+  revalidateTag("categories" + businessName);
+  return { success: true };
+}
