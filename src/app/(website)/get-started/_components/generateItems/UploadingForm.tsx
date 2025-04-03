@@ -27,7 +27,10 @@ export default function UploadingForm({
     if (state?.error) {
       setFile(undefined);
     }
-  }, [state?.error]);
+    if(state?.success){
+      router.push("customize-qr")
+    }
+  }, [state]);
 
   return (
     <form

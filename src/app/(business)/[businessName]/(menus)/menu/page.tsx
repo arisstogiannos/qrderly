@@ -42,7 +42,7 @@ export default async function page({
   searchParams,
 }: {
   params: Promise<{ businessName: string }>;
-  searchParams: Promise<{ l: string }>;
+  searchParams: Promise<{ l: string,table:string }>;
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
   const getCachedCategories = cache(
@@ -68,14 +68,15 @@ export default async function page({
   );
 
   const lang = (await searchParams).l;
+  const table = (await searchParams).table;
   const menu = await getActiveMenu(businessName);
 
   if (!menu) {
     notFound();
   }
 
-  if (menu.type === "SMART_QR_MENU") {
-    redirect("/" + businessName.replaceAll(" ", "-") + "/smart-menu");
+  if (menu.type === "SMART_QR_MENU" || menu.type === "SELF_SERVICE_QR_MENU" ) {
+    redirect("/" + businessName.replaceAll(" ", "-") + "/smart-menu?table="+table);
   }
 
   const [categories, products] = await Promise.all([

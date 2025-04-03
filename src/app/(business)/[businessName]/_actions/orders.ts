@@ -19,6 +19,26 @@ export async function getAllOrders(businessName: string) {
 
   return orders;
 }
+export async function getOrderById(id: string) {
+  const order = await db.order.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      status: true,
+      price: true,
+
+      orderItems: {
+        select: {
+          menuItem: { select: { name: true, priceInCents: true } },
+          quantity: true,
+          price:true
+        },
+      },
+    },
+  });
+
+  return order;
+}
 export async function getPendingOrders(businessName: string) {
   const orders = await db.order.findMany({
     where: { business: { name: businessName }, status: "PENDING" },
@@ -34,11 +54,10 @@ export async function getPendingOrders(businessName: string) {
     orderBy: { createdAt: "asc" },
   });
 
-
   return orders;
 }
 
-export async function deletOrder(id: string) {
+export async function deletOrder(id: string, businessName?: string) {
   try {
     await db.order.delete({
       where: { id },
@@ -47,7 +66,7 @@ export async function deletOrder(id: string) {
     console.error(err);
     return { success: false, error: "Something went wrong!" };
   }
-  // revalidateTag("orders");
+  revalidateTag("orders" + businessName);
   return { success: true };
 }
 

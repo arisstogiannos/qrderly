@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Edit, Stars } from "lucide-react";
 import { cn } from "@/lib/utils";
 import QrDisplay from "./_components/Dashboard/QrDisplay";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default async function page({
   params,
@@ -19,10 +20,10 @@ export default async function page({
   const { business, user } = await checkUserAuthorized(
     businessName
   );
-  console.log(business)
 
   return (
-    <div>
+    <div className=" flex flex-col">
+      <SidebarTrigger className="ml-auto mb-5"/>
       <DashboardSection title="Information">
         <DashboardCard title="Business">
           <DashboardCardRow title="Name" value={businessName} />
@@ -77,7 +78,7 @@ export default async function page({
             <RevenueChart businessName={businessName} />
           </Suspense>
         </DashboardSection>
-        <DashboardSection title="QR">
+        <DashboardSection classNames="max-md:col-span-2" title="QR">
           <Suspense
             fallback={
               <DashboardCard title="loading" classNames="cols-span-full">
@@ -95,8 +96,8 @@ export default async function page({
 
 async function QrCard({ business }: { business: BusinessExtended }) {
   return (
-    <DashboardCard title="Qr Code" classNames="col-span-full ">
-      <div className={cn("grid grid-cols-2",!business.tables&&"grid-cols-1")}>
+    <DashboardCard title="Qr Code" classNames="col-span-full w-full">
+      <div className={cn("grid sm:grid-cols-2 grid-cols-1 gap-y-5",!business.tables&&"grid-cols-1")}>
         {/* <div className="gap-y-2 items-center flex flex-col"> */}
         <QrDisplay business={business} />
         {business.tables && (
@@ -158,7 +159,7 @@ function DashboardSection({
 }) {
   return (
     <section
-      className={cn("space-y-5  bg-accent/50 rounded-3xl p-8 mb-5", classNames)}
+      className={cn("space-y-5  bg-accent/50 rounded-3xl p-4 md:p-8 mb-5", classNames)}
     >
       <h3 className="text-xl font-medium">{title}</h3>
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 ">

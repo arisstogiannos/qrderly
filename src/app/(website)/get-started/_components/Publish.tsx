@@ -64,7 +64,7 @@ export default function Publish({
     render = (
       <div className="w-full flex flex-col items-center pt-10 min-h-80">
         <p>Wait a moment while we generte your menu.</p>
-        <Loader className="h-16" />
+        <Loader className="h-16 mt-7" />
       </div>
     );
   } else if (!state?.error) {

@@ -5,6 +5,7 @@ import {
   MenuItem,
   Order,
   OrderItem,
+  OrderStatus,
   QR,
   Subscription,
   UserRole,
@@ -15,6 +16,7 @@ import { ReactNode } from "react";
 export type ProductType = {
   title: string;
   desc: string;
+  link:string;
   shortDesc: string;
   videoPath: string;
   steps: string[];
@@ -24,7 +26,7 @@ export type ProductType = {
 export type ProductURL =
   | "qr-menu"
   | "smart-ordering-qr-menu"
-  | "self-service-qr-menu";
+  | "smart-self-service-menu";
 
 export type Cart = Order & {
   cartItems: CartItem[];
@@ -42,6 +44,7 @@ export type CartItem = {
   menuItem: MenuItemRequired;
   quantity: number;
   preferences: string;
+  price:number
 };
 
 export type MenuItemRequired = Omit<
@@ -100,3 +103,18 @@ export type MenuItemAI = {
   priceInCents: number;
   preferences: { name: string; values: string[] }[] | null;
 };
+
+
+export type RequiredOrder =  {
+  id: string;
+  price: number;
+  status: OrderStatus;
+  orderItems: {
+      quantity: number;
+      menuItem: {
+          name: string;
+          priceInCents:number
+      };
+  }[];
+}
+

@@ -29,12 +29,8 @@ export default function OrderDetailsModal({
       <div className="flex flex-col gap-10 justify-between">
         <div className="flex gap-20">
           <p>Table: {order.table}</p>
-          <p>Time: {order.createdAt.toLocaleTimeString()}</p>
+          <p>Time: {new Date(order.createdAt).toLocaleTimeString()}</p>
         </div>
-        {/* <div className="flex gap-20 md:hidden">
-          <p>Price: {order.price}</p>
-          <p>Time: {order.status}</p>
-        </div> */}
 
         <ItemsTable order={order} />
       </div>

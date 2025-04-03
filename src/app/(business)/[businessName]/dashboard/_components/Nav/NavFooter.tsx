@@ -51,7 +51,11 @@ export function NavFooter({
           asChild
         >
           <a
-            href={"/" + activeBusiness.name.replaceAll(" ", "-") + "/menu"}
+            href={
+              "/" +
+              activeBusiness.name.replaceAll(" ", "-") +
+              (activeBusiness.menu.type === "QR_MENU" ? "/menu" : "/smart-menu") +"?table=admin"
+            }
             target="_blank"
             rel="noreferrer"
           >
@@ -112,7 +116,7 @@ export function NavFooter({
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link  href={"businesses"}>
+                <Link href={"businesses"}>
                   <BriefcaseBusiness />
                   Businesses
                 </Link>

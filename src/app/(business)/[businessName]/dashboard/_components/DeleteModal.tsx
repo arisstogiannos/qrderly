@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Delete, X } from "lucide-react";
 
 
 export default function DeleteModal<T>({
@@ -20,6 +21,7 @@ export default function DeleteModal<T>({
   action: (item: T) => void;
 }) {
   const [open, setOpen] = React.useState(false);
+  
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -27,9 +29,9 @@ export default function DeleteModal<T>({
         <Button
           variant={"destructive"}
           size={"sm"}
-          className="w-full text-sm px-0"
+          className="w-full text-sm px-0 py-4 "
         >
-          Delete
+         <X/> Delete
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-3xs sm:max-w-sm h-auto">

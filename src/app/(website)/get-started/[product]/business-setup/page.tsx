@@ -20,7 +20,7 @@ export default async function page({
     }
 
     if (result.redirect === "noQR") {
-      redirect("/get-started/" + product + "/customize-qr");
+      redirect("/get-started/" + product + "/generate-items");
     }
   
     if (result.redirect === "unpublishedMenu") {

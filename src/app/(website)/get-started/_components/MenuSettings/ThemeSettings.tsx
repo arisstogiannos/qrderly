@@ -74,7 +74,7 @@ export default function ThemeSettings({
                 onChange={() => handleThemeChange(theme)}
               />
               <div
-                className={`size-24 overflow-hidden rounded-3xl grid grid-cols-3 border-4 transition-all peer-checked:border-black border-transparent`}
+                className={`sm:size-24 size-20 overflow-hidden rounded-3xl grid grid-cols-3 border-4 transition-all peer-checked:border-black border-transparent`}
               >
                 {colors.map((color) => (
                   <div key={color} style={{ backgroundColor: color }} />
@@ -93,7 +93,7 @@ export default function ThemeSettings({
             onChange={(e) => setSelectedTheme("custom")}
           />
           <div
-            className={`size-24 overflow-hidden rounded-3xl peer-checked:text-black  border-4 transition-all peer-checked:border-black border-muted-foreground/50 flex-center text-muted-foreground/50`}
+            className={`sm:size-24 size-20 overflow-hidden rounded-3xl peer-checked:text-black  border-4 transition-all peer-checked:border-black border-muted-foreground/50 flex-center text-muted-foreground/50`}
           >
             <Plus strokeWidth={"3px"} />
           </div>

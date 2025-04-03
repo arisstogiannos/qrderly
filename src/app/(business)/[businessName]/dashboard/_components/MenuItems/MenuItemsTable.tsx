@@ -18,7 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CheckCircle2, MoreVertical } from "lucide-react";
+import { CheckCircle2, Edit, MoreVertical } from "lucide-react";
 import { useBusinessContext } from "@/context/BusinessProvider";
 import { Modal } from "../Modal";
 import CloudImage from "@/components/CloudImage";
@@ -43,7 +43,7 @@ export default function MenuItemsTable({
   menuItems,
   setOptimisticItem,
   businessName,
-  categories
+  categories,
 }: {
   menuItems: MenuItemWithCategory[];
   businessName: string;
@@ -51,9 +51,9 @@ export default function MenuItemsTable({
     newItem: MenuItemWithCategory;
     type: "delete" | "add" | "update";
   }) => void;
-  categories:CategoryWithItemCount[]
+  categories: CategoryWithItemCount[];
 }) {
-  const { searchQuery, category, language,languages } = useFiltersContext();
+  const { searchQuery, category, language, languages } = useFiltersContext();
 
   function handleDelete(item: MenuItemWithCategory) {
     startTransition(() => {
@@ -70,13 +70,13 @@ export default function MenuItemsTable({
     <Table className="text-base">
       <TableHeader>
         <TableRow>
-          <TableHead>
+          <TableHead className="max-sm:hidden">
             Status
             <span className="sr-only">Available for Purchase</span>
           </TableHead>
           <TableHead>Image</TableHead>
           <TableHead>Name</TableHead>
-          <TableHead>Category</TableHead>
+          <TableHead className="max-[390px]:hidden">Category</TableHead>
           <TableHead>Price</TableHead>
 
           <TableHead className="w-0">
@@ -113,7 +113,7 @@ export default function MenuItemsTable({
           }
           return (
             <TableRow key={item.id}>
-              <TableCell>
+              <TableCell className="max-sm:hidden">
                 <CheckCircle2 />
               </TableCell>
               <TableCell>
@@ -131,35 +131,45 @@ export default function MenuItemsTable({
                 </div>
               </TableCell>
               <TableCell>{translatedItem.name}</TableCell>
-              <TableCell>{translatedCategoryName}</TableCell>
-              <TableCell>{formatCurrency(item.priceInCents)}</TableCell>
+              <TableCell className="max-[390px]:hidden">
+                {translatedCategoryName}
+              </TableCell>
+              <TableCell>{formatCurrency(item.priceInCents / 100)}</TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger className="cursor-pointer">
                     <MoreVertical />
                     <span className="sr-only">Actions</span>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
+                  <DropdownMenuContent className="w-20">
                     <DropdownMenuItem asChild>
                       <Modal
                         trigger={
                           <Button
                             variant={"ghost"}
                             size={"sm"}
-                            className="w-full text-sm px-0"
+                            className="w-full text-sm px-0 py-4"
                           >
-                            Edit{" "}
+                            <Edit /> Edit
                           </Button>
                         }
                         title="Edit item"
                         subtitle=""
                         classNames="pt-5"
                       >
-{                       language === languages.split(",")[0]? <MenuItemForm
-                        categories={categories}
-                          item={item}
-                          setOptimisticItem={setOptimisticItem}
-                        />:<TranslatedMenuItemForm item={translatedItem} setOptimisticItem={setOptimisticItem} language={language}/>}
+                        {language === languages.split(",")[0] ? (
+                          <MenuItemForm
+                            categories={categories}
+                            item={item}
+                            setOptimisticItem={setOptimisticItem}
+                          />
+                        ) : (
+                          <TranslatedMenuItemForm
+                            item={translatedItem}
+                            setOptimisticItem={setOptimisticItem}
+                            language={language}
+                          />
+                        )}
                       </Modal>
                     </DropdownMenuItem>
                     <DropdownMenuItem variant="destructive" asChild>

@@ -29,7 +29,7 @@ export function OrdersProvider({
       return p;
     },
     queryKey: ["pending-orders"],
-    refetchInterval: false,
+    refetchInterval: 5000,
     
   });
   const [orders, setOrders] = useState<OrderWithItems[]>(data ?? []);

@@ -188,3 +188,12 @@ export const getActiveMenuNotCached =
       }
     })
   }
+
+
+  export async function getMenuByBusinessName(businessName:string){
+    const menu = await db.menu.findFirst({
+      where: { business: { name: businessName } },
+    });
+
+    return menu
+  }

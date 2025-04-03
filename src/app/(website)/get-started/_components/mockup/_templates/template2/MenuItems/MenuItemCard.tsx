@@ -1,8 +1,5 @@
 import { formatCurrency } from "@/lib/formatter";
 import { Card, CardContent } from "@/components/ui/card";
-import CloudImage from "@/components/CloudImage";
-import { MenuItem } from "@prisma/client";
-import { CardModalProvider } from "@/context/CardModalProvider";
 
 
 export function MenuItemCard({ index }: { index: number }) {

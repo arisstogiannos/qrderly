@@ -47,7 +47,6 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
       b.menu.published
   );
 
-  console.log(businessId )
 
   return (
     <form className="grid md:grid-cols-2 lg:grid-rows-[auto_auto] grid-rows-[auto_auto_auto] gap-x-10 gap-y-5  rounded-2xl  lg:w-xl  overflow-y-auto">

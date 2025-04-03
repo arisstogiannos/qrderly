@@ -4,6 +4,7 @@ import { ProductType } from "@/types";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { MainButton } from "../(landing page)/_sections/hero/MainButton";
 
 export default async function page() {
   return (
@@ -23,14 +24,14 @@ export default async function page() {
 
 function ProductCard({ product }: { product: ProductType }) {
   return (
-    <div className="gap-y-2 bg-accent p-6 rounded-3xl flex flex-col">
+    <div className="gap-y-2 bg-accent p-6 rounded-3xl flex flex-col hover:scale-105 transition-transform duration-300">
       <h2 className="md:text-xl font-medium capitalize ">{product.title}</h2>
-      <p className="mb-3">{product.shortDesc}</p>
-      <Button className="mt-auto" asChild>
-        <Link href={"/get-started/"+product.title.toLowerCase().replaceAll(" ","-")+"/business-setup"}>
+      <p className="mb-5">{product.shortDesc}</p>
+      <MainButton className="mt-auto shadow-none bg-primary hover:text-background" >
+        <Link className="flex justify-between w-full" href={"/get-started/"+product.title.toLowerCase().replaceAll(" ","-")+"/business-setup"}>
           Get Started <ArrowRight />
         </Link>
-      </Button>
+      </MainButton>
     </div>
   );
 }

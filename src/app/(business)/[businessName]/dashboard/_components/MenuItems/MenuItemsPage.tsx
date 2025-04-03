@@ -61,7 +61,7 @@ export default function MenuItemsPage({
             }
             title="Add New Item"
             subtitle=""
-            classNames="pt-5  overflow-y-auto"
+            classNames="pt-5  "
           >
             <MenuItemForm
               categories={categories}

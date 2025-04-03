@@ -35,14 +35,14 @@ function Feature({
   }, [isInView]);
 
   return (
-    <div ref={ref} className="space-y-5">
+    <div ref={ref} className="space-y-5 text-background">
       <div  className="flex gap-4 max-w-2xl xl:last-of-type:mb-60 ">
         <span className="bg-foreground size-10 lg:size-14 flex-center p-2 min-w-10 lg:min-w-14 md:mt-1 rounded-full text-primary ">
           {icon}
         </span>
         <div className="space-y-1 sm:space-y-2 text-balance">
-          <h3 className="font-medium text-2xl md:text-5xl">{title}</h3>
-          <p className="text-lg md:text-2xl">{desc}</p>
+          <h3 className="font-medium text-2xl md:text-5xl mix-blend-difference">{title}</h3>
+          <p className="text-lg md:text-2xl mix-blend-difference font-normal">{desc}</p>
         </div>
       </div>
       <video

@@ -16,7 +16,7 @@ export  default async function Page() {
         </div>
 
         <header className="mx-auto space-y-6">
-          <h2 className="capitalize text-5xl md:text-7xl font-medium">choose plan</h2>
+          <h2 className="capitalize text-5xl md:text-7xl font-medium mx-auto text-center">choose Product</h2>
           <Switch />
         </header>
         <section className="grid grid-rows-3 grid-cols-1 xl:grid-rows-1 xl:grid-cols-3 2xl:mx-40 gap-10">

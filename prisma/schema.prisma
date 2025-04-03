@@ -138,6 +138,7 @@ model OrderItem {
   menuItem    MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
   quantity    Int
   preferences String
+  price Int
 }
 
 model MenuItem {

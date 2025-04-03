@@ -11,38 +11,38 @@ export default function OrderInformation({ sub }:{sub: Subscription}) {
   return (
     <>
       <Section>
-        <Column>
-          <Row >
+        <Row>
+          <Column >
             <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
               Order ID
             </Text>
-            <Text className=" mt-0 mr-4">{sub.id}</Text>
-          </Row>
-          <Row>
+            <Text className=" mt-0 mr-4">{"sub?.id"}</Text>
+          </Column>
+          <Column>
             <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
               Purchase On
             </Text>
             <Text className=" mt-0 mr-4">
-              {dateFormatter.format(sub.purchasedAt)}
+              {dateFormatter.format(sub?.purchasedAt)}
             </Text>
-          </Row>
-          <Row>
+          </Column>
+          <Column>
             <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
               Price Paid
             </Text>
             <Text className=" mt-0 mr-4">
               {formatCurrency(100 / 100)}
             </Text>
-          </Row>
-          <Row>
+          </Column>
+          <Column>
             <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
               Product
             </Text>
             <Text className=" mt-0 mr-4">
-             {sub.product}
+             {sub?.product}
             </Text>
-          </Row>
-        </Column>
+          </Column>
+        </Row>
       </Section>
       <Section className="border border-solid border-gray-500 rounded-lg p-4 md:p-6 my-4">
         {/* <Img

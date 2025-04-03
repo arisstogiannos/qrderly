@@ -1,4 +1,8 @@
-'use client' // Error boundaries must be Client Components
+'use client'
+import { ErrorMessage } from "@/components/Messages"
+import { Button } from "@/components/ui/button"
+
+ // Error boundaries must be Client Components
  
 export default function GlobalError({
   error,
@@ -11,8 +15,17 @@ export default function GlobalError({
     // global-error must include html and body tags
     <html>
       <body>
-        <h2>Something went wrong!</h2>
-        <button onClick={() => reset()}>Try again</button>
+      <div className='w-screen h-screen flex flex-col items-center justify-center gap-4'>
+      <ErrorMessage msg={'Oops! Something went wrong...'+error.message}/>
+      <Button
+        onClick={
+          // Attempt to recover by trying to re-render the segment
+          () => reset()
+        }
+      >
+        Try again
+      </Button>
+    </div>
       </body>
     </html>
   )

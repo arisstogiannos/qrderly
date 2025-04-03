@@ -6,6 +6,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import updateSearchParams from "@/lib/updateSearchParams";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { ReactNode } from "react";
 
@@ -34,7 +35,7 @@ export default function LanguageSelect({
       <DropdownMenuContent className="bg-background">
         {languagesList.map((l) => (
           <DropdownMenuItem
-            onClick={() => router.push("?l=" + l)}
+            onClick={() => updateSearchParams("l",l) }
             className="uppercase text-foreground"
             key={l}
           >

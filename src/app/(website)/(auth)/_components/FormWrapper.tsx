@@ -14,7 +14,7 @@ export function FormWrapper({ title, subtitle, children }: { title: string, subt
       <Card>
         <CardHeader>
           <CardTitle className="capitalize text-2xl">{title}</CardTitle>
-          <CardDescription className="capitalize text-lg">
+          <CardDescription className=" text-lg">
            {subtitle}
           </CardDescription>
         </CardHeader>

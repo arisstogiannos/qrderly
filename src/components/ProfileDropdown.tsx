@@ -6,22 +6,25 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { LayoutDashboard, SquareMenu, Stars, User2 } from "lucide-react";
+import {
+  LayoutDashboard,
+  LogOut,
+  SquareMenu,
+  Stars,
+  User2,
+} from "lucide-react";
 import Link from "next/link";
 import { Session } from "next-auth";
-import { UserRole } from "@prisma/client";
 import { signOut } from "@/app/(website)/(auth)/_actions/login";
 import { Button } from "./ui/button";
-import { DashboardIcon } from "@/app/(business)/[businessName]/dashboard/_components/Icons";
 
 export function ProfileDropdown({ session }: { session: Session | null }) {
   const businesses = session?.user.business.filter(
     (b) => b.menu && b.menu.published
   );
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -46,30 +49,50 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
               </Link>
             </DropdownMenuItem>
 
-              {businesses &&
-                businesses.map((b) => (
-            <DropdownMenuGroup key={b.name} className="mx-2">
-
-              <DropdownMenuLabel className="flex items-center gap-2 text-nowrap ml-0 pl-0">{b.name} <hr className="w-full" /></DropdownMenuLabel>
+            {businesses &&
+              businesses.map((b) => (
+                <DropdownMenuGroup key={b.name} className="mx-2">
+                  <DropdownMenuLabel className="flex items-center gap-2 text-nowrap ml-0 pl-0">
+                    {b.name} <hr className="w-full" />
+                  </DropdownMenuLabel>
 
                   <div key={b.name} className=" flex gap-2">
-                    <DropdownMenuItem className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary" asChild>
-                      <Link href={"/" + b.name.replaceAll(" ","-") + "/dashboard"}>
-                      <LayoutDashboard/> Dashboard
+                    <DropdownMenuItem
+                      className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
+                      asChild
+                    >
+                      <Link
+                        href={"/" + b.name.replaceAll(" ", "-") + "/dashboard"}
+                      >
+                        <LayoutDashboard /> Dashboard
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary" asChild>
-                      <Link target="_blank" href={"/" + b.name.replaceAll(" ","-") + "/menu"}>
-                       <SquareMenu/> Menu
+                    <DropdownMenuItem
+                      className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
+                      asChild
+                    >
+                      <Link
+                        target="_blank"
+                        href={
+                          "/" +
+                          b.name.replaceAll(" ", "-") +
+                          (b.menu.type === "QR_MENU"
+                            ? "/menu?table=admin"
+                            : "/smart-menu?table=admin")
+                        }
+                      >
+                        <SquareMenu /> Menu
                       </Link>
                     </DropdownMenuItem>
                   </div>
-            </DropdownMenuGroup>
-                ))}
+                </DropdownMenuGroup>
+              ))}
+            <DropdownMenuSeparator />
 
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild className="">
               <form action={signOut}>
-                <Button variant={"destructive"} type="submit">
+                <Button className=" w-full" type="submit">
+                  <LogOut className="rotate-180 text-background" />
                   Sign Out
                 </Button>
               </form>

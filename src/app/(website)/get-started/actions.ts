@@ -5,10 +5,11 @@ import { productMap, productMapURL } from "@/data";
 import { db } from "@/db";
 import { BusinessExtended, ProductType, ProductURL } from "@/types";
 import { BillingType, Menu, Product, Template } from "@prisma/client";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import QRCodeStyling, { Options } from "qr-code-styling";
+import getSession from "@/lib/getSession";
 
 const businessSchema = z.object({
   name: z.string(),
@@ -93,6 +94,7 @@ export async function submitMenuSettings(
     };
   }
 
+
   const {
     defaultLanguage,
     language,
@@ -141,6 +143,11 @@ export async function submitMenuSettings(
     };
   }
   if (!menu) redirect(`/get-started/${productMapURL[product]}/generate-items`);
+
+  const session = await getSession()
+
+  const business =session?.user.business.find((b)=>b.id = businessId)
+  revalidatePath("/"+business?.name.replaceAll(" ","-")+"/")
 }
 
 export async function createMenu(
@@ -204,6 +211,7 @@ export async function createMenu(
   });
 
   revalidateTag("active-menu" + business.name);
+  revalidatePath("/"+business.name.replaceAll(" ","-")+"/")
 
   const url =
     process.env.NEXT_PUBLIC_SERVER_URL +

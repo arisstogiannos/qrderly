@@ -23,6 +23,7 @@ import Options from "./Options";
 import TranslateCheckBox from "../TranslateCheckBox";
 import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 export default function MenuItemForm({
   item,
@@ -36,7 +37,7 @@ export default function MenuItemForm({
   }) => void;
   categories: CategoryWithItemCount[];
 }) {
-  const { businessName } = useBusinessContext();
+  const { businessName,business } = useBusinessContext();
   const [state, action, isPending] = useActionState(
     upsertMenuItem.bind(null, businessName),
     null
@@ -136,15 +137,15 @@ export default function MenuItemForm({
         })}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">Description <span className="text-muted-foreground">(optional)</span></Label>
         <Input
           name="description"
           id="description"
           defaultValue={
             (item?.description || state?.data?.description) ?? undefined
           }
-          required
-          minLength={1}
+           pattern="[^_]*" // Disallows "_"
+          title="Underscore (_) is not allowed"
           maxLength={100}
           placeholder="Enter the menu items description"
         />
@@ -182,7 +183,6 @@ export default function MenuItemForm({
           defaultValue={item?.priceInCents || state?.data?.priceInCents}
           required
           min={1}
-          max={100}
           placeholder="Enter the menu items price"
         />
         {state?.errors?.priceInCents?.map((er) => {
@@ -195,34 +195,9 @@ export default function MenuItemForm({
           );
         })}
       </div>
+      
       <div className="space-y-2">
-        <Label htmlFor="stock">Stock</Label>
-        <Input
-          type="number"
-          name="stock"
-          defaultValue={
-            (item?.stock ||
-              (state?.data?.stock && parseInt(state?.data?.stock))) ??
-            undefined
-          }
-          id="stock"
-          required
-          min={1}
-          max={100}
-          placeholder="Enter the menu items stock"
-        />
-        {state?.errors?.stock?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
-        })}
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="options">Options</Label>
+        <Label htmlFor="options">Options <span className="text-muted-foreground">(optional)</span></Label>
         <Options
           defaultOptions={
             (item?.preferences || state?.data?.options) ?? undefined
@@ -238,7 +213,7 @@ export default function MenuItemForm({
           );
         })}
       </div>
-      <div className="space-y-2">
+     {business.menu.template==="T1"&& <div className="space-y-2">
         <Label htmlFor="image">Image</Label>
         <label className="cursor-pointer mx-auto relative flex flex-col items-center justify-center border-dashed border-2 border-primary/50 rounded-lg w-full xl:w-[400] h-[250] bg-accent/50 hover:bg-accent hover:border-primary transition-colors">
           {preview ? (
@@ -295,7 +270,7 @@ export default function MenuItemForm({
             />
           );
         })}
-      </div>
+      </div>}
       {item && <input type="text" name="id" defaultValue={item.id} hidden />}
       <Button type="submit" className="w-full" disabled={isPending}>
         {isPending ? <Loader /> : "Save"}

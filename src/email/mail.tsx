@@ -5,6 +5,7 @@ import React from "react";
 import ResetPasswordEmail from "./components/auth/ResetPasswordEmail";
 import { z } from "zod";
 import ContactEmail from "./components/contact/ContactEmail";
+import { render } from "@react-email/render";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -13,19 +14,23 @@ export const sendVerificationEmail = async (
   verificationToken: string
 ) => {
   const confirmLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/account-verification?token=${verificationToken}`;
-
+  
+  const html = await render(<EmailVerification confirmLink={confirmLink} />, {
+    pretty: true,
+  });
   await resend.emails.send({
     from: `Aris <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: "Email Verification",
-    react: React.createElement(EmailVerification, { confirmLink: confirmLink }),
+    react: html,
   });
 };
+
 export const sendResetPasswordEmail = async (
   email: string,
   resetToken: string
 ) => {
-  const resetLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/new-password?token=${resetToken}`;
+  const resetLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/reset-password?token=${resetToken}`;
 
   await resend.emails.send({
     from: `Aris <${process.env.SENDER_EMAIL as string}>`,

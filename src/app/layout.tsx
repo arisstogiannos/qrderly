@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "../context/Providers";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
 
 const instrumentsSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -11,8 +13,15 @@ const instrumentsSans = Instrument_Sans({
 
 export const metadata = {
   title: "QR Ordering App - Seamless Contactless Orders",
-  description: "Scan QR codes to browse menus, place orders, and pay—all from your phone. A modern, fast, and seamless restaurant ordering experience.",
-  keywords: ["QR ordering", "contactless ordering", "restaurant menu", "food ordering", "online payment"],
+  description:
+    "Scan QR codes to browse menus, place orders, and pay—all from your phone. A modern, fast, and seamless restaurant ordering experience.",
+  keywords: [
+    "QR ordering",
+    "contactless ordering",
+    "restaurant menu",
+    "food ordering",
+    "online payment",
+  ],
   authors: [{ name: "Aris Stogiannos", url: "https://aris-stogiannos.gr" }],
   icons: {
     icon: "/favicon.ico",

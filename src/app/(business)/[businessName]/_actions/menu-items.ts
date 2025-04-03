@@ -13,6 +13,7 @@ import { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 import { cache } from "@/lib/cache";
 import { Category } from "@prisma/client";
 import { serializeOptions } from "@/lib/preferences";
+import { getMenuByBusinessName } from "./menu";
 
 export async function getMenuItems(businessName: string) {
   const menuItems = await db.menuItem.findMany({
@@ -39,11 +40,10 @@ const imageSchema = fileSchema.refine(
 const MenuItemSchema = z.object({
   name: z.string().min(1),
   translateName: z.string().min(1).max(3),
-  description: z.string().min(1),
+  description: z.string().optional(),
   translateDescription: z.string().min(1).max(3),
   categoryId: z.string().min(1),
   priceInCents: z.string().min(1),
-  stock: z.string().min(1),
   options: z.string().optional(),
   image: imageSchema.optional(),
   id: z.string().optional(),
@@ -78,14 +78,13 @@ export async function upsertMenuItem(
     name,
     options,
     priceInCents,
-    stock,
     categoryId,
   } = result.data;
 
   try {
-    const menu = await db.menu.findFirst({
-      where: { business: { name: businessName } },
-    });
+    const getCachedMenu = cache(getMenuByBusinessName,["menu"+businessName],{tags:["menu"+businessName]})
+
+    const menu = await getCachedMenu(businessName)
 
     const translations: Translation = {};
 
@@ -138,7 +137,6 @@ export async function upsertMenuItem(
           description,
           priceInCents: Number(priceInCents),
           categoryId,
-          stock: parseInt(stock),
           menuId: menu.id,
           preferences: options,
           imagePath: uploadedImage.public_id,
@@ -150,7 +148,6 @@ export async function upsertMenuItem(
           description,
           priceInCents: Number(priceInCents),
           categoryId,
-          stock: parseInt(stock),
           menuId: menu.id,
           preferences: options,
           translations: JSON.stringify(translations),
@@ -212,13 +209,9 @@ export async function updateItemTranslation(
   const { description, id, name, language, translations } = result.data;
 
   try {
-    const menu = await db.menu.findFirst({
-      where: { business: { name: businessName } },
-    });
 
     const translationsJson: Translation = JSON.parse(translations);
 
-    if (menu) {
       translationsJson[language].name = name;
       translationsJson[language].description = description;
 
@@ -226,12 +219,7 @@ export async function updateItemTranslation(
         where: { id },
         data: { translations: JSON.stringify(translationsJson) },
       });
-    } else {
-      return {
-        data: result.data,
-        error: "Something went wrong!",
-      };
-    }
+    
   } catch (error) {
     console.error("create item er: " + error);
 

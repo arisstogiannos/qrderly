@@ -1,4 +1,5 @@
 import {
+  Brain,
   Brush,
   LayoutDashboard,
   Palette,
@@ -19,12 +20,12 @@ export const plandata = [
     title: "QR Menu",
     billing: {
       yearly: {
-        price: "$12/mo",
+        price: "€9/month",
         payment_link: "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
         price_id: "price_1R43QrP01OOv4UZm9i3yN0ZG",
       },
       monthly: {
-        price: "$19/mo",
+        price: "€12/month",
         payment_link: "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
         price_id: "price_1R43P6P01OOv4UZmstL2rwRL",
       },
@@ -52,14 +53,14 @@ export const plandata = [
     title: "Smart Ordering Qr Menu",
     billing: {
       yearly: {
-        price: "$22/mo",
+        price: "€14/month",
         payment_link: "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-        price_id:"price_1R4G7rP01OOv4UZmDIUZNTjl"
+        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
       },
       monthly: {
-        price: "$22/mo",
+        price: "€18/month",
         payment_link: "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-        price_id:"price_1R4G7rP01OOv4UZmDIUZNTjl"
+        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
       },
     },
     bullets: [
@@ -85,17 +86,17 @@ export const plandata = [
     ],
   },
   {
-    title: "Self Service Smart QR",
+    title: "Smart Self Service Menu",
     billing: {
       yearly: {
-        price: "$12/mo",
+        price: "€16/month",
         payment_link: "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
-        price_id:"price_1R4G7rP01OOv4UZmDIUZNTjl"
+        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
       },
       monthly: {
-        price: "$19/mo",
+        price: "€20/month",
         payment_link: "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
-        price_id:"price_1R4G7rP01OOv4UZmDIUZNTjl"
+        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
       },
     },
     bullets: [
@@ -126,6 +127,7 @@ export const productsData = [
   {
     title: "QR Menu",
     desc: "Say goodbye to printed menus and hello to a modern, hassle-free dining experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
+    link:"qr-menu",
     shortDesc:
       "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
 
@@ -138,10 +140,10 @@ export const productsData = [
     ],
     features: [
       {
-        title: "Customizable Themes",
-        desc: "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests.",
-        video: "/videos/customizeable.webm",
-        icon: <Palette size={"2rem"} />,
+        title: "Effortless Digital Menu from Images & PDFs!",
+        desc: "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!",
+        video: "/videos/AI-MENU.webm",
+        icon: <Brain size={"2rem"} />,
       },
       {
         title: "Real-Time Dashboard",
@@ -161,11 +163,20 @@ export const productsData = [
         video: "/videos/multi-language.webm",
         icon: <TranslationIcon />,
       },
+      {
+        title: "Customizable Themes",
+        desc: "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests.",
+        video: "/videos/customizeable.webm",
+        icon: <Palette size={"2rem"} />,
+      },
+
     ],
   },
+ 
   {
     title: "Smart Ordering QR Menu",
-    desc: "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones—without waiting for a waiter. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
+    link:"/get-started/smart-ordering-qr-menu",
+    desc: "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
     shortDesc:
       "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
     videoPath: "/smart QR animation.webm",
@@ -176,6 +187,12 @@ export const productsData = [
       "Fulfill Order - Once the order is completed by the staff.",
     ],
     features: [
+      {
+        title: "Effortless Digital Menu from Images & PDFs!",
+        desc: "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!",
+        video: "/videos/AI-MENU.webm",
+        icon: <Brain size={"2rem"} />,
+      },
       {
         title: "Customizable Themes",
         desc: "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests.",
@@ -215,10 +232,12 @@ export const productsData = [
     ],
   },
   {
-    title: "Online Ordering",
-    desc: "Launch your own online ordering platform and let customers order for delivery or takeaway—all without third-party commissions. Increase your profits, manage orders efficiently, and offer a seamless ordering experience.",
+    title: "Smart Self Service Menu",
+    desc: "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
+    link:"smart-self-service-menu",
+
     shortDesc:
-      "Launch your own online ordering platform where customers can easily place delivery or takeaway orders. No third-party commissions or hosting expenses — just direct sales and complete control over your business.",
+      "Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
     videoPath: "/smart QR animation.webm",
     steps: [
       "Set Up Your Online Store - Customize your menu, pricing, and branding by following the exact same steps as setting up a QR menu.",
@@ -227,6 +246,12 @@ export const productsData = [
       "Prepare & Fulfill Orders - Notify customers when their order is ready for pickup or out for delivery.",
     ],
     features: [
+      {
+        title: "Effortless Digital Menu from Images & PDFs!",
+        desc: "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!",
+        video: "/videos/AI-MENU.webm",
+        icon: <Brain size={"2rem"} />,
+      },
       {
         title: "Customizable Themes",
         desc: "Personalize your menu with colors, fonts, and branding to match your business style.",
@@ -303,12 +328,17 @@ export const faqData = [
   },
 ];
 
-
 export const productMap = {
-    "qr-menu": Product.QR_MENU,
-    "smart-ordering-qr-menu": Product.SMART_QR_MENU,
-    "self-service-qr-menu":Product.SELF_SERVICE_QR_MENU
-  };
-  export const productMapURL: Record<Product,ProductURL> = Object.fromEntries(
-    Object.entries(productMap).map(([key, value]) => [value, key])
-  ) as Record<Product,ProductURL>;
+  "qr-menu": Product.QR_MENU,
+  "smart-ordering-qr-menu": Product.SMART_QR_MENU,
+  "smart-self-service-menu": Product.SELF_SERVICE_QR_MENU,
+};
+export const productMapURL: Record<Product, ProductURL> = Object.fromEntries(
+  Object.entries(productMap).map(([key, value]) => [value, key])
+) as Record<Product, ProductURL>;
+
+export const productPath = {
+  "qr-menu": "menu",
+  "smart-ordering-qr-menu": "smart-menu",
+  "smart-self-service-menu": "smart-menu",
+};

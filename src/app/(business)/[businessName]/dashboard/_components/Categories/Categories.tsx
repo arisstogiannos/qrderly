@@ -45,7 +45,7 @@ export default function Categories() {
             <>
             <SelectItem key={"all"} value={"all"}>All Categories</SelectItem>
             {categories.map((category) => (
-              <SelectItem key={category.name} value={category.id}>{category.name}</SelectItem>
+              <SelectItem key={category.id} value={category.id}>{category.name}</SelectItem>
             ))}
             </>
           )}

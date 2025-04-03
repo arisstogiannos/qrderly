@@ -36,7 +36,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Self Service QR Menu",
-    href: "/products/self-service-qr-menu",
+    href: "/products/self-service-smart-menu",
     description:
       "Your customers order through the menu and will be notified when its ready",
   },
@@ -55,7 +55,7 @@ export function NavigationDesktop({ session }: { session: Session | null }) {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>
-            <Link href={"/products"}>Products</Link>
+            Products
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
@@ -208,7 +208,7 @@ function MenuButton({
     });
   }
   return (
-    <Button className="lg:hidden z-20 bg-foreground  has-[>svg]:px-1.5 has-[>svg]:py-1.5 h-auto  " onClick={handleClick}>
+    <Button className="lg:hidden z-50 bg-foreground  has-[>svg]:px-1.5 has-[>svg]:py-1.5 h-auto  " onClick={handleClick}>
       <MenuIcon className="size-6"  />
     </Button>
   );

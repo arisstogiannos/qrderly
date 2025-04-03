@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { useCartContext } from "@/context/CartContext";
 
@@ -11,6 +11,8 @@ import { toast } from "sonner";
 import MenuItemVersionsInCart from "./MenuItemVersionsInCart";
 import Options from "./Options";
 import MenuItemModalFooter from "./MenuItemModalFooter";
+import { CheckCircleIcon } from "lucide-react";
+import { useCardModalContext } from "@/context/CardModalProvider";
 
 export default function MenuItemOptionsForm({
   menuItem,
@@ -21,11 +23,15 @@ export default function MenuItemOptionsForm({
 }) {
   const { cartItems, addToCart, updateCartItem } = useCartContext();
   const [cartItemVersionId, setCartItemVersionId] = useState<string>("");
-  const [price, setPrice] = useState(0);
-
+const {setPrice,price} = useCardModalContext()
   const existingMenuItems = cartItems.filter(
     (item) => item.menuItem.id === menuItem.id
   );
+
+  useEffect(()=>{
+
+    setPrice(menuItem.priceInCents)
+  },[])
 
   const existingMenuItem = existingMenuItems.find(
     (item) => item.id === cartItemVersionId
@@ -35,17 +41,16 @@ export default function MenuItemOptionsForm({
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData);
-    console.log(data)
     const dataAsString = JSON.stringify(data)
       .replaceAll(`"`, "")
       .replaceAll(",", ", ")
       .slice(1, -1);
     if (cartItemVersionId === "") {
-      addToCart(menuItem, dataAsString);
+      addToCart(menuItem, dataAsString,price);
     } else {
-      updateCartItem(dataAsString, cartItemVersionId);
+      updateCartItem(dataAsString, cartItemVersionId,price);
     }
-    toast("Item added to cart");
+    toast(" Item added to cart",{duration:1500,icon:<CheckCircleIcon/> ,position:"top-left",style:{width:'60%', backgroundColor:"lightgreen", color:"darkgreen",borderColor:"darkgreen"}});
     setOpen(false);
   }
 
@@ -59,12 +64,10 @@ export default function MenuItemOptionsForm({
         />
       )}
       <Options
-        price={price}
-        setPrice={setPrice}
         options={menuItem.preferences ?? ""}
         existingOptions={existingMenuItem?.preferences}
       />
-      <MenuItemModalFooter  item={existingMenuItem} />
+      <MenuItemModalFooter  item={existingMenuItem}  />
     </form>
   );
 }

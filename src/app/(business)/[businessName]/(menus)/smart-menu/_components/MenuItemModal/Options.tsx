@@ -3,6 +3,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import React, { useEffect, useMemo, useState } from "react";
+import { formatCurrency } from "@/lib/formatter";
+import { useCardModalContext } from "@/context/CardModalProvider";
 
 // Define Option Type
 type Option = {
@@ -24,23 +26,23 @@ const deserializeOptions = (str: string | undefined): Option[] => {
 const stringToJson = (str: string | undefined): Record<string, string> => {
   if (!str) return {};
 
-  return str.split(", ").reduce((acc, pair) => {
-    const [name, value] = pair.split(":");
-    if (!acc[name]) acc[name] = value;
-    // acc[name].push(value);
-    return acc;
-  }, {} as Record<string, string>);
+  return str.split(", ").reduce(
+    (acc, pair) => {
+      const [name, value] = pair.split(":");
+      if (!acc[name]) acc[name] = value;
+      // acc[name].push(value);
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 };
 
 export default function Options({
   options,
   existingOptions,
-  price,setPrice
 }: {
   options: string;
   existingOptions: string | undefined;
-  price:number,
-  setPrice:React.Dispatch<React.SetStateAction<number>>;
 }) {
   // Deserialize options and existing selections
   const deserializedOptions = useMemo(
@@ -51,9 +53,10 @@ export default function Options({
     () => stringToJson(existingOptions),
     [existingOptions]
   );
+
   return (
     <div className="space-y-7">
-      {deserializedOptions.map((option,i) => (
+      {deserializedOptions.map((option, i) => (
         <div key={i} className="grid gap-4">
           <Label
             htmlFor={option.name}
@@ -65,20 +68,21 @@ export default function Options({
           {option.type === "single" ? (
             <DefaultRadioGroup
               name={option.name}
-              setPrice={setPrice}
               defaultValue={deserializedValues[option.name] ?? ""}
+              values={option.values}
             >
-              {option.values.map((value,i) => (
+              {option.values.map((value, i) => (
                 <div key={i} className="flex items-center space-x-2">
                   <RadioGroupItem
-                    value={value.name }
+                    value={value.name}
                     className="border-primary"
-
                   />
                   <Label className="text-base capitalize font-normal">
                     {value.name}{" "}
                     {value.price !== "0" && (
-                      <span className="text-muted">(+${value.price})</span>
+                      <span className="text-muted">
+                        {formatCurrency(Number(value.price) / 100)}
+                      </span>
                     )}
                   </Label>
                 </div>
@@ -88,7 +92,9 @@ export default function Options({
             <MultipleChoiceGroup
               name={option.name}
               values={option.values}
-              defaultValues={deserializedValues[option.name]?.split("+") ?? []}
+              defaultValues={
+                deserializedValues[option.name]?.split(" + ") ?? []
+              }
             />
           )}
         </div>
@@ -102,22 +108,28 @@ interface DefaultRadioGroupProps {
   name: string;
   defaultValue?: string;
   children: React.ReactNode;
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  values: { name: string; price: string }[];
 }
 export function DefaultRadioGroup({
   name,
   defaultValue,
   children,
-  setPrice,
+  values,
 }: DefaultRadioGroupProps) {
   const [value, setValue] = useState(defaultValue);
+  const [localPrice, setLocalPrice] = useState(0);
+  const { setPrice } = useCardModalContext();
 
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);
 
   function handleChange(e: string) {
+    const price = values.find((v) => v.name === e)?.price;
     setValue(e);
+
+    setPrice((prev) => prev + (Number(price) - localPrice));
+    setLocalPrice(Number(price));
   }
 
   return (
@@ -144,25 +156,46 @@ export function MultipleChoiceGroup({
   values,
   defaultValues,
 }: MultipleChoiceGroupProps) {
-  const [selectedValues, setSelectedValues] = useState<string[]>(defaultValues);
-  console.log(selectedValues);
+  const [selectedValues, setSelectedValues] = useState<string[] | null>(null);
+  const [localPrice, setLocalPrice] = useState(0);
+
+  const { setPrice } = useCardModalContext();
+
   useEffect(() => {
-    setSelectedValues(defaultValues);
+    if (defaultValues.length > 0 && !selectedValues) {
+      setSelectedValues(defaultValues);
+    }
   }, [defaultValues]);
 
+  useEffect(() => {
+    let lp = 0;
+
+    if(selectedValues){
+
+      
+      for (const value of selectedValues) {
+        lp += Number(values.find((v) => v.name === value)?.price ?? 0);
+      }
+      setPrice((prev) => prev - localPrice + lp);
+      setLocalPrice(lp);
+    }
+  }, [selectedValues]);
+
   const handleChange = (name: string) => {
-    setSelectedValues((prev) =>
-      prev.includes(name) ? prev.filter((v) => v !== name) : [...prev, name]
+
+      setSelectedValues((prev) =>
+         prev?.includes(name) ? prev.filter((v) => v !== name) : prev?[...prev, name]:[name]
     );
   };
 
   return (
     <div className="space-y-2">
-      {values.map((value,i) => (
+      {values.map((value, i) => (
         <div key={i} className="flex items-center space-x-2">
           <Checkbox
             id={`${name}-${value.name}`}
             checked={selectedValues?.includes(value.name)}
+            // value={value.name}
             onCheckedChange={() => handleChange(value.name)}
           />
           <Label
@@ -177,7 +210,7 @@ export function MultipleChoiceGroup({
         type="hidden"
         hidden
         name={name}
-        defaultValue={selectedValues?.join("+")}
+        defaultValue={selectedValues?.join(" + ")}
       />
     </div>
   );

@@ -93,7 +93,8 @@ export default function CategoriesForm({
         })}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">Description <span className="text-muted-foreground">(optional but recommended)</span></Label>
+        <p className="text-muted-foreground text-sm">You can describe a category to get more accurate translates.</p>
         <Input
           name="description"
           id="description"
@@ -104,7 +105,6 @@ export default function CategoriesForm({
           maxLength={100}
           placeholder="Enter the menu items description"
         />
-        <TranslateCheckBox name="translateDescription" />
         {state?.errors?.description?.map((er) => {
           return (
             <ErrorMessage

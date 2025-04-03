@@ -1,3 +1,4 @@
+"use server"
 import { db } from "@/db";
 import { v4 as uuidv4 } from "uuid";
 
@@ -63,6 +64,29 @@ export const verifyToken = async (token: string) => {
   });
 
   return { success: true};
+};
+
+export const verifyResetToken = async (token: string) => {
+  const validToken = await db.token.findFirst({
+    where: {
+      token,
+      type:"RESET_PASSWORD"
+    },
+  });
+
+  if (!validToken) {
+    return {
+      error: "Invalid token",
+    };
+  }
+
+  if (new Date(validToken.expiresAt) < new Date()) {
+    return {
+      error: "Token has expired",
+    };
+  }
+
+  return { success: true,token:validToken.token};
 };
 
 export const generatePasswordResetToken = async (email: string) => {

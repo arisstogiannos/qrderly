@@ -7,6 +7,7 @@ import CategoriesForm from "./CategoriesForm";
 import CategoriesTable from "./CategoriesTale";
 import { CategoryWithItemCount } from "@/types";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import Filters from "../Filters";
 
 export default function CategoriesPage({
   categories,
@@ -48,18 +49,21 @@ export default function CategoriesPage({
           <h1 className="font-medium text-2xl"> Categories</h1>
           <SidebarTrigger className="xl:hidden" />
         </div>
-        <Modal
-          trigger={
-            <Button>
-              Add New <Plus />
-            </Button>
-          }
-          title="Add New Category"
-          subtitle=""
-          classNames="pt-6"
-        >
-          <CategoriesForm setOptimisticCategory={setOptimisticCategory} />
-        </Modal>
+        <div className="md:flex lg:gap-10 gap-4 contents">
+          <Filters showCategories={false} />
+          <Modal
+            trigger={
+              <Button>
+                Add New <Plus />
+              </Button>
+            }
+            title="Add New Category"
+            subtitle=""
+            classNames="pt-6"
+          >
+            <CategoriesForm setOptimisticCategory={setOptimisticCategory} />
+          </Modal>
+        </div>
       </div>
       <CategoriesTable
         categories={optimisticCategories}

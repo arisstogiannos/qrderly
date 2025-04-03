@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import PhoneMockup from "./PhoneMockup";
+import { MainButton } from "./MainButton";
 
 export default function Hero() {
   return (
@@ -22,10 +23,9 @@ export default function Hero() {
           Transform Your Bussiness with Smart QR Menus & Online Ordering
         </h1>
         <p className="text-xl md:text-4xl">
-          A complete digital solution for restaurants, bars, and cafeterias in
-          Greece. Let your customers order effortlessly via QR code or online.
+        Instantly set up your interactive QR menu and ordering system — with our powerful AI, transform your printed menu into a digital menu in minutes!
         </p>
-        <Button
+        {/* <Button
           variant={"outline"}
           asChild
           className="mt-8 text-xl  py-6 px-2 gap-10 justify-between "
@@ -37,20 +37,25 @@ export default function Hero() {
               <ArrowRight className="text-background size-8" />
             </span>{" "}
           </Link>
-        </Button>
+        </Button> */}
+        <MainButton className="mt-5 lg:mt-14 md:text-xl" >
+        <Link href={"/get-started"} className="flex gap-4 items-center">
+          Get Started For Free <ArrowRight />
+          </Link>
+        </MainButton>
       </div>
-      <div className=" relative h-full w-full">
-        <div className="absolute lg:top-36  xl:top-20 top-0 left-0 xl:left-20 bg-black/30 lg:bg-black/40 blur-3xl w-full lg:w-[150%] h-2/3 lg:h-[80%] xl:h-3/4 "></div>
-        <div className=" absolute right-0 top-20 xl:top-0 xl:-right-96 w-[320px] md:w-[650px] lg:w-[850px] xl:w-[1000px] h-auto aspect-video ">
+      <div className=" relative max-md:left-1/2 max-md:-translate-x-1/2 h-full max-md:w-screen max-lg:overflow-x-hidden overflow-y-visible">
+        <div className="absolute lg:top-36  xl:top-20 top-32 left-0 xl:left-20 bg-black/35 lg:bg-black/40 blur-3xl w-full lg:w-[150%] h-[50%] lg:h-[80%] xl:h-3/4 "></div>
+        <div className=" absolute -right-60 top-20 xl:top-0 xl:-right-96 w-[520px] md:w-[650px] lg:w-[850px] xl:w-[1000px] h-auto aspect-video ">
           <Image
             quality={100}
-            src={"/Dashboard.png"}
+            src={"/Menu Items2.png"}
             fill
             alt="dasboard mockup"
             className="object-contain animate-float-slow  backdrop-blur-xs rounded-3xl overflow-hidden"
           />
         </div>
-        <div className="  absolute left-0 top-20 md:top-40 lg:top-32 lg:left-5 w-[100px] md:w-[200px] lg:w-[220px] lg:h-[450px] xl:w-[250px] h-[300px] xl:h-[500px]  ">
+        <div className="  absolute -left-5 top-24 md:top-40 lg:top-32 lg:left-5 w-[200px] md:w-[200px] lg:w-[220px] lg:h-[450px] xl:w-[250px] h-[300px] xl:h-[500px]  ">
           {/* <Image
             quality={100}
             src={"/iPhone 16 2.png"}
@@ -58,7 +63,7 @@ export default function Hero() {
             alt="iphone mockup"
             className="object-contain animate-float-slow delay-[2s]   backdrop-blur-xs rounded-3xl overflow-hidden"
           /> */}
-          <PhoneMockup/>
+          <PhoneMockup />
         </div>
       </div>
     </div>

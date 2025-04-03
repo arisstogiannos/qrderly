@@ -6,6 +6,7 @@ import { checkUser } from "../../isAllowed";
 import { notFound, redirect } from "next/navigation";
 import Publish from "../../_components/Publish";
 import QrCreator from "../../_components/qr/QrCreator";
+import { productPath } from "@/data";
 
 export default async function page({
   params,
@@ -33,11 +34,7 @@ export default async function page({
     redirect("/get-started/" + product + "/publish");
   }
 
-  const productPath = {
-    "qr-menu": "menu",
-    "smart-ordering-qr-menu": "smart-menu",
-    "self-service-qr-menu": "smart-menu",
-  };
+
 
   const url =
     process.env.NEXT_PUBLIC_SERVER_URL +

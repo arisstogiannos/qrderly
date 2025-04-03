@@ -35,6 +35,8 @@ export function TeamSwitcher({
     return null
   }
 
+  
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>

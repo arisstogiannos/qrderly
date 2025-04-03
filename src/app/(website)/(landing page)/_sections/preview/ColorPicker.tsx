@@ -28,7 +28,7 @@ export default function ColorPicker({
       onChange={(e) => handleColorChange(e.target.value)}
       name={"color"}
       defaultValue={value}
-      className="rounded-lg border-none appearance-none"
+      className="rounded-lg border-none appearance-none max-sm:w-10"
     />
   );
 }

@@ -1,18 +1,11 @@
 "use server"
-import { getMenu } from "@/app/(business)/[businessName]/_actions/menu";
 import { getMenuItemsByMenuId } from "@/app/(business)/[businessName]/_actions/menu-items";
 import { auth } from "@/auth";
-import { db } from "@/db";
+import { productMap } from "@/data";
 import { BusinessExtended, ExtendedUser, ProductURL } from "@/types";
-import { Product } from "@prisma/client";
-import { User } from "next-auth";
 import { redirect } from "next/navigation";
 
-const productMap = {
-  "qr-menu": Product.QR_MENU,
-  "smart-ordering-qr-menu": Product.SMART_QR_MENU,
-  "self-service-qr-menu": Product.SELF_SERVICE_QR_MENU,
-};
+
 
 export async function checkUser(product: ProductURL): Promise<{
   business:BusinessExtended;
@@ -41,8 +34,7 @@ export async function checkUser(product: ProductURL): Promise<{
       return { business:b, redirect: "businessWithoutMenu",user:user };
     }
     if (!b.menu.published) {
-      const menuItems = await getMenuItemsByMenuId(b.menu.id)
-      console.log(b.qr)
+      // const menuItems = await getMenuItemsByMenuId(b.menu.id)
       if (!b.qr) {
         return { business:b, redirect: "noQR",user:user };
       }

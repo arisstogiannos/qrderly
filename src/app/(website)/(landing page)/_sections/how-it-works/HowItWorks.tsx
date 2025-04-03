@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { MainButton } from "../hero/MainButton";
 
 const steps = [
   "create a free account",
@@ -20,12 +21,12 @@ export default function HowItWorks() {
           Follow these 5 steps and your online menu will be set in minutes
         </p>
         <div className="md:gap-x-8 flex max-md:justify-between ">
-          <Button
-            className=" md:text-2xl p-5 md:p-7 rounded-full bg-foreground text-sm"
+          <MainButton
+            className=" md:text-2xl  text-sm font-medium"
             asChild
           >
-            <Link href={"/get-started"}>Get Started for free</Link>
-          </Button>
+            <Link href={"/get-started"} className="hover:translate-0">Get Started for free</Link>
+          </MainButton>
           <Button
             variant={"outline"}
             asChild

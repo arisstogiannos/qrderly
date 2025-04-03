@@ -1,11 +1,12 @@
 "use server";
 
 import { z } from "zod";
-import { signIn, signOut as authSignOut } from "@/auth";
+import { signIn, signOut as authSignOut, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { db } from "@/db";
 import { sendVerificationEmail } from "@/email/mail";
 import { generateVerificationToken } from "@/lib/tokens";
+import { UpdateSession } from "next-auth/react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).trim(),

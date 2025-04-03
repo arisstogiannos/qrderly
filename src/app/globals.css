@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@plugin "tailwindcss-animate";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -19,12 +19,19 @@
 @utility animate-float-slow {
   animation: float 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+@keyframes slideDown{
+  0%{
+    scale: 0;
+  }
+  100%{
+    scale: 1;
+  }
 
+}
 .scrollbar-hidden::-webkit-scrollbar {
   width: 0px; /* Adjust width of the scrollbar */
   height: 0px; /* Adjust height for horizontal scrollbar */
 }
-
 @keyframes float {
   0% {
     transform: translatey(0px);
@@ -36,6 +43,7 @@
     transform: translatey(0px);
   }
 }
+
 
 @theme {
   --breakpoint-3xl: 100rem;

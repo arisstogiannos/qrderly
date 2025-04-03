@@ -15,8 +15,8 @@ type CartContextType = {
   setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
   increaseItemQuantity: (cartItemId: string, currQuantity: number) => void;
   decreaseItemQuantity: (cartItemId: string, currQuantity: number) => void;
-  addToCart: (menuItem: MenuItemRequired, selectedPreferances: string) => void;
-  updateCartItem: (selectedPreferances: string, cartItemId: string) => void;
+  addToCart: (menuItem: MenuItemRequired, selectedPreferances: string,price:number) => void;
+  updateCartItem: (selectedPreferances: string, cartItemId: string,price:number) => void;
 };
 
 export const CartContext = createContext<CartContextType | undefined>(
@@ -40,6 +40,7 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
             quantity: currQuantity + 1,
             menuItem: item.menuItem,
             preferences: item.preferences,
+            price: item.price,
           };
         }
 
@@ -74,13 +75,14 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  function addToCart(menuItem: MenuItemRequired, selectedPreferances: string) {
+  function addToCart(menuItem: MenuItemRequired, selectedPreferances: string,price:number) {
     let itemToAdd: CartItem;
     setCartItems((prev) => {
       itemToAdd = {
         id: crypto.randomUUID(),
         quantity: 1,
         preferences: selectedPreferances,
+        price:price,
         menuItem: {
           id: menuItem.id,
           name: menuItem.name,
@@ -111,7 +113,7 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  function updateCartItem(selectedPreferances: string, cartItemId: string) {
+  function updateCartItem(selectedPreferances: string, cartItemId: string,price:number) {
     setCartItems((prev) => {
       const existingItemWithSameOptions = prev.find(
         (item) => item.preferences === selectedPreferances
@@ -134,7 +136,7 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
         
         return prev.map((item) =>
           item.id === cartItemId
-        ? { ...item, preferences: selectedPreferances }
+        ? { ...item, preferences: selectedPreferances,price:price }
         : item
       );
     }

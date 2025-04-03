@@ -39,6 +39,7 @@ export default function QrCreator({
   const [logo, setLogo] = useState("");
   const [qrCode, setQrCode] = useState<QRCodeStyling | null>(null);
   const [dotColor, setDotColor] = useState(initialOptions?.dotsOptions?.color??"#000000");
+  
 
   const qrOptions = {
     width: 300,
@@ -48,7 +49,6 @@ export default function QrCreator({
     image: logo,
     shape: "square",
     margin: 10,
-    
     cornersSquareOptions: { type: cornerSquareShape },
     cornersDotOptions: { type: cornerDotsShape },
     dotsOptions: {
@@ -116,7 +116,7 @@ export default function QrCreator({
   };
 
   return (
-    <form action={action} className="p-5  flex flex-col gap-y-5">
+    <form action={action} className="mt-2  flex flex-col gap-y-5">
       <div className="flex gap-4 flex-wrap">
         <QrShape
           cornerDotShape={cornerDotsShape}

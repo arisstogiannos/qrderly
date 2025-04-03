@@ -2,6 +2,8 @@
 import { z } from "zod";
 import { db } from "@/db";
 import bcrypt from "bcryptjs";
+import { generatePasswordResetToken } from "@/lib/tokens";
+import { sendResetPasswordEmail } from "@/email/mail";
 
 
 const resetPasswordSchema = z.object({
@@ -33,8 +35,8 @@ export async function resetPassword(prevState: any, formData: FormData) {
     };
   }
 
-  // const resetToken = await generatePasswordResetToken(user.email);
-  // await sendResetPasswordEmail(resetToken.email, resetToken.token);
+  const resetToken = await generatePasswordResetToken(user.email);
+  await sendResetPasswordEmail(resetToken.email, resetToken.token);
 
   return { success: "Password reset email sent" };
 }

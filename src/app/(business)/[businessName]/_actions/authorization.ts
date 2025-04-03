@@ -1,7 +1,6 @@
 "use server"
 
-import { auth } from "@/auth";
-import { cache } from "@/lib/cache";
+import getSession from "@/lib/getSession";
 import { UserRole } from "@prisma/client";
 import { redirect } from "next/navigation";
 
@@ -9,9 +8,8 @@ import { redirect } from "next/navigation";
 // export  const checkUserAuthorizedCached = cache(checkUserAuthorized, ["auth-session"], { revalidate:600*90,tags:["auth-session"] }); // 60 sec cache
 
 export async function checkUserAuthorized(businessName:string){
-console.log("authhhh")
 
-      const session = await auth();
+      const session = await getSession();
       const userRole = session?.user.role;
       const businesses = session?.user.business;
       

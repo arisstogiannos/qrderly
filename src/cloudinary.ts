@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
@@ -14,7 +14,7 @@ export async function uploadImage(image: File, folder: string) {
     cloudinary.uploader
       .upload_stream(
         {
-          tags: ["nextjs-server-actions-upload-sneakers"],
+          tags: [folder],
           folder: folder,
         },
         function (error, result) {
@@ -37,4 +37,32 @@ export async function deleteImage(imagePath: string) {
       .then(resolve)
       .catch((reject) => console.error(reject));
   });
+}
+export async function getImage(imagePath: string) {
+  const image = await cloudinary.api.resources_by_asset_ids(
+    "7d24a5f063d5c30b4e6fed5263a3dc4e"
+  );
+
+  return image
+}
+export async function getImageBlob(publicId:string) {
+  try {
+    // Step 1: Retrieve the image URL from Cloudinary
+    const imageUrl = cloudinary.url(publicId, { secure: true });
+
+    // Step 2: Download the image data
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
+    }
+    const arrayBuffer = await response.arrayBuffer();
+
+    // Step 3: Convert the ArrayBuffer to a Blob
+    const blob = new Blob([arrayBuffer], { type: response.headers.get('content-type') ?? undefined });
+
+    return blob
+    
+  } catch (error) {
+    console.error('Error processing image:', error);
+  }
 }

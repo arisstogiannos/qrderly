@@ -12,6 +12,7 @@ import { createMenuItems } from "./app/(business)/[businessName]/_actions/menu-i
 import { MenuItemAI } from "./types";
 import { createCategories } from "./app/(business)/[businessName]/_actions/categories";
 import { serializeOptions } from "./lib/preferences";
+import { getImage, getImageBlob } from "./cloudinary";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -45,22 +46,22 @@ export async function extractMenuItemsFromImage(
   }
   const { file } = result?.data;
   if (file) {
-    // const fileBuffer = Buffer.from(await file.arrayBuffer()).toString("base64")
 
-    await fs.mkdir("menus", { recursive: true });
-    const filePath = `menus/${crypto.randomUUID()}-${file.name}`;
-    await fs.writeFile(filePath, Buffer.from(await file.arrayBuffer()));
-    // const arrayBuffer = await image.arrayBuffer();
-    // const imageBytes = Buffer.from(arrayBuffer).toString("base64");
-    console.log(file.type);
-    //   const fileBuffer =  Buffer.from(await imageFile.arrayBuffer());
+    // const blob = await getImageBlob('ifbgsql6v6xapcjooypt')
+    // if (!blob) {
+    //   throw new Error("Failed to fetch image from Cloudinary");
+    // }
 
+    // ✅ Convert the fetched image to Blob
+    // const blob = await response.blob();
 
+    // ✅ Convert File to Blob
+    const arrayBuffer = await file.arrayBuffer();
+    const blob = new Blob([arrayBuffer], { type: file.type });
+
+    // ✅ Upload to Gemini API
     const uploadedFile = await ai.files.upload({
-      file: filePath,
-      // config:{
-      //   mimeType:"image/jpeg"
-      // }
+      file: blob, // Upload the Blob
     });
     console.log(uploadedFile);
 
@@ -158,6 +159,7 @@ export async function extractMenuItemsFromImage(
       });
 
       if (response.text) {
+        console.log(response.text);
         if (response.text.includes("%%%Not a menu%%%"))
           return {
             error:
@@ -179,7 +181,7 @@ export async function extractMenuItemsFromImage(
 
         const createdCategories = await createCategories(
           businessName,
-          categories.splice(0,5)
+          categories.splice(0, 5)
         );
 
         // const itemsWithPreferances = menuItems.map((it)=>it.preferences?it.preferences = serializeOptions(it.preferences):null)
@@ -187,12 +189,15 @@ export async function extractMenuItemsFromImage(
         if (createdCategories.data) {
           const result = await createMenuItems(
             businessName,
-            menuItems.splice(0,5),
+            menuItems.splice(0, 5),
             createdCategories.data
           );
-          return result
+          console.log(response.text);
+
+          return result;
         }
       }
     }
   }
+  return { success: "s" };
 }

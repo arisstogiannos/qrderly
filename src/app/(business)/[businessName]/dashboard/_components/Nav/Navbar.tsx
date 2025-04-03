@@ -102,7 +102,7 @@ export function AppSidebar({
   return (
     <Sidebar variant="inset" {...props} className="bg-primary rounded-3xl">
       <SidebarHeader>
-        <TeamSwitcher businesses={user.business} business={business} />
+        <TeamSwitcher businesses={user.business.filter((b)=>b?.menu?.published)} business={business} />
       </SidebarHeader>
       <SidebarContent>
         <NavLinks items={navLinks} activeBusinessName={business.name} />

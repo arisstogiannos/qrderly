@@ -5,10 +5,12 @@ import {
   translateTextToMultipleDeepL,
 } from "@/app/translation";
 import { db } from "@/db";
+import { cache } from "@/lib/cache";
 import { Translation } from "@/types";
 import { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
+import { getMenuByBusinessName } from "./menu";
 
 export async function getCategories(businessName: string) {
   const categories = await db.category.findMany({
@@ -31,7 +33,6 @@ const CategorySchema = z.object({
   name: z.string().min(1),
   translateName: z.string().min(1).max(3),
   description: z.string().optional(),
-  translateDescription: z.string().min(1).max(3),
   id: z.string().optional(),
 });
 type Category = z.infer<typeof CategorySchema>;
@@ -51,41 +52,36 @@ export async function upsertCategory(
       errors: result.error.flatten().fieldErrors,
     };
   }
-  const { description, name, id, translateName, translateDescription } =
-    result.data;
+  const { description, name, id, translateName } = result.data;
 
   try {
     const menu = await db.menu.findFirst({
       where: { business: { name: businessName } },
     });
+
     const translations: Translation = {};
 
     if (menu) {
-      const languages = menu.languages.split(",");
-      const srcLang = languages.reverse().pop();
+      const languages = menu.languages.split(",") as TargetLanguageCode[];
+      const srcLang = languages.reverse().pop() as SourceLanguageCode;
 
       if (srcLang) {
-        const textToTranslate =
-          (translateName === "yes" ? name : "") +
-          "_" +
-          (translateDescription === "yes" ? description : "");
+        const textToTranslate = translateName === "yes" ? name : null;
 
-        if (textToTranslate !== "_") {
-          const translationResult = await translateTextToMultiple(
+        if (textToTranslate) {
+          const translationResult = await translateTextToMultipleDeepL(
             textToTranslate,
             srcLang,
-            languages
+            languages,
+            description
           );
 
           for (let i = 0; i < translationResult.length; i++) {
-            const translationArr = translationResult[i].split("_");
-            const nameTranslation = translationArr[0];
-            const descTranslation = translationArr[1];
+            const translation = translationResult[i];
 
             translations[languages[i]] = {
-              name: nameTranslation !== "" ? nameTranslation : name,
-              description:
-                descTranslation !== "" ? descTranslation : description,
+              name: translation !== "" ? translation : name,
+              description: "",
             };
           }
         }
@@ -119,10 +115,57 @@ export async function upsertCategory(
   // redirect("/test/dashboard/menu-items");
 }
 
+const TranslationCategorySchema = z.object({
+  name: z.string().min(1),
+  id: z.string().optional(),
+  translations: z.string().min(1),
+  language: z.string().min(1),
+});
+export async function updateTranslationCategory(
+  businessName: string,
+  prev: any,
+  formData: FormData
+) {
+  const result = TranslationCategorySchema.safeParse(
+    Object.fromEntries(formData)
+  );
+
+  if (!result.success) {
+    const rawData = Object.fromEntries(formData) as Partial<Category>;
+
+    return {
+      data: rawData,
+      errors: result.error.flatten().fieldErrors,
+    };
+  }
+
+  const { name, id, translations, language } = result.data;
+  try {
+    const translationsJson: Translation = JSON.parse(translations);
+
+    translationsJson[language].name = name;
+
+    await db.category.update({
+      where: { id },
+      data: { translations: JSON.stringify(translationsJson) },
+    });
+  } catch (error) {
+    console.error("upsert category er: " + error);
+
+    return {
+      data: result.data,
+      error: "Something went wrong!",
+    };
+  }
+
+  revalidateTag("categories" + businessName);
+  return { success: true };
+  // redirect("/test/dashboard/menu-items");
+}
 
 export async function createCategories(
   businessName: string,
-  categories: {name:string,description:string}[]
+  categories: { name: string; description: string }[]
 ) {
   try {
     const menu = await db.menu.findFirst({
@@ -165,7 +208,6 @@ export async function createCategories(
       }
 
       const data = categories.map((category, i) => {
-
         return {
           name: category.name,
           menuId: menu.id,
@@ -173,11 +215,11 @@ export async function createCategories(
         };
       });
 
-     const result =  await db.category.createManyAndReturn({
+      const result = await db.category.createManyAndReturn({
         data: data,
       });
       revalidateTag("categories" + businessName);
-      return {data:result}
+      return { data: result };
     } else {
       return {
         error: "Something went wrong!",

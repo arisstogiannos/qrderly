@@ -15,9 +15,14 @@ export default function TablesSetup({
 
   function handleTableNumberChange(value: number) {
     if (value > tables.length) {
-      setTables((prev) => [...prev, value.toString()]); // Add a new table
+      const newElements:string[] = []
+      for (let index = tables.length+1; index <= value; index++) {
+        newElements.push(index.toString())
+        
+      }
+      setTables((prev) => [...prev, ...newElements]); 
     } else {
-      setTables((prev) => prev.slice(0, value)); // Remove extra tables
+      setTables((prev) => prev.slice(0, value)); 
     }
     setNoTables(value);
   }

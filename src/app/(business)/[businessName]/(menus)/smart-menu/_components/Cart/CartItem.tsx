@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 
 export function CartItem({ item }: { item: CartItemType }) {
-  const { menuItem, quantity, id } = item;
+  const { menuItem, quantity, id,price } = item;
   const context = useCartContext();
   const increaseContextItemQuantity = context?.increaseItemQuantity;
   const decreaseContextItemQuantity = context?.decreaseItemQuantity;
@@ -65,7 +65,7 @@ export function CartItem({ item }: { item: CartItemType }) {
       </div>
       <div className="ml-auto">
         <span className="">
-          {formatCurrency((menuItem.priceInCents / 100) * quantity)}
+          {formatCurrency((price / 100) * quantity)}
         </span>
       </div>
     </div>

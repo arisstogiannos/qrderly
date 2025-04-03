@@ -8,15 +8,23 @@ import { Session } from "next-auth";
 const Menu = ({
   isOpen,
   setIsOpen,
-  session
+  session,
 }: {
   isOpen: boolean;
   setIsOpen: (v: boolean) => void;
-  session:Session | null
+  session: Session | null;
 }) => {
   const navlinks = [
     { title: "home", href: "/" },
-    { title: "products", href: "/products" },
+    {
+      title: "products",
+      href: "/products",
+      subLinks: [
+        { title: "Qr Menu", href: "/products" },
+        { title: "Smart qr menu", href: "/products" },
+        { title: "self service menu ", href: "/products" },
+      ],
+    },
     { title: "pricing", href: "/pricing" },
     { title: "FAQ / Contact", href: "/FAQ-contact" },
   ];
@@ -25,10 +33,9 @@ const Menu = ({
     { title: "facebook", href: "https://www.facebook.com/Helenasrooms/" },
   ];
 
-  function handleClick(){
+  function handleClick() {
     document.body.classList.remove("overflow-hidden");
-    setIsOpen(false)
-
+    setIsOpen(false);
   }
 
   return (
@@ -44,11 +51,77 @@ const Menu = ({
       initial={{ opacity: 0 }}
       className={`w-screen ${
         !isOpen ? "pointer-events-none" : "pointer-events-auto"
-      } px-6  h-[100svh]  flex flex-col xl:flex-row  bg-foreground text-background fixed top-0 left-0 z-[10]  `}
+      } px-6  h-[100svh]  flex flex-col xl:flex-row  bg-foreground text-background fixed top-0 left-0 z-20  `}
     >
       <ul className="text-6xl md:text-8xl  flex flex-col gap-5 mt-auto  capitalize">
-        {navlinks.map((link, i) => {
-          return (
+        {navlinks.map((link, i) =>
+          link.subLinks ? (
+            <div key={i} className="flex flex-col gap-y-2">
+              <motion.span
+              initial={{opacity:0}}
+                animate={
+                  isOpen
+                    ? {
+                        opacity:1,
+                        transition: {
+                          delay: 0.2 + i * 0.05,
+                          duration: 0.8,
+                          ease: "circOut",
+                        },
+                        
+                      }
+                    : {
+                       opacity:0,
+                       transition: {
+                        delay: i * 0.05,
+                        duration: 0.3,
+                        ease: "circIn",
+                      },
+                      }
+                }
+                className="text-muted-foreground text-base "
+              >
+                products
+              </motion.span>
+              {link.subLinks.map((sub) => (
+                <motion.span
+                  key={sub.title}
+                  className="group overflow-hidden pl-4"
+                >
+                  <motion.li
+                    className="origin-left text-4xl"
+                    onClick={handleClick}
+                    animate={
+                      isOpen
+                        ? {
+                            rotateZ: 0,
+                            y: 0,
+                            transition: {
+                              delay: 0.2 + i * 0.05,
+                              duration: 0.8,
+                              ease: "circOut",
+                            },
+                          }
+                        : {
+                            rotateZ: "30deg",
+                            y: 180,
+                            transition: {
+                              delay: i * 0.05,
+                              duration: 0.3,
+                              ease: "circIn",
+                            },
+                          }
+                    }
+                  >
+                    <Link className="relative " href={sub.href}>
+                      {/* <motion.span  className="absolute top-1/2 left-0 translate-y-full -z-40 bg-mBrown  w-full scale-x-0 h-2 group-hover:scale-x-100 origin-left transition-transform duration-700"></motion.span> */}
+                      {sub.title}
+                    </Link>
+                  </motion.li>
+                </motion.span>
+              ))}
+            </div>
+          ) : (
             <motion.span key={i} className="group overflow-hidden ">
               <motion.li
                 className="origin-left "
@@ -81,8 +154,8 @@ const Menu = ({
                 </Link>
               </motion.li>
             </motion.span>
-          );
-        })}
+          )
+        )}
       </ul>
       <div className="pb-10 pt-20 flex items-center justify-between">
         <a href="mailto:qrderly@gmail.com" className="text-base md:text-lg">
@@ -93,15 +166,16 @@ const Menu = ({
           size={"lg"}
           className="text-xl md:text-3xl md:p-8 p-6 "
           asChild
-        >{!session ? (
-          <Link href={"/sign-up"} className="">
-            Sign Up
-          </Link>
-        ) : (
-          <Link href={"/get-started"} className="">
-            Create Menu
-          </Link>
-        )}
+        >
+          {!session ? (
+            <Link href={"/sign-up"} className="">
+              Sign Up
+            </Link>
+          ) : (
+            <Link href={"/get-started"} className="">
+              Create Menu
+            </Link>
+          )}
         </Button>
       </div>
       {/* <ul className="text-xl lg:text-4xl xl:text-3xl  3xl:text-2xl text-background/60  max-xl:flex-wrap flex font-medium  gap-x-8 gap-y-4 mt-24 xl:mt-auto 2xl:ml-auto pb-5 lg:pb-10  capitalize">

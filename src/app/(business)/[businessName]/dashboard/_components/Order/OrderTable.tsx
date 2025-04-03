@@ -24,28 +24,29 @@ import Loader from "@/components/Loader";
 import { Modal } from "../Modal";
 import DeleteModal from "../DeleteModal";
 import { deletOrder } from "../../../_actions/orders";
+import { OrderWithItems } from "@/types";
 // const OrdersTablePagination = dynamic(() => import("./OrdersTablePagination"));
 
 export default function OrdersTable() {
   const { orders, setCurrOrder, currOrder,isPending } = useOrdersContext();
-  const [previousOrders, setPreviousOrders] = useState(() => orders);
+  const [previousOrders, setPreviousOrders] = useState<OrderWithItems[]>();
 
-//  useEffect(() => {
-//   if (previousOrders?.length !== orders?.length) {
-//     setPreviousOrders(orders);
-
-//     const playAudio = async () => {
-//       try {
-//         const audio = new Audio("/new-order-audio.mp3"); // Ensure the file exists in public/
-//         await audio.play(); // Handle promise rejection properly
-//       } catch (error) {
-//         console.error("Audio playback failed:", error);
-//       }
-//     };
-
-//     playAudio(); // Call the async function
-//   }
-// }, [orders]);
+ useEffect(() => {
+   if (previousOrders?.length !== orders?.length) {
+     
+     const playAudio = async () => {
+       try {
+         const audio = new Audio("/new-order-audio.mp3"); // Ensure the file exists in public/
+         await audio.play(); // Handle promise rejection properly
+        } catch (error) {
+          console.error("Audio playback failed:", error);
+        }
+      };
+      
+      playAudio(); // Call the async function
+    }
+    setPreviousOrders(orders);
+}, [orders]);
 
   if (isPending) return <Loader className="w-20 mx-auto"/>;
   if (!orders || orders.length === 0) return <p>No orders found</p>;

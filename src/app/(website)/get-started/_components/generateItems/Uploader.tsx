@@ -24,7 +24,6 @@ export default function Uploader({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
-    console.log(selectedFile?.type);
     if (selectedFile) {
       onUpload(selectedFile);
 

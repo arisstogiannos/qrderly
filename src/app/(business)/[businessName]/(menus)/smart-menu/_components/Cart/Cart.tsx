@@ -1,6 +1,6 @@
 "use client";
 import { ShoppingBag } from "lucide-react";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useActionState, useState } from "react";
 import {
   Sheet,
   SheetClose,
@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { CartItem } from "./CartItem";
 import { submitOrder } from "../../actions";
 import { useSearchParams } from "next/navigation";
+import Loader from "@/components/Loader";
 
 type Product = {
   id: string;
@@ -36,17 +37,21 @@ type CartItem = {
 
 export default function Cart({ businessName }: { businessName: string }) {
   const [open, setOpen] = useState(false);
-  const table = useSearchParams().get('table')
+  const table = useSearchParams().get("table");
   const { cartItems } = useCartContext();
-
-if(!table) throw new Error("Please scan the Qr Code again.")
 
   let total = 0;
   let noItems = 0;
   cartItems.forEach((item) => {
-    total += item.quantity * item.menuItem.priceInCents;
+    total += item.quantity * item.price;
     noItems += item.quantity;
   });
+  const [state, action, isPending] = useActionState(
+    submitOrder.bind(null, cartItems, businessName, total, table ?? ""),
+    null
+  );
+
+  // if(!table) throw new Error("Please scan the Qr Code again.")
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -76,16 +81,19 @@ if(!table) throw new Error("Please scan the Qr Code again.")
           </Suspense>
         </div>
         <SheetFooter className="mt-auto px-0">
-          <Button
-            disabled={cartItems.length === 0}
-            asChild={cartItems.length > 0}
-            className="w-full capitalize"
-            onClick={() => submitOrder(cartItems, businessName, total,table)}
-          >
-            <SheetClose asChild>
-              <span> Complete Order {formatCurrency(total / 100)}</span>
-            </SheetClose>
-          </Button>
+          <form action={action}>
+            <Button
+              disabled={cartItems.length === 0 || !table || isPending}
+              type="submit"
+              className="w-full capitalize"
+            >
+              {table ? isPending?<Loader/>: (
+                <span> Complete Order {formatCurrency(total / 100)}</span>
+              ) : (
+                <span>You can only order by scanning qr</span>
+              )}
+            </Button>
+          </form>
         </SheetFooter>
       </SheetContent>
     </Sheet>

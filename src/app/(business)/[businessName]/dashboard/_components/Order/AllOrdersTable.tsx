@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import {
   Table,
@@ -21,7 +22,7 @@ import { Modal } from "../Modal";
 import { Button } from "@/components/ui/button";
 import { OrderWithItems } from "@/types";
 import OrderDetailsModal from "./OrderDetailsModal";
-import { revalidateTag } from "next/cache";
+import { useBusinessContext } from "@/context/BusinessProvider";
 // const OrdersTablePagination = dynamic(() => import("./OrdersTablePagination"));
 
 export default function AllOrdersTable({
@@ -29,12 +30,12 @@ export default function AllOrdersTable({
 }: {
   orders: OrderWithItems[];
 }) {
+  const {businessName} = useBusinessContext()
   if (!orders || orders.length === 0) return <p>No orders found</p>;
 
   async function handleDeleteOrder(item: string) {
-    "use server";
-    deletOrder(item).then(() => {});
-    revalidateTag("orders");
+    deletOrder(item,businessName).then(() => {});
+   
   }
 
   return (

@@ -31,7 +31,7 @@ export default function LoginForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   return (
-    <form action={loginAction}>
+    <form action={loginAction} className="min-h-[350px]">
       <div className="flex flex-col gap-6">
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
@@ -56,14 +56,14 @@ export default function LoginForm() {
           })}
         </div>
         <div className="grid gap-3">
-          <div className="flex items-center">
+          <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <a
-              href="#"
-              className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+            <Link
+              href="/reset-password"
+              className=" inline-block text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
-            </a>
+            </Link>
           </div>
           <Input
             autoComplete="current-password"

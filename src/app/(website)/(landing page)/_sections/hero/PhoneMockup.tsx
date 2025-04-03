@@ -9,7 +9,6 @@ export default function PhoneMockup() {
     const interval = setInterval(() => {
       setCurr((prev) => (prev + 1) % 2);
     }, 3000);
-    console.log(curr);
 
     return () => clearInterval(interval);
   }, [curr, setCurr]);
@@ -26,10 +25,10 @@ export default function PhoneMockup() {
           >
             <Image
               quality={100}
-              src="/iPhone 16 2.png"
+              src="/image.png"
               fill
               alt="iphone mockup"
-              className="object-contain backdrop-blur-xs rounded-3xl overflow-hidden"
+              className="object-contain lg:backdrop-blur-xs rounded-3xl overflow-hidden"
             />
           </motion.div>
         ) : (
@@ -45,7 +44,7 @@ export default function PhoneMockup() {
               src="/Template 2.png"
               fill
               alt="iphone mockup"
-              className="object-contain backdrop-blur-xs rounded-3xl overflow-hidden"
+              className="object-contain lg:backdrop-blur-xs rounded-3xl overflow-hidden"
             />
           </motion.div>
         )}

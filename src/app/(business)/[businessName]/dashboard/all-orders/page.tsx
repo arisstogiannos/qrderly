@@ -10,10 +10,6 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 //   tags: ["all-orders-a"],
 //   revalidate: false,
 // });
-const getAllOrdersCache = cache(getAllOrders, ["orders"], {
-  tags: ["orders"],
-  revalidate: 3600,
-});
 export default async function page({
   params,
 }: {
@@ -21,7 +17,11 @@ export default async function page({
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
   await checkUserAuthorized(businessName);
-
+  
+  const getAllOrdersCache = cache(getAllOrders, ["orders"+businessName], {
+    tags: ["orders"+businessName],
+    revalidate: 3600,
+  });
   const orders = await getAllOrdersCache(businessName);
 
   return (
@@ -30,7 +30,7 @@ export default async function page({
         <h1 className="font-medium text-2xl">All Orders</h1>
         <SidebarTrigger className="xl:hidden" />
       </div>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader className="w-20 mx-auto" />}>
         <AllOrdersTable orders={orders} />
       </Suspense>
     </section>

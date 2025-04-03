@@ -53,7 +53,7 @@ export default async function AdminLayout({
         <section className="my-container h-full  overflow-y-auto overflow-x-hidden rounded-xl bg-background w-full p-4 sm:p-10 sm:pb-0 ">
           <SubscriptionExpired business={business} />
           {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
-            <BusinessProvider businessName={businessName}>
+            <BusinessProvider businessName={businessName} business={business}>
               {children}
             </BusinessProvider>
           {/* </HydrationBoundary> */}

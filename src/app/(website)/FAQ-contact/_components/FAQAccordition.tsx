@@ -10,9 +10,9 @@ export default function FAQAccordition() {
   return (
     <Accordion type="single" >
     {faqData.map((faq) => (
-        <AccordionItem key={faq.answer} value={faq.question} className="transition-all duration-1000 bg-background rounded-2xl border-0 mb-2 px-4">
+        <AccordionItem key={faq.answer} value={faq.question} className=" bg-background rounded-2xl border-0 mb-2 px-4">
         <AccordionTrigger className="text-xl">{faq.question}</AccordionTrigger>
-        <AccordionContent className="text-lg transition-all duration-1000">
+        <AccordionContent className="text-lg">
           {faq.answer}
         </AccordionContent>
       </AccordionItem>
