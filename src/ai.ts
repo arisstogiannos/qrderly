@@ -8,9 +8,9 @@ import {
 import fs from "fs/promises";
 import path from "path";
 import { z } from "zod";
-import { createMenuItems } from "./app/(business)/[businessName]/_actions/menu-items";
+import { createMenuItems } from "./app/[locale]/(business)/[businessName]/_actions/menu-items";
 import { MenuItemAI } from "./types";
-import { createCategories } from "./app/(business)/[businessName]/_actions/categories";
+import { createCategories } from "./app/[locale]/(business)/[businessName]/_actions/categories";
 import { serializeOptions } from "./lib/preferences";
 import { getImage, getImageBlob } from "./cloudinary";
 

@@ -1,5 +1,5 @@
 "use client"
-import { useMotionValueEvent, useScroll,motion, useTransform } from 'framer-motion'
+import {  useScroll,motion, useTransform } from 'framer-motion'
 import React from 'react'
 
 export default function NavBackground() {
@@ -7,7 +7,6 @@ export default function NavBackground() {
 
     const value=useTransform(scrollYProgress,[0,0.15],[0,1])
 
-    useMotionValueEvent(scrollYProgress,'change',(e)=>console.log(e))
   return (
     <motion.div style={{opacity:value }} className="absolute inset-0 bg-linear-to-b from-background from-50% via-80% via-background/80 to-background/0 w-screen left-1/2 -translate-x-1/2 -z-10"/>
 )

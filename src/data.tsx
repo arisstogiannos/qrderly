@@ -11,7 +11,7 @@ import {
   OrderIcon,
   OrderReceiveIcon,
   TranslationIcon,
-} from "./app/(website)/products/_components/Icons";
+} from "./app/[locale]/(website)/products/_components/Icons";
 import { Product } from "@prisma/client";
 import { ProductURL } from "./types";
 
@@ -31,9 +31,13 @@ export const plandata = [
       },
     },
     bullets: [
-      "Generate 1 QR code for your menu",
       "Unlimited scans",
-      "Your own admin dashboard to manage and update your menu in real time",
+      "Free customizable QR code",
+      "Customerizable themes & templates",
+      "Free Hosting",
+      "Manage your menu in real time",
+      "Add unlimited products & categories",
+      "Multi-language support (up to 30)",
       "No app download required",
     ],
     free: [
@@ -50,7 +54,7 @@ export const plandata = [
     ],
   },
   {
-    title: "Smart Ordering Qr Menu",
+    title: "Smart Ordering QR Menu",
     billing: {
       yearly: {
         price: "€14/month",
@@ -65,10 +69,10 @@ export const plandata = [
     },
     bullets: [
       "All features of the QR Menu plan",
-      "Generate 1 QR code for every table to know where the orders are coming from",
+      "Generate 1 QR code per table for identification",
       "Customers can place orders directly from their phones",
       "Real-time order notifications for your staff",
-      "Customizable menu with item availability options",
+      "Indexed in search engines"
     ],
     free: [
       "Unlimited Traffic",
@@ -101,10 +105,8 @@ export const plandata = [
     },
     bullets: [
       "All features of the Smart QR Menu plan",
-      "Generate 1 QR code for every table to know where the orders are coming from",
-      "Customers can place orders directly from their phones",
-      "Real-time order notifications for your staff",
-      "Customizable menu with item availability options",
+      "Customers receive notification when their order is ready",
+      "Customers can place orders for takeaway",
     ],
     free: [
       "Unlimited Traffic",
@@ -255,15 +257,15 @@ export const productsData = [
       {
         title: "Customizable Themes",
         desc: "Personalize your menu with colors, fonts, and branding to match your business style.",
-        video: "/videos/customizeable.webm",
+        video: "/videos/customizeable-no-cart.webm",
         icon: <Brush />,
       },
-      {
-        title: "Dashboard",
-        desc: "Instantly add/update menu items, descriptions, and prices from your own Dashboard.",
-        video: "/videos/dashboard-add-item.webm",
-        icon: <Brush />,
-      },
+        {
+          title: "Real-Time Dashboard",
+          desc: "Effortlessly update menu items, descriptions, and prices with just a few clicks. No need to reprint menus—changes reflect instantly across all customer devices.",
+          video: "/videos/dashboard-add-item.webm",
+          icon: <LayoutDashboard size={"2em"} />,
+        },
       {
         title: "Instant Digital Menu Access",
         desc: " Guests scan a QR code to view your menu instantly on their smartphones.",

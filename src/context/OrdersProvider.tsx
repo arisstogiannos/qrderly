@@ -1,6 +1,6 @@
 "use client";
 
-import { getPendingOrders } from "@/app/(business)/[businessName]/_actions/orders";
+import { getPendingOrders } from "@/app/[locale]/(business)/[businessName]/_actions/orders";
 import { OrderWithItems } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";

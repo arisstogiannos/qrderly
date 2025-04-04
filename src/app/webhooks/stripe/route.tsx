@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
         expand: ["line_items", "customer", "subscription"],
       }
     );
-    console.log(session);
     const userId = session.metadata?.userId;
     const product = session.metadata?.product as Product;
     const billing = session.metadata?.billing as BillingType;
@@ -91,7 +90,6 @@ export async function POST(req: NextRequest) {
     //     },
     //   },
     // });
-    console.log(sub?.business?.name)
     
     revalidateTag("active-menu" + sub?.business?.name);
 

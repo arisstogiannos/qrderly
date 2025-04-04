@@ -7,7 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { Session } from "next-auth";
-import { signOut } from "@/app/(website)/(auth)/_actions/login";
+import { signOut } from "@/app/[locale]/(website)/(auth)/_actions/login";
 import { ProfileDropdown } from "./ProfileDropdown";
 import {
   NavigationMenu,
@@ -20,6 +20,9 @@ import {
 } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import Menu from "./Menu";
+import { useRouter } from "@/i18n/navigation";
+import I18nLanguageSelect from "./I18nLanguageSelect";
+import { useTranslations } from "next-intl";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -43,27 +46,25 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function NavigationDesktop({ session }: { session: Session | null }) {
+  const t = useTranslations("navbar")
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Home
+              {t("Home")}
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>
-            Products
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
+        <NavigationMenuItem className="">
+          <NavigationMenuTrigger>{t("Products")}</NavigationMenuTrigger>
+          <NavigationMenuContent className="bg-foreground rounded-2xl">
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[300px] bg-foreground text-background  rounded-xl">
+              {/* <li className="row-span-3">
+                <NavigationMenuLink asChild className="bg-foreground pointer-events-none">
+                  <div
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-black p-6 no-underline outline-none focus:shadow-md"
                   >
                     <div className="mb-2 mt-4 text-lg font-medium">
                       shadcn/ui
@@ -72,16 +73,16 @@ export function NavigationDesktop({ session }: { session: Session | null }) {
                       Beautifully designed components built with Radix UI and
                       Tailwind CSS.
                     </p>
-                  </a>
+                  </div>
                 </NavigationMenuLink>
-              </li>
+              </li> */}
               {components.map((component) => (
                 <ListItem
                   key={component.title}
-                  title={component.title}
+                  title={t(component.title+".title")}
                   href={component.href}
                 >
-                  {component.description}
+                  {t(component.title+".description")}
                 </ListItem>
               ))}
             </ul>
@@ -91,28 +92,31 @@ export function NavigationDesktop({ session }: { session: Session | null }) {
         <NavigationMenuItem>
           <Link href="/pricing" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Pricing
+            {  t("Pricing")}
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
+        <NavigationMenuItem className="mr-2">
           <Link href="/FAQ-contact" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              FAQ/Contact
+              {t('FAQ/Contact')}
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
+        <I18nLanguageSelect />
+
         <Button asChild className="lg:bg-foreground ml-2 p-4 mr-2  text-lg">
           {!session ? (
             <Link href={"/sign-up"} className="">
-              Sign Up
+             {t("signBtn")}
             </Link>
           ) : (
             <Link href={"/get-started"} className="">
-              Create Menu
+              {t("createBtn")}
             </Link>
           )}
         </Button>
+
         {session ? <ProfileDropdown session={session} /> : null}
       </NavigationMenuList>
     </NavigationMenu>
@@ -124,9 +128,9 @@ const ListItem = forwardRef<
   React.ComponentPropsWithoutRef<typeof Link>
 >(({ className, title, children, ...props }, ref) => {
   return (
-    <li>
+    <li className="hover:bg-background/10 rounded-xl transition-all duration-300">
       <Link ref={ref} {...props}>
-        <NavigationMenuLink asChild>
+        <NavigationMenuLink asChild className="hover:text-primary">
           <div
             className={cn(
               "block select-none space-y-1 rounded-md p-3 ",
@@ -184,7 +188,9 @@ export function NavigationMobile({ session }: { session: Session | null }) {
 
   return (
     <nav className="flex-center gap-2">
+
       <ProfileDropdown session={session} />
+      <I18nLanguageSelect />
       <MenuButton setIsOpen={setIsOpen} />
 
       <Menu isOpen={isOpen} setIsOpen={setIsOpen} session={session} />
@@ -208,8 +214,11 @@ function MenuButton({
     });
   }
   return (
-    <Button className="lg:hidden z-50 bg-foreground  has-[>svg]:px-1.5 has-[>svg]:py-1.5 h-auto  " onClick={handleClick}>
-      <MenuIcon className="size-6"  />
+    <Button
+      className="lg:hidden z-50 bg-foreground  has-[>svg]:px-1.5 has-[>svg]:py-1.5 h-auto  "
+      onClick={handleClick}
+    >
+      <MenuIcon className="size-6" />
     </Button>
   );
 }

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Session } from "next-auth";
+import { useTranslations } from "next-intl";
 
 const Menu = ({
   isOpen,
@@ -14,19 +15,20 @@ const Menu = ({
   setIsOpen: (v: boolean) => void;
   session: Session | null;
 }) => {
+  const t = useTranslations("navbar")
   const navlinks = [
-    { title: "home", href: "/" },
+    { title: t("Home"), href: "/" },
     {
-      title: "products",
+      title: t("Products"),
       href: "/products",
       subLinks: [
-        { title: "Qr Menu", href: "/products" },
-        { title: "Smart qr menu", href: "/products" },
-        { title: "self service menu ", href: "/products" },
+        { title: t("QR Menu.title"), href: "/products/qr-menu" },
+        { title: t("Smart qr menu"), href: "/products/smart-ordering-qr-menu" },
+        { title: t("self service menu"), href: "/products/self-service-smart-menu" },
       ],
     },
-    { title: "pricing", href: "/pricing" },
-    { title: "FAQ / Contact", href: "/FAQ-contact" },
+    { title: t("Pricing"), href: "/pricing" },
+    { title: t("FAQ/Contact"), href: "/FAQ-contact" },
   ];
   const sociallinks = [
     { title: "instagram", href: "https://www.instagram.com/helenas_rooms/" },

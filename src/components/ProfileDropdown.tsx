@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Session } from "next-auth";
-import { signOut } from "@/app/(website)/(auth)/_actions/login";
+import { signOut } from "@/app/[locale]/(website)/(auth)/_actions/login";
 import { Button } from "./ui/button";
 
 export function ProfileDropdown({ session }: { session: Session | null }) {
