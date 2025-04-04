@@ -17,7 +17,7 @@ export const dynamicParams = true; // or false, to 404 on unknown paths
 export async function generateStaticParams() {
   const menus = await getActiveMenusNotCached("QR_MENU");
 
-  return menus.map((menu) => ({
+  return menus.map((menu) => ({locale:
     businessName: String(menu.business.name).replaceAll(" ", "-"),
   }));
 }
