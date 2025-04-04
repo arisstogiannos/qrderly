@@ -63,7 +63,7 @@ export const getActiveMenusNotCached =
     const menus = await db.menu.findMany({
       where: {
         published: true,
-        type,
+        //type,
         business: {
           OR: [
             {

@@ -36,7 +36,7 @@ export async function generateStaticParams() {
   const getActiveMenusCache = cache(getActiveMenusNotCached, ["active-menus"], {
     tags: ["active-menus"],
   });
-  const menus = await getActiveMenusNotCached("SMART_QR_MENU");
+  const menus = await getActiveMenusCache("SMART_QR_MENU");
 
   return menus.map((menu) => ({
     businessName: String(menu.business.name).replaceAll(" ", "-"),
