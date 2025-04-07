@@ -48,13 +48,13 @@ export async function generateStaticParams() {
 
 export default async function page({
   params,
-  searchParams,
+  // searchParams,
 }: {
   params: Promise<{ businessName: string }>;
-  searchParams: Promise<{ l: string }>;
+  // searchParams: Promise<{ l: string }>;
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
-  const lang = (await searchParams).l;
+  const lang = "en"
 
   const getActiveMenu = cache(
     getActiveMenuNotCached,
