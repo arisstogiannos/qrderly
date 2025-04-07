@@ -18,6 +18,7 @@ import ActiveOrder from "./_components/ActiveOrder";
 import { cookies } from "next/headers";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
+export const dynamic = "error"
 
 export async function generateMetadata({
   params,
@@ -38,7 +39,7 @@ export async function generateStaticParams() {
   const getActiveMenusCache = cache(getActiveMenusNotCached, ["active-menus"], {
     tags: ["active-menus"],
   });
-  const menus = await getActiveMenusCache(["SMART_QR_MENU","SELF_SERVICE_QR_MENU"]);
+  const menus = await getActiveMenusNotCached(["SMART_QR_MENU","SELF_SERVICE_QR_MENU"]);
 
   return menus.map((menu) => ({
     locale: "en",
@@ -48,10 +49,8 @@ export async function generateStaticParams() {
 
 export default async function page({
   params,
-  // searchParams,
 }: {
   params: Promise<{ businessName: string }>;
-  // searchParams: Promise<{ l: string }>;
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
   const lang = "en"
@@ -93,7 +92,7 @@ export default async function page({
     getCachedMenuItems(businessName),
   ]);
   const colors = menu.theme.split(",");
-      const activeOrder = (await cookies()).get("order")?.value;
+      // const activeOrder = (await cookies()).get("order")?.value;
 
   return (
     <main className="bg-background text-foreground">
@@ -108,7 +107,6 @@ export default async function page({
           }
           `}</style>
       <ScanTracker menuId={menu.id} />
-      {}
       <CartContextProvider>
         {menu.template === "T1" ? (
           <Template1
@@ -128,7 +126,7 @@ export default async function page({
           />
         )}
       </CartContextProvider>
-      <ActiveOrder activeOrder={activeOrder}/>
+      <ActiveOrder activeOrder={'activeOrder'}/>
     </main>
   );
 }

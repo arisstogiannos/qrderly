@@ -21,7 +21,9 @@ export function Navbar({
           <Suspense>
             <LanguageSelect languages={menu.languages} />
           </Suspense>
+          <Suspense>
           <Cart menuType={menu.type} businessName={businessName} />
+          </Suspense>
         </div>
       </div>
 
