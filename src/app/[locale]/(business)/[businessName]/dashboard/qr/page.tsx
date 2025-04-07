@@ -32,6 +32,7 @@ export default async function page({
           <p>Customize</p>
           <QrCreator business={business} url={business.qr.link} />
         </div>
+        <hr className="border-accent" />
         {business.product === "SMART_QR_MENU" && (
           <TablesForm business={business} />
         )}{" "}

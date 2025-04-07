@@ -2,6 +2,7 @@
 import { db } from "@/db";
 import { Cart, CartItem } from "@/types";
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function submitOrder(
@@ -38,7 +39,6 @@ export async function submitOrder(
           status: "PENDING",
           price,
           table: table,
-
           orderItems: {
             createMany: {
               data: itemsWithoutMenuItem,
@@ -49,6 +49,7 @@ export async function submitOrder(
     },
   });
   revalidateTag("orders" + businessName);
+   (await cookies()).set("order", order.id,{expires:new Date().setMonth(new Date().getMonth() + 24)});
 
   if (menu?.type === "SELF_SERVICE_QR_MENU") {
     redirect(

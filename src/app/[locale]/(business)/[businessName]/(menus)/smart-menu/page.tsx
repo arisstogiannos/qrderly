@@ -14,6 +14,8 @@ import Template1 from "./_templates/template1/Template1";
 import Theme from "../_components/Theme";
 import Template2 from "./_templates/template2/Template2";
 import ScanTracker from "../_components/ScanTracker";
+import ActiveOrder from "./_components/ActiveOrder";
+import { cookies } from "next/headers";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
 
@@ -36,9 +38,10 @@ export async function generateStaticParams() {
   const getActiveMenusCache = cache(getActiveMenusNotCached, ["active-menus"], {
     tags: ["active-menus"],
   });
-  const menus = await getActiveMenusCache("SMART_QR_MENU");
+  const menus = await getActiveMenusNotCached(["SMART_QR_MENU","SELF_SERVICE_QR_MENU"]);
 
   return menus.map((menu) => ({
+    locale: "en",
     businessName: String(menu.business.name).replaceAll(" ", "-"),
   }));
 }
@@ -90,12 +93,10 @@ export default async function page({
     getCachedMenuItems(businessName),
   ]);
   const colors = menu.theme.split(",");
+      const activeOrder = (await cookies()).get("order")?.value;
 
   return (
-    <main
-
-      className="bg-background text-foreground"
-    >
+    <main className="bg-background text-foreground">
       {/* <Theme theme={menu.theme}/> */}
       <style>{`
         :root {
@@ -104,28 +105,30 @@ export default async function page({
           --primary: ${colors[2]};
           --secondary: ${colors[1]};
           --accent: ${colors[4]};
-        }
-      `}</style>
-      <ScanTracker menuId={menu.id}/>
+          }
+          `}</style>
+      <ScanTracker menuId={menu.id} />
+      {}
       <CartContextProvider>
         {menu.template === "T1" ? (
           <Template1
-            businessName={businessName}
-            categories={categories}
-            lang={lang}
-            menu={menu}
-            menuItems={products}
+          businessName={businessName}
+          categories={categories}
+          lang={lang}
+          menu={menu}
+          menuItems={products}
           />
         ) : (
           <Template2
-            businessName={businessName}
-            categories={categories}
-            lang={lang}
-            menu={menu}
-            menuItems={products}
+          businessName={businessName}
+          categories={categories}
+          lang={lang}
+          menu={menu}
+          menuItems={products}
           />
         )}
       </CartContextProvider>
+      <ActiveOrder activeOrder={activeOrder}/>
     </main>
   );
 }

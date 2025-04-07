@@ -23,6 +23,12 @@ export type ProductType = {
   features: FeatureType[];
 };
 
+export type Option = {
+  name: string;
+  type: "single" | "multiple";
+  values: { name: string; price: string }[];
+};
+
 export type ProductURL =
   | "qr-menu"
   | "smart-ordering-qr-menu"

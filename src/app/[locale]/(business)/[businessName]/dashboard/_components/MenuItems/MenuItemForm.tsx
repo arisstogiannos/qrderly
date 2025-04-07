@@ -23,7 +23,6 @@ import Options from "./Options";
 import TranslateCheckBox from "../TranslateCheckBox";
 import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 
 export default function MenuItemForm({
   item,

@@ -32,6 +32,7 @@ import { User } from "next-auth";
 import { BusinessExtended, ExtendedUser } from "@/types";
 import { Business } from "@prisma/client";
 import Link from "next/link";
+import Image from "next/image";
 
 export function NavFooter({
   user,
@@ -74,7 +75,18 @@ export function NavFooter({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="size-8 rounded-lg bg-foreground text-background flex-center">
-                <User2 className="size-6" />
+                {user.image ? (
+                  <Image
+                    src={user.image}
+                    alt="profile"
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                  />
+                ) : (
+                  <User2 className="size-6" />
+                )}
+                
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>

@@ -60,6 +60,7 @@ model User {
   business      Business[]
   password      String?
   // settings   Settings?
+  
   accounts      Account[]
   subscriptions Subscription[]
 }

@@ -19,7 +19,7 @@ export default async function page({
   return (
     <section className="h-screen flex-center  w-full">
       <div className="flex  flex-col items-center mx-5 w-full bg-secondary rounded-3xl p-6">
-        <h2 className="text-3xl font-medium">Your Order is Ready!</h2>
+        <h2 className="text-3xl font-medium">Your Order is Received!</h2>
         {/* <p className="text-foreground/50 font-normal mx-auto text-center mt-1">
           Please show the order number when collecting your order
         </p> */}

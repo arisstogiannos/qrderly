@@ -5,13 +5,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import React, { useEffect, useMemo, useState } from "react";
 import { formatCurrency } from "@/lib/formatter";
 import { useCardModalContext } from "@/context/CardModalProvider";
+import { Option } from "@/types";
 
 // Define Option Type
-type Option = {
-  name: string;
-  type: "single" | "multiple";
-  values: { name: string; price: string }[];
-};
 
 // Deserialize JSON string into Option array
 const deserializeOptions = (str: string | undefined): Option[] => {

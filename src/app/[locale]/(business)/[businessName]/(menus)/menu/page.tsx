@@ -15,9 +15,10 @@ import Theme from "../_components/Theme";
 export const dynamicParams = true; // or false, to 404 on unknown paths
 
 export async function generateStaticParams() {
-  const menus = await getActiveMenusNotCached("QR_MENU");
+  const menus = await getActiveMenusNotCached(["QR_MENU"]);
 
-  return menus.map((menu) => ({locale:"en",
+  return menus.map((menu) => ({
+    locale: "en",
     businessName: String(menu.business.name).replaceAll(" ", "-"),
   }));
 }
@@ -42,7 +43,7 @@ export default async function page({
   searchParams,
 }: {
   params: Promise<{ businessName: string }>;
-  searchParams: Promise<{ l: string,table:string }>;
+  searchParams: Promise<{ l: string; table: string }>;
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
   const getCachedCategories = cache(
@@ -68,15 +69,17 @@ export default async function page({
   );
 
   const lang = (await searchParams).l;
-  const table = (await searchParams).table;
+  const table = (await searchParams).table ?? "";
   const menu = await getActiveMenu(businessName);
 
   if (!menu) {
     notFound();
   }
 
-  if (menu.type === "SMART_QR_MENU" || menu.type === "SELF_SERVICE_QR_MENU" ) {
-    redirect("/" + businessName.replaceAll(" ", "-") + "/smart-menu?table="+table);
+  if (menu.type === "SMART_QR_MENU" || menu.type === "SELF_SERVICE_QR_MENU") {
+    redirect(
+      "/" + businessName.replaceAll(" ", "-") + "/smart-menu?table=" + table
+    );
   }
 
   const [categories, products] = await Promise.all([
@@ -87,10 +90,7 @@ export default async function page({
   const colors = menu.theme.split(",");
 
   return (
-    <main
-
-      className="min-h-screen"
-    >
+    <main className="min-h-screen">
       {/* <Theme theme={menu.theme}/> */}
       <style>{`
         :root {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -30,16 +30,20 @@ import { OrderWithItems } from "@/types";
 export default function OrdersTable() {
   const { orders, setCurrOrder, currOrder,isPending } = useOrdersContext();
   const [previousOrders, setPreviousOrders] = useState<OrderWithItems[]>();
+  const isFirstRender = useRef(true);
 
  useEffect(() => {
    if (previousOrders?.length !== orders?.length) {
-     
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
      const playAudio = async () => {
        try {
          const audio = new Audio("/new-order-audio.mp3"); // Ensure the file exists in public/
          await audio.play(); // Handle promise rejection properly
         } catch (error) {
-          console.error("Audio playback failed:", error);
+          // console.error("Audio playback failed:", error);
         }
       };
       

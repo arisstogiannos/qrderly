@@ -144,7 +144,7 @@ export async function upsertMenuItem(
         dataToUpsert = {
           name,
           description,
-          priceInCents: Number(priceInCents),
+          priceInCents: Number(priceInCents)*100,
           categoryId,
           menuId: menu.id,
           preferences: options,

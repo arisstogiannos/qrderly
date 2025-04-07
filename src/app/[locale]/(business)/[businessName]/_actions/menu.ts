@@ -59,11 +59,15 @@ export const getActiveMenus = unstable_cache(
   }
 );
 export const getActiveMenusNotCached = 
-  async (type?: Product) => {
+  async (types?: Product[]) => {
     const menus = await db.menu.findMany({
       where: {
         published: true,
-        //type,
+        OR:[
+          {type:types?.[0]},
+          {type:types?.[1]},
+          {type:types?.[2]},
+        ],
         business: {
           OR: [
             {

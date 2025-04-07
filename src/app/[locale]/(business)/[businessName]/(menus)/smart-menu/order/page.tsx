@@ -1,10 +1,6 @@
 import React from "react";
 import { getOrderById } from "../../../_actions/orders";
 import { redirect } from "next/navigation";
-import { CheckCircle2 } from "lucide-react";
-import CheckAnimation from "@/components/CheckAnimation";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { formatCurrency } from "@/lib/formatter";
 import OrderTracking from "../_components/OrderTracking";
 import BackButton from "../_components/BackButton";
