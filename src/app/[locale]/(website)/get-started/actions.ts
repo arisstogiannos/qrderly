@@ -213,7 +213,7 @@ export async function createMenu(
   });
 
   revalidateTag("active-menu" + business.name);
-  revalidatePath("/" + business.name.replaceAll(" ", "-") + "/");
+  revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/");
 
   const businessNameUrl = business.name.replaceAll(" ", "-");
 

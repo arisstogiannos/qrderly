@@ -89,6 +89,8 @@ export const routing = defineRouting({
       el: "/[businessName]/πίνακας ελέγχου/ζωντανές-παραγγελίες",
       en: "/[businessName]/dashboard/live-orders",
     },
+    "/en/[businessName]/menu": "/en/[businessName]/menu",
+    "/en/[businessName]/smart-menu": "/en/[businessName]/smart-menu"
    
   },
 });
