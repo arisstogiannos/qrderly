@@ -69,7 +69,7 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
                       asChild
                     >
                       <IntlLink
-                        href={"/" + b.name.replaceAll(" ", "-") + "/dashboard"}
+                        href={{pathname:"/[businessName]/dashboard",params:{businessName:b.name.replaceAll(" ", "-")}}}
                       >
                         <LayoutDashboard /> Dashboard
                       </IntlLink>

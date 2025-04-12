@@ -68,7 +68,7 @@ function filter(products: MenuItem[], lang: string, query: string) {
 
     if (existingTranslation) {
       condition =
-        (translationsAsJson[lang].name.toLowerCase().includes(query) ||
+        (translationsAsJson[lang].name?.toLowerCase().includes(query) ||
           translationsAsJson[lang].description?.toLowerCase().includes(query)) &&
         query !== "";
     } else {

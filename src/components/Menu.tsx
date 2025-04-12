@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import {Link} from "@/i18n/navigation";
+import {getPathname, Link} from "@/i18n/navigation";
 
 import { Button } from "./ui/button";
 import { Session } from "next-auth";
@@ -17,11 +17,13 @@ const Menu = ({
   session: Session | null;
 }) => {
   const t = useTranslations("navbar")
-  const navlinks = [
+  type Href = Parameters<typeof getPathname>[0]["href"];
+
+  const navlinks:{title:string,href:Href,subLinks?:{title:string,href:Href}[]}[] = [
     { title: t("Home"), href: "/" },
     {
       title: t("Products"),
-      href: "/products",
+      href: "/",
       subLinks: [
         { title: t("QR Menu.title"), href: "/products/qr-menu" },
         { title: t("Smart qr menu"), href: "/products/smart-ordering-qr-menu" },

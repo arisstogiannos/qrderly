@@ -215,14 +215,11 @@ export async function createMenu(
   revalidateTag("active-menu" + business.name);
   revalidatePath("/" + business.name.replaceAll(" ", "-") + "/");
 
-  const url =
-    process.env.NEXT_PUBLIC_SERVER_URL +
-    "/" +
-    business.name.replaceAll(" ", "-");
+  const businessNameUrl = business.name.replaceAll(" ", "-");
 
   return {
     success: "Proccess Complete",
-    url,
+    businessNameUrl,
   };
 }
 

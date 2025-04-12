@@ -57,7 +57,7 @@ export default function Publish({
     render = (
       <Success
         url={
-          state?.url || "/" + publishedMenuBusiness?.name.replaceAll(" ", "-")
+          state?.businessNameUrl || "/" + publishedMenuBusiness?.name.replaceAll(" ", "-")
         }
       />
     );
@@ -123,7 +123,7 @@ function Success({ url }: { url: string }) {
       </div>
       <div className="flex flex-col gap-3 lg:flex-row pb-5 lg:pb-0">
         <Button size={"lg"} asChild>
-          <IntlLink href={url + "/dashboard"} replace={true} >
+          <IntlLink href={{params:{businessName:url},pathname:"/[businessName]/dashboard"}} replace={true} >
             Dashboard <ArrowRight />
           </IntlLink>
         </Button>

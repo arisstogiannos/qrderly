@@ -17,7 +17,8 @@ export default function I18nLanguageSelect({className,...props}:React.ComponentP
       onClick={() =>{
         setLoading(true);
         router.replace(
-          {  params: { product: productParam ?? "" },pathname:pathname },
+            // @ts-expect-error 
+          {  params,pathname },
 
           { locale: params.locale === "en" ? "el" : "en",scroll:true, }
         )}

@@ -1,8 +1,7 @@
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
-import {Link} from "@/i18n/navigation";
-
+import Link from "next/link";
 
 import { notFound, redirect } from "next/navigation";
 import React from "react";
@@ -52,17 +51,17 @@ export default async function SuccessPage({
         <CheckCircle2 className="size-40 text-green-500 mb-4 " />
         <h1 className="text-3xl font-bold text-center">Payment Successful</h1>
         <p className="text-center max-w-lg">
-          Thank you for your purchase! You will receive an email with your receipt and subscription information.
+          Thank you for your purchase! You will receive an email with your
+          receipt and subscription information.
         </p>
         <Button asChild>
-
-        <Link
-          href={successPageLink}
-          className=" capitalize mt-6"
+          <Link
+            href={successPageLink }
+            className=" capitalize mt-6"
           >
-          {successPageButton}
-        </Link>
-          </Button>
+            {successPageButton}
+          </Link>
+        </Button>
       </div>
     </section>
   );

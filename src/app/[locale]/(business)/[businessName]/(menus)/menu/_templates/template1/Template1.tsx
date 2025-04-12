@@ -22,7 +22,9 @@ export default function Template1({
         <Suspense>
           <Categories categories={categories} />
         </Suspense>
+        <Suspense>
         <MenuItems categories={categories} menuItems={menuItems} />
+        </Suspense>
       </div>
     </>
   );

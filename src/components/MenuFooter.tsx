@@ -3,6 +3,6 @@ import React from 'react'
 
 export default function MenuFooter() {
   return (
-    <footer><Link href={"/"}>Powered by Scanby</Link></footer>
+    <footer className='mt-10 w-full flex-center mb-3'><Link href={"/"}>Powered by Scanby</Link></footer>
   )
 }

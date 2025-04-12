@@ -2,6 +2,7 @@ import { Category, Menu, MenuItem } from "@prisma/client";
 import { Navbar } from "./Nav/Navbar";
 import Categories from "./Categories";
 import { MenuItems } from "./MenuItems/MenuItems";
+import { Suspense } from "react";
 
 export default function Template1({
   menu,
@@ -16,15 +17,15 @@ export default function Template1({
 }) {
   return (
     <>
-      <Navbar menu={menu}  businessName={businessName} />
+      <Navbar menu={menu} businessName={businessName} />
       <div>
         <div className="flex flex-col space-y-2">
-          <Categories categories={categories} />
-
-          <MenuItems
-            categories={categories}
-            menuItems={menuItems}
-          />
+          <Suspense>
+            <Categories categories={categories} />
+          </Suspense>
+          <Suspense>
+            <MenuItems categories={categories} menuItems={menuItems} />
+          </Suspense>
         </div>
       </div>
     </>

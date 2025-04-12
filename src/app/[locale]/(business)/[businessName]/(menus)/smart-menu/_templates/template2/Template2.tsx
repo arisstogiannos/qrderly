@@ -25,7 +25,9 @@ export default function Template2({
         </Suspense>
 
         <div className="my-container pt-5">
+        <Suspense>
           <MenuItems categories={categories} menuItems={menuItems} />
+        </Suspense>
         </div>
       </div>
     </>

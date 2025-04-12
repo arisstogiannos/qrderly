@@ -73,9 +73,9 @@ export const routing = defineRouting({
       el: "/[businessName]/πίνακας ελέγχου/ανέβασμα-μενού",
       en: "/[businessName]/dashboard/upload-menu",
     },
-    "/[businessName]/dashboard/orders": {
+    "/[businessName]/dashboard/all-orders": {
       el: "/[businessName]/πίνακας ελέγχου/παραγγελίες",
-      en: "/[businessName]/dashboard/orders",
+      en: "/[businessName]/dashboard/all-orders",
     },
     "/[businessName]/dashboard/settings": {
       el: "/[businessName]/πίνακας ελέγχου/ρυθμίσεις",
@@ -89,25 +89,6 @@ export const routing = defineRouting({
       el: "/[businessName]/πίνακας ελέγχου/ζωντανές-παραγγελίες",
       en: "/[businessName]/dashboard/live-orders",
     },
-    "/[businessName]/dashboard/analytics": {
-      el: "/[businessName]/πίνακας ελέγχου/αναλυτικά",
-      en: "/[businessName]/dashboard/analytics",
-    },
-    "/[businessName]/dashboard/subscriptions": {
-      el: "/[businessName]/πίνακας ελέγχου/συνδρομές",
-      en: "/[businessName]/dashboard/subscriptions",
-    },
-    "/[businessName]/dashboard/billing": {
-      el: "/[businessName]/πίνακας ελέγχου/χρέωση",
-      en: "/[businessName]/dashboard/billing",
-    },
-    "/[businessName]/dashboard/business-info": {
-      el: "/[businessName]/πίνακας ελέγχου/πληροφορίες-επιχείρησης",
-      en: "/[businessName]/dashboard/business-info",
-    },
-    "/[businessName]/dashboard/personal-info": {
-      el: "/[businessName]/πίνακας ελέγχου/προσωπικά-στοιχεία",
-      en: "/[businessName]/dashboard/personal-info",
-    },
+   
   },
 });
