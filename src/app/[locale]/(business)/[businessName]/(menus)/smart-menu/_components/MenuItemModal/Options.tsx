@@ -3,9 +3,9 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import React, { useEffect, useMemo, useState } from "react";
-import { formatCurrency } from "@/lib/formatter";
 import { useCardModalContext } from "@/context/CardModalProvider";
 import { Option } from "@/types";
+import DisplayPrice from "@/components/DisplayPrice";
 
 // Define Option Type
 
@@ -75,9 +75,9 @@ export default function Options({
                   />
                   <Label className="text-base capitalize font-normal">
                     {value.name}{" "}
-                    {value.price !== "0" && (
+                    {value.price && value.price!=='0' && (
                       <span className="text-muted">
-                        {formatCurrency(Number(value.price) / 100)}
+                        <DisplayPrice price={Number(value.price) }/>
                       </span>
                     )}
                   </Label>
@@ -124,7 +124,7 @@ export function DefaultRadioGroup({
     const price = values.find((v) => v.name === e)?.price;
     setValue(e);
 
-    setPrice((prev) => prev + (Number(price) - localPrice));
+    setPrice((prev) => prev + (Number.isNaN((Number(price) - localPrice))?0:(Number(price) - localPrice)));
     setLocalPrice(Number(price));
   }
 
@@ -196,9 +196,9 @@ export function MultipleChoiceGroup({
           />
           <Label
             htmlFor={`${name}-${value.name}`}
-            className="text-base capitalize font-normal"
+            className="text-base capitalize font-normal space-x-1"
           >
-            {value.name} {value.price && `(+${value.price})`}
+            <span>{value.name}</span> <span className="opacity-80">+ {value.price && <DisplayPrice price={Number(value.price)}/>}</span>
           </Label>
         </div>
       ))}

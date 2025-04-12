@@ -11,10 +11,11 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import { LogOut, Sidebar } from "lucide-react";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
+
 import { useParams, usePathname } from "next/navigation";
 import { ComponentProps, useEffect, useState } from "react";
-import { signOut } from "@/app/[locale]/(website)/(auth)/_actions/login";
+import { signOut } from "@/app/[locale]/(auth)/_actions/login";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);

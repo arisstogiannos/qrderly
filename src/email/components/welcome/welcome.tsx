@@ -27,11 +27,11 @@ function Welcome({confirmLink}: {confirmLink: string}) {
           <Img className="w-full" src="http://localhost:3001/Banner.png" alt="sss"/>
           <Section className="mx-2">
 
-            <Heading className="font-medium ">Welcome to Orderly! Let’s Get You Set Up</Heading>
+            <Heading className="font-medium ">Welcome to scanby! Let’s Get You Set Up</Heading>
             <Container className="text-xl ml-0 flex md:text-3xl">
 
             <Text className="m-0 leading-0 text-lg ">Hey [First Name],</Text>
-            <Text style={{lineHeight:1}} className="text-lg">Welcome to Orderly – the easiest way to offer seamless, contactless ordering at your business! </Text>
+            <Text style={{lineHeight:1}} className="text-lg">Welcome to scanby – the easiest way to offer seamless, contactless ordering at your business! </Text>
             </Container>
             <Section className="flex leading-0">
 

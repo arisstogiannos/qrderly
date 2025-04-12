@@ -1,24 +1,163 @@
 {
+  "categoriesForm": {
+    "name": "Name",
+    "description": "Description",
+    "optional": "optional but recommended",
+    "descriptionHint": "You can describe a category to get more accurate translations.",
+    "namePlaceholder": "Enter the category name",
+    "descriptionPlaceholder": "Enter the category description",
+    "save": "Save"
+  },
+  "menuItemForm": {
+    "name": "Name",
+    "description": "Description",
+    "category": "Category",
+    "price": "Price",
+    "priceDesc": "(in cents e.g 1.50$ -> 150)",
+    "options": "Options",
+    "image": "Image",
+    "optional": "optional",
+    "nameValidation": "Underscore (_) is not allowed",
+    "descriptionValidation": "Underscore (_) is not allowed",
+    "namePlaceholder": "Enter the menu item's name",
+    "descriptionPlaceholder": "Enter the menu item's description",
+    "pricePlaceholder": "Enter the menu item's price",
+    "imagePlaceholder": "Click to upload image",
+    "save": "Save"
+  },
+  "categoriesPage": {
+    "noCategories": "No Categories Found",
+    "title": "Categories",
+    "add": "Add New"
+  },
+  "filters": {
+    "search": "Search",
+    "noCategories": "No Categories Found",
+    "all categories": "All Categories"
+  },
+  "categoriesTable": {
+    "name": "Name",
+    "description": "Description",
+    "noItems": "N. of Items",
+    "actions": "Actions",
+    "edit": "Edit",
+    "editItem": "Edit Item",
+    "deleteFailed": "Failed to delete item, rolling back..."
+  },
+  "allOrdersTable": {
+    "products": "Products",
+    "price": "Price",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions",
+    "noOrders": "No orders found",
+    "viewDetails": "View Details",
+    "orderDetails": "Order Details"
+  },
+  "orderDetailsModal": {
+    "noOrderSelected": "No order selected",
+    "table": "Table",
+    "date": "Date",
+    "product": "Product",
+    "preferences": "Preferences"
+  },
+  "orderDetails": {
+    "noOrderSelected": "No order selected",
+    "table": "Table",
+    "time": "Time",
+    "product": "Product",
+    "preferences": "Preferences",
+    "complete": "Complete"
+  },
+  "ordersTable": {
+    "products": "Products",
+    "price": "Price",
+    "date": "Date",
+    "actions": "Actions",
+    "noOrders": "No orders found",
+    "viewDetails": "View Details",
+    "orderDetails": "Order Details"
+  },
+  "tablesForm": {
+    "tables": "Tables",
+    "save": "Save"
+  },
+  "tablesSetup": {
+    "numberOfTables": "Number of Tables",
+    "description": "We generate one QR for each table for order identification. This way you will know which table made the order.",
+    "tableRange": "The table numbers will be from 1 to {noTables}. You can go ahead and customize the tables if you like.",
+    "validation": "Comma (,) is not allowed",
+    "placeholder": "Enter name for Table {tableNumber}"
+  },
+  "admin": {
+    "navbar": {
+      "Dashboard": "Dashboard",
+      "Upload Menu": "Upload Menu",
+      "signBtn": "Sign Up",
+      "Menu": "Menu",
+      "All Orders": "All Orders",
+      "Live Orders": "Live Orders",
+      "Settings": "Settings",
+      "Qr Settings": "QR Settings",
+      "Categories": "Categories",
+      "Items": "Items",
+      "Visit Live Menu": "Visit Live Menu",
+      "Logout": "Logout",
+      "Subscriptions": "Subscriptions",
+      "Upgrade to Pro": "Upgrade to Pro",
+      "menus": "Menus",
+      "Orders": "Orders"
+    },
+    "menu items": {
+      "title": "Menu Items",
+      "add": "Add New",
+      "add new item": "Add New Item",
+      "edit": "Edit",
+      "delete": "Delete",
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "image": "Image",
+      "category": "Category",
+      "options": "Options",
+      "save changes": "Save Changes",
+      "status": "Status"
+    },
+    "orders": {
+      "allOrders": {
+        "title": "All Orders"
+      },
+      "liveOrders": {
+        "title": "Live Orders"
+      }
+    },
+    "delete": {
+      "title": "Delete Item",
+      "desc": "Are you sure you want to delete this item?",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    }
+  },
   "Hero": {
     "title": "Transform Your Bussiness with Smart QR Menus & Online Ordering",
     "subtitle": "Instantly set up your interactive QR menu and ordering system — with our powerful AI, transform your printed menu into a digital menu in minutes!",
     "button": "Get Started for Free"
   },
   "WhyUs": {
-    "title": "Why Qrderly?",
-    "subtitle": "We let you create, launch, and manage everything on your own—no business or third-party intervention needed.",
+    "title": "Why scanby?",
+    "subtitle": "We let you create, launch, and manage everything on your own—no business or third-party intervention needed, in a matter of minutes.",
     "bullets": {
       "1": {
         "title": "Create & Customize Instantly",
-        "subtitle": "Set up your menu in minutes with our easy-to-use interface. No technical skills required."
+        "subtitle": "Upload a photo or PDF of your printed menu, and we’ll instantly turn it into a digital version using AI—no technical skills required."
       },
       "2": {
-        "title": "No Middleman, No Delays",
-        "subtitle": "Unlike other platforms, you have full control over your menu updates, pricing, and customization—whenever you want."
+        "title": "Customizable & Multilingual",
+        "subtitle": "Tailor your menu to fit your brand and serve customers in up to 30 languages with full multilingual support."
       },
       "3": {
         "title": "Seamless Managing",
-        "subtitle": "Manage your menu, receive orders, and make instant updates through our powerful admin dashboard."
+        "subtitle": "Update your menu, prices, and items instantly—no middlemen, no delays. Manage everything seamlessly from your own dashboard, anytime you want."
       },
       "4": {
         "title": "Start for Free – No Credit Card Required",
@@ -90,7 +229,10 @@
   },
 
   "productsData": {
+    "button": "Get Started for Free",
+
     "features": {
+      "title": "Some Features",
       "Effortless Digital Menu from Images & PDFs!": {
         "title": "Effortless Digital Menu from Images & PDFs!",
         "desc": "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!"
@@ -109,7 +251,7 @@
       },
       "Multi-Language Support": {
         "title": "Multi-Language Support",
-        "desc": "Cater to international customers with multilingual menus. Guests can switch between languages improving accessibility and customer satisfaction."
+        "desc": "Your menu is automatically translated in up to 30 languages. Guests can switch between languages improving accessibility and customer satisfaction."
       },
       "Seamless QR Ordering": {
         "title": "Seamless QR Ordering",
@@ -146,9 +288,9 @@
         "step4": "Fulfill Order - Once the order is completed by the staff."
       }
     },
-    "Smart Self Service Menu": {
-      "title": "Smart Self Service Menu",
-      "longTitle": "Smart Self Service Menu",
+    "Self Service Smart Menu": {
+      "title": "Self Service Smart Menu",
+      "longTitle": "Self Service Smart Menu",
 
       "desc": "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
       "shortDesc": "Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
@@ -191,32 +333,35 @@
     "self service menu": "self service menu"
   },
   "howItWorks": {
-    "title": "how to set up your qR menu",
+    "title": "How to Set up your QR Menu",
     "subtitle": "Follow these 5 steps and your online menu will be set in minutes",
     "button1": "Get Started for Free",
     "button2": "Learn More",
     "bullets": {
-      "1": "create a free account",
-      "2": "choose a product",
-      "3": "setup your bussiness profile",
-      "4": "create and personalize your menu",
-      "5": "your menu is online! Your customers can scan the qr code we generated for you or visit your link."
+      "1": "Create a free account",
+      "2": "Choose a product",
+      "3": "Create and personalize your menu",
+      "4": "Upload your existing menu to generate a digital version",
+      "5": "Your menu is online! Your customers can scan the qr code we generated for you or visit your link."
     }
   },
+  "pricing": {
+    "yearly": "Yearly (save 20%)",
+    "monthly": "Monthly"
+  },
   "plandata": {
+    "free": "Free Trial",
+    "button": "Get Started",
+    "upgrade": " Upgrade {business} To Pro",
     "title": "Choose Your Product",
     "QR Menu": {
       "title": "QR Menu",
       "billing": {
         "yearly": {
-          "price": "€9/month",
-          "payment_link": "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
-          "price_id": "price_1R43QrP01OOv4UZm9i3yN0ZG"
+          "price": "€9/month"
         },
         "monthly": {
-          "price": "€12/month",
-          "payment_link": "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
-          "price_id": "price_1R43P6P01OOv4UZmstL2rwRL"
+          "price": "€12/month"
         }
       },
       "bullets": {
@@ -234,14 +379,10 @@
       "title": "Smart Ordering QR Menu",
       "billing": {
         "yearly": {
-          "price": "€14/month",
-          "payment_link": "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-          "price_id": "price_1R4G7rP01OOv4UZmDIUZNTjl"
+          "price": "€14/month"
         },
         "monthly": {
-          "price": "€18/month",
-          "payment_link": "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-          "price_id": "price_1R4G7rP01OOv4UZmDIUZNTjl"
+          "price": "€18/month"
         }
       },
       "bullets": {
@@ -256,14 +397,10 @@
       "title": "Smart Self Service Menu",
       "billing": {
         "yearly": {
-          "price": "€16/month",
-          "payment_link": "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
-          "price_id": "price_1R4G7rP01OOv4UZmDIUZNTjl"
+          "price": "€16/month"
         },
         "monthly": {
-          "price": "€20/month",
-          "payment_link": "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
-          "price_id": "price_1R4G7rP01OOv4UZmDIUZNTjl"
+          "price": "€20/month"
         }
       },
       "bullets": {
@@ -272,5 +409,175 @@
         "3": "Customers can place orders for takeaway"
       }
     }
+  },
+  "dashboard": {
+    "analytics": "Analytics",
+    "qr": "QR",
+    "information": "Information",
+    "business": "Business",
+    "billing": "Billing",
+    "personal": "Personal",
+    "name": "Name",
+    "location": "Location",
+    "email": "Email",
+    "type": "Type",
+    "product": "Product",
+    "lastPayment": "Last Payment",
+    "expires": "Expires",
+    "edit": "Edit",
+    "manage": "Manage",
+    "loading": "Loading"
+  },
+  "menu settings": {
+    "title": "Menu Settings",
+    "Template": "Template",
+    "T1": "Template 1",
+    "T2": "Template 2",
+    "Default Language": "Default Language",
+    "Default Language Desc": " The native language that you will write the menu items, categories...",
+    "Languages": "Languages",
+    "Add Language": "Add Language",
+    "Search Language": "Search Language...",
+    "Theme": "Theme",
+    "Customize": "Customize",
+    "Save": "Save",
+    "Next": "Next"
+  },
+  "qr settings": {
+    "qr shape": {
+      "shape": "Dot Shape",
+      "cornerDotsShape": "Corner Dots Shape",
+      "cornerSquareShape": "Corner Square Shape",
+      "square": "Square",
+      "dots": "Dots",
+      "rounded": "Rounded",
+      "classy": "Classy",
+      "classy rounded": "Classy Rounded",
+      "extra rounded": "Extra Rounded"
+    },
+    "colors": "Colors",
+    "logo": "Logo",
+    "text": "Text",
+    "optional": "Optional",
+    "title": "QR Settings",
+    "download": "Download QR Code",
+    "Save": "Save",
+    "Next": "Next"
+  },
+  "get started": {
+    "title": "Choose the product you want to pocceed with. Get started for free and see what’s right for you!",
+    "button": "Get Started for Free"
+  },
+  "uploadingForm": {
+    "overwrite":"Overwrite existing items",
+    "overwriteDesc":"Any existing items in your menu that match a new item will be overwriten.",
+    "yes":"Yes",
+    "no":"No",
+    "toast":"{newItems} new items added! Review them on the Menu Items page. You can always make manual changes.",
+    "title": "Upload your menu",
+    "upload":"Upload",
+    "dialogTitle": "Our AI is proccessing your menu. This will take a few seconds.",
+    "description": "Our AI will automatically populate your menu for you. All you have to do is upload an image or PDF. If you want to manually insert all the items, click skip.",
+    "skip": "Skip",
+    "next": "Next",
+    "imageTitle": "Image",
+    "imageDescription": "Upload a PNG file from your device for the best results. You can also upload a picture from your camera, but it needs to be clear.",
+    "pdfTitle": "PDF",
+    "pdfDescription": "Upload a PDF file from your device for the best results. Ensure the document is clear and readable."
+  },
+  "uploader": {
+    "image": "Image",
+    "pdf": "PDF",
+    "description": "Upload a file for processing."
+  },
+  "translateCheckBox": {
+    "label": "Translate",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "businessSetupForm": {
+    "businessName": "Business Name",
+    "businessNameHint": "It will be used as a URL for your menu. Example: scanby.io/mybusiness/menu",
+    "businessNameValidation": "Only letters, numbers, dashes (-), underscores (_), dots (.) and tildes (~) are allowed.",
+    "businessType": "Business Type",
+    "businessTypePlaceholder": "Choose your business type",
+    "restaurant": "Restaurant",
+    "bar": "Bar",
+    "cafeteria": "Cafeteria",
+    "currency": "Currency",
+    "currencyPlaceholder": "Choose currency",
+    "country": "Country",
+    "city": "City",
+    "next": "Next"
+  },
+  "progress": {
+    "extractingItems": "Extracting Items",
+    "translatingLanguages": "Translating to Target Languages",
+    "creatingMenu": "Creating Menu",
+    "completed": "Completed",
+    "inProgress": "In progress...",
+    "waiting": "Waiting"
+  },
+  "registerForm": {
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "signUp": "Sign up",
+    "signUpWithGoogle": "Sign up with Google",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "verificationSent": "A verification code has been sent to your email!",
+    "termsAndPrivacy": "By clicking continue, you agree to our Terms of Service and Privacy Policy.",
+    "error": {
+      "generic": "An error has occurred. Try again.",
+      "oauth": "Try logging in the same way you signed up."
+    }
+  },
+  "loginForm": {
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot your password?",
+    "signIn": "Sign in",
+    "signInWithGoogle": "Sign in with Google",
+    "dontHaveAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "verificationSent": "A verification code has been sent to your email!",
+    "termsAndPrivacy": "By clicking continue, you agree to our Terms of Service and Privacy Policy.",
+    "error": {
+      "generic": "An error has occurred. Try again.",
+      "oauth": "Try logging in the same way you signed up."
+    }
+  },
+  "registerPage": {
+    "title": "Register",
+    "subtitle": "Create an account"
+  },
+  "loginPage": {
+    "title": "Welcome back",
+    "subtitle": "Login to your account"
+  },
+  "resetForm": {
+    "title": "Reset your password",
+    "subtitle": "We will send you an email with a link. Click on it to change your password.",
+    "emailPlaceholder": "Enter your email",
+    "sendResetCode": "Send reset code",
+    "resetLinkSent": "A reset link has been sent to your email!"
+  },
+  "createMenuBtn": {
+    "signUp": "Εγγραφή",
+    "createMenu": "Δημιουργία Μενού",
+    "modalTitle": "Δημιουργία μενού για το {product}",
+    "modalSubtitle": "Έχετε μια συνδρομή για το {product}, αλλά δεν το έχετε δημοσιεύσει ακόμα. Συνεχίστε ή δημιουργήστε νέο μενού για άλλο προϊόν.",
+    "createDifferentMenu": "Δημιουργία διαφορετικού μενού",
+    "continue": "Συνέχεια"
+  },
+  "uploadMenuPage": {
+    "title": "Upload Menu",
+    "description": "Upload your menu items and categories easily."
   }
 }

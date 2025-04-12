@@ -18,16 +18,17 @@ import { ProductURL } from "./types";
 export const plandata = [
   {
     title: "QR Menu",
+    product:Product.QR_MENU,
     billing: {
       yearly: {
         price: "€9/month",
         payment_link: "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
-        price_id: "price_1R43QrP01OOv4UZm9i3yN0ZG",
+        price_id: "price_1RCcdIP01OOv4UZmVJXgEIOe",
       },
       monthly: {
         price: "€12/month",
         payment_link: "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
-        price_id: "price_1R43P6P01OOv4UZmstL2rwRL",
+        price_id: "price_1RCcckP01OOv4UZmRve6z45C",
       },
     },
     bullets: [
@@ -55,16 +56,17 @@ export const plandata = [
   },
   {
     title: "Smart Ordering QR Menu",
+    product:Product.SMART_QR_MENU,
     billing: {
       yearly: {
         price: "€14/month",
         payment_link: "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
+        price_id: "price_1RCcg5P01OOv4UZmNRQB9uy4",
       },
       monthly: {
         price: "€18/month",
         payment_link: "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
+        price_id: "price_1RCcf5P01OOv4UZmIhoeMexq",
       },
     },
     bullets: [
@@ -91,16 +93,17 @@ export const plandata = [
   },
   {
     title: "Smart Self Service Menu",
+    product:Product.SELF_SERVICE_QR_MENU,
     billing: {
       yearly: {
         price: "€16/month",
         payment_link: "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
-        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
+        price_id: "price_1RCcjUP01OOv4UZm9VGok3b4",
       },
       monthly: {
         price: "€20/month",
         payment_link: "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
-        price_id: "price_1R4G7rP01OOv4UZmDIUZNTjl",
+        price_id: "price_1RCcj7P01OOv4UZmp9UYVIQf",
       },
     },
     bullets: [
@@ -177,7 +180,7 @@ export const productsData = [
  
   {
     title: "Smart Ordering QR Menu",
-    link:"/get-started/smart-ordering-qr-menu",
+    link:"smart-ordering-qr-menu",
     desc: "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
     shortDesc:
       "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
@@ -234,9 +237,9 @@ export const productsData = [
     ],
   },
   {
-    title: "Smart Self Service Menu",
+    title: "Self Service Smart Menu",
     desc: "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
-    link:"smart-self-service-menu",
+    link:"self-service-smart-menu",
 
     shortDesc:
       "Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
@@ -333,7 +336,7 @@ export const faqData = [
 export const productMap = {
   "qr-menu": Product.QR_MENU,
   "smart-ordering-qr-menu": Product.SMART_QR_MENU,
-  "smart-self-service-menu": Product.SELF_SERVICE_QR_MENU,
+  "self-service-smart-menu": Product.SELF_SERVICE_QR_MENU,
 };
 export const productMapURL: Record<Product, ProductURL> = Object.fromEntries(
   Object.entries(productMap).map(([key, value]) => [value, key])
@@ -342,5 +345,5 @@ export const productMapURL: Record<Product, ProductURL> = Object.fromEntries(
 export const productPath = {
   "qr-menu": "menu",
   "smart-ordering-qr-menu": "smart-menu",
-  "smart-self-service-menu": "smart-menu",
+  "self-service-smart-menu": "smart-menu",
 };

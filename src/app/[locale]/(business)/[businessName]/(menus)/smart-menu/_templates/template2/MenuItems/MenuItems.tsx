@@ -1,15 +1,16 @@
 import { Category, MenuItem } from "@prisma/client";
 import { MenuItemCard } from "./MenuItemCard";
 import { Translation } from "@/types";
+import { Suspense } from "react";
+import CateroryDisplay from "../../../../_components/CateroryDisplay";
+import CategoryDisplay from "../../../../_components/CateroryDisplay";
 
 export async function MenuItems({
   categories,
   menuItems,
-  lang,
 }: {
   categories: Category[];
   menuItems: MenuItem[];
-  lang: string;
 }) {
   const menuItemsByCategory: Record<string, MenuItem[]> = {};
   const categoriess = categories;
@@ -28,29 +29,18 @@ export async function MenuItems({
       {Object.entries(menuItemsByCategory).map(
         ([categoryId, menuItems]) =>
           Object.entries(menuItems).length > 0 && (
-            <div key={categoryId} id={categoryId} className="space-y-4 scroll-m-10">
-              <p className="text-2xl font-medium capitalize">
-                {categories.find((c) => c.id === categoryId)?.name}
-              </p>
+            <div
+              key={categoryId}
+              id={categoryId}
+              className="space-y-4 scroll-m-20"
+            >
+                <CategoryDisplay category={categories.find((c) => c.id === categoryId)}/>
               <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                {Object.entries(menuItems).map(([categoryId, product]) => {
-                  const translationsAsJson: Translation | null =
-                    product.translations
-                      ? JSON.parse(product.translations)
-                      : null;
-
-                  const existingTranslation =
-                    translationsAsJson && translationsAsJson[lang];
-                  product.name =
-                    existingTranslation && translationsAsJson[lang].name
-                      ? translationsAsJson[lang].name
-                      : product.name;
-                  product.description =
-                    existingTranslation && translationsAsJson[lang].description
-                      ? translationsAsJson[lang].description
-                      : product.description;
-                  return <MenuItemCard key={product.id} {...product} />;
-                })}
+                <Suspense>
+                  {Object.entries(menuItems).map(([categoryId, product]) => {
+                    return <MenuItemCard key={product.id} {...product} />;
+                  })}
+                </Suspense>
               </div>
             </div>
           )

@@ -10,9 +10,9 @@ import Template1 from "./_templates/template1/Template1";
 import Template2 from "./_templates/template2/Template2";
 import { cache } from "@/lib/cache";
 import ScanTracker from "../_components/ScanTracker";
-import Theme from "../_components/Theme";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
+export const dynamic ="error"
 
 export async function generateStaticParams() {
   const menus = await getActiveMenusNotCached(["QR_MENU"]);
@@ -30,20 +30,17 @@ export async function generateMetadata({
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
 
-  const description = `Check out our menu`;
 
   return {
     title: businessName + " | Online Menu",
-    description,
+     description: `Explore ${businessName}'s full menu online.`
   };
 }
 
 export default async function page({
   params,
-  searchParams,
 }: {
   params: Promise<{ businessName: string }>;
-  searchParams: Promise<{ l: string; table: string }>;
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
   const getCachedCategories = cache(
@@ -68,19 +65,17 @@ export default async function page({
     }
   );
 
-  const lang = (await searchParams).l;
-  const table = (await searchParams).table ?? "";
   const menu = await getActiveMenu(businessName);
 
   if (!menu) {
     notFound();
   }
 
-  if (menu.type === "SMART_QR_MENU" || menu.type === "SELF_SERVICE_QR_MENU") {
-    redirect(
-      "/" + businessName.replaceAll(" ", "-") + "/smart-menu?table=" + table
-    );
-  }
+  // if (menu.type === "SMART_QR_MENU" || menu.type === "SELF_SERVICE_QR_MENU") {
+  //   redirect(
+  //     "/" + businessName.replaceAll(" ", "-") + "/smart-menu?table=" +" table"
+  //   );
+  // }
 
   const [categories, products] = await Promise.all([
     getCachedCategories(businessName),
@@ -107,7 +102,6 @@ export default async function page({
         <Template1
           businessName={businessName}
           categories={categories}
-          lang={lang}
           menu={menu}
           menuItems={products}
         />
@@ -115,7 +109,6 @@ export default async function page({
         <Template2
           businessName={businessName}
           categories={categories}
-          lang={lang}
           menu={menu}
           menuItems={products}
         />

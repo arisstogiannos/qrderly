@@ -3,14 +3,13 @@ import {
   useState,
   useEffect,
   useRef,
-  useCallback,
   useActionState,
 } from "react";
 import QRCodeStyling, { CornerDotType, CornerSquareType, DotType, dotTypes, Options } from "qr-code-styling";
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download, Save } from "lucide-react";
+import { ArrowRight, Save } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { saveQR } from "../../actions";
 import { BusinessExtended, ProductURL } from "@/types";
@@ -19,6 +18,7 @@ import Loader from "@/components/Loader";
 import QrDownLoad from "./QrDownLoad";
 import QrShape from "./QrShape";
 import QeColors from "./QeColors";
+import { useTranslations } from "next-intl";
 
 export default function QrCreator({
   url,
@@ -31,6 +31,7 @@ export default function QrCreator({
 }) {
   const initialOptions:Options  = business.qr?.qrOptions ? JSON.parse( business.qr.qrOptions) : null 
   const qrRef = useRef<HTMLDivElement | null>(null);
+  const t = useTranslations("qr settings");
   const [bgColor, setBgColor] = useState(initialOptions?.backgroundOptions?.color??"#ffffff");
   const [text, setText] = useState(business.qr?.text??"Scan Me!");
   const [shape, setShape] = useState<DotType>(initialOptions?.dotsOptions?.type??"square");
@@ -102,6 +103,7 @@ export default function QrCreator({
         }
         ctx.textAlign = "left";
         ctx.fillText(text, 5, canvas.height - 3, (canvas.width * 3) / 4); // Position text
+        canvas.style.backgroundColor = bgColor;
       }, 100);
     }
   }, [qrCode, text]);
@@ -136,7 +138,7 @@ export default function QrCreator({
         />
         <div className="space-y-2">
           <Label htmlFor="logo">
-            Logo <span className="text-muted-foreground">(optional)</span>
+            {t("logo")} <span className="text-muted-foreground">({t("optional")})</span>
           </Label>
           <Input
             type="file"
@@ -148,7 +150,7 @@ export default function QrCreator({
       </div>
       <div className="space-y-2">
         <Label htmlFor="Text">
-          Text <span className="text-muted-foreground">(optional)</span>
+          {t("text")} <span className="text-muted-foreground">({t("optional")})</span>
         </Label>
         <Input
           type="text"
@@ -173,11 +175,11 @@ export default function QrCreator({
           <Loader />
         ) : product?(
           <>
-            Next <ArrowRight className="size-5" />
+            {t("Next")} <ArrowRight className="size-5" />
           </>
         ):(
           <>
-            Save <Save className="size-5" />
+            {t("Save")} <Save className="size-5" />
           </>
         )}
       </Button>

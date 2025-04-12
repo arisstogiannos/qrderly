@@ -1,24 +1,29 @@
 "use client";
+import { Translation } from "@/types";
 import { Category } from "@prisma/client";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Categories({ categories }: { categories: Category[] }) {
-  const [currentCategory, setCurrentCategory] = useState(categories.at(0)?.name);
+  const [currentCategory, setCurrentCategory] = useState(
+    categories.at(0)?.name
+  );
+  const lang = useSearchParams().get("l");
+
   const linksRef = useRef<Record<string, HTMLButtonElement | null>>({});
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const isUserClicking = useRef(false); // Prevent scroll effect on click
 
   useEffect(() => {
     categories.forEach(
-      (cat) =>
-        (sectionsRef.current[cat.name] = document.getElementById(cat.name)),
+      (cat) => (sectionsRef.current[cat.id] = document.getElementById(cat.id))
     );
 
     const handleScroll = () => {
       if (isUserClicking.current) return; // Prevent auto-scroll when user clicks
 
       const visibleCategory = categories.find((category) => {
-        const section = sectionsRef.current[category.name];
+        const section = sectionsRef.current[category.id];
         if (!section) return false;
         const rect = section.getBoundingClientRect();
         return (
@@ -28,10 +33,10 @@ export default function Categories({ categories }: { categories: Category[] }) {
       });
 
       if (visibleCategory) {
-        setCurrentCategory(visibleCategory.name);
+        setCurrentCategory(visibleCategory.id);
 
         // Scroll the category button into view only when user is scrolling
-        linksRef.current[visibleCategory.name]?.scrollIntoView({
+        linksRef.current[visibleCategory.id]?.scrollIntoView({
           behavior: "smooth",
           block: "nearest",
           inline: "center",
@@ -58,24 +63,40 @@ export default function Categories({ categories }: { categories: Category[] }) {
   }
 
   return (
-    <div className="sticky top-0 z-10  bg-background/70 font-medium text-foreground backdrop-blur-2xl lg:pt-[100px]">
+    <div className="sticky top-0 z-10  bg-background/70 font-medium text-foreground backdrop-blur-2xl ">
       <div className="scrollbar-hidden my-container flex items-center gap-4 overflow-auto py-4 text-lg capitalize lg:gap-7 ">
         <p className="hidden lg:block lg:text-3xl">Categories</p>
 
-        {categories.map((category) => (
-          <button
-            key={category.name}
-            ref={(el) => {
-              if (el) linksRef.current[category.name] = el;
-            }}
-            className={`rounded-full px-5 py-2 text-sm font-medium capitalize transition-colors lg:text-base xl:hover:bg-primary ${
-              currentCategory === category.name ? "bg-primary" : "bg-primary/30"
-            }`}
-            onClick={() => handleClick(category.name)}
-          >
-            {category.name}
-          </button>
-        ))}
+        {categories.map((category) => {
+          const translationsAsJson: Translation | null = category.translations
+            ? JSON.parse(category.translations)
+            : null;
+
+          const existingTranslation = !!(
+            lang &&
+            translationsAsJson &&
+            translationsAsJson[lang]
+          );
+          const nameToDisplay =
+            existingTranslation && translationsAsJson[lang].name
+              ? translationsAsJson[lang].name
+              : category.name;
+
+          return (
+            <button
+              key={category.id}
+              ref={(el) => {
+                if (el) linksRef.current[category.id] = el;
+              }}
+              className={`rounded-full px-5 py-2 text-sm font-medium capitalize transition-colors lg:text-base xl:hover:bg-primary ${
+                currentCategory === category.id ? "bg-primary" : "bg-primary/30"
+              }`}
+              onClick={() => handleClick(category.id)}
+            >
+              {nameToDisplay}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

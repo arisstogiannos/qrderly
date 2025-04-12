@@ -8,13 +8,11 @@ export default function Template1({
   categories,
   menuItems,
   businessName,
-  lang,
 }: {
   menu: Menu;
   categories: Category[];
   menuItems: MenuItem[];
   businessName: string;
-  lang: string;
 }) {
   return (
     <>
@@ -26,7 +24,6 @@ export default function Template1({
           <MenuItems
             categories={categories}
             menuItems={menuItems}
-            lang={lang}
           />
         </div>
       </div>

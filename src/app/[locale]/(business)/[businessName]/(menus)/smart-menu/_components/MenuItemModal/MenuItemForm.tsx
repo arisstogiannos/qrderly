@@ -22,16 +22,17 @@ export default function MenuItemOptionsForm({
   setOpen: (value: boolean) => void;
 }) {
   const { cartItems, addToCart, updateCartItem } = useCartContext();
-  const [cartItemVersionId, setCartItemVersionId] = useState<string>("");
-const {setPrice,price} = useCardModalContext()
   const existingMenuItems = cartItems.filter(
     (item) => item.menuItem.id === menuItem.id
   );
+  const [cartItemVersionId, setCartItemVersionId] = useState<string>(
+    (!menuItem.preferences && existingMenuItems.length>0) ? existingMenuItems[0].id : ""
+  ); 
+  const { setPrice, price } = useCardModalContext();
 
-  useEffect(()=>{
-
-    setPrice(menuItem.priceInCents)
-  },[])
+  useEffect(() => {
+    setPrice(menuItem.priceInCents);
+  }, []);
 
   const existingMenuItem = existingMenuItems.find(
     (item) => item.id === cartItemVersionId
@@ -46,17 +47,27 @@ const {setPrice,price} = useCardModalContext()
       .replaceAll(",", ", ")
       .slice(1, -1);
     if (cartItemVersionId === "") {
-      addToCart(menuItem, dataAsString,price);
+      addToCart(menuItem, dataAsString, price);
     } else {
-      updateCartItem(dataAsString, cartItemVersionId,price);
+      updateCartItem(dataAsString, cartItemVersionId, price);
     }
-    toast(" Item added to cart",{duration:1500,icon:<CheckCircleIcon/> ,position:"top-left",style:{width:'60%', backgroundColor:"lightgreen", color:"darkgreen",borderColor:"darkgreen"}});
+    toast(" Item added to cart", {
+      duration: 1500,
+      icon: <CheckCircleIcon />,
+      position: "top-left",
+      style: {
+        width: "60%",
+        backgroundColor: "lightgreen",
+        color: "darkgreen",
+        borderColor: "darkgreen",
+      },
+    });
     setOpen(false);
   }
 
   return (
     <form className={cn("grid items-start gap-6")} onSubmit={handleSubmit}>
-      {existingMenuItems && (
+      {existingMenuItems.length > 0 && menuItem.preferences && (
         <MenuItemVersionsInCart
           setCartItemVersionId={setCartItemVersionId}
           cartItemVersionId={cartItemVersionId}
@@ -67,7 +78,7 @@ const {setPrice,price} = useCardModalContext()
         options={menuItem.preferences ?? ""}
         existingOptions={existingMenuItem?.preferences}
       />
-      <MenuItemModalFooter  item={existingMenuItem}  />
+      <MenuItemModalFooter item={existingMenuItem} />
     </form>
   );
 }

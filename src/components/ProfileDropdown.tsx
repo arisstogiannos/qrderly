@@ -15,15 +15,22 @@ import {
   Stars,
   User2,
 } from "lucide-react";
-import Link from "next/link";
+
 import { Session } from "next-auth";
-import { signOut } from "@/app/[locale]/(website)/(auth)/_actions/login";
 import { Button } from "./ui/button";
+import { signOut } from "@/app/[locale]/(auth)/_actions/login";
+import Link from "next/link";
+import {Link as IntlLink} from "@/i18n/navigation";
 
 export function ProfileDropdown({ session }: { session: Session | null }) {
   const businesses = session?.user.business.filter(
     (b) => b.menu && b.menu.published
   );
+  async function handle(){
+    await signOut()
+    location.reload()
+    
+  }
 
   return (
     <DropdownMenu>
@@ -61,11 +68,11 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
                       className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
                       asChild
                     >
-                      <Link
+                      <IntlLink
                         href={"/" + b.name.replaceAll(" ", "-") + "/dashboard"}
                       >
                         <LayoutDashboard /> Dashboard
-                      </Link>
+                      </IntlLink>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
@@ -74,10 +81,10 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
                       <Link
                         target="_blank"
                         href={
-                          "/" +
+                          "/en/" +
                           b.name.replaceAll(" ", "-") +
                           (b.menu.type === "QR_MENU"
-                            ? "/menu?table=admin"
+                            ? "/menu"
                             : "/smart-menu?table=admin")
                         }
                       >
@@ -90,7 +97,7 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem asChild className="">
-              <form action={signOut}>
+              <form  action={handle}>
                 <Button className=" w-full" type="submit">
                   <LogOut className="rotate-180 text-background" />
                   Sign Out

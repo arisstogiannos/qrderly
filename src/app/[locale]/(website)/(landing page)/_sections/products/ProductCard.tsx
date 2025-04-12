@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ProductType } from "@/types";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
+
 
 export function ProductCard({
     isSelected,

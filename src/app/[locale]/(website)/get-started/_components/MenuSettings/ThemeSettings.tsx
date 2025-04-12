@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ErrorMessage } from "@/components/Messages";
 import { Menu, Template } from "@prisma/client";
 import CustomThemeMaker from "./CustomThemeMaker";
+import { useTranslations } from "next-intl";
 
 const themes = {
   T1: [
@@ -28,6 +29,7 @@ export default function ThemeSettings({
   template: Template;
   errors: string[] | undefined;
 }) {
+  const t = useTranslations("menu settings")
   const [selectedTheme, setSelectedTheme] = useState<string>(
     menu?.theme ?? themes[template][0]
   );
@@ -53,7 +55,7 @@ export default function ThemeSettings({
   return (
     <div className="grid gap-3 ">
       <div>
-        <p>Theme</p>
+        <p>{t("Theme")}</p>
         {/* <p className="text-sm sm:text-base text-muted-foreground">
         Change the appearance of your menu by selecting between light, dark
         and custom themes for a more personalized look

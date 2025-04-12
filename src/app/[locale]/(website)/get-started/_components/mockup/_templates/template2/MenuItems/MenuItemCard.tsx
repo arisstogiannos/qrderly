@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/lib/formatter";
+import { formatCurrency, formatCurrencyFromCents } from "@/lib/formatter";
 import { Card, CardContent } from "@/components/ui/card";
 
 
@@ -25,7 +25,7 @@ export function MenuItemCard({ index }: { index: number }) {
               </p>
             </div>
             <span className="text-base">
-              {formatCurrency(230 / 100)}
+              {formatCurrencyFromCents(230, "EUR" )}
             </span>
           </CardContent>
         </Card>

@@ -28,7 +28,7 @@ export function OrdersProvider({
       const p = getPendingOrders(businessName);
       return p;
     },
-    queryKey: ["pending-orders"],
+    queryKey: ["pending-orders" + businessName],
     refetchInterval: 5000,
     
   });

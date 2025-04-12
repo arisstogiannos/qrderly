@@ -2,10 +2,16 @@
 all orders filtering 
 
 design emails
-design publish page
 
 
 add multiple images
+
+
+design publish page
+metatdata
+footer
+menufooter
+sitemap
 
 
 
@@ -24,3 +30,32 @@ DONE clean code
 DONE listen to all stripe events
         canceled sub
         expired sub 
+
+
+
+i need code that convert this format
+
+translations:{
+{
+languageCode:"en",
+name:"beef",
+description:"some beef"
+}
+
+{
+languageCode:"el",
+name:"μοσχαρι",
+description:"καποιο μοσχαρι"
+}
+}
+
+to this format
+
+translations:{
+en:{
+name:"beef",
+description:"some beef"}
+},
+el:{
+name:"μοσχαρι",
+description:"καποιο μοσχαρι"}

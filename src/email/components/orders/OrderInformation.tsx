@@ -31,7 +31,7 @@ export default function OrderInformation({ sub }:{sub: Subscription}) {
               Price Paid
             </Text>
             <Text className=" mt-0 mr-4">
-              {formatCurrency(100 / 100)}
+              {formatCurrency(100 )}
             </Text>
           </Column>
           <Column>

@@ -3,13 +3,7 @@ import Steps from "../_components/Steps";
 
 
 export default async function layout({ children }: { children: ReactNode }) {
-  // const msg = await isAllowed()
-  // if(msg){
-  //   return <div className="h-screen">{msg}</div>
-  // }
 
-  // const frenchTranslation = await translateTextLingva("Μοσχάρι", "en"); // "Bonjour"
-  // console.log(frenchTranslation)
   return (
     <div className="mt-0 space-y-14">
       <Steps />

@@ -8,6 +8,7 @@ import {
   getSupportedTargetLanguagesDeepL,
 } from "@/app/translation";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { getTranslations } from "next-intl/server";
 
 export default async function page({
   params,
@@ -16,6 +17,7 @@ export default async function page({
 }) {
   const businessName = (await params).businessName?.replaceAll("-", " ");
   const { business } = await checkUserAuthorized(businessName);
+  const t = await getTranslations("menu settings");
 
   const srcLanguages = await getSupportedSrcLanguagesDeepL();
   const trgtLanguages = await getSupportedTargetLanguagesDeepL();
@@ -23,7 +25,7 @@ export default async function page({
   return (
     <div className="space-y-16">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-medium">Menu Settings</h1>
+        <h1 className="text-3xl font-medium">{t("title")}</h1>
         <SidebarTrigger className="xl:hidden" />
       </div>
       <form className="flex lg:w-fit lg:flex-row gap-x-40 flex-col min-h-[600px] gap-y-20">

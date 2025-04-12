@@ -8,6 +8,7 @@ import CategoriesTable from "./CategoriesTale";
 import { CategoryWithItemCount } from "@/types";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Filters from "../Filters";
+import { useTranslations } from "next-intl";
 
 export default function CategoriesPage({
   categories,
@@ -42,11 +43,13 @@ export default function CategoriesPage({
       return state;
     }
   );
+
+  const t = useTranslations("categoriesPage")
   return (
     <section className="space-y-20">
       <div className="flex justify-between lg:flex-row flex-col gap-y-4">
         <div className="flex items-center justify-between">
-          <h1 className="font-medium text-2xl"> Categories</h1>
+          <h1 className="font-medium text-2xl">{t("title")}</h1>
           <SidebarTrigger className="xl:hidden" />
         </div>
         <div className="md:flex lg:gap-10 gap-4 contents">
@@ -54,7 +57,7 @@ export default function CategoriesPage({
           <Modal
             trigger={
               <Button>
-                Add New <Plus />
+                {t("add")} <Plus />
               </Button>
             }
             title="Add New Category"

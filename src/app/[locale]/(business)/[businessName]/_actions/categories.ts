@@ -16,7 +16,6 @@ export async function getCategories(businessName: string) {
   const categories = await db.category.findMany({
     where: { menu: { business: { name: businessName } } },
   });
-  console.log("categories");
 
   return categories;
 }
@@ -25,7 +24,6 @@ export async function getCategoriesWithItemCount(businessName: string) {
     where: { menu: { business: { name: businessName } } },
     include: { _count: { select: { menuItems: true } } },
   });
-  console.log("categories");
   return categories;
 }
 
@@ -167,6 +165,8 @@ export async function createCategories(
   businessName: string,
   categories: { name: string; description: string }[]
 ) {
+
+  if(categories.length===0) return{data:[]}
   try {
     const menu = await db.menu.findFirst({
       where: { business: { name: businessName } },

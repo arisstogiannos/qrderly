@@ -1,15 +1,12 @@
 "use client";
 import { Translation } from "@/types";
 import { Category } from "@prisma/client";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-export default function Categories({
-  categories,
-  lang,
-}: {
-  categories: Category[];
-  lang: string;
-}) {
+export default function Categories({ categories }: { categories: Category[] }) {
+  const lang = useSearchParams().get("l");
+
   const [currentCategory, setCurrentCategory] = useState(
     categories.at(0)?.name
   );
@@ -36,10 +33,10 @@ export default function Categories({
       });
 
       if (visibleCategory) {
-        setCurrentCategory(visibleCategory.name);
+        setCurrentCategory(visibleCategory.id);
 
         // Scroll the category button into view only when user is scrolling
-        linksRef.current[visibleCategory.name]?.scrollIntoView({
+        linksRef.current[visibleCategory.id]?.scrollIntoView({
           behavior: "smooth",
           block: "nearest",
           inline: "center",
@@ -66,7 +63,7 @@ export default function Categories({
   }
 
   return (
-    <div className="sticky top-0 z-10  bg-background/70 font-medium text-foreground backdrop-blur-2xl lg:pt-[100px]">
+    <div className="sticky top-0 z-10  bg-background/70 font-medium text-foreground backdrop-blur-2xl ">
       <div className="scrollbar-hidden my-container flex items-center gap-4 overflow-auto py-4 text-lg capitalize lg:gap-7 ">
         <p className="hidden lg:block lg:text-3xl">Categories</p>
 
@@ -75,31 +72,29 @@ export default function Categories({
             ? JSON.parse(category.translations)
             : null;
 
-          const existingTranslation =
-            translationsAsJson && translationsAsJson[lang];
-          category.name =
-            existingTranslation && translationsAsJson[lang].name
-              ? translationsAsJson[lang].name
-              : category.name;
-          category.description =
-            existingTranslation && translationsAsJson[lang].description
-              ? translationsAsJson[lang].description
-              : category.description;
-
+            const existingTranslation = !!(
+              lang &&
+              translationsAsJson &&
+              translationsAsJson[lang]
+            );
+            const nameToDisplay =
+              existingTranslation && translationsAsJson[lang].name
+                ? translationsAsJson[lang].name
+                : category.name;
           return (
             <button
               key={category.id}
               ref={(el) => {
                 if (el) linksRef.current[category.id] = el;
               }}
-              className={`rounded-full text-nowrap px-5 py-2 text-sm font-medium capitalize transition-colors lg:text-base xl:hover:bg-primary ${
-                currentCategory === category.name
+              className={`rounded-full text-nowrap px-5 py-2 text-sm font-medium capitalize transition-colors lg:text-base xl:hover:bg-primary  ${
+                currentCategory === category.id
                   ? "bg-primary"
                   : "bg-primary/30"
               }`}
               onClick={() => handleClick(category.id)}
             >
-              {category.name}
+              {nameToDisplay}
             </button>
           );
         })}

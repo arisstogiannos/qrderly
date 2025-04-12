@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatCurrency } from "@/lib/formatter";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import OrderDetails from "./OrderDetails";
 import { useOrdersContext } from "@/context/OrdersProvider";
@@ -25,46 +23,48 @@ import { Modal } from "../Modal";
 import DeleteModal from "../DeleteModal";
 import { deletOrder } from "../../../_actions/orders";
 import { OrderWithItems } from "@/types";
-// const OrdersTablePagination = dynamic(() => import("./OrdersTablePagination"));
+import DisplayPrice from "@/components/DisplayPrice";
+import { useFormatter, useTranslations } from "next-intl";
 
 export default function OrdersTable() {
-  const { orders, setCurrOrder, currOrder,isPending } = useOrdersContext();
+  const { orders, setCurrOrder, currOrder, isPending } = useOrdersContext();
   const [previousOrders, setPreviousOrders] = useState<OrderWithItems[]>();
   const isFirstRender = useRef(true);
+  const formater = useFormatter();
+  const t = useTranslations("ordersTable");
 
- useEffect(() => {
-   if (previousOrders?.length !== orders?.length) {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-     const playAudio = async () => {
-       try {
-         const audio = new Audio("/new-order-audio.mp3"); // Ensure the file exists in public/
-         await audio.play(); // Handle promise rejection properly
+  useEffect(() => {
+    if (previousOrders?.length !== orders?.length) {
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        return;
+      }
+      const playAudio = async () => {
+        try {
+          const audio = new Audio("/new-order-audio.mp3");
+          await audio.play();
         } catch (error) {
-          // console.error("Audio playback failed:", error);
+          console.error("Audio playback failed:", error);
         }
       };
-      
-      playAudio(); // Call the async function
+
+      playAudio();
     }
     setPreviousOrders(orders);
-}, [orders]);
+  }, [orders]);
 
-  if (isPending) return <Loader className="w-20 mx-auto"/>;
-  if (!orders || orders.length === 0) return <p>No orders found</p>;
+  if (isPending) return <Loader className="w-20 mx-auto" />;
+  if (!orders || orders.length === 0) return <p>{t("noOrders")}</p>;
 
   return (
     <>
       <Table className="text-base ">
         <TableHeader className="text-lg">
           <TableRow className="lg:lg:hover:bg-transparent">
-            <TableHead>Products</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead className="max-sm:hidden">Date</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-center">Actions</TableHead>
+            <TableHead>{t("products")}</TableHead>
+            <TableHead>{t("price")}</TableHead>
+            <TableHead className="max-sm:hidden">{t("date")}</TableHead>
+            <TableHead className="text-center sr-only">{t("actions")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -77,28 +77,29 @@ export default function OrdersTable() {
               <TableRow
                 key={order.id}
                 onClick={() => setCurrOrder(order)}
-                className={(currOrder && currOrder.id === order.id)?"bg-accent pointer-events-none":"cursor-pointer lg:hover:bg-secondary"}
+                className={
+                  currOrder && currOrder.id === order.id
+                    ? "bg-accent "
+                    : "cursor-pointer lg:hover:bg-secondary"
+                }
               >
                 <TableCell>{productNames}</TableCell>
 
-                <TableCell>{formatCurrency(order.price / 100)}</TableCell>
-                <TableCell className="max-sm:hidden">
-                  {order.createdAt.toLocaleTimeString() +
-                    " - " +
-                    order.createdAt.toLocaleDateString()}
-                </TableCell>
                 <TableCell>
-                  <div
-                    className={`rounded-lg lowercase first-letter:uppercase bg-green-600/30 p-1 text-center text-green-600 ${order.status === "PENDING" ? "bg-yellow-600/30 text-yellow-600" : ""}`}
-                  >
-                    {order.status}
-                  </div>
+                  <DisplayPrice price={order.price } />
                 </TableCell>
+                <TableCell className="max-sm:hidden">
+                  {formater.dateTime(new Date(order.createdAt), {
+                    dateStyle: "long",
+                    timeStyle: "short",
+                  })}
+                </TableCell>
+
                 <TableCell className="text-center">
                   <DropdownMenu>
                     <DropdownMenuTrigger className="cursor-pointer">
                       <MoreVertical />
-                      <span className="sr-only">Actions</span>
+                      <span className="sr-only">{t("actions")}</span>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem asChild>
@@ -109,10 +110,10 @@ export default function OrdersTable() {
                               size={"sm"}
                               className="w-full text-sm px-0"
                             >
-                              View Details{" "}
+                              {t("viewDetails")}
                             </Button>
                           }
-                          title="Order Details"
+                          title={t("orderDetails")}
                           subtitle=""
                           classNames="pt-5"
                         >

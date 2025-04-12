@@ -6,7 +6,7 @@ import { AuthError } from "next-auth";
 import { db } from "@/db";
 import { sendVerificationEmail } from "@/email/mail";
 import { generateVerificationToken } from "@/lib/tokens";
-import { UpdateSession } from "next-auth/react";
+import getSession from "@/lib/getSession";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).trim(),
@@ -56,11 +56,14 @@ export async function login(prevState: any, formData: FormData) {
   }
 
   try {
+
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/get-started",
+      // redirectTo: "/get-started",
+      redirect:false
     });
+    return { loggedIn: "Login successful" };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -77,6 +80,11 @@ export async function login(prevState: any, formData: FormData) {
 
 export async function signOut() {
   await authSignOut({
-    redirectTo: "/login",
+    redirect: false,
+  });
+}
+export async function signOutDashboard() {
+  await authSignOut({
+    redirectTo:"/login" ,
   });
 }

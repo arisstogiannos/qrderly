@@ -1,13 +1,11 @@
 "use client";
-import Link from "next/link";
-import React, { ComponentRef, forwardRef, ReactNode, useState } from "react";
+import { Link } from "@/i18n/navigation";
+
+import React, { forwardRef, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import { MenuIcon, X } from "lucide-react";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import { Session } from "next-auth";
-import { signOut } from "@/app/[locale]/(website)/(auth)/_actions/login";
 import { ProfileDropdown } from "./ProfileDropdown";
 import {
   NavigationMenu,
@@ -20,9 +18,10 @@ import {
 } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import Menu from "./Menu";
-import { useRouter } from "@/i18n/navigation";
 import I18nLanguageSelect from "./I18nLanguageSelect";
 import { useTranslations } from "next-intl";
+import { useSession } from "next-auth/react";
+import CreateMenuBtn from "./CreateMenuBtn";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -45,8 +44,15 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ];
 
-export function NavigationDesktop({ session }: { session: Session | null }) {
-  const t = useTranslations("navbar")
+type hrefType =
+  | "/products/qr-menu"
+  | "/products/smart-ordering-qr-menu"
+  | "/products/self-service-smart-menu";
+
+export function NavigationDesktop() {
+  const t = useTranslations("navbar");
+  const { data: session, status } = useSession();
+  console.log(session);
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -79,10 +85,10 @@ export function NavigationDesktop({ session }: { session: Session | null }) {
               {components.map((component) => (
                 <ListItem
                   key={component.title}
-                  title={t(component.title+".title")}
-                  href={component.href}
+                  title={t(component.title + ".title")}
+                  href={component.href as hrefType}
                 >
-                  {t(component.title+".description")}
+                  {t(component.title + ".description")}
                 </ListItem>
               ))}
             </ul>
@@ -92,31 +98,28 @@ export function NavigationDesktop({ session }: { session: Session | null }) {
         <NavigationMenuItem>
           <Link href="/pricing" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            {  t("Pricing")}
+              {t("Pricing")}
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem className="mr-2">
           <Link href="/FAQ-contact" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {t('FAQ/Contact')}
+              {t("FAQ/Contact")}
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <I18nLanguageSelect />
 
-        <Button asChild className="lg:bg-foreground ml-2 p-4 mr-2  text-lg">
-          {!session ? (
+        {!session ? (
+          <Button asChild className="lg:bg-foreground ml-2 p-4 mr-2  text-lg">
             <Link href={"/sign-up"} className="">
-             {t("signBtn")}
+              {t("signBtn")}
             </Link>
-          ) : (
-            <Link href={"/get-started"} className="">
-              {t("createBtn")}
-            </Link>
-          )}
-        </Button>
-
+          </Button>
+        ) : (
+          <CreateMenuBtn session={session} />
+        )}
         {session ? <ProfileDropdown session={session} /> : null}
       </NavigationMenuList>
     </NavigationMenu>
@@ -171,24 +174,13 @@ ListItem.displayName = "ListItem";
 //     </nav>
 //   );
 // }
-function NavLink({ children, href }: { children: ReactNode; href: string }) {
-  const pathname = usePathname();
-  return (
-    <Link
-      href={href}
-      className={`${pathname === href ? "text-primary font-medium" : "text-foreground"} lg:hover:-translate-y-1 transition-transform duration-300`}
-    >
-      {children}
-    </Link>
-  );
-}
 
-export function NavigationMobile({ session }: { session: Session | null }) {
+export function NavigationMobile() {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   return (
     <nav className="flex-center gap-2">
-
       <ProfileDropdown session={session} />
       <I18nLanguageSelect />
       <MenuButton setIsOpen={setIsOpen} />

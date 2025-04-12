@@ -12,7 +12,18 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '5mb',
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+    ],
+  },
+
 };
+
+
 
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);

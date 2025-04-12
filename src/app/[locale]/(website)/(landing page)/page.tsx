@@ -7,20 +7,27 @@ import Preview from "./_sections/preview/Preview";
 import SomeFeatures from "./_sections/SomeFeatures";
 import Testimonials from "./_sections/Testimonials";
 import { Suspense } from "react";
+import {setRequestLocale} from 'next-intl/server';
+ 
 
-export default function Home() {
+
+export default async function IndexPage({params}:{params: Promise<{locale: string}>}) {
+  const locale = (await params).locale;
+ 
+  // Enable static rendering
+  setRequestLocale(locale);
+
   return (
     <>
       <Hero />
-      <ChooseUs/>
+      <ChooseUs />
       <Products />
       <Suspense>
-
-      <Preview/>
+        <Preview />
       </Suspense>
-      <SomeFeatures/>
+      <SomeFeatures />
       <HowItWorks />
-      <Testimonials/>
+      {/* <Testimonials /> */}
       {/* <WhoIsThisFor/> */}
     </>
   );

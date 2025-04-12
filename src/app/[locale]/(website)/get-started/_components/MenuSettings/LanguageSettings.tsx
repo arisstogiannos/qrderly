@@ -7,6 +7,7 @@ import LanguageInput from "./LanguageInput";
 import { ComboBox } from "@/components/ComboBox";
 import { Language } from "@/types";
 import { Menu } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
 export default function LanguageSettings({
   menu,
@@ -19,12 +20,14 @@ export default function LanguageSettings({
   menu?: Menu;
   errors: string[] | undefined;
 }) {
+    const t = useTranslations("menu settings")
+  
   return (
     <div className="grid gap-3">
       <div>
-        <Label>Deafult Language</Label>
+        <Label>{t("Default Language")}</Label>
         <p className="text-sm text-muted-foreground">
-          The native language that you will write the menu items, categories...
+        {t("Default Language Desc")}
         </p>
       </div>
       <ComboBox
@@ -35,7 +38,7 @@ export default function LanguageSettings({
         placeholder="Select Language"
       />
 
-      <Label>Languages</Label>
+      <Label>{t("Languages")}</Label>
       <LanguageInput
         existingLanguages={menu?.languages}
         languages={targetLanguages}

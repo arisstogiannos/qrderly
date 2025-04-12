@@ -1,15 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-
 import { useState } from "react";
-
 import { Check } from "lucide-react";
 import { createSession } from "../../subscriptionActions";
-import { BillingType, UserRole } from "@prisma/client";
-import { BusinessExtended, ExtendedUser, ProductURL } from "@/types";
+import { BillingType } from "@prisma/client";
+import {  ExtendedUser, ProductURL } from "@/types";
 import { productMap } from "@/data";
-import { User } from "next-auth";
 
 type thisProps = {
   plan: {
@@ -34,7 +31,7 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
 
   const unpublishedTrial = user?.subscriptions.find(
     (s) =>
-      s.business == null &&
+      s.businessId == null &&
       s.billing === "FREETRIAL" &&
       s.product === productMap[product]
   );

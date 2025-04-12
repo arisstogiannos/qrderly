@@ -10,15 +10,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import React, { useActionState, useEffect, useState } from "react";
+
+import React, { useActionState } from "react";
 import { submitBusinessInfo } from "../../actions";
 import { ErrorMessage } from "@/components/Messages";
-import { redirect, useRouter } from "next/navigation";
 import { ProductURL } from "@/types";
 import Loader from "@/components/Loader";
-import { Checkbox } from "@/components/ui/checkbox";
 import TablesSetup from "./TablesSetup";
+import { supportedCurrencies } from "@/lib/formatter";
+import { useTranslations } from "next-intl";
 
 export default function BusinessSetupForm({
   product,
@@ -29,26 +29,18 @@ export default function BusinessSetupForm({
     submitBusinessInfo.bind(null, product),
     null
   );
-  //   const [formData,setFormData] = useState({
-  // const router = useRouter()
-
-  // if(state?.success){
-  //   router.push("/get-started/"+product+"/menu-settings")
-  // }
+  const t = useTranslations("businessSetupForm");
 
   return (
     <form action={action} className="flex flex-col gap-6 max-w-3xl">
       <div className="grid gap-3">
         <div className="space-y-1">
-          <Label htmlFor="name">Business Name</Label>
-          <p className="text-sm text-muted-foreground">
-            It will be used as a url for your menu. Example:
-            qrderly.io/mybusiness/menu
-          </p>
+          <Label htmlFor="name">{t("businessName")}</Label>
+          <p className="text-sm text-muted-foreground">{t("businessNameHint")}</p>
         </div>
         <Input
-          pattern="[^-]*" // Disallows "_"
-          title="Underscore (-) is not allowed"
+          pattern="[A-Za-z0-9\-._~ ]*"
+          title={t("businessNameValidation")}
           id="name"
           name="name"
           type="text"
@@ -65,15 +57,39 @@ export default function BusinessSetupForm({
         })}
       </div>
       <div className="grid gap-3">
-        <Label htmlFor="type">Business Type</Label>
+        <Label htmlFor="type">{t("businessType")}</Label>
         <Select name="type" required>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Choose your business type" />
+            <SelectValue placeholder={t("businessTypePlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={"restaurant"}>restaurant</SelectItem>
-            <SelectItem value={"bar"}>bar</SelectItem>
-            <SelectItem value={"cafeteria"}>cafeteria</SelectItem>
+            <SelectItem value={"restaurant"}>{t("restaurant")}</SelectItem>
+            <SelectItem value={"bar"}>{t("bar")}</SelectItem>
+            <SelectItem value={"cafeteria"}>{t("cafeteria")}</SelectItem>
+          </SelectContent>
+        </Select>
+        {state?.errors?.type?.map((er) => {
+          return (
+            <ErrorMessage
+              key={er}
+              classNames="text-sm bg-transparent p-0 "
+              msg={er}
+            />
+          );
+        })}
+      </div>
+      <div className="grid gap-3">
+        <Label htmlFor="currency">{t("currency")}</Label>
+        <Select name="currency" required>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder={t("currencyPlaceholder")} />
+          </SelectTrigger>
+          <SelectContent>
+            {supportedCurrencies.map((currency) => (
+              <SelectItem key={currency} value={currency}>
+                {currency}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         {state?.errors?.type?.map((er) => {
@@ -88,7 +104,7 @@ export default function BusinessSetupForm({
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="country">Country</Label>
+        <Label htmlFor="country">{t("country")}</Label>
         <Input id="country" name="country" type="text" required />
         {state?.errors?.country?.map((er) => {
           return (
@@ -101,7 +117,7 @@ export default function BusinessSetupForm({
         })}
       </div>
       <div className="grid gap-3">
-        <Label htmlFor="city">City</Label>
+        <Label htmlFor="city">{t("city")}</Label>
         <Input id="city" name="city" type="text" required />
         {state?.errors?.city?.map((er) => {
           return (
@@ -137,7 +153,7 @@ export default function BusinessSetupForm({
           <Loader />
         ) : (
           <>
-            Next <ArrowRight className="size-5" />
+            {t("next")} <ArrowRight className="size-5" />
           </>
         )}
       </Button>
@@ -145,4 +161,3 @@ export default function BusinessSetupForm({
     </form>
   );
 }
-

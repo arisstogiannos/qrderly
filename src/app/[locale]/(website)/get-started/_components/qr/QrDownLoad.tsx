@@ -8,6 +8,7 @@ import {  Download } from "lucide-react";
 import { BusinessExtended } from "@/types";
 
 import JSZip from "jszip";
+import { useTranslations } from "next-intl";
 
 export default function QrDownLoad({
   qrCode,
@@ -18,34 +19,16 @@ export default function QrDownLoad({
   text:string
   business: BusinessExtended;
 }) {
+  const t = useTranslations("qr settings");
   if (!qrCode) return null;
 
   const downloadQR = () => {
     if (qrCode) {
       qrCode.download({ name: "custom-qr", extension: "png" });
-      qrCode.getRawData("png");
+      
     }
   };
 
-  // const downloadMultipleQRAsPDF = async () => {
-  //   const qrDataURLs = await Promise.all([
-  //     new QRCodeStyling({ ...qrOptions, data: "url1" }).getRawData("png"),
-  //     new QRCodeStyling({ ...qrOptions, data: "url2" }).getRawData("png"),
-  //     new QRCodeStyling({ ...qrOptions, data: "url3" }).getRawData("png"),
-  //   ]);
-
-  //   const pdf = new jsPDF();
-  //   qrDataURLs.forEach((dataURL, index) => {
-  //     if(index > 0) pdf.addPage();
-  //     if(dataURL){
-
-  //       pdf.addImage(dataURL, "PNG", 10, 10, 100, 100); // Adjust position and size as needed
-  //       pdf.text(`QR Code ${index + 1}`, 10, 120); // Add text below QR code
-  //     }
-  //   });
-
-  //   pdf.save("qrcodes.pdf");
-  // };
 
   const downloadMultipleQRAsZip = async () => {
     if (!business.tables || !qrCode) return;
@@ -138,7 +121,7 @@ export default function QrDownLoad({
   return (
     <div>
       <Button type="button" onClick={business.product==="SMART_QR_MENU"?downloadMultipleQRAsZip:downloadQR} className="w-full">
-        Download QR Code <Download />
+        {t("download")} <Download />
       </Button>
     </div>
   );

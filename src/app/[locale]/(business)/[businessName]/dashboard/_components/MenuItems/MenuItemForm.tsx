@@ -7,7 +7,6 @@ import React, {
   startTransition,
   useActionState,
   useEffect,
-  useLayoutEffect,
   useState,
 } from "react";
 import { upsertMenuItem } from "../../../_actions/menu-items";
@@ -23,6 +22,7 @@ import Options from "./Options";
 import TranslateCheckBox from "../TranslateCheckBox";
 import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function MenuItemForm({
   item,
@@ -36,13 +36,14 @@ export default function MenuItemForm({
   }) => void;
   categories: CategoryWithItemCount[];
 }) {
-  const { businessName,business } = useBusinessContext();
+  const { businessName, business } = useBusinessContext();
   const [state, action, isPending] = useActionState(
     upsertMenuItem.bind(null, businessName),
     null
   );
   const { setOpen } = useModalContext();
   const [preview, setPreview] = useState<string | null>(null);
+  const t = useTranslations("menuItemForm");
 
   useEffect(() => {
     if (state?.success) {
@@ -97,22 +98,8 @@ export default function MenuItemForm({
       className="space-y-5 max-w-xl max-h-[80vh] overflow-y-auto "
       onSubmit={handleSubmit}
     >
-      {/* <div className="flex  items-center gap-x-5">
-        Language:
-        <Suspense>
-          <LanguageSelect
-            languages={languages}
-            Trigger={(children) => (
-              <div className="p-2 border-2 border-foreground/20 text-foreground rounded-lg flex gap-3">
-                {children}
-                <ChevronsUpDown />
-              </div>
-            )}
-          />
-        </Suspense>
-      </div> */}
       <div className="space-y-2">
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">{t("name")}</Label>
         <Input
           name="name"
           id="name"
@@ -120,9 +107,9 @@ export default function MenuItemForm({
           defaultValue={item?.name || state?.data?.name}
           minLength={1}
           maxLength={100}
-          pattern="[^_]*" // Disallows "_"
-          title="Underscore (_) is not allowed"
-          placeholder="Enter the menu items name"
+          pattern="[^_]*"
+          title={t("nameValidation")}
+          placeholder={t("namePlaceholder")}
         />
         <TranslateCheckBox name="translateName" />
         {state?.errors?.name?.map((er) => {
@@ -136,20 +123,22 @@ export default function MenuItemForm({
         })}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="description">Description <span className="text-muted-foreground">(optional)</span></Label>
+        <Label htmlFor="description">
+          {t("description")}{" "}
+          <span className="text-muted-foreground">({t("optional")})</span>
+        </Label>
         <Input
           name="description"
           id="description"
           defaultValue={
             (item?.description || state?.data?.description) ?? undefined
           }
-           pattern="[^_]*" // Disallows "_"
-          title="Underscore (_) is not allowed"
+          pattern="[^_]*"
+          title={t("descriptionValidation")}
           maxLength={100}
-          placeholder="Enter the menu items description"
+          placeholder={t("descriptionPlaceholder")}
         />
         <TranslateCheckBox name={"translateDescription"} />
-
         {state?.errors?.description?.map((er) => {
           return (
             <ErrorMessage
@@ -161,7 +150,7 @@ export default function MenuItemForm({
         })}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="categoryId">Category</Label>
+        <Label htmlFor="categoryId">{t("category")}</Label>
         <Categories categories={categories} currCategory={item?.categoryId} />
         {state?.errors?.categoryId?.map((er) => {
           return (
@@ -174,7 +163,7 @@ export default function MenuItemForm({
         })}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="priceInCents">Price</Label>
+        <Label htmlFor="priceInCents">{t("price")}<span className="text-muted-foreground">{t("priceDesc")}</span></Label>
         <Input
           type="number"
           name="priceInCents"
@@ -182,7 +171,7 @@ export default function MenuItemForm({
           defaultValue={item?.priceInCents || state?.data?.priceInCents}
           required
           min={1}
-          placeholder="Enter the menu items price"
+          placeholder={t("pricePlaceholder")}
         />
         {state?.errors?.priceInCents?.map((er) => {
           return (
@@ -194,9 +183,11 @@ export default function MenuItemForm({
           );
         })}
       </div>
-      
       <div className="space-y-2">
-        <Label htmlFor="options">Options <span className="text-muted-foreground">(optional)</span></Label>
+        <Label htmlFor="options">
+          {t("options")}{" "}
+          <span className="text-muted-foreground">({t("optional")})</span>
+        </Label>
         <Options
           defaultOptions={
             (item?.preferences || state?.data?.options) ?? undefined
@@ -212,67 +203,57 @@ export default function MenuItemForm({
           );
         })}
       </div>
-     {business.menu.template==="T1"&& <div className="space-y-2">
-        <Label htmlFor="image">Image</Label>
-        <label className="cursor-pointer mx-auto relative flex flex-col items-center justify-center border-dashed border-2 border-primary/50 rounded-lg w-full xl:w-[400] h-[250] bg-accent/50 hover:bg-accent hover:border-primary transition-colors">
-          {preview ? (
-            <img
-              src={preview}
-              alt="Uploaded"
-              className="w-full h-full object-cover rounded-lg"
-            />
-          ) : item?.imagePath ? (
-            <CloudImage alt="" src={item.imagePath} fill className="object-cover" />
-          ) : (
-            <div className=" flex flex-col items-center gap-4">
-              <Image
-                src={"/image-placeholder.png"}
-                quality={100}
-                width={150}
-                height={150}
-                alt="placeholder"
+      {business.menu.template === "T1" && (
+        <div className="space-y-2">
+          <Label htmlFor="image">{t("image")}</Label>
+          <label className="cursor-pointer mx-auto relative flex flex-col items-center justify-center border-dashed border-2 border-primary/50 rounded-lg w-full xl:w-[400] h-[250] bg-accent/50 hover:bg-accent hover:border-primary transition-colors">
+            {preview ? (
+              <img
+                src={preview}
+                alt="Uploaded"
+                className="w-full h-full object-cover rounded-lg"
               />
-              <span className="text-gray-500">Click to upload image</span>
-            </div>
-          )}
-          <input
-            type="file"
-            accept={"image/*"}
-            name={"image"}
-            className="hidden"
-            onChange={handleFileChange}
-          />
-        </label>
-        {/* <Input
-          type="file"
-          accept="image/*"
-          name="image"
-          id="image"
-          minLength={1}
-          maxLength={100}
-          placeholder="Enter the menu items image"
-        />
-        {item?.imagePath && item.imagePath !=="pending" && (
-          <CloudImage
-            src={item?.imagePath}
-            height={300}
-            width={300}
-            alt="item image"
-          />
-        )} */}
-        {state?.errors?.image?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
+            ) : item?.imagePath ? (
+              <CloudImage
+                alt=""
+                src={item.imagePath}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className=" flex flex-col items-center gap-4">
+                <Image
+                  src={"/image-placeholder.png"}
+                  quality={100}
+                  width={150}
+                  height={150}
+                  alt="placeholder"
+                />
+                <span className="text-gray-500">{t("imagePlaceholder")}</span>
+              </div>
+            )}
+            <input
+              type="file"
+              accept={"image/*"}
+              name={"image"}
+              className="hidden"
+              onChange={handleFileChange}
             />
-          );
-        })}
-      </div>}
+          </label>
+          {state?.errors?.image?.map((er) => {
+            return (
+              <ErrorMessage
+                key={er}
+                classNames="text-sm bg-transparent p-0 "
+                msg={er}
+              />
+            );
+          })}
+        </div>
+      )}
       {item && <input type="text" name="id" defaultValue={item.id} hidden />}
       <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? <Loader /> : "Save"}
+        {isPending ? <Loader /> : t("save")}
       </Button>
       {state?.error ? <ErrorMessage msg={state.error} /> : null}
     </form>

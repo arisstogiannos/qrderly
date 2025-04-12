@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/db";
+import getSession from "@/lib/getSession";
 import { revalidateTag } from "next/cache";
 
 export async function getAllOrders(businessName: string) {
@@ -72,12 +73,14 @@ export async function deletOrder(id: string, businessName?: string) {
 
 export async function completeOrder(id: string) {
   try {
-    await db.order.update({
+    const order = await db.order.update({
       where: { id },
       data: {
         status: "COMPLETED",
       },
     });
+    const business = (await getSession())?.user.business.find((b)=> b.id ===  order.businessId);
+    revalidateTag("order" + business?.name);
   } catch (err) {
     console.error(err);
     return { success: false, error: "Something went wrong!" };

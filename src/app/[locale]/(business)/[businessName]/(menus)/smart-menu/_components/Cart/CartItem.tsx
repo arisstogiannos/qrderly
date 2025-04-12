@@ -1,13 +1,12 @@
 "use client";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import React from "react";
-
-import { formatCurrency } from "@/lib/formatter";
 import { useCartContext } from "@/context/CartContext";
 import CloudImage from "@/components/CloudImage";
 import { CartItem as CartItemType, Translation } from "@/types";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
+import DisplayPrice from "@/components/DisplayPrice";
 
 export function CartItem({ item }: { item: CartItemType }) {
   const { menuItem, quantity, id,price } = item;
@@ -65,7 +64,7 @@ export function CartItem({ item }: { item: CartItemType }) {
       </div>
       <div className="ml-auto">
         <span className="">
-          {formatCurrency((price / 100) * quantity)}
+          <DisplayPrice price={(price ) * quantity}/>
         </span>
       </div>
     </div>

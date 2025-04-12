@@ -29,7 +29,7 @@ export async function translateTextToMultipleDeepL(
     const translateTextDeepLCached = cache(
       translateTextDeepL,
       [`${srcLang}-${l}-${text}`],
-      { revalidate: 604800 } // Cache for 7 days
+      { revalidate: 604800,tags:[`${srcLang}-${l}-${text}`] } // Cache for 7 days
     );
     return translateTextDeepLCached(text, srcLang, l,context);
   });

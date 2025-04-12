@@ -4,11 +4,21 @@ import React from "react";
 import FAQAccordition from "./_components/FAQAccordition";
 import ContactForm from "./_components/ContactForm";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import {setRequestLocale} from 'next-intl/server';
+import Link from "next/link";
 
-export default async function page() {
+export const dynamic = "error"
+ 
+
+
+export default async function page({params}:{params: Promise<{locale: string}>}) {
+  const locale = (await params).locale;
+ 
+  // Enable static rendering
+  setRequestLocale(locale);
   const t = await getTranslations("faq")
   return (
     <div className="gap-y-20 flex flex-col mt-20">
@@ -22,7 +32,7 @@ export default async function page() {
             className="text-lg md:text-2xl xl:text-xl rounded-full p-6 px-10 gap-x-4 mt-3 bg-foreground "
             asChild
           >
-            <Link href={"#contact-form"} >
+            <Link  href={{hash:"#contact-form"}} >
               {t("button")} <ArrowRight className="size-6 rotate-90" />
             </Link>
           </Button>

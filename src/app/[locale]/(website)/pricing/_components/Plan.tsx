@@ -1,9 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
 import React from "react";
 import { usePlanContext } from "./PlanContext";
-
 import { BusinessExtended, ProductURL } from "@/types";
 import { BillingType, Business, Product, UserRole } from "@prisma/client";
 import { productMap } from "@/data";
@@ -52,13 +51,13 @@ export default function Plan({ plan, user }: thisProps) {
   //   createFreeSubscription.bind(null,  productUrl, businessId),
   //   null
   // );
-  const t = useTranslations("plandata."+plan.title)
+  const t = useTranslations("plandata")
 
   return (
     <section className="bg-background border-2 border-primary/20 p-6 rounded-3xl flex flex-col gap-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-3xl">
-      <h2 className="font-medium text-3xl">{t('title')}</h2>
+      <h2 className="font-medium text-3xl">{t(plan.title+'.title')}</h2>
       <span className="text-3xl font-semibold">
-      {t('billing.'+selectedPlanType+".price")}
+      {t(plan.title+".billing."+selectedPlanType+".price")}
       </span>
       <ul className="space-y-2 text-lg mb-10">
         {plan.bullets.map((bullet,i) => (
@@ -69,7 +68,7 @@ export default function Plan({ plan, user }: thisProps) {
           <Check />
         </span>
       </span>
-            {t("bullets."+(i+1))}
+            {t(plan.title+".bullets."+(i+1))}
           </li>
         ))}
       </ul>
@@ -87,8 +86,8 @@ export default function Plan({ plan, user }: thisProps) {
           )}
           className="rounded-full bg-foreground text-xl py-6"
         >
-          Choose
-        </Button>
+              {t("button")}
+              </Button>
         {!business ? (
           <Button
             variant={"outline"}
@@ -96,8 +95,8 @@ export default function Plan({ plan, user }: thisProps) {
             onClick={createFreeSubscription.bind(null, productUrl, businessId)}
             asChild
           >
-            <Link href={"/get-started/" + productUrl + "/business-setup"}>
-              Free Trial
+            <Link href={{pathname:"/get-started/[product]/business-setup",params:{product:productUrl}}}>
+              {t("free")}
             </Link>
           </Button>
         ) : (
@@ -116,7 +115,7 @@ export default function Plan({ plan, user }: thisProps) {
             className="rounded-full  text-xl py-6 w-full whitespace-normal "
             
           >
-            Upgrade {business.name} To Pro
+           {t("upgrade",{business:business.name})}
           </Button>
         )}
       </div>

@@ -2,17 +2,24 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import React, { useActionState, useState } from "react";
+import { Link } from "@/i18n/navigation";
+import React, { useActionState, useEffect, useState } from "react";
 import { signIn as signInAuth } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { ErrorMessage, SuccessMessage } from "@/components/Messages";
 import { Loader2 } from "lucide-react";
 import { login } from "../_actions/login";
+import { useTranslations } from "next-intl";
 
 export default function LoginForm() {
   const [state, loginAction, isPending] = useActionState(login, null);
-  
+  const t = useTranslations("loginForm");
+
+  useEffect(() => {
+    if (state?.loggedIn) {
+      location.href = "/get-started";
+    }
+  }, [state]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -21,48 +28,43 @@ export default function LoginForm() {
 
   const searchParams = useSearchParams();
   const loginError = searchParams.get("error");
-  let loginErrorMessage = "";
+  let loginErrorMessage = t("error.generic");
   if (loginError === "OAuthAccountNotLinked") {
-    loginErrorMessage = "Try logging in the same way you signed up";
+    loginErrorMessage = t("error.oauth");
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   return (
     <form action={loginAction} className="min-h-[350px]">
       <div className="flex flex-col gap-6">
         <div className="grid gap-3">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("email")}</Label>
           <Input
             autoComplete="email"
             id="email"
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder={t("emailPlaceholder")}
             required
             value={formData.email}
             onChange={handleChange}
           />
-          {state?.errors?.email?.map((er) => {
-            return (
-              <ErrorMessage
-                key={er}
-                classNames="text-sm bg-transparent p-0 "
-                msg={er}
-              />
-            );
-          })}
+          {state?.errors?.email?.map((er) => (
+            <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />
+          ))}
         </div>
         <div className="grid gap-3">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("password")}</Label>
             <Link
               href="/reset-password"
               className=" inline-block text-sm underline-offset-4 hover:underline"
             >
-              Forgot your password?
+              {t("forgotPassword")}
             </Link>
           </div>
           <Input
@@ -73,46 +75,37 @@ export default function LoginForm() {
             required
             value={formData.password}
             onChange={handleChange}
-            placeholder="Enter your password"
+            placeholder={t("passwordPlaceholder")}
           />
-          {state?.errors?.password?.map((er) => {
-            return (
-              <ErrorMessage
-                key={er}
-                classNames="text-sm bg-transparent p-0 "
-                msg={er}
-              />
-            );
-          })}
+          {state?.errors?.password?.map((er) => (
+            <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />
+          ))}
         </div>
         <div className="flex flex-col gap-3">
           <Button disabled={isPending} type="submit" className="w-full">
-            {isPending ? <Loader2 className="animate-spin" /> : "Sign in"}
+            {isPending ? <Loader2 className="animate-spin" /> : t("signIn")}
           </Button>
           <Button
             type="button"
-            onClick={() => signInAuth("google", { callbackUrl: "/" })}
+            onClick={() => signInAuth("google", { callbackUrl: "/get-started" })}
             variant={"outline"}
           >
-            Sign in with Google
-          </Button>{" "}
+            {t("signInWithGoogle")}
+          </Button>
         </div>
       </div>
       <div className="mt-4 text-center text-sm">
-        Don&apos;t have an account?{" "}
+        {t("dontHaveAccount")}{" "}
         <Link href="/sign-up" className="underline underline-offset-4">
-          Sign up
+          {t("signUp")}
         </Link>
       </div>
-      <div className=" space-y-10 pb-1 mt-10">
+      <div className="space-y-10 pb-1 mt-10">
         {loginError && <ErrorMessage msg={loginErrorMessage} />}
         {state?.error && <ErrorMessage msg={state?.error} />}
-        {state?.success && (
-          <SuccessMessage msg="A verification code has been sent to your email!" />
-        )}
+        {state?.success && <SuccessMessage msg={t("verificationSent")} />}
         <div className="mt-auto self-end text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 lg:hover:[&_a]:text-primary">
-          By clicking continue, you agree to our{" "}
-          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          {t("termsAndPrivacy")}
         </div>
       </div>
     </form>

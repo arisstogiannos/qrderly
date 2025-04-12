@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
+
 
 import { notFound, redirect } from "next/navigation";
 import React from "react";

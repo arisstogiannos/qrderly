@@ -8,7 +8,7 @@ import {
   translateTextToMultiple,
   translateTextToMultipleDeepL,
 } from "@/app/translation";
-import { MenuItemAI, Translation } from "@/types";
+import { MenuItemAI, Translation, TranslationAI } from "@/types";
 import { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 import { cache } from "@/lib/cache";
 import { Category } from "@prisma/client";
@@ -20,7 +20,6 @@ export async function getMenuItems(businessName: string) {
     where: { menu: { business: { name: businessName } } },
     include: { category: { select: { name: true } } },
   });
-  console.log(menuItems)
   return menuItems;
 }
 export async function getMenuItemsByMenuId(id: string) {
@@ -82,9 +81,13 @@ export async function upsertMenuItem(
   } = result.data;
 
   try {
-    const getCachedMenu = cache(getMenuByBusinessName,["menu"+businessName],{tags:["menu"+businessName]})
+    const getCachedMenu = cache(
+      getMenuByBusinessName,
+      ["menu" + businessName],
+      { tags: ["menu" + businessName] }
+    );
 
-    const menu = await getCachedMenu(businessName)
+    const menu = await getCachedMenu(businessName);
 
     const translations: Translation = {};
 
@@ -123,12 +126,10 @@ export async function upsertMenuItem(
                 descTranslation !== "" ? descTranslation : description,
             };
           }
-        }else{
+        } else {
           for (let i = 0; i < languages.length; i++) {
-
-
             translations[languages[i]] = {
-              name:  name,
+              name: name,
               description: description,
             };
           }
@@ -144,7 +145,7 @@ export async function upsertMenuItem(
         dataToUpsert = {
           name,
           description,
-          priceInCents: Number(priceInCents)*100,
+          priceInCents: Number(priceInCents),
           categoryId,
           menuId: menu.id,
           preferences: options,
@@ -184,6 +185,8 @@ export async function upsertMenuItem(
   }
 
   revalidateTag("menu-items" + businessName);
+  revalidateTag("categories" + businessName);
+
   return { success: true };
 }
 
@@ -216,20 +219,17 @@ export async function updateItemTranslation(
     };
   }
   const { description, id, name, language, translations } = result.data;
-  console.log(translations)
 
   try {
-
     const translationsJson: Translation = JSON.parse(translations);
 
-      translationsJson[language].name = name;
-      translationsJson[language].description = description;
+    translationsJson[language].name = name;
+    translationsJson[language].description = description;
 
-      await db.menuItem.update({
-        where: { id },
-        data: { translations: JSON.stringify(translationsJson) },
-      });
-    
+    await db.menuItem.update({
+      where: { id },
+      data: { translations: JSON.stringify(translationsJson) },
+    });
   } catch (error) {
     console.error("create item er: " + error);
 
@@ -248,63 +248,28 @@ export async function createMenuItems(
   menuItems: MenuItemAI[],
   categories: Category[]
 ) {
+  const getMenuCached = cache(getMenuByBusinessName, ["menu" + businessName], {
+    tags: ["menu" + businessName],
+  });
   try {
-    const menu = await db.menu.findFirst({
-      where: { business: { name: businessName } },
-    });
-
-    const translations: { [index: number]: Translation } = {};
+    const menu = await getMenuByBusinessName(businessName);
 
     if (menu) {
-      const languages = menu.languages.split(",");
-      const srcLang = languages.reverse().pop();
-
-      if (srcLang) {
-        // Use a for...of loop to handle async operations properly
-        for (let index = 0; index < menuItems.length; index++) {
-          const item = menuItems[index];
-          const textToTranslate = item.name + "_" + item.description;
-
-          if (textToTranslate !== "_") {
-            try {
-              // Fetch translations for the item
-              const translationResult = await translateTextToMultipleDeepL(
-                textToTranslate,
-                srcLang as SourceLanguageCode,
-                languages as TargetLanguageCode[]
-              );
-
-              // Initialize translations for the current item
-              translations[index] = translations[index] || {};
-
-              for (let i = 0; i < translationResult.length; i++) {
-                const translationArr = translationResult[i].split("_");
-                const nameTranslation = translationArr[0];
-                const descTranslation = translationArr[1];
-
-                translations[index][languages[i]] = {
-                  name: nameTranslation !== "" ? nameTranslation : item.name,
-                  description:
-                    descTranslation !== "" ? descTranslation : item.description,
-                };
-              }
-            } catch (error) {
-              console.error(`Error translating item "${item.name}":`, error);
-              // Handle error in translation (you may decide to log or skip)
-            }
-          }
-        }
-      }
-
       const data = menuItems.map((item, i) => {
-        const { category, preferences, categoryDescription, ...rest } = item; // Destructure to exclude the 'category' field
+        const {
+          category,
+          preferences,
+          translations,
+          categoryDescription,
+          ...rest
+        } = item; // Destructure to exclude the 'category' field
         const matchiingCategory = categories.find((c) => c.name === category);
         return {
           ...rest, // Spread the remaining properties
           menuId: menu.id,
           categoryId: matchiingCategory?.id ?? "",
-          translations: JSON.stringify(translations[i]),
-          preferences: preferences ? serializeOptions(preferences) : null,
+          translations: JSON.stringify(convertTranslationFormat(translations)),
+          preferences: preferences ? JSON.stringify(preferences) : null,
         };
       });
 
@@ -325,16 +290,41 @@ export async function createMenuItems(
   }
 
   revalidateTag("menu-items" + businessName);
+  revalidateTag("categories" + businessName);
+  revalidateTag("generate-items" + businessName);
   return { success: true };
+}
+
+function convertTranslationFormat(
+  inputJson: TranslationAI[]
+): Translation | { error: string } {
+  try {
+    if (!Array.isArray(inputJson)) {
+      return { error: "Input JSON is not an array." };
+    }
+
+    const outputJson: Translation = {};
+
+    inputJson.forEach((translation) => {
+      const { languageCode, name, description } = translation;
+      if (languageCode) {
+        outputJson[languageCode] = { name, description };
+      }
+    });
+
+    return outputJson;
+  } catch (error) {
+    return { error: `An error occurred: ${error}` };
+  }
 }
 
 export async function deleteMenuItem(id: string, businessName: string) {
   const menuItem = await db.menuItem.delete({ where: { id } });
 
-  if (!menuItem.imagePath)
-    return { success: false, error: "Something went wrong" };
-
-  await deleteImage(menuItem.imagePath);
   revalidateTag("menu-items" + businessName);
+  revalidateTag("categories" + businessName);
+
+  if (menuItem.imagePath) await deleteImage(menuItem.imagePath);
+  
   return { success: true };
 }

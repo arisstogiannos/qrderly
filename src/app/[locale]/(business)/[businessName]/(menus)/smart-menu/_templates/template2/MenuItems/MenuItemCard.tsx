@@ -1,11 +1,14 @@
-import { formatCurrency } from "@/lib/formatter";
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { MenuItem } from "@prisma/client";
 import { CardModalProvider } from "@/context/CardModalProvider";
-
 import MenuItemModal, {
   ModalTrigger,
-} from "../../../_components/MenuItemModal/MenuItemModal"
+} from "../../../_components/MenuItemModal/MenuItemModal";
+import { Translation } from "@/types";
+import { useSearchParams } from "next/navigation";
+import DisplayPrice from "@/components/DisplayPrice";
+import { useCartContext } from "@/context/CartContext";
 
 export function MenuItemCard({
   id,
@@ -16,13 +19,42 @@ export function MenuItemCard({
   preferences,
   translations,
 }: MenuItem) {
+  const lang = useSearchParams().get("l");
+
+  const { cartItems } = useCartContext();
+  const productInCart = cartItems.filter((item) => item.menuItem.id === id);
+  let quantity = 0;
+  if (productInCart.length > 0) {
+    for (let i = 0; i < productInCart.length; i++) {
+      quantity += productInCart[i].quantity;
+    }
+  }
+
+  const translationsAsJson: Translation | null = translations
+    ? JSON.parse(translations)
+    : null;
+
+  const existingTranslation =
+    lang && translationsAsJson && translationsAsJson[lang];
+  name =
+    existingTranslation &&
+    translationsAsJson[lang].name &&
+    translationsAsJson[lang].name !== "null"
+      ? translationsAsJson[lang].name
+      : name;
+  description =
+    existingTranslation &&
+    translationsAsJson[lang].description &&
+    translationsAsJson[lang].description !== "null"
+      ? translationsAsJson[lang].description
+      : description;
   return (
     <CardModalProvider>
       <ModalTrigger>
         <Card
           id={name}
           className={
-            "flex py-2 px-2 flex-row border-0 border-b-2 border-foreground/10 shadow-none  rounded-none  min-[390px]:min-w-[350px] max-w-full relative  min-h-[100px]  overflow-hidden  text-foreground bg-transparent  transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
+            "flex py-2 px-2 flex-row border-0 border-b-2 border-foreground/10 shadow-none    rounded-none  min-[390px]:min-w-[350px] max-w-full relative  min-h-[100px]  overflow-hidden  text-foreground bg-transparent  transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
           }
         >
           <CardContent
@@ -41,12 +73,17 @@ export function MenuItemCard({
               </p>
             </div>
             <span className="lg:text-lg text-foreground">
-              {formatCurrency(priceInCents / 100)}
+              <DisplayPrice price={priceInCents } />
             </span>
+            {quantity !== 0 && (
+              <div className="absolute right-0 bottom-0 flex size-8 items-center justify-center rounded-tl-xl bg-primary font-medium">
+                {quantity}
+              </div>
+            )}
           </CardContent>
         </Card>
         <MenuItemModal
-        withImage={false}
+          withImage={false}
           menuItem={{
             id,
             name,

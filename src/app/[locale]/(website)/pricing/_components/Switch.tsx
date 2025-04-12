@@ -1,8 +1,10 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { usePlanContext } from "./PlanContext";
 
 export function Switch() {
   const { selectedPlanType, setSelectedPlanType } = usePlanContext();
+  const t = useTranslations("pricing")
   return (
     <div  className="relative  bg-background w-fit rounded-full px-1 py-1 mx-auto">
       <div className="relative w-full h-full">
@@ -18,7 +20,7 @@ export function Switch() {
             }`}
             onClick={() => setSelectedPlanType("yearly")}
           >
-            Yearly (save 20%)
+            {t("yearly")}
           </button>
           <button
             className={`z-10 text-center cursor-pointer transition-colors duration-300 delay-75 ${
@@ -26,7 +28,7 @@ export function Switch() {
             }`}
             onClick={() => setSelectedPlanType("monthly")}
           >
-            Monthly
+            {t("monthly")}
           </button>
         </div>
       </div>

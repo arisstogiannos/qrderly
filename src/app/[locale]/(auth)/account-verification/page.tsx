@@ -1,6 +1,7 @@
 
 import { verifyToken } from "@/lib/tokens";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
+
 import React from "react";
 
 export default async function AccountVerificationPage({

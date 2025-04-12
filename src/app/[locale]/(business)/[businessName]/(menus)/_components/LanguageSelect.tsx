@@ -3,11 +3,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import updateSearchParams from "@/lib/updateSearchParams";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import React, { ReactNode } from "react";
 
 export default function LanguageSelect({
@@ -20,8 +19,6 @@ export default function LanguageSelect({
   const languagesList = languages.split(",");
   const searchParams = useSearchParams();
   const currentLang = searchParams.get("l");
-  const currentTable = searchParams.get("table");
-  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -33,10 +30,10 @@ export default function LanguageSelect({
           </div>
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-background">
+      <DropdownMenuContent className="bg-background border border-primary/50 shadow-2xl">
         {languagesList.map((l) => (
           <DropdownMenuItem
-            onClick={() => router.push("?l="+l +"&table="+currentTable) }
+            onClick={() => updateSearchParams("l",l) }
             className="uppercase text-foreground"
             key={l}
           >

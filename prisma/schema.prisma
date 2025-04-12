@@ -78,6 +78,7 @@ model Business {
   subscription Subscription?
   product      Product       @default(QR_MENU)
   tables       String?
+  currency     String      @default("EUR")
   // Settings Settings[]
 }
 

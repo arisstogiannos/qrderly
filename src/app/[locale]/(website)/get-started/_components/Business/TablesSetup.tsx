@@ -1,6 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 
 export default function TablesSetup({
@@ -12,30 +13,26 @@ export default function TablesSetup({
   const [tables, setTables] = useState<string[]>(
     initialTables ?? ["1", "2", "3"]
   );
+  const t = useTranslations("tablesSetup");
 
   function handleTableNumberChange(value: number) {
     if (value > tables.length) {
-      const newElements:string[] = []
-      for (let index = tables.length+1; index <= value; index++) {
-        newElements.push(index.toString())
-        
+      const newElements: string[] = [];
+      for (let index = tables.length + 1; index <= value; index++) {
+        newElements.push(index.toString());
       }
-      setTables((prev) => [...prev, ...newElements]); 
+      setTables((prev) => [...prev, ...newElements]);
     } else {
-      setTables((prev) => prev.slice(0, value)); 
+      setTables((prev) => prev.slice(0, value));
     }
     setNoTables(value);
   }
 
-
   return (
     <div className="grid gap-3">
       <div className="grid gap-1 max-w-lg">
-        <Label htmlFor="noTables">Number of Tables</Label>
-        <p className="text-sm text-muted-foreground">
-          We generate one qr for each table for order identification. This way
-          you will know which table made the order
-        </p>
+        <Label htmlFor="noTables">{t("numberOfTables")}</Label>
+        <p className="text-sm text-muted-foreground">{t("description")}</p>
         <Input
           id="noTables"
           name="noTables"
@@ -47,25 +44,24 @@ export default function TablesSetup({
         />
       </div>
       <p className="text-sm">
-        The table numbers will be from 1 to {noTables}. You can go ahead and
-        customize the tables if you like
+        {t("tableRange", { noTables })}
       </p>
       <div className="flex flex-row flex-wrap gap-2">
-        {tables.map((t, i) => (
+        {tables.map((table, i) => (
           <div key={i} className="flex items-center gap-2">
             <Input
               id={`table-${i + 1}`}
               name={`table-${i + 1}`}
               type="text"
-              pattern="[^,]*" // Disallows "_"
-              title="Comma (,) is not allowed"
-              defaultValue={t}
+              pattern="[^,]*"
+              title={""+ t("validation")}
+              defaultValue={table}
               onChange={(e) =>
                 setTables((prev) =>
                   prev.map((p, index) => (i === index ? e.target.value : p))
                 )
               }
-              placeholder={`Enter name for Table ${i + 1}`}
+              placeholder={t("placeholder", { tableNumber: i + 1 })}
               className="max-w-20"
               required
             />

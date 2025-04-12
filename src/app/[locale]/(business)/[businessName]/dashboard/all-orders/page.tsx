@@ -5,6 +5,7 @@ import Loader from "@/components/Loader";
 import { checkUserAuthorized } from "../../_actions/authorization";
 import { cache } from "@/lib/cache";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { getTranslations } from "next-intl/server";
 
 // const getOrdersCache = unstable_cache(getAllOrders, ["all-orders-a-s"], {
 //   tags: ["all-orders-a"],
@@ -22,12 +23,14 @@ export default async function page({
     tags: ["orders"+businessName],
     revalidate: 3600,
   });
+  const t = await getTranslations("admin.orders")
+  
   const orders = await getAllOrdersCache(businessName);
 
   return (
     <section className="space-y-10">
       <div className="flex items-center justify-between">
-        <h1 className="font-medium text-2xl">All Orders</h1>
+        <h1 className="font-medium text-2xl">{t("allOrders.title")}</h1>
         <SidebarTrigger className="xl:hidden" />
       </div>
       <Suspense fallback={<Loader className="w-20 mx-auto" />}>

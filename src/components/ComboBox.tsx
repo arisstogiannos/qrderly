@@ -18,6 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useTranslations } from "next-intl"
 
 
 
@@ -38,6 +39,7 @@ export function AddLanguageComboBox<T extends Record<string, string>>({
     }));
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
+    const t = useTranslations("menu settings")
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -48,13 +50,13 @@ export function AddLanguageComboBox<T extends Record<string, string>>({
           aria-expanded={open}
           className="w-[200px] justify-between font-normal"
         >
-          Add Language
+         { t("Add Language")}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput value={value} onValueChange={setValue} placeholder="Search Language..." className="h-9" />
+          <CommandInput value={value} onValueChange={setValue} placeholder={t("Search Language")} className="h-9" />
           <CommandList>
             <CommandEmpty>No item found.</CommandEmpty>
             <CommandGroup>

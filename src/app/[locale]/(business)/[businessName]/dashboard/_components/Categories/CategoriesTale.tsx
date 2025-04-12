@@ -16,7 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CheckCircle2, MoreVertical } from "lucide-react";
+import { CheckCircle2, MoreVertical, TriangleAlert } from "lucide-react";
 import { useBusinessContext } from "@/context/BusinessProvider";
 import { Button } from "@/components/ui/button";
 import {
@@ -80,7 +80,16 @@ export default function CategoriesTable({
       setOptimisticCategory({ newItem: item, type: "delete" });
     });
     deleteCategory(item.id, businessName).catch(() => {
-      toast("Failed to delete item, rolling back...");
+      toast("Failed to delete item, rolling back...", {
+        duration: 2000,
+        icon: <TriangleAlert />,
+        position: "bottom-right",
+        style: {
+          backgroundColor: "red",
+          color: "darkred",
+          borderColor: "darkred",
+        },
+      });
     });
   }
   return (
@@ -107,7 +116,7 @@ export default function CategoriesTable({
           // ✅ Create a new object instead of mutating item
           const translatedItem = {
             ...item,
-            name: existingTranslation ? existingTranslation.name : item.name,
+            name: existingTranslation &&  existingTranslation.name ? existingTranslation.name : item.name,
           };
 
           return (

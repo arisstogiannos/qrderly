@@ -1,9 +1,11 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useTranslations } from 'next-intl';
 import React, { useCallback, useRef } from 'react'
 
 export default function QeColors({setBgColor,setDotColor,dotColor,bgColor}:{dotColor:string,bgColor:string,setDotColor:(v:string)=>void,setBgColor:(v:string)=>void}) {
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
+    const t = useTranslations("qr settings");
 
      const handleDotColorChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +39,7 @@ export default function QeColors({setBgColor,setDotColor,dotColor,bgColor}:{dotC
     
   return (
     <><div className="space-y-2">
-    <Label htmlFor="dotColor">Dots</Label>
+    <Label htmlFor="dotColor">{t("colors")}</Label>
     <Input
       name="dotColor"
       id="dotColor"
@@ -47,8 +49,7 @@ export default function QeColors({setBgColor,setDotColor,dotColor,bgColor}:{dotC
       onChange={handleDotColorChange}
     />
   </div>
-  <div className="space-y-2">
-    <Label htmlFor="bgColor">Background</Label>
+  <div className="space-y-2 mt-auto">
     <Input
       name="bgColor"
       id="bgColor"

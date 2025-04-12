@@ -8,6 +8,7 @@ import MenuItemsTable from "./MenuItemsTable";
 import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
 import { useOptimistic } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useTranslations } from "next-intl";
 
 export default function MenuItemsPage({
   menuItems,
@@ -44,11 +45,12 @@ export default function MenuItemsPage({
       return state;
     }
   );
+  const t = useTranslations("admin.menu items");
   return (
     <section className="xl:space-y-20 space-y-8">
       <div className="flex justify-between lg:flex-row flex-col gap-y-4">
         <div className="flex items-center justify-between">
-          <h1 className="font-medium text-2xl">Menu Items</h1>
+          <h1 className="font-medium text-2xl">{t("title")}</h1>
           <SidebarTrigger className="xl:hidden" />
         </div>
         <div className="md:flex lg:gap-10 gap-4 contents">
@@ -56,10 +58,10 @@ export default function MenuItemsPage({
           <Modal
             trigger={
               <Button type="button">
-                Add New <Plus />
+                {t("add")} <Plus />
               </Button>
             }
-            title="Add New Item"
+            title={t("add new item")}
             subtitle=""
             classNames="pt-5  "
           >

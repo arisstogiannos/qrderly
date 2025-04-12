@@ -2,18 +2,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import React, { useActionState, useState } from "react";
 import { register } from "../_actions/register";
 import { ErrorMessage, SuccessMessage } from "@/components/Messages";
 import { Loader2 } from "lucide-react";
 import { signIn as signInAuth } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 export default function RegisterForm() {
   const [state, registerAction, isPending] = useActionState(register, null);
+  const t = useTranslations("registerForm");
 
-  // Local state to manage form inputs
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,9 +23,9 @@ export default function RegisterForm() {
 
   const searchParams = useSearchParams();
   const registerError = searchParams.get("error");
-  let registerErrorMessage = "An error has occured. Try again";
+  let registerErrorMessage = t("error.generic");
   if (registerError === "OAuthAccountNotLinked") {
-    registerErrorMessage = "Try logging in the same way you signed up";
+    registerErrorMessage = t("error.oauth");
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,38 +33,29 @@ export default function RegisterForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  let passwordsMatch = formData.confirmPassword === formData.password
+  let passwordsMatch = formData.confirmPassword === formData.password;
 
   return (
     <form action={registerAction}>
       <div className="flex flex-col gap-6">
         <div className="grid gap-3">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("email")}</Label>
           <Input
             autoComplete="email"
             id="email"
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder={t("emailPlaceholder")}
             required
             value={formData.email}
             onChange={handleChange}
           />
-          {state?.errors?.email?.map((er) => {
-            return (
-              <ErrorMessage
-                key={er}
-                classNames="text-sm bg-transparent p-0 "
-                msg={er}
-              />
-            );
-          })}
+          {state?.errors?.email?.map((er) => (
+            <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />
+          ))}
         </div>
         <div className="grid gap-3">
-          <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
-           
-          </div>
+          <Label htmlFor="password">{t("password")}</Label>
           <Input
             autoComplete="current-password"
             id="password"
@@ -72,74 +64,67 @@ export default function RegisterForm() {
             required
             value={formData.password}
             onChange={handleChange}
-            placeholder="Password"
-            className={formData.confirmPassword.length>0?passwordsMatch?"ring-2 ring-green-500 focus-visible:ring-green-500":"ring-2 ring-red-500 focus-visible:ring-red-500 ":""}
+            placeholder={t("passwordPlaceholder")}
+            className={
+              formData.confirmPassword.length > 0
+                ? passwordsMatch
+                  ? "ring-2 ring-green-500 focus-visible:ring-green-500"
+                  : "ring-2 ring-red-500 focus-visible:ring-red-500 "
+                : ""
+            }
           />
-
-          {state?.errors?.password?.map((er) => {
-            return (
-              <ErrorMessage
-                key={er}
-                classNames="text-sm bg-transparent p-0 "
-                msg={er}
-              />
-            );
-          })}
+          {state?.errors?.password?.map((er) => (
+            <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />
+          ))}
         </div>
         <div className="grid gap-3">
-          <div className="flex items-center">
-            <Label htmlFor="confirm-password">Confirm Password</Label>
-          </div>
+          <Label htmlFor="confirm-password">{t("confirmPassword")}</Label>
           <Input
             id="confirm-password"
-            type="confirm-password"
+            type="password"
             autoComplete="current-password"
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            placeholder="Confirm Password"
-            className={formData.confirmPassword.length>0?passwordsMatch?"ring-2 ring-green-500 focus-visible:ring-green-500":"ring-2 ring-red-500 focus-visible:ring-red-500 ":""}
-
+            placeholder={t("confirmPasswordPlaceholder")}
+            className={
+              formData.confirmPassword.length > 0
+                ? passwordsMatch
+                  ? "ring-2 ring-green-500 focus-visible:ring-green-500"
+                  : "ring-2 ring-red-500 focus-visible:ring-red-500 "
+                : ""
+            }
             required
           />
-           {state?.errors?.confirmPassword?.map((er) => {
-            return (
-              <ErrorMessage
-                key={er}
-                classNames="text-sm bg-transparent p-0 "
-                msg={er}
-              />
-            );
-          })}
+          {state?.errors?.confirmPassword?.map((er) => (
+            <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />
+          ))}
         </div>
         <div className="flex flex-col gap-3">
-          <Button disabled={isPending } type="submit" className="w-full">
-            {isPending ? <Loader2 className="animate-spin" /> : "Sign up"}
+          <Button disabled={isPending} type="submit" className="w-full">
+            {isPending ? <Loader2 className="animate-spin" /> : t("signUp")}
           </Button>
           <Button
             variant="outline"
             type="button"
-            onClick={() => signInAuth("google")}
+            onClick={() => signInAuth("google",{redirectTo:"/"})}
             className="w-full"
           >
-            Sign up with Google
+            {t("signUpWithGoogle")}
           </Button>
         </div>
       </div>
       <div className="mt-4 text-center text-sm">
-        Already have an account?{" "}
+        {t("alreadyHaveAccount")}{" "}
         <Link href="/login" className="underline underline-offset-4">
-          Sign in
+          {t("signIn")}
         </Link>
       </div>
-      <div className="  space-y-5 pb-1 pt-5">
+      <div className="space-y-5 pb-1 pt-5">
         {registerError && <ErrorMessage msg={registerErrorMessage} />}
-        {state?.success && (
-          <SuccessMessage msg="A verification code has been sent to your email" />
-        )}
+        {state?.success && <SuccessMessage msg={t("verificationSent")} />}
         <div className="mt-auto self-end text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 lg:hover:[&_a]:text-primary">
-          By clicking continue, you agree to our{" "}
-          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          {t("termsAndPrivacy")}
         </div>
       </div>
     </form>

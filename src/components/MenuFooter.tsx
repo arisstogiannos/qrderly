@@ -1,7 +1,8 @@
+import Link from 'next/link'
 import React from 'react'
 
 export default function MenuFooter() {
   return (
-    <footer><a href={"/"}>Powered by Qrderly</a></footer>
+    <footer><Link href={"/"}>Powered by Scanby</Link></footer>
   )
 }

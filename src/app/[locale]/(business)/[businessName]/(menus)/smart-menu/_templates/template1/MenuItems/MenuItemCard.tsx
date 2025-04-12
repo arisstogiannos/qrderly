@@ -1,13 +1,15 @@
 "use client";
-import { formatCurrency } from "@/lib/formatter";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCartContext } from "@/context/CartContext";
 import CloudImage from "@/components/CloudImage";
 import { MenuItem } from "@prisma/client";
 import { CardModalProvider } from "@/context/CardModalProvider";
-import MenuItemModal, { ModalTrigger } from "../../../_components/MenuItemModal/MenuItemModal";
+import MenuItemModal, {
+  ModalTrigger,
+} from "../../../_components/MenuItemModal/MenuItemModal";
 import { useSearchParams } from "next/navigation";
 import { Translation } from "@/types";
+import DisplayPrice from "@/components/DisplayPrice";
 
 export function MenuItemCard({
   id,
@@ -16,12 +18,26 @@ export function MenuItemCard({
   description,
   imagePath,
   preferences,
-  translations
+  translations,
 }: MenuItem) {
   const { cartItems } = useCartContext();
+  const lang = useSearchParams().get("l") ;
   const productInCart = cartItems.filter((item) => item.menuItem.id === id);
+  const translationsAsJson: Translation | null = translations
+    ? JSON.parse(translations)
+    : null;
 
-
+  const existingTranslation = lang && translationsAsJson && translationsAsJson[lang];
+  name =
+    existingTranslation && translationsAsJson[lang].name && translationsAsJson[lang].name !== "null"
+      ? translationsAsJson[lang].name
+      : name;
+  description =
+    existingTranslation &&
+    translationsAsJson[lang].description &&
+    translationsAsJson[lang].description !== "null"
+      ? translationsAsJson[lang].description
+      : description;
 
   let quantity = 0;
   if (productInCart.length > 0) {
@@ -66,7 +82,7 @@ export function MenuItemCard({
               </p>
             </div>
             <span className="lg:text-lg text-foreground">
-              {formatCurrency(priceInCents / 100)}
+              <DisplayPrice price={priceInCents } />
             </span>
             {quantity !== 0 && (
               <div className="absolute right-0 top-0 flex size-10 items-center justify-center rounded-bl-xl bg-primary font-medium">
@@ -75,19 +91,19 @@ export function MenuItemCard({
             )}
           </CardContent>
         </Card>
-        </ModalTrigger>
-        <MenuItemModal
+      </ModalTrigger>
+      <MenuItemModal
         withImage
         menuItem={{
-              id,
-              name,
-              priceInCents,
-              description,
-              imagePath,
-              preferences,
-              translations
-            }}
-          />
+          id,
+          name,
+          priceInCents,
+          description,
+          imagePath,
+          preferences,
+          translations,
+        }}
+      />
     </CardModalProvider>
   );
 }

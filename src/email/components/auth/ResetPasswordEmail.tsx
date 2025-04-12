@@ -28,11 +28,11 @@ function ResetPasswordEmail({resetLink}: {resetLink: string}) {
               <Column className="mr-0 p-0">
                 <Img
                   className=" w-fit mr-0"
-                  src="https://qrderly.vercel.app/logo black.png"
+                  src="https://scanby.vercel.app/logo black.png"
                 />
               </Column>
               <Column className="m-0">
-                <Text className="font-medium text-2xl">Orderly</Text>
+                <Text className="font-medium text-2xl">scanby</Text>
               </Column>
             </Row>
           </Section>
@@ -44,7 +44,7 @@ function ResetPasswordEmail({resetLink}: {resetLink: string}) {
               Hi name
             </Text>
             <Text className="text-base mt-0">
-            Someone recently requested a password change for your Orderly account. If this was you, you can set a new password here:
+            Someone recently requested a password change for your scanby account. If this was you, you can set a new password here:
             </Text>
           </Section>
           <Section>

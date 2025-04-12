@@ -1,9 +1,6 @@
-import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "../context/Providers";
-import { auth } from "@/auth";
-import { SessionProvider } from "next-auth/react";
 
 const instrumentsSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -12,55 +9,76 @@ const instrumentsSans = Instrument_Sans({
 });
 
 export const metadata = {
-  title: "QR Ordering App - Seamless Contactless Orders",
+  title: "Smart QR Menu & Ordering System",
   description:
-    "Scan QR codes to browse menus, place orders, and pay—all from your phone. A modern, fast, and seamless restaurant ordering experience.",
+  "Set up a digital QR menu in under 5 minutes. Upload a PDF or image and instantly generate a menu where your customers can scan and even order from. Get started for free - No Credit Card Required",
   keywords: [
-    "QR ordering",
-    "contactless ordering",
-    "restaurant menu",
-    "food ordering",
-    "online payment",
+    "QR menu",
+    "digital menu",
+    "smart ordering",
+    "self-service menu",
+    "self-service ordering system",
+    "ordering system",
+    "QR menu with ordering system",
+    "AI menu generator",
+    "5-minute menu setup",
+    "QR code menu",
+    "contactless ordering system",
+    "online menu creatoor"
   ],
   authors: [{ name: "Aris Stogiannos", url: "https://aris-stogiannos.gr" }],
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  // openGraph: {
-  //   title: "QR Ordering App - Order Food Seamlessly",
-  //   description: "Transform your restaurant experience with QR-based ordering. Browse, order, and pay effortlessly.",
-  //   url: "https://your-qr-ordering-app.com",
-  //   siteName: "QR Ordering App",
-  //   images: [
-  //     {
-  //       url: "/og-image.jpg",
-  //       width: 1200,
-  //       height: 630,
-  //       alt: "QR Ordering App Screenshot",
-  //     },
-  //   ],
-  //   locale: "en_US",
-  //   type: "website",
-  // },
-  // twitter: {
-  //   card: "summary_large_image",
-  //   site: "@yourTwitterHandle",
-  //   title: "QR Ordering App - Contactless Food Ordering",
-  //   description: "Scan, order, and enjoy a seamless dining experience.",
-  //   images: ["/twitter-card.jpg"],
-  // },
+  openGraph: {
+    title: "QR Ordering App - Browse & Order Seamlessly",
+    description: "Transform your business customer experience with QR Menus with built-in Ordering System option.",
+    url: "https://your-qr-ordering-app.com",
+    siteName: "Scanby",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "QR Ordering App Screenshot",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@yourTwitterHandle",
+    title: "QR Ordering App - Contactless Food Ordering",
+    description: "Scan, order, and enjoy a seamless dining experience.",
+    images: ["/twitter-card.jpg"],
+  },
 };
+export const dynamicParams = false; // or false, to 404 on unknown paths
 
-export default function RootLayout({
+export async function generateStaticParams() {
+  return [
+    {
+      locale: "en",
+    },
+    { locale: "el" },
+  ];
+}
+
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
-        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden`}
+        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
       >
         <Providers>{children}</Providers>
       </body>

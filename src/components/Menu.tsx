@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
+
 import { Button } from "./ui/button";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -160,8 +161,8 @@ const Menu = ({
         )}
       </ul>
       <div className="pb-10 pt-20 flex items-center justify-between">
-        <a href="mailto:qrderly@gmail.com" className="text-base md:text-lg">
-          qrderly@gmail.com
+        <a href="mailto:scanby@gmail.com" className="text-base md:text-lg">
+          scanby@gmail.com
         </a>
         <Button
           onClick={handleClick}

@@ -49,18 +49,19 @@ export async function submitOrder(
     },
   });
   revalidateTag("orders" + businessName);
-   (await cookies()).set("order", order.id,{expires:new Date().setMonth(new Date().getMonth() + 24)});
+   (await cookies()).set(businessName+"order", order.id,{expires:new Date().setHours(new Date().getHours() + 2)});
+   (await cookies()).set(businessName+"last-order", order.id,{expires:new Date().setHours(new Date().getHours() + 2)});
 
   if (menu?.type === "SELF_SERVICE_QR_MENU") {
     redirect(
-      "/" +
+      "/en/" +
         businessName.replaceAll(" ", "-") +
         "/smart-menu/order?order=" +
         order.id
     );
   } else {
     redirect(
-      "/" +
+      "/en/" +
         businessName.replaceAll(" ", "-") +
         "/smart-menu/order-placed?order=" +
         order.id

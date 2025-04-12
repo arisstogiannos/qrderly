@@ -18,6 +18,7 @@ import { getQueryClient } from "../../../../../../../../react-query";
 import { upsertCategory } from "../../../_actions/categories";
 import TranslateCheckBox from "../TranslateCheckBox";
 import { CategoryWithItemCount } from "@/types";
+import { useTranslations } from "next-intl";
 
 export default function CategoriesForm({
   item,
@@ -29,6 +30,7 @@ export default function CategoriesForm({
     type: "delete" | "add" | "update";
   }) => void;
 }) {
+  const t = useTranslations("categoriesForm");
   const { businessName } = useBusinessContext();
   const [state, action, isPending] = useActionState(
     upsertCategory.bind(null, businessName),
@@ -49,7 +51,7 @@ export default function CategoriesForm({
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData);
     const newItem: CategoryWithItemCount = {
-      id: item?.id??crypto.randomUUID(), // Temporary ID
+      id: item?.id ?? crypto.randomUUID(), // Temporary ID
       name: (data.name as string) ?? "",
       description: (data.description as string) || null, // Ensuring nullable
       menuId: "",
@@ -59,7 +61,7 @@ export default function CategoriesForm({
       _count: { menuItems: 0 },
     };
     startTransition(() => {
-      setOptimisticCategory({ newItem, type: item?"update":"add" });
+      setOptimisticCategory({ newItem, type: item ? "update" : "add" });
     });
     setOpen(false);
   }
@@ -71,7 +73,7 @@ export default function CategoriesForm({
       onSubmit={handleSubmit}
     >
       <div className="space-y-2">
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">{t("name")}</Label>
         <Input
           name="name"
           id="name"
@@ -79,7 +81,7 @@ export default function CategoriesForm({
           defaultValue={item?.name || state?.data?.name}
           minLength={1}
           maxLength={100}
-          placeholder="Enter the menu items name"
+          placeholder={t("namePlaceholder")}
         />
         <TranslateCheckBox name="translateName" />
         {state?.errors?.name?.map((er) => {
@@ -93,8 +95,11 @@ export default function CategoriesForm({
         })}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="description">Description <span className="text-muted-foreground">(optional but recommended)</span></Label>
-        <p className="text-muted-foreground text-sm">You can describe a category to get more accurate translates.</p>
+        <Label htmlFor="description">
+          {t("description")}{" "}
+          <span className="text-muted-foreground">({t("optional")})</span>
+        </Label>
+        <p className="text-muted-foreground text-sm">{t("descriptionHint")}</p>
         <Input
           name="description"
           id="description"
@@ -103,7 +108,7 @@ export default function CategoriesForm({
           }
           minLength={1}
           maxLength={100}
-          placeholder="Enter the menu items description"
+          placeholder={t("descriptionPlaceholder")}
         />
         {state?.errors?.description?.map((er) => {
           return (
@@ -118,7 +123,7 @@ export default function CategoriesForm({
       {item && <input type="text" name="id" defaultValue={item.id} hidden />}
 
       <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? <Loader /> : "Save"}
+        {isPending ? <Loader /> : t("save")}
       </Button>
       {state?.error ? <ErrorMessage msg={state.error} /> : null}
     </form>

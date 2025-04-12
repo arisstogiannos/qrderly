@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import {
   Table,
@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatCurrency } from "@/lib/formatter";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +22,9 @@ import { Button } from "@/components/ui/button";
 import { OrderWithItems } from "@/types";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { useBusinessContext } from "@/context/BusinessProvider";
+import DisplayPrice from "@/components/DisplayPrice";
+import { useFormatter } from "next-intl";
+import { useTranslations } from "next-intl";
 // const OrdersTablePagination = dynamic(() => import("./OrdersTablePagination"));
 
 export default function AllOrdersTable({
@@ -30,12 +32,14 @@ export default function AllOrdersTable({
 }: {
   orders: OrderWithItems[];
 }) {
-  const {businessName} = useBusinessContext()
-  if (!orders || orders.length === 0) return <p>No orders found</p>;
+  const { businessName } = useBusinessContext();
+  const formater = useFormatter();
+  const t = useTranslations("allOrdersTable");
+
+  if (!orders || orders.length === 0) return <p>{t("noOrders")}</p>;
 
   async function handleDeleteOrder(item: string) {
-    deletOrder(item,businessName).then(() => {});
-   
+    deletOrder(item, businessName).then(() => {});
   }
 
   return (
@@ -43,11 +47,11 @@ export default function AllOrdersTable({
       <Table className="text-base">
         <TableHeader className="text-lg">
           <TableRow className="lg:lg:hover:bg-transparent">
-            <TableHead>Products</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead className="max-sm:hidden">Date</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-center">Actions</TableHead>
+            <TableHead>{t("products")}</TableHead>
+            <TableHead>{t("price")}</TableHead>
+            <TableHead className="max-sm:hidden">{t("date")}</TableHead>
+            <TableHead>{t("status")}</TableHead>
+            <TableHead className="text-center sr-only">{t("actions")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -58,16 +62,25 @@ export default function AllOrdersTable({
             );
             return (
               <TableRow key={order.id}>
-                <TableCell>{productNames}</TableCell>
-
-                <TableCell>{formatCurrency(order.price / 100)}</TableCell>
+                <TableCell className="truncate max-w-32 sm:max-w-80">
+                  {productNames}
+                </TableCell>
+                <TableCell>
+                  <DisplayPrice price={order.price } />
+                </TableCell>
                 <TableCell className="max-sm:hidden">
-                  {new Date(order.createdAt).toLocaleTimeString()} -{" "}
-                  {new Date(order.createdAt).toLocaleDateString()}
+                  {formater.dateTime(new Date(order.createdAt), {
+                    dateStyle: "long",
+                    timeStyle: "short",
+                  })}
                 </TableCell>
                 <TableCell>
                   <div
-                    className={`rounded-lg lowercase first-letter:uppercase bg-green-600/30 p-1 text-center text-green-600 ${order.status === "PENDING" ? "bg-yellow-600/30 text-yellow-600" : ""}`}
+                    className={`rounded-lg lowercase first-letter:uppercase bg-green-600/30 p-1 text-center text-green-600 ${
+                      order.status === "PENDING"
+                        ? "bg-yellow-600/30 text-yellow-600"
+                        : ""
+                    }`}
                   >
                     {order.status}
                   </div>
@@ -76,7 +89,7 @@ export default function AllOrdersTable({
                   <DropdownMenu>
                     <DropdownMenuTrigger className="cursor-pointer">
                       <MoreVertical />
-                      <span className="sr-only">Actions</span>
+                      <span className="sr-only">{t("actions")}</span>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem asChild>
@@ -87,10 +100,10 @@ export default function AllOrdersTable({
                               size={"sm"}
                               className="w-full text-sm px-0"
                             >
-                              View Details{" "}
+                              {t("viewDetails")}
                             </Button>
                           }
-                          title="Order Details"
+                          title={t("orderDetails")}
                           subtitle=""
                           classNames="pt-5"
                         >

@@ -11,10 +11,12 @@ import React from "react";
 import { useFiltersContext } from "@/context/FiltersProvider";
 import { useBusinessContext } from "@/context/BusinessProvider";
 import { getCategories, getCategoriesWithItemCount } from "../../../_actions/categories";
+import { useTranslations } from "next-intl";
 
 export default function Categories() {
   const { setCategory } = useFiltersContext();
   const { businessName } = useBusinessContext();
+  const t = useTranslations("filters")
 
   const {
     data: categories,
@@ -40,10 +42,10 @@ export default function Categories() {
         </SelectTrigger>
         <SelectContent>
           {!categories || categories.length === 0 ? (
-            <SelectItem value={"all"} className="pointer-events-none">No categories found</SelectItem>
+            <SelectItem value={"all"} className="pointer-events-none">{t("noCategories")}</SelectItem>
           ) : (
             <>
-            <SelectItem key={"all"} value={"all"}>All Categories</SelectItem>
+            <SelectItem key={"all"} value={"all"}>{t("all categories")}</SelectItem>
             {categories.map((category) => (
               <SelectItem key={category.id} value={category.id}>{category.name}</SelectItem>
             ))}

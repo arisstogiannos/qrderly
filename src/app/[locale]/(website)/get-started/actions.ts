@@ -3,12 +3,12 @@
 import { auth } from "@/auth";
 import { productMap, productMapURL } from "@/data";
 import { db } from "@/db";
-import { BusinessExtended, ProductType, ProductURL } from "@/types";
+import { ProductURL } from "@/types";
 import { BillingType, Menu, Product, Template } from "@prisma/client";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import QRCodeStyling, { Options } from "qr-code-styling";
+import { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
 
 const businessSchema = z.object({
@@ -16,6 +16,7 @@ const businessSchema = z.object({
   type: z.string(),
   country: z.string(),
   city: z.string(),
+  currency: z.string(),
   tables: z.string().optional(),
 });
 
@@ -59,6 +60,7 @@ export async function submitBusinessInfo(
         userId: user.id,
         product: productMap[product],
         tables: data.tables,
+        currency: data.currency,
       },
     });
   } catch {
@@ -93,7 +95,6 @@ export async function submitMenuSettings(
       errors: result.error.flatten().fieldErrors,
     };
   }
-
 
   const {
     defaultLanguage,
@@ -144,11 +145,11 @@ export async function submitMenuSettings(
   }
   if (!menu) redirect(`/get-started/${productMapURL[product]}/generate-items`);
 
-  const session = await getSession()
+  const session = await getSession();
 
-  const business =session?.user.business.find((b)=>b.id === businessId)
-  revalidateTag("active-menu" + business?.name)
-  return {success:"Changes saved!"}
+  const business = session?.user.business.find((b) => b.id === businessId);
+  revalidateTag("active-menu" + business?.name);
+  return { success: "Changes saved!" };
 }
 
 export async function createMenu(
@@ -212,7 +213,7 @@ export async function createMenu(
   });
 
   revalidateTag("active-menu" + business.name);
-  revalidatePath("/"+business.name.replaceAll(" ","-")+"/")
+  revalidatePath("/" + business.name.replaceAll(" ", "-") + "/");
 
   const url =
     process.env.NEXT_PUBLIC_SERVER_URL +
@@ -268,20 +269,20 @@ export async function saveQR(
   text: string,
   product?: ProductURL
 ) {
-  const {imageOptions,...rest} = qrOptions
+  const { imageOptions, ...rest } = qrOptions;
   try {
     await db.qR.upsert({
       where: { businessId },
       create: {
         link: qrOptions.data ?? "",
         businessId,
-        qrOptions: JSON.stringify({...rest}),
+        qrOptions: JSON.stringify({ ...rest }),
         text,
       },
       update: {
         link: qrOptions.data ?? "",
         businessId,
-        qrOptions: JSON.stringify({...rest}),
+        qrOptions: JSON.stringify({ ...rest }),
         text,
       },
     });

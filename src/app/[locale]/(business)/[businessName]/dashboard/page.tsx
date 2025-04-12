@@ -10,6 +10,7 @@ import { Edit, Stars } from "lucide-react";
 import { cn } from "@/lib/utils";
 import QrDisplay from "./_components/Dashboard/QrDisplay";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { getTranslations } from "next-intl/server";
 
 export default async function page({
   params,
@@ -17,19 +18,17 @@ export default async function page({
   params: Promise<{ businessName: string }>;
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
-  const { business, user } = await checkUserAuthorized(
-    businessName
-  );
+  const { business, user } = await checkUserAuthorized(businessName);
+  const t = await getTranslations("dashboard");
 
   return (
     <div className=" flex flex-col">
-      <SidebarTrigger className="ml-auto mb-5"/>
-    
-      <div className="grid  xl:grid-cols-3 w-full gap-5">
-        <DashboardSection title="Analytics" classNames="col-span-2">
+      <SidebarTrigger className="ml-auto mb-5" />
+      <div className="grid xl:grid-cols-3 w-full gap-5">
+        <DashboardSection title={t("analytics")} classNames="col-span-2">
           <Suspense
             fallback={
-              <DashboardCard title="loading" classNames="cols-span-full">
+              <DashboardCard title={t("loading")} classNames="cols-span-full">
                 <div className="size-full bg-gray-300"></div>
               </DashboardCard>
             }
@@ -37,10 +36,10 @@ export default async function page({
             <RevenueChart businessName={businessName} />
           </Suspense>
         </DashboardSection>
-        <DashboardSection classNames="max-md:col-span-2" title="QR">
+        <DashboardSection classNames="max-md:col-span-2" title={t("qr")}>
           <Suspense
             fallback={
-              <DashboardCard title="loading" classNames="cols-span-full">
+              <DashboardCard title={t("loading")} classNames="cols-span-full">
                 <div className="size-full bg-gray-300"></div>
               </DashboardCard>
             }
@@ -49,28 +48,28 @@ export default async function page({
           </Suspense>
         </DashboardSection>
       </div>
-      <DashboardSection title="Information">
-        <DashboardCard title="Business">
-          <DashboardCardRow title="Name" value={businessName} />
-          <DashboardCardRow title="Location" value={business.location} />
-          <DashboardCardRow title="Type" value={business.type} />
+      <DashboardSection title={t("information")}>
+        <DashboardCard title={t("business")}>
+          <DashboardCardRow title={t("name")} value={businessName} />
+          <DashboardCardRow title={t("location")} value={business.location} />
+          <DashboardCardRow title={t("type")} value={business.type} />
           <Button className="w-full mt-3">
-            Edit <Edit />
+            {t("edit")} <Edit />
           </Button>
         </DashboardCard>
-        <DashboardCard title="Billing">
+        <DashboardCard title={t("billing")}>
           <DashboardCardRow
-            title="Product"
+            title={t("product")}
             value={business.product.replaceAll("_", " ")}
           />
           <DashboardCardRow
-            title="Last Payment"
+            title={t("lastPayment")}
             value={new Date(
               business.subscription.renewedAt
             ).toLocaleDateString()}
           />
           <DashboardCardRow
-            title="Expires"
+            title={t("expires")}
             value={
               (business.subscription.expiresAt &&
                 new Date(
@@ -80,14 +79,14 @@ export default async function page({
             }
           />
           <Button className="w-full mt-3">
-            Manage <Stars />
+            {t("manage")} <Stars />
           </Button>
         </DashboardCard>
-        <DashboardCard title="Personal">
-          <DashboardCardRow title="Name" value={user?.name ?? ""} />
-          <DashboardCardRow title="Email" value={user.email ?? ""} />
+        <DashboardCard title={t("personal")}>
+          <DashboardCardRow title={t("name")} value={user?.name ?? ""} />
+          <DashboardCardRow title={t("email")} value={user.email ?? ""} />
           <Button className="w-full mt-3">
-            Edit <Edit />
+            {t("edit")} <Edit />
           </Button>
         </DashboardCard>
       </DashboardSection>
@@ -98,7 +97,7 @@ export default async function page({
 async function QrCard({ business }: { business: BusinessExtended }) {
   return (
     <DashboardCard title="Qr Code" classNames="col-span-full w-full">
-      <div className={cn("grid sm:grid-cols-2 grid-cols-1 gap-y-5",!business.tables&&"grid-cols-1")}>
+      <div className={cn("grid sm:grid-cols-2 grid-cols-1 gap-y-5",!business.tables&&" sm:grid-cols-1")}>
         {/* <div className="gap-y-2 items-center flex flex-col"> */}
         <QrDisplay business={business} />
         {business.tables && (

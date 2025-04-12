@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import {Link} from "@/i18n/navigation";
+
 import React from "react";
 import { MainButton } from "../hero/MainButton";
 import { getTranslations } from "next-intl/server";
@@ -16,7 +17,7 @@ const steps = [
 export default async function HowItWorks() {
   const t = await getTranslations("howItWorks")
   return (
-    <section className="grid xl:grid-cols-2 grid-rows-[auto_auto] grid-cols-1 xl:grid-rows-1 font-medium capitalize">
+    <section className="grid xl:grid-cols-2 grid-rows-[auto_auto] grid-cols-1 xl:grid-rows-1 font-medium ">
       <div className="space-y-6 md:space-y-12 lg:space-y-8 max-xl:border-b xl:border-r border-foreground lg:pr-28 pb-14 xl:pb-0">
         <h2 className="text-5xl md:text-8xl ">{t("title")}</h2>
         <p className="text-xl md:text-4xl ">

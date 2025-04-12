@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/lib/formatter";
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import CloudImage from "@/components/CloudImage";
 import { MenuItem } from "@prisma/client";
@@ -6,6 +6,9 @@ import { CardModalProvider } from "@/context/CardModalProvider";
 import MenuItemModal, { ModalTrigger } from "./MenuItemModal";
 import MenuItemOptions from "./MenuItemOptions";
 import MenuItemModalHeader from "./MenuItemModalHeader";
+import { Translation } from "@/types";
+import { useSearchParams } from "next/navigation";
+import DisplayPrice from "@/components/DisplayPrice";
 
 export function MenuItemCard({
   id,
@@ -14,8 +17,26 @@ export function MenuItemCard({
   description,
   imagePath,
   preferences,
+  translations,
 }: MenuItem) {
+  const lang = useSearchParams().get("l");
 
+  const translationsAsJson: Translation | null = translations
+    ? JSON.parse(translations)
+    : null;
+
+  const existingTranslation = lang && translationsAsJson && translationsAsJson[lang];
+  name =
+    existingTranslation && translationsAsJson[lang].name && translationsAsJson[lang].name !== "null"
+      ? translationsAsJson[lang].name
+      : name;
+
+  description =
+    existingTranslation &&
+    translationsAsJson[lang].description &&
+    translationsAsJson[lang].description !== "null"
+      ? translationsAsJson[lang].description
+      : description;
   return (
     <CardModalProvider>
       <ModalTrigger>
@@ -42,7 +63,9 @@ export function MenuItemCard({
             className={"flex flex-col justify-between py-1 px-3  h-full"}
           >
             <div className="space-y-1 lg:space-y-1">
-              <h3 className={"text-base lg:text-lg capitalize text-foreground"}>{name}</h3>
+              <h3 className={"text-base lg:text-lg capitalize text-foreground"}>
+                {name}
+              </h3>
               <p
                 className={
                   "line-clamp-2 text-sm text-muted-foreground lg:text-sm max-w-[140px]"
@@ -52,7 +75,7 @@ export function MenuItemCard({
               </p>
             </div>
             <span className="lg:text-lg text-foreground">
-              {formatCurrency(priceInCents / 100)}
+              <DisplayPrice price={priceInCents } />
             </span>
           </CardContent>
         </Card>
@@ -64,7 +87,7 @@ export function MenuItemCard({
             description,
             imagePath,
             preferences,
-            translations:null
+            translations: null,
           }}
         >
           <MenuItemModalHeader
@@ -75,7 +98,7 @@ export function MenuItemCard({
               description,
               imagePath,
               preferences,
-              translations:null
+              translations: null,
             }}
           />
           <MenuItemOptions
@@ -86,7 +109,7 @@ export function MenuItemCard({
               description,
               imagePath,
               preferences,
-              translations:null
+              translations: null,
             }}
           />
         </MenuItemModal>

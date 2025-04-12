@@ -79,7 +79,7 @@ export function formatAndGroupData(
   if (groupByMonth) {
     formated = chartData.map((item) => ({
       date: monthNames[new Date(item.createdAt).getMonth()],
-      income: item.pricePaidInCents / 100,
+      income: item.pricePaidInCents ,
     }));
   } else {
     formated = chartData.map((item) => ({
@@ -89,7 +89,7 @@ export function formatAndGroupData(
         (new Date(item.createdAt).getMonth() + 1) +
         "/" +
         new Date(item.createdAt).getFullYear(),
-      income: item.pricePaidInCents / 100,
+      income: item.pricePaidInCents ,
     }));
   }
 

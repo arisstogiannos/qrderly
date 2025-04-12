@@ -1,5 +1,6 @@
+import DisplayPrice from "@/components/DisplayPrice";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatCurrency } from "@/lib/formatter";
+import { formatCurrency, formatCurrencyFromCents } from "@/lib/formatter";
 import React from "react";
 
 export default function MenuItem({ index }: { index: number }) {
@@ -19,15 +20,12 @@ export default function MenuItem({ index }: { index: number }) {
       >
         <div className="space-y-0.5 ">
           <h3 className={"  capitalize"}>Product {index}</h3>
-          <p
-            className={
-              "line-clamp-2 text-text-mockup/50  max-w-[140px]"
-            }
-          >
+          <p className={"line-clamp-2 text-text-mockup/50  max-w-[140px]"}>
             Description {index}
           </p>
         </div>
-        <span className="">{formatCurrency(260 / 100)}</span>
+        {formatCurrencyFromCents(230, "EUR")}
+
         {index === 2 && (
           <div className="absolute right-0 top-0 flex size-8 items-center justify-center rounded-bl-xl bg-primary-mockup font-medium">
             {1}
@@ -35,6 +33,5 @@ export default function MenuItem({ index }: { index: number }) {
         )}
       </CardContent>
     </Card>
-    
   );
 }

@@ -31,3 +31,10 @@ export async function saveTables(businessId: string, prev: any, formData: FormDa
 
 //   revalidateTag("business"+businessId)
 }
+export async function getCurrency(businessName: string) {
+
+  return await db.business.findUnique({
+    where:{name:businessName},
+    select:{currency:true}
+  })
+}

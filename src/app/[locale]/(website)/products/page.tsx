@@ -3,7 +3,6 @@ import React from "react";
 import Product from "./_components/Product";
 import Background from "@/components/Background";
 
-// export const dynamic = "error"
 export default function page() {
   
   return (

@@ -15,10 +15,10 @@ export function Navbar({
 }) {
   if (!menu.languages) return <div></div>;
   return (
-    <nav className="my-container z-50 sticky block space-y-10 bg-background/70 py-5 text-foreground backdrop-blur-xl ">
+    <nav className="my-container z-50 sticky  space-y-10 bg-background/70 py-5 text-foreground backdrop-blur-xl ">
       <div className="flex items-center justify-between">
         <h1 className=" w-fit  text-2xl font-semibold uppercase text-primary">
-          coffeeshop
+          {businessName}
         </h1>
         <div className="flex items-center gap-4">
           <Suspense>

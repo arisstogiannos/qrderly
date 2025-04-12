@@ -7,6 +7,7 @@ import { saveTables } from "../../_actions/business";
 import Loader from "@/components/Loader";
 import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function TablesForm({
   business,
@@ -17,17 +18,18 @@ export default function TablesForm({
     saveTables.bind(null, business.id),
     null
   );
-  const router = useRouter()
+  const router = useRouter();
+  const t = useTranslations("tablesForm");
 
-  useEffect(()=>{
+  useEffect(() => {
+    if (state?.success) {
+      router.refresh();
+    }
+  }, [state]);
 
-      if(state?.success){
-        router.refresh()
-      }
-  },[state])
   return (
     <form className="max-w-xl flex flex-col gap-y-5">
-      <p>Tables</p>
+      <p>{t("tables")}</p>
       <TablesSetup initialTables={business.tables?.split(",")} />
       <Button
         disabled={isPending}
@@ -39,7 +41,7 @@ export default function TablesForm({
           <Loader />
         ) : (
           <>
-            Save <Save className="size-5" />
+            {t("save")} <Save className="size-5" />
           </>
         )}
       </Button>

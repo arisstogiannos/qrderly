@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircleIcon, TriangleAlert } from "lucide-react";
+import { ArrowRight, CheckCircleIcon, Save, TriangleAlert } from "lucide-react";
 import React, { useActionState, useEffect } from "react";
 import { submitMenuSettings } from "../../actions";
 import { ProductURL } from "@/types";
@@ -12,6 +12,7 @@ import LanguageSettings from "./LanguageSettings";
 import ThemeSettings from "./ThemeSettings";
 import { Language } from "deepl-node";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export default function MenuSettingsForm({
   businessId,
@@ -59,6 +60,7 @@ export default function MenuSettingsForm({
       }
     }
   }, [menu, state]);
+  const t = useTranslations("menu settings")
 
   return (
     <>
@@ -85,9 +87,12 @@ export default function MenuSettingsForm({
         formAction={action}
       >
         {isPending ? (
-          <Loader />
+          <Loader className="text-xs h-[90%]" />
         ) : menu ? (
-          "Save"
+          <>
+            <Save />
+            {t("Save")}
+          </>
         ) : (
           <>
             Next <ArrowRight className="size-5" />

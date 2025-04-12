@@ -68,7 +68,7 @@ export const sendContactEmail = async (
   }
 
   const emailStatus = await resend.emails.send({
-    from: `Qrderly App <${process.env.SENDER_EMAIL as string}>`,
+    from: `scanby App <${process.env.SENDER_EMAIL as string}>`,
     to: process.env.ADMIN_EMAIL as string,
     subject: "Contact Form",
     react: React.createElement(ContactEmail, { data:result.data }),

@@ -18,7 +18,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { ModalProvider } from "@/context/ModalProvider";
 import { cn } from "@/lib/utils";
 
@@ -73,7 +73,7 @@ export function Modal({
           <DrawerTitle className="text-xl">{title}</DrawerTitle>
           <DrawerDescription className="sr-only">{subtitle}</DrawerDescription>
           <DrawerClose>
-            <X className="bg-foreground text-background rounded-full absolute right-5 top-5 size-8 p-1" />
+            <ChevronDown className="bg-foreground text-background rounded-full absolute right-5 top-5 size-8 p-1" />
           </DrawerClose>
         </DrawerHeader>
         <ModalProvider open={open} setOpen={setOpen}>

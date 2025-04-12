@@ -16,7 +16,7 @@ import { ReactNode } from "react";
 export type ProductType = {
   title: string;
   desc: string;
-  link:string;
+  link: string;
   shortDesc: string;
   videoPath: string;
   steps: string[];
@@ -32,7 +32,7 @@ export type Option = {
 export type ProductURL =
   | "qr-menu"
   | "smart-ordering-qr-menu"
-  | "smart-self-service-menu";
+  | "self-service-smart-menu";
 
 export type Cart = Order & {
   cartItems: CartItem[];
@@ -50,7 +50,7 @@ export type CartItem = {
   menuItem: MenuItemRequired;
   quantity: number;
   preferences: string;
-  price:number
+  price: number;
 };
 
 export type MenuItemRequired = Omit<
@@ -92,8 +92,13 @@ export type MenuItemWithCategory = MenuItem & {
 };
 export type Translation = Record<
   string,
-  { name: string; description: string | undefined | null }
+  { name: string | null; description: string | undefined | null }
 >;
+export type TranslationAI = {
+  languageCode: string;
+  name: string | null;
+  description: string | null | undefined;
+};
 
 export type CategoryWithItemCount = Category & {
   _count: {
@@ -108,19 +113,18 @@ export type MenuItemAI = {
   categoryDescription: string;
   priceInCents: number;
   preferences: { name: string; values: string[] }[] | null;
+  translations: TranslationAI[];
 };
 
-
-export type RequiredOrder =  {
+export type RequiredOrder = {
   id: string;
   price: number;
   status: OrderStatus;
   orderItems: {
-      quantity: number;
-      menuItem: {
-          name: string;
-          priceInCents:number
-      };
+    quantity: number;
+    menuItem: {
+      name: string;
+      priceInCents: number;
+    };
   }[];
-}
-
+};

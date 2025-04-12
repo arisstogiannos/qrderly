@@ -1,6 +1,5 @@
-import { formatCurrency } from "@/lib/formatter";
+import DisplayPrice from "@/components/DisplayPrice";
 import { MenuItemRequired, Option } from "@/types";
-
 
 /**
  * Deserializes the options string into an array of Option objects.
@@ -14,15 +13,12 @@ const deserializeOptions = (str: string | null): Option[] => {
   }
 };
 
-
-
 export default function MenuItemOptions({
   menuItem,
 }: {
   menuItem: MenuItemRequired;
 }) {
   const deserializedOptions = deserializeOptions(menuItem.preferences);
-
 
   return (
     <div className="space-y-7">
@@ -31,8 +27,16 @@ export default function MenuItemOptions({
           <p className="text-base font-normal capitalize">{option.name}</p>
           <ul className="space-y-2 list-disc ">
             {option.values.map((value, i) => (
-              <li key={i} className=" text-base font-light capitalize list-inside  list-item">
-               {value.name} {value.price!=="0"&&<span className="text-foreground/60 font-normal ml-1">+{formatCurrency(Number(value.price)/100)}</span>}
+              <li
+                key={i}
+                className=" text-base font-light capitalize list-inside  list-item"
+              >
+                {value.name}{" "}
+                {value.price && value.price!=='0' && (
+                  <span className="text-foreground/60 font-normal ml-1">
+                    + <DisplayPrice price={Number(value.price) } />
+                  </span>
+                )}
               </li>
             ))}
           </ul>

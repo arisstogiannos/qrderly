@@ -2,13 +2,10 @@
 
 import {
   BadgeCheck,
-  Bell,
-  BriefcaseBusiness,
   ChevronsUpDown,
   CreditCard,
   Eye,
   LogOut,
-  Sparkles,
   User2,
 } from "lucide-react";
 
@@ -27,12 +24,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { signOut } from "@/app/[locale]/(website)/(auth)/_actions/login";
-import { User } from "next-auth";
+import { signOut, signOutDashboard } from "@/app/[locale]/(auth)/_actions/login";
 import { BusinessExtended, ExtendedUser } from "@/types";
-import { Business } from "@prisma/client";
-import Link from "next/link";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import I18nLanguageSelect from "@/components/I18nLanguageSelect";
+import UpgradeSubModal from "../UpgradeSubModal";
 
 export function NavFooter({
   user,
@@ -42,6 +41,8 @@ export function NavFooter({
   activeBusiness: BusinessExtended;
 }) {
   const { isMobile } = useSidebar();
+  const t = useTranslations("admin.navbar");
+  console.log(activeBusiness)
 
   return (
     <SidebarMenu>
@@ -51,20 +52,30 @@ export function NavFooter({
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           asChild
         >
-          <a
+          <I18nLanguageSelect className=" bg-transparent border-background border-2" />
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          asChild
+        >
+          <Link
             href={
-              "/" +
+              "/en/" +
               activeBusiness.name.replaceAll(" ", "-") +
-              (activeBusiness.menu.type === "QR_MENU" ? "/menu" : "/smart-menu") +"?table=admin"
+              (activeBusiness.menu.type === "QR_MENU"
+                ? "/menu"
+                : "/smart-menu?table=admin")
             }
             target="_blank"
-            rel="noreferrer"
           >
             <span className="size-8 rounded-lg bg-foreground text-background flex-center">
               <Eye className="size-6" />
             </span>
-            <span className="truncate">Visit Live Menu</span>
-          </a>
+            <span className="truncate">{t("Visit Live Menu")}</span>
+          </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
       <SidebarMenuItem>
@@ -74,20 +85,22 @@ export function NavFooter({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <div className="size-8 rounded-lg bg-foreground text-background flex-center">
+
                 {user.image ? (
+              <div className="size-8">
                   <Image
-                    src={user.image}
-                    alt="profile"
-                    width={32}
-                    height={32}
-                    className="rounded-full"
+                  src={user.image}
+                  alt="profile"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
                   />
+                  </div>
                 ) : (
+                  <div className="size-8 rounded-lg bg-foreground text-background flex-center">
                   <User2 className="size-6" />
-                )}
-                
               </div>
+                )}
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-sm">{user.email}</span>
@@ -103,9 +116,8 @@ export function NavFooter({
           >
             {activeBusiness.subscription.billing === "FREETRIAL" ? (
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Sparkles />
-                  Upgrade to Pro
+                <DropdownMenuItem asChild>
+                  <UpgradeSubModal business={activeBusiness} />
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
               </DropdownMenuGroup>
@@ -127,21 +139,11 @@ export function NavFooter({
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href={"businesses"}>
-                  <BriefcaseBusiness />
-                  Businesses
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut}>
+            <DropdownMenuItem onClick={signOutDashboard}>
               <LogOut />
-              Log out
+              {t("Logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,5 +1,4 @@
 "use client";
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import {
   Card,
@@ -29,7 +28,7 @@ import {
   formatAndGroupData,
   setDataDateRange,
 } from "@/lib/chartFunctions";
-import { formatCurrency } from "@/lib/formatter";
+import DisplayPrice from "@/components/DisplayPrice";
 
 const chartConfig = {
   desktop: {
@@ -63,7 +62,7 @@ export default function Chart({
       chartData,
       chartTimePeriod.at(0)?.value.createdAfter,
       chartTimePeriod.at(0)?.value.createdBefore,
-      setFormattedChartData,
+      setFormattedChartData
     );
   }, [chartData]);
 
@@ -75,7 +74,9 @@ export default function Chart({
             <CardTitle>Sales Report</CardTitle>
             <CardDescription className="mt-4">
               <div className="">Average Income</div>
-              <div className="text-lg font-bold text-black">{formatCurrency(calculateAvg(formattedChartData))}</div>
+              <div className="text-lg font-bold text-black">
+                <DisplayPrice price={calculateAvg(formattedChartData)} />
+              </div>
             </CardDescription>
           </div>
 
@@ -86,7 +87,7 @@ export default function Chart({
                 chartData,
                 new Date(jsonValue.createdAfter),
                 new Date(jsonValue.createdBefore),
-                setFormattedChartData,
+                setFormattedChartData
               );
             }}
             // defaultValue={JSON.stringify(chartTimePeriod.at(0)?.value)}
@@ -126,7 +127,7 @@ export default function Chart({
               interval={0}
               // tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent  />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Bar
               dataKey="income"
               type="natural"

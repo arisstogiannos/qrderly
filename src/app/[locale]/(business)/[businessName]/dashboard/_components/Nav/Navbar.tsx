@@ -2,6 +2,8 @@
 import * as React from "react";
 import {
   
+  Brain,
+  CloudUpload,
   LayoutDashboard,
   QrCode,
   Settings,
@@ -33,6 +35,13 @@ const data = {
       title: "Dashboard",
       url: "",
       icon: <LayoutDashboard />,
+      isActive: false,
+      
+    },
+    {
+      title: "Upload Menu",
+      url: "upload-menu",
+      icon: <CloudUpload />,
       isActive: false,
       
     },

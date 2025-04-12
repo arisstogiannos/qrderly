@@ -20,8 +20,11 @@ export default function Providers({ children }: { children: ReactNode }) {
 
   const queryClient = getQueryClient();
   return (
+        <SessionProvider  >
+    
     <QueryClientProvider client={queryClient}>
     {children}
     </QueryClientProvider>
+    </SessionProvider>
   );
 }

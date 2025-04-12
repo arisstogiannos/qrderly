@@ -11,15 +11,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { formatCurrency } from "@/lib/formatter";
 import { useCartContext } from "@/context/CartContext";
 
 import { Button } from "@/components/ui/button";
 import { CartItem } from "./CartItem";
 import { submitOrder } from "../../actions";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Loader from "@/components/Loader";
 import { Product } from "@prisma/client";
+import DisplayPrice from "@/components/DisplayPrice";
 
 // type Product = {
 //   id: string;
@@ -97,7 +97,11 @@ export default function Cart({
         <SheetFooter className="mt-auto px-0">
           <form action={action}>
             <Button
-              disabled={cartItems.length === 0 || !table || isPending}
+              disabled={
+                cartItems.length === 0 ||
+                (!table && menuType === "SMART_QR_MENU") ||
+                isPending
+              }
               type="submit"
               className="w-full capitalize"
             >
@@ -105,7 +109,10 @@ export default function Cart({
                 isPending ? (
                   <Loader />
                 ) : (
-                  <span> Complete Order {formatCurrency(total / 100)}</span>
+                  <span>
+                    {" "}
+                    Complete Order <DisplayPrice price={total } />
+                  </span>
                 )
               ) : (
                 <span>You can only order by scanning qr</span>

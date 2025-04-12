@@ -1,12 +1,9 @@
 "use client";
-
 import { MenuItem } from "@prisma/client";
-import { formatCurrency } from "@/lib/formatter";
-
-import Link from "next/link";
 import CloudImage from "@/components/CloudImage";
-
 import { Translation } from "@/types";
+import DisplayPrice from "@/components/DisplayPrice";
+import Link from "next/link";
 
 export function SearchModal({
   products,
@@ -52,7 +49,7 @@ export function SearchModal({
                 </p>
               </div>
               <p className="ml-auto text-sm">
-                {formatCurrency(p.priceInCents / 100)}
+                <DisplayPrice price={p.priceInCents }/>
               </p>
             </div>
           </Link>

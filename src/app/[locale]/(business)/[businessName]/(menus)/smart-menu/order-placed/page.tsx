@@ -1,12 +1,9 @@
 import React from "react";
 import { getOrderById } from "../../../_actions/orders";
 import { redirect } from "next/navigation";
-import { CheckCircle2 } from "lucide-react";
 import CheckAnimation from "@/components/CheckAnimation";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { formatCurrency } from "@/lib/formatter";
 import BackButton from "../_components/BackButton";
+import DisplayPrice from "@/components/DisplayPrice";
 
 export default async function page({
   searchParams,
@@ -37,17 +34,23 @@ export default async function page({
                 <p>
                   {item.quantity}x {item.menuItem.name}
                 </p>
-                <p>{formatCurrency(item.price / 100)}</p>
+                <p>
+                  {" "}
+                  <DisplayPrice price={item.price } />
+                </p>
               </div>
             ))}
             <hr />
             <div className="flex justify-between">
               <p>Total Price</p>
-              <p>{formatCurrency(validOrder.price/100)}</p>
+              <p>
+                {" "}
+                <DisplayPrice price={validOrder.price } />
+              </p>
             </div>
           </div>
         </div>
-       <BackButton/>
+        <BackButton />
       </div>
     </section>
   );

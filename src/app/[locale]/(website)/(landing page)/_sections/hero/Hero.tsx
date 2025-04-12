@@ -1,15 +1,14 @@
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+
 import React from "react";
 import PhoneMockup from "./PhoneMockup";
 import { MainButton } from "./MainButton";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 export default async function Hero() {
-
-  const t = await getTranslations("Hero")
+  const t = await getTranslations("Hero");
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 grid-rows-2 xl:grid-rows-1 xl:mt-20 xl:h-[700px] mb-0 lg:mb-40">
       <div className="absolute top-0  left-0 -z-10  xl:w-full h-screen overflow-x-hidden w-screen backgroundMesh  ">
@@ -23,11 +22,9 @@ export default async function Hero() {
       </div>
       <div className="space-y-5 mt-20">
         <h1 className=" font-bold  text-4xl md:text-6xl leading-tight ">
-       { t("title")}
+          {t("title")}
         </h1>
-        <p className="text-xl md:text-4xl">
-        { t("subtitle")}
-        </p>
+        <p className="text-xl md:text-4xl">{t("subtitle")}</p>
         {/* <Button
           variant={"outline"}
           asChild
@@ -41,9 +38,9 @@ export default async function Hero() {
             </span>{" "}
           </Link>
         </Button> */}
-        <MainButton className="mt-5 lg:mt-14 md:text-xl" >
-        <Link href={"/get-started"} className="flex gap-4 items-center">
-          {t("button")} <ArrowRight />
+        <MainButton className="mt-5 lg:mt-14 md:text-xl">
+          <Link href={"/get-started"} className="flex gap-4 items-center">
+            {t("button")} <ArrowRight />
           </Link>
         </MainButton>
       </div>

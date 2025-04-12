@@ -1,9 +1,8 @@
-import { plandata, productMap } from "@/data";
+import { plandata } from "@/data";
 import { db } from "@/db";
 import PurchaseReceiptEmail from "@/email/components/orders/PurchaseReceipt";
-import { ProductURL } from "@/types";
 import { BillingType, Product } from "@prisma/client";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import Stripe from "stripe";
@@ -31,23 +30,23 @@ export async function POST(req: NextRequest) {
     const email = session.metadata?.email;
     const businessId = session.metadata?.businessId ?? "";
     const subToUpgrade = session.metadata?.freeSubscriptionId ?? "";
-    
+
     if (!userId || !billing || !product || !email) {
       return new NextResponse("Bad Request: Missing Metadata", { status: 400 });
     }
-    
+
     const currentDate = new Date();
     const expireDate =
-    billing === "MONTHLY"
-    ? new Date(currentDate.setMonth(currentDate.getMonth() + 1))
-    : new Date(currentDate.setFullYear(currentDate.getFullYear() + 1));
-    
+      billing === "MONTHLY"
+        ? new Date(currentDate.setMonth(currentDate.getMonth() + 1))
+        : new Date(currentDate.setFullYear(currentDate.getFullYear() + 1));
+
     const subscriptionId =
-    typeof session.subscription === "object"
-    ? session.subscription?.id
-    : session.subscription;
+      typeof session.subscription === "object"
+        ? session.subscription?.id
+        : session.subscription;
     const subscriptionData = {
-      userId:userId,
+      userId: userId,
       billing: billing,
       product: product,
       businessId: businessId !== "" ? businessId : null,
@@ -55,31 +54,28 @@ export async function POST(req: NextRequest) {
       stripeSubId: subscriptionId,
       hasExpired: false,
     };
-    
+
     let query;
-    
+
     if (subToUpgrade !== "") {
       query = { id: subToUpgrade };
     } else {
       query = { businessId_product: { businessId, product } };
     }
 
-
-    
     const sub = await db.subscription.upsert({
       where: query,
-      include:{business:true},
-      create:subscriptionData,
-      update:subscriptionData
-      
+      include: { business: true },
+      create: subscriptionData,
+      update: subscriptionData,
     });
-    
+
     // const {
     //   subscriptions: [sub],
     // } = await db.user.update({
     //   where: { id: userId },
     //   select: { subscriptions: {include:{business:true}, orderBy: { purchasedAt: "desc" }, take: 1 } },
-      
+
     //   data: {
     //     subscriptions: {
     //       upsert: {
@@ -90,7 +86,7 @@ export async function POST(req: NextRequest) {
     //     },
     //   },
     // });
-    
+
     revalidateTag("active-menu" + sub?.business?.name);
 
     await resend.emails.send({
@@ -115,6 +111,32 @@ export async function POST(req: NextRequest) {
     });
 
     revalidateTag("active-menu" + sub?.business?.name);
+  } else if (event.type === "customer.subscription.updated") {
+    const updatedSub = event.data.object;
+    const newPlan = updatedSub.items.data[0].plan;
+    console.log(updatedSub.items.data[0].plan.id);
+    const newSubProduct = plandata.find(
+      (plan) =>
+        plan.billing[newPlan.interval === "month" ? "monthly" : "yearly"]
+          .price_id === newPlan.id
+    );
+    if (newSubProduct) {
+      const sub = await db.subscription.update({
+        where: { stripeSubId: updatedSub.id },
+        data: {
+          billing: newPlan.interval === "month" ? "MONTHLY" : "YEARLY",
+          product: newSubProduct.product,
+          purchasedAt:new Date(),
+          renewedAt:new Date(),
+          business:{update:{product:newSubProduct.product,menu:{update:{type:newSubProduct.product}}}}
+        },
+        select:{business:{select:{name:true}}}
+      });
+      revalidateTag("active-menu" + sub?.business?.name);
+    }
+
+    // Get the current period end to set the new expiration date
+    const newExpireDate = new Date(updatedSub.current_period_end * 1000); // Stripe returns seconds
   }
 
   return new NextResponse();

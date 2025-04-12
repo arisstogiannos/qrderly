@@ -1,7 +1,6 @@
 "use client";
 import { FeatureType } from "@/types";
 import { AnimatePresence, useInView, motion } from "framer-motion";
-import { Brush } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 

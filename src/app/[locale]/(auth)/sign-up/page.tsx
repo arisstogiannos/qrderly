@@ -1,13 +1,15 @@
 import React, { Suspense } from "react";
 import { FormWrapper } from "../_components/FormWrapper";
 import RegisterForm from "../_components/RegisterForm";
+import { useTranslations } from "next-intl";
 
 export default function page() {
-  return (
-    <FormWrapper title="register" subtitle="create an account">
-      <Suspense>
+  const t = useTranslations("registerPage");
 
-      <RegisterForm />
+  return (
+    <FormWrapper title={t("title")} subtitle={t("subtitle")}>
+      <Suspense>
+        <RegisterForm />
       </Suspense>
     </FormWrapper>
   );

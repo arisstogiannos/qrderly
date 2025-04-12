@@ -3,9 +3,9 @@ import { useEffect } from "react";
 
 const VideoContainer = ({ selectedProduct }: { selectedProduct: number }) => {
   const videos = [
-    { src: "/QR animation.webm", idN: "des" },
-    { src: "/smart QR animation.webm", idN: "seo" },
-    // { src: "/QR animation.webm", idN: "dev" },
+    { src: "/videos/QR animation.webm", idN: "des" },
+    { src: "/videos/smart QR animation.webm", idN: "seo" },
+    { src: "/videos/self-service.webm", idN: "dev" },
   ];
   useEffect(() => {
     if (

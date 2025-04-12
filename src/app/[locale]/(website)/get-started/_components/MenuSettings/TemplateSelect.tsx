@@ -11,11 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Menu, Template } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
 export default function TemplateSelect({template,menu,errors}:{template:Template,menu?:Menu,errors?:string[] | undefined}) {
+  const t = useTranslations("menu settings")
   return (
     <div className="grid gap-3">
-    <Label>Template</Label>
+    <Label>{t("Template")}</Label>
     <Select
       required
       name="template"
@@ -26,8 +28,8 @@ export default function TemplateSelect({template,menu,errors}:{template:Template
         <SelectValue placeholder="Select template" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="T1">Template 1</SelectItem>
-        <SelectItem value="T2">Template 2</SelectItem>
+        <SelectItem value="T1">{t("T1")}</SelectItem>
+        <SelectItem value="T2">{t("T2")}</SelectItem>
       </SelectContent>
     </Select>
 

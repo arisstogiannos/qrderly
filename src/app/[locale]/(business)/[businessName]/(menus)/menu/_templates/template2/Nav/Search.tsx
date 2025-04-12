@@ -43,7 +43,7 @@ export function SearchBar({ businessName }: { businessName: string }) {
         placeholder="Search"
         className="bg-transparent placeholder:text-primary/50 w-full focus:outline-none"
         value={query}
-        onChange={(e) => setQuery(e.target.value.toLowerCase())}
+        onChange={(e) => setQuery(e.target.value)}
         onClick={() => setOpen(true)}
       />
       {filteredProducts.length > 0 && open && (
@@ -68,14 +68,14 @@ function filter(products: MenuItem[], lang: string, query: string) {
 
     if (existingTranslation) {
       condition =
-        (translationsAsJson[lang].name.toLowerCase().includes(query) ||
-          translationsAsJson[lang].description?.toLowerCase().includes(query)) &&
+        (translationsAsJson[lang].name.toLowerCase().includes(query.toLowerCase()) ||
+          translationsAsJson[lang].description?.toLowerCase().includes(query.toLowerCase())) &&
         query !== "";
     } else {
       condition =
-        (p.name.toLowerCase().includes(query) ||
-          p.description?.toLowerCase().includes(query) ||
-          p.categoryId.toLowerCase().includes(query)) &&
+        (p.name.toLowerCase().includes(query.toLowerCase()) ||
+          p.description?.toLowerCase().includes(query.toLowerCase()) ||
+          p.categoryId.toLowerCase().includes(query.toLowerCase())) &&
         query !== "";
     }
 

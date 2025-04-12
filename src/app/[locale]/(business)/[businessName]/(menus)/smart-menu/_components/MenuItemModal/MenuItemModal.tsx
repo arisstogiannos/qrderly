@@ -8,11 +8,11 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { ReactNode } from "react";
-import { formatCurrency } from "@/lib/formatter";
 import CloudImage from "@/components/CloudImage";
 import { useCardModalContext } from "@/context/CardModalProvider";
 import MenuItemOptionsForm from "./MenuItemForm";
 import { MenuItemRequired } from "@/types";
+import DisplayPrice from "@/components/DisplayPrice";
 
 export default function MenuItemModal({
   menuItem,
@@ -53,14 +53,14 @@ export default function MenuItemModal({
 
 function MenuItemModalHeader({ menuItem }: { menuItem: MenuItemRequired }) {
   return (
-    <DrawerHeader className=" sticky top-0 py-7 px-0 bg-gradient-to-b from-myBlack to-transparent from-70% flex items-start justify-between  flex-row">
+    <DrawerHeader className=" sticky top-0 py-7 px-0 bg-gradient-to-b from-background to-transparent from-70% flex items-start justify-between  flex-row">
       <div className="space-y-4">
         <DrawerTitle className="font-normal ">{menuItem.name}</DrawerTitle>
         <DrawerDescription className="overflow-hidden">
           {menuItem.description}
         </DrawerDescription>
       </div>
-      <p>{formatCurrency(menuItem.priceInCents / 100)}</p>
+      <p><DisplayPrice price={menuItem.priceInCents }/></p>
     </DrawerHeader>
   );
 }

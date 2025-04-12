@@ -10,7 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Delete, Trash, Trash2, X } from "lucide-react";
+import {  Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 
 export default function DeleteModal<T>({
@@ -21,6 +22,7 @@ export default function DeleteModal<T>({
   action: (item: T) => void;
 }) {
   const [open, setOpen] = React.useState(false);
+  const t = useTranslations("admin.delete");
   
 
   return (
@@ -31,23 +33,23 @@ export default function DeleteModal<T>({
           size={"sm"}
           className="w-full text-sm px-0 py-4 "
         >
-         <Trash2/> Delete
+         <Trash2/> {t("delete")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xs sm:max-w-sm h-auto">
+      <DialogContent className="max-w-3xs sm:max-w-sm h-auto p-4">
         <DialogHeader className="">
-          <DialogTitle className="textb">Delete Item</DialogTitle>
+          <DialogTitle className="textb">{t("title")}</DialogTitle>
           <DialogDescription>
-            Are You sure you want to delete this item?
+           {(t("desc"))}
           </DialogDescription>
         </DialogHeader>
           <Button
             variant={"destructive"}
             size={"sm"}
-            className="w-full text-sm px-0 py-4"
+            className="w-full text-sm px-0 py-4 mt-3"
             onClick={action.bind(null, item)}
           >
-            Delete
+            {t("delete")}
           </Button>
       </DialogContent>
     </Dialog>

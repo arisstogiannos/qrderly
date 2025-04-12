@@ -1,12 +1,8 @@
 "use client";
-
 import { MenuItem } from "@prisma/client";
-import { formatCurrency } from "@/lib/formatter";
-
-import Link from "next/link";
-import CloudImage from "@/components/CloudImage";
-
 import { Translation } from "@/types";
+import DisplayPrice from "@/components/DisplayPrice";
+import Link from "next/link";
 
 export function SearchModal({
   products,
@@ -18,7 +14,7 @@ export function SearchModal({
   lang: string;
 }) {
   return (
-    <div className="my-container absolute left-0 top-full mt-2 w-full gap-3 rounded-lg bg-secondary p-2 duration-300 animate-in fade-in-0 slide-in-from-top-3">
+    <div className="my-container absolute left-0 top-full mt-2 w-full gap-3 rounded-lg bg-secondary p-2 duration-300 animate-in fade-in-0 slide-in-from-top-3 shadow-lg shadow-primary">
       <div
         onClick={() => setOpen(false)}
         className="fixed top-0 left-0  w-full h-screen -z-10 "
@@ -44,7 +40,7 @@ export function SearchModal({
                 </p>
               </div>
               <p className="ml-auto text-sm">
-                {formatCurrency(p.priceInCents / 100)}
+                <DisplayPrice price={p.priceInCents }/>
               </p>
             </div>
           </Link>

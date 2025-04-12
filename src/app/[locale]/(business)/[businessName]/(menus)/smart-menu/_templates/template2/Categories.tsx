@@ -1,14 +1,13 @@
 "use client";
 import { Translation } from "@/types";
 import { Category } from "@prisma/client";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Categories({
   categories,
-  lang,
 }: {
   categories: Category[];
-  lang: string;
 }) {
   const [currentCategory, setCurrentCategory] = useState(
     categories.at(0)?.name
@@ -16,18 +15,19 @@ export default function Categories({
   const linksRef = useRef<Record<string, HTMLButtonElement | null>>({});
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const isUserClicking = useRef(false); // Prevent scroll effect on click
+  const lang = useSearchParams().get("l");
 
   useEffect(() => {
     categories.forEach(
       (cat) =>
-        (sectionsRef.current[cat.name] = document.getElementById(cat.id))
+        (sectionsRef.current[cat.id] = document.getElementById(cat.id))
     );
 
     const handleScroll = () => {
       if (isUserClicking.current) return; // Prevent auto-scroll when user clicks
 
       const visibleCategory = categories.find((category) => {
-        const section = sectionsRef.current[category.name];
+        const section = sectionsRef.current[category.id];
         if (!section) return false;
         const rect = section.getBoundingClientRect();
         return (
@@ -37,10 +37,9 @@ export default function Categories({
       });
 
       if (visibleCategory) {
-        setCurrentCategory(visibleCategory.name);
+        setCurrentCategory(visibleCategory.id);
 
-        // Scroll the category button into view only when user is scrolling
-        linksRef.current[visibleCategory.name]?.scrollIntoView({
+        linksRef.current[visibleCategory.id]?.scrollIntoView({
           behavior: "smooth",
           block: "nearest",
           inline: "center",
@@ -57,7 +56,7 @@ export default function Categories({
     setCurrentCategory(category);
     sectionsRef.current[category]?.scrollIntoView({
       behavior: "smooth",
-      block: "center",
+      block: "start",
     });
 
     // Re-enable auto-scroll after a delay
@@ -67,7 +66,7 @@ export default function Categories({
   }
 
   return (
-    <div className="sticky top-0 z-10  bg-background/70 font-medium text-foreground backdrop-blur-2xl lg:pt-[100px]">
+    <div className="sticky top-0 z-10  bg-background/70 font-medium text-foreground backdrop-blur-2xl ">
       <div className="scrollbar-hidden my-container flex items-center gap-4 overflow-auto py-4 text-lg capitalize lg:gap-7 ">
         <p className="hidden lg:block lg:text-3xl">Categories</p>
 
@@ -77,29 +76,26 @@ export default function Categories({
             : null;
 
           const existingTranslation =
-            translationsAsJson && translationsAsJson[lang];
-          category.name =
+            !!(lang && translationsAsJson && translationsAsJson[lang])
+         const nameToDisplay =
             existingTranslation && translationsAsJson[lang].name
               ? translationsAsJson[lang].name
               : category.name;
-          category.description =
-            existingTranslation && translationsAsJson[lang].description
-              ? translationsAsJson[lang].description
-              : category.description;
+
           return (
             <button
-              key={category.name}
+              key={category.id}
               ref={(el) => {
-                if (el) linksRef.current[category.name] = el;
+                if (el) linksRef.current[category.id] = el;
               }}
-              className={`rounded-md px-5 py-2 text-sm font-medium transition-colors capitalize lg:text-base xl:hover:bg-primary ${
-                currentCategory === category.name
+              className={`rounded-md px-5 py-2 text-sm font-medium transition-colors capitalize lg:text-base xl:hover:bg-primary text-nowrap ${
+                currentCategory === category.id
                   ? "bg-primary"
                   : "bg-primary/30"
               }`}
-              onClick={() => handleClick(category.name)}
+              onClick={() => handleClick(category.id)}
             >
-              {category.name}
+              {nameToDisplay}
             </button>
           );
         })}

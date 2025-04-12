@@ -7,19 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
 import React, { startTransition, useOptimistic } from "react";
-import { deleteMenuItem, getMenuItems } from "../../../_actions/menu-items";
-import Loader from "@/components/Loader";
-import { formatCurrency } from "@/lib/formatter";
+import { deleteMenuItem } from "../../../_actions/menu-items";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CheckCircle2, Edit, MoreVertical } from "lucide-react";
-import { useBusinessContext } from "@/context/BusinessProvider";
+import { CheckCircle2, Edit, MoreVertical, TriangleAlert } from "lucide-react";
 import { Modal } from "../Modal";
 import CloudImage from "@/components/CloudImage";
 import { Button } from "@/components/ui/button";
@@ -29,9 +25,9 @@ import { MenuItem } from "@prisma/client";
 import DeleteModal from "../DeleteModal";
 import { toast } from "sonner";
 import { CategoryWithItemCount, Translation } from "@/types";
-import { useSearchParams } from "next/navigation";
-import { getCategories } from "../../../_actions/categories";
 import TranslatedMenuItemForm from "./TranslatedMenuItemForm";
+import DisplayPrice from "@/components/DisplayPrice";
+import { useTranslations } from "next-intl";
 
 type MenuItemWithCategory = MenuItem & {
   category: {
@@ -54,13 +50,23 @@ export default function MenuItemsTable({
   categories: CategoryWithItemCount[];
 }) {
   const { searchQuery, category, language, languages } = useFiltersContext();
+  const t = useTranslations("admin.menu items")
 
   function handleDelete(item: MenuItemWithCategory) {
     startTransition(() => {
       setOptimisticItem({ newItem: item, type: "delete" });
     });
     deleteMenuItem(item.id, businessName).catch(() => {
-      toast("Failed to delete item, rolling back...");
+      toast("Failed to delete item, rolling back...", {
+        duration: 2000,
+        icon: <TriangleAlert />,
+        position: "bottom-right",
+        style: {
+          backgroundColor: "red",
+          color: "darkred",
+          borderColor: "darkred",
+        },
+      });
     });
   }
   if (!menuItems || menuItems.length === 0) return <p>No items found.</p>;
@@ -71,13 +77,13 @@ export default function MenuItemsTable({
       <TableHeader>
         <TableRow>
           <TableHead className="max-sm:hidden">
-            Status
+            {t("status")}
             <span className="sr-only">Available for Purchase</span>
           </TableHead>
-          <TableHead>Image</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead className="max-[410px]:hidden">Category</TableHead>
-          <TableHead>Price</TableHead>
+          <TableHead>{t("image")}</TableHead>
+          <TableHead>{t("name")}</TableHead>
+          <TableHead className="max-[410px]:hidden">{t("category")}</TableHead>
+          <TableHead>{t("price")}</TableHead>
 
           <TableHead className="w-0">
             <span className="sr-only">Actions</span>
@@ -95,7 +101,7 @@ export default function MenuItemsTable({
           // ✅ Create a new object instead of mutating item
           const translatedItem = {
             ...item,
-            name: existingTranslation ? existingTranslation.name : item.name,
+            name: existingTranslation && existingTranslation.name ? existingTranslation.name : item.name,
             description: existingTranslation
               ? (existingTranslation.description ?? null)
               : (item.description ?? null),
@@ -130,11 +136,11 @@ export default function MenuItemsTable({
                   )}
                 </div>
               </TableCell>
-              <TableCell>{translatedItem.name}</TableCell>
+              <TableCell className="truncate max-w-32 sm:max-w-80">{translatedItem.name}</TableCell>
               <TableCell className="max-[410px]:hidden">
                 {translatedCategoryName}
               </TableCell>
-              <TableCell>{formatCurrency(item.priceInCents / 100)}</TableCell>
+              <TableCell><DisplayPrice price={item.priceInCents}/></TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger className="cursor-pointer">
@@ -150,7 +156,7 @@ export default function MenuItemsTable({
                             size={"sm"}
                             className="w-full text-sm px-0 py-4"
                           >
-                            <Edit /> Edit
+                            <Edit /> {t("edit")}
                           </Button>
                         }
                         title="Edit item"

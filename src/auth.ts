@@ -6,6 +6,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { Business, Subscription, UserRole } from "@prisma/client";
 import { db } from "./db";
 import { BusinessExtended, ExtendedSubscription } from "./types";
+import { signIn as signInReact } from "next-auth/react";
 
 declare module "next-auth" {
   interface Session {
@@ -38,6 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (!existingUser?.emailVerified) return false;
 
+
       return true;
     },
     async jwt({ token, trigger, session }) {
@@ -63,12 +65,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               location:true,
               type:true,
               qr:true,
-              subscription: {
-                include: { business: { include: { menu: true } } },
-              },
+              subscription: true
             },
           },
-          
           role: true,
           subscriptions: true,
         },

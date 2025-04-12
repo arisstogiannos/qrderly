@@ -7,10 +7,12 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+
 import { ReactNode } from "react";
 
-export function NavLinks({
+export async function NavLinks({
   items,
   activeBusinessName,
 }: {
@@ -27,6 +29,7 @@ export function NavLinks({
   }[];
   activeBusinessName: string;
 }) {
+  const t = await getTranslations("admin.navbar")
   return (
     <SidebarGroup className="mt-10 ">
       <SidebarMenu>
@@ -38,7 +41,7 @@ export function NavLinks({
                     isActive={false}
                     className="pointer-events-none"
                   >
-                    <span>{item.title}</span>
+                    <span>{t(item.title)}</span>
                   </SidebarMenuButton>
                   {item.items?.length ? (
                     <SidebarMenuSub>
@@ -49,7 +52,7 @@ export function NavLinks({
                         >
                           <SidebarMenuSubButton
                             asChild
-                            className="bg-transparent text-base py-4 transition-colors hover:bg-accent/30 hover:text-background "
+                            className="bg-transparent text-base py-4 transition-colors hover:bg-accent/30 hover:text-background text-nowrap w-fit"
                           >
                             <Link
                               href={
@@ -61,7 +64,7 @@ export function NavLinks({
                             >
                               {item.icon}
 
-                              {item.title}
+                              {t(item.title)}
                             </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
@@ -85,7 +88,7 @@ export function NavLinks({
                       }
                     >
                       {item.icon}
-                      <span>{item.title}</span>
+                      <span className="text-nowrap">{t(item.title)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -107,7 +110,7 @@ export function NavLinks({
                     }
                   >
                     {item.icon}
-                    <span>{item.title}</span>
+                    <span className="text-nowrap">{t(item.title)}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
