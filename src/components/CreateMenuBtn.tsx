@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Session } from "next-auth";
-import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/Modal";
+import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal";
 import { useModalContext } from "@/context/ModalProvider";
 import { Product } from "@prisma/client";
 import { productMapURL } from "@/data";
@@ -24,6 +24,8 @@ export default function CreateMenuBtn({
       (!sub.businessId ||
         !business.find((b) => b.id === sub.businessId)?.menu.published)
   );
+
+
 
   return (
      !paidUnPublishedSub ? (

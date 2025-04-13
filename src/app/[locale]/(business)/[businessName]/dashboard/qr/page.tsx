@@ -1,7 +1,7 @@
 import React from "react";
 import { checkUserAuthorized } from "../../_actions/authorization";
 import QrCreator from "@/app/[locale]/(website)/get-started/_components/qr/QrCreator";
-import TablesForm from "../_components/TablesForm";
+import TablesForm from "../_components/SharedComponents/TablesForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { getTranslations } from "next-intl/server";
 

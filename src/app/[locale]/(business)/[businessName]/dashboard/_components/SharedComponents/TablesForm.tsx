@@ -3,7 +3,7 @@ import TablesSetup from "@/app/[locale]/(website)/get-started/_components/Busine
 import { Button } from "@/components/ui/button";
 import { BusinessExtended } from "@/types";
 import React, { useActionState, useEffect } from "react";
-import { saveTables } from "../../_actions/business";
+import { saveTables } from "../../../_actions/business";
 import Loader from "@/components/Loader";
 import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";

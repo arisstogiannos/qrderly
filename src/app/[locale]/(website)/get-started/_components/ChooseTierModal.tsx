@@ -5,8 +5,9 @@ import { useState } from "react";
 import { Check } from "lucide-react";
 import { createSession } from "../../subscriptionActions";
 import { BillingType } from "@prisma/client";
-import {  ExtendedUser, ProductURL } from "@/types";
+import { ExtendedUser, ProductURL } from "@/types";
 import { productMap } from "@/data";
+import Loader from "@/components/Loader";
 
 type thisProps = {
   plan: {
@@ -26,6 +27,7 @@ type thisProps = {
 
 export function ChooseTier({ plan, user, businessId, action }: thisProps) {
   const [billingState, setBillingState] = useState<BillingType>("YEARLY");
+  const [isPending, setIsPending] = useState(false);
 
   const product = plan.title.toLowerCase().replaceAll(" ", "-") as ProductURL;
 
@@ -43,7 +45,6 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
       b.menu &&
       b.menu.published
   );
-
 
   return (
     <form className="grid md:grid-cols-2 lg:grid-rows-[auto_auto] grid-rows-[auto_auto_auto] gap-x-10 gap-y-5  rounded-2xl  lg:w-xl  overflow-y-auto">
@@ -87,6 +88,8 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
           ))}
         </ul>
         <Button
+          onClick={() => setIsPending(true)}
+          disabled={isPending}
           formAction={createSession.bind(
             null,
             plan.billing[billingState === "MONTHLY" ? "monthly" : "yearly"]
@@ -95,12 +98,12 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
             productMap[product],
             businessId,
             unpublishedTrial?.id ?? "",
-            "/get-started/"+product+"/publish", 
+            "/get-started/" + product + "/publish",
             "procceed to publishing"
           )}
           className="w-full mt-auto"
         >
-          Continue
+          {isPending ? <Loader /> : "Continue"}
         </Button>
       </div>
     </form>

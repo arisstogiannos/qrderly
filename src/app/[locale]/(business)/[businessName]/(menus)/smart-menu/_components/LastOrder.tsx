@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Modal } from "../../../dashboard/_components/Modal";
+import { Modal } from "../../../dashboard/_components/SharedComponents/Modal";
 
 export default function LastOrder({businessName}:{businessName:string}) {
   const [lastOrder,setLastOrder] = useState<string | undefined>(undefined);

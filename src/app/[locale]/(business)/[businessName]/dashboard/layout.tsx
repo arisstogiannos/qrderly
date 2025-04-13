@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
 
-import SubscriptionExpired from "./_components/SubscriptionExpired";
+import SubscriptionExpired from "./_components/SharedComponents/SubscriptionExpired";
 
 export default async function AdminLayout({
   children,

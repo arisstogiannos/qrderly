@@ -22,7 +22,7 @@ import { NavFooter } from "./NavFooter";
 import { OrderIcon } from "@/app/[locale]/(website)/products/_components/Icons";
 import { TeamSwitcher } from "./BusinessSwitcher";
 import { BusinessExtended, ExtendedUser } from "@/types";
-import { CategoriesIcon, ProductsIcon, SalesIcon } from "../Icons";
+import { CategoriesIcon, ProductsIcon, SalesIcon } from "../SharedComponents/Icons";
 
 const data = {
   user: {

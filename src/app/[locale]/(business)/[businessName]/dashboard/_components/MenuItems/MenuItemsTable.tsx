@@ -16,13 +16,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CheckCircle2, Edit, MoreVertical, TriangleAlert } from "lucide-react";
-import { Modal } from "../Modal";
+import { Modal } from "../SharedComponents/Modal";
 import CloudImage from "@/components/CloudImage";
 import { Button } from "@/components/ui/button";
 import { useFiltersContext } from "@/context/FiltersProvider";
 import MenuItemForm from "./MenuItemForm";
 import { MenuItem } from "@prisma/client";
-import DeleteModal from "../DeleteModal";
+import DeleteModal from "../SharedComponents/DeleteModal";
 import { toast } from "sonner";
 import { CategoryWithItemCount, Translation } from "@/types";
 import TranslatedMenuItemForm from "./TranslatedMenuItemForm";

@@ -48,8 +48,16 @@ export async function submitBusinessInfo(
   const session = await auth();
   const user = session?.user;
 
+  
   if (!user?.id) {
     redirect("/unauthorized");
+  }
+  const freebusinesses = user.business.filter((b)=>b.subscription.billing==="FREETRIAL")
+  
+  if(freebusinesses.length>3){
+    return {
+      error: "You have more than 3 free menus. You have to upgrade to pro.",
+    };
   }
   try {
     await db.business.create({
@@ -218,7 +226,7 @@ export async function createMenu(
   revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/menu");
   revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/smart-menu");
 
-  const businessNameUrl = business.name.replaceAll(" ", "-")+'/'+(business.product==="QR_MENU"?"/menu":"/smart-menu?table=admin")
+  const businessNameUrl = business.name.replaceAll(" ", "-")
 
   return {
     success: "Proccess Complete",

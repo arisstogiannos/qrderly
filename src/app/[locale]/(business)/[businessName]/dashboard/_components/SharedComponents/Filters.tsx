@@ -1,5 +1,5 @@
 import React from "react";
-import Categories from "./Categories/Categories";
+import Categories from "../Categories/Categories";
 import Search from "./Search";
 import LanguageSelect from "./LanguageSelect";
 

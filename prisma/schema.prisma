@@ -45,22 +45,22 @@ enum Product {
 }
 
 model Banner {
-  id            String         @id @default(uuid())
-  text          String
-  targetTime         DateTime         
+  id         String   @id @default(uuid())
+  text       String
+  targetTime DateTime
 }
 
 model User {
-  id            String         @id @default(uuid())
+  id            String     @id @default(uuid())
   name          String
-  email         String         @unique
+  email         String     @unique
   image         String?
-  role          UserRole       @default(USER)
-  emailVerified DateTime?      @map("email_verified")
+  role          UserRole   @default(ADMIN)
+  emailVerified DateTime?  @map("email_verified")
   business      Business[]
   password      String?
   // settings   Settings?
-  
+
   accounts      Account[]
   subscriptions Subscription[]
 }
@@ -78,7 +78,7 @@ model Business {
   subscription Subscription?
   product      Product       @default(QR_MENU)
   tables       String?
-  currency     String      @default("EUR")
+  currency     String        @default("EUR")
   // Settings Settings[]
 }
 
@@ -117,7 +117,7 @@ model Menu {
 model QR {
   id         String    @id @default(uuid())
   businessId String?   @unique
-  business   Business? @relation(fields: [businessId], references: [id],onDelete: Cascade)
+  business   Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
   // menuId     String
   // menu       Menu     @relation(fields: [menuId], references: [id])
   link       String
@@ -146,13 +146,13 @@ model OrderItem {
   menuItem    MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
   quantity    Int
   preferences String
-  price Int
+  price       Int
 }
 
 model MenuItem {
   id           String      @id @default(uuid())
   menuId       String
-  menu         Menu        @relation(fields: [menuId], references: [id],onDelete: Cascade)
+  menu         Menu        @relation(fields: [menuId], references: [id], onDelete: Cascade)
   orderItems   OrderItem[]
   name         String
   description  String?
@@ -176,7 +176,7 @@ model Category {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   menuId       String
-  menu         Menu     @relation(fields: [menuId], references: [id],onDelete: Cascade)
+  menu         Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
   translations String?
 
   menuItems MenuItem[]

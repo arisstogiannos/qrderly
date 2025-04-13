@@ -1,13 +1,13 @@
 "use client";
 import React, { useOptimistic } from "react";
-import { Modal } from "../Modal";
+import { Modal } from "../SharedComponents/Modal";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import CategoriesForm from "./CategoriesForm";
 import CategoriesTable from "./CategoriesTale";
 import { CategoryWithItemCount } from "@/types";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import Filters from "../Filters";
+import Filters from "../SharedComponents/Filters";
 import { useTranslations } from "next-intl";
 
 export default function CategoriesPage({

@@ -31,7 +31,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import I18nLanguageSelect from "@/components/I18nLanguageSelect";
-import UpgradeSubModal from "../UpgradeSubModal";
+import UpgradeSubModal from "../SharedComponents/UpgradeSubModal";
 
 export function NavFooter({
   user,

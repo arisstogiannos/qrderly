@@ -26,12 +26,14 @@ export function Modal({
   title,
   subtitle,
   children,
+  initialOpen,
   trigger,
   classNames,
 }: {
   title: string;
   subtitle: string;
   children: React.ReactNode;
+  initialOpen?:boolean;
   trigger: React.ReactNode;
   classNames?: string;
 }) {
@@ -50,7 +52,7 @@ export function Modal({
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen} >
+      <Dialog open={initialOpen??open} onOpenChange={setOpen} >
         <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className={cn("max-w-xl ", classNames)}>
           <DialogHeader>

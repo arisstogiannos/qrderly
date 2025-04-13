@@ -19,7 +19,7 @@ import CloudImage from "@/components/CloudImage";
 import { useModalContext } from "@/context/ModalProvider";
 import { getQueryClient } from "../../../../../../../../react-query";
 import Options from "./Options";
-import TranslateCheckBox from "../TranslateCheckBox";
+import TranslateCheckBox from "../SharedComponents/TranslateCheckBox";
 import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
 import Image from "next/image";
 import { useTranslations } from "next-intl";

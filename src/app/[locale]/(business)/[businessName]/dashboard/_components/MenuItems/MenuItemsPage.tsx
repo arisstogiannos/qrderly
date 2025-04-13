@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import Filters from "../Filters";
-import { Modal } from "../Modal";
+import Filters from "../SharedComponents/Filters";
+import { Modal } from "../SharedComponents/Modal";
 import MenuItemForm from "./MenuItemForm";
 import MenuItemsTable from "./MenuItemsTable";
 import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";

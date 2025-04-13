@@ -16,7 +16,7 @@ import { useBusinessContext } from "@/context/BusinessProvider";
 import { useModalContext } from "@/context/ModalProvider";
 import { getQueryClient } from "../../../../../../../../react-query";
 import { upsertCategory } from "../../../_actions/categories";
-import TranslateCheckBox from "../TranslateCheckBox";
+import TranslateCheckBox from "../SharedComponents/TranslateCheckBox";
 import { CategoryWithItemCount } from "@/types";
 import { useTranslations } from "next-intl";
 

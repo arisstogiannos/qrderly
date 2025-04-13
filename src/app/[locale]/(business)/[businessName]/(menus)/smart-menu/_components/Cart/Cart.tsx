@@ -20,6 +20,7 @@ import { useSearchParams } from "next/navigation";
 import Loader from "@/components/Loader";
 import { Product } from "@prisma/client";
 import DisplayPrice from "@/components/DisplayPrice";
+import { usePreventRefresh } from "@/hooks/use-prevent-reload";
 
 // type Product = {
 //   id: string;
@@ -46,6 +47,7 @@ export default function Cart({
   const [open, setOpen] = useState(false);
   const table = useSearchParams().get("table");
   const { cartItems } = useCartContext();
+  usePreventRefresh("Cart items will be lost if you reload. Do you want to continue?",cartItems.length>0)
 
   let total = 0;
   let noItems = 0;

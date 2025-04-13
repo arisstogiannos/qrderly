@@ -15,9 +15,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
-import DeleteModal from "../DeleteModal";
+import DeleteModal from "../SharedComponents/DeleteModal";
 import { deletOrder } from "../../../_actions/orders";
-import { Modal } from "../Modal";
+import { Modal } from "../SharedComponents/Modal";
 import { Button } from "@/components/ui/button";
 import { OrderWithItems } from "@/types";
 import OrderDetailsModal from "./OrderDetailsModal";

@@ -25,9 +25,9 @@ import {
   getCategoriesWithItemCount,
 } from "../../../_actions/categories";
 import Loader from "@/components/Loader";
-import { Modal } from "../Modal";
+import { Modal } from "../SharedComponents/Modal";
 import CategoriesForm from "./CategoriesForm";
-import DeleteModal from "../DeleteModal";
+import DeleteModal from "../SharedComponents/DeleteModal";
 import {
   CategoryWithItemCount,
   MenuItemWithCategory,

@@ -1,5 +1,5 @@
 "use client";
-import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/Modal";
+import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal";
 import { Button } from "@/components/ui/button";
 import { plandata, productMap } from "@/data";
 import { ExtendedUser, ProductURL } from "@/types";
@@ -57,7 +57,7 @@ export default function Publish({
     render = (
       <Success
         url={
-          state?.businessNameUrl || "/" + publishedMenuBusiness?.name.replaceAll(" ", "-")
+          state?.businessNameUrl +(product==="qr-menu"?"/menu":"/smart-menu?table=admin" )||  publishedMenuBusiness?.name.replaceAll(" ", "-") +(product==="qr-menu"?"/menu":"/smart-menu?table=admin" )
         }
       />
     );
@@ -80,6 +80,7 @@ export default function Publish({
 
   return (
     <Modal
+    initialOpen
       title={
         !isPending && !state?.success && !publishedMenuBusiness ? "Publish" : ""
       }

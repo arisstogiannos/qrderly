@@ -1,7 +1,7 @@
 import React, { ReactNode, Suspense } from "react";
 import { checkUserAuthorized } from "../_actions/authorization";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Chart from "./_components/Chart";
+import Chart from "./_components/Dashboard/Chart";
 import { getAllOrders } from "../_actions/orders";
 import { cache } from "@/lib/cache";
 import { BusinessExtended } from "@/types";
