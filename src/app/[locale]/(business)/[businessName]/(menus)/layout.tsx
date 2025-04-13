@@ -9,8 +9,15 @@ import {
 import { notFound } from "next/navigation";
 import ScrollToTop from "@/components/ScrollToTop";
 
+export const dynamicParams = true; // or false, to 404 on unknown paths
+export const revalidate =60; 
+
+
 export async function generateStaticParams() {
-  const menus = await getActiveMenusNotCached([
+  const getActiveMenusCache = cache(getActiveMenusNotCached, ["active-menus"], {
+    tags: ["active-menus"],
+  });
+  const menus = await getActiveMenusCache([
     "QR_MENU",
     "SMART_QR_MENU",
     "SELF_SERVICE_QR_MENU",

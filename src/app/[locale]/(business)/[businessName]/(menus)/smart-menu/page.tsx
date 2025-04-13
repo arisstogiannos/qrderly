@@ -37,7 +37,7 @@ export async function generateStaticParams() {
   const getActiveMenusCache = cache(getActiveMenusNotCached, ["active-menus"], {
     tags: ["active-menus"],
   });
-  const menus = await getActiveMenusNotCached([
+  const menus = await getActiveMenusCache([
     "SMART_QR_MENU",
     "SELF_SERVICE_QR_MENU",
   ]);

@@ -55,7 +55,8 @@ export const metadata = {
     images: ["/twitter-card.jpg"],
   },
 };
-export const dynamicParams = false; // or false, to 404 on unknown paths
+export const dynamicParams = true; // or false, to 404 on unknown paths
+export const revalidate = 60
 
 export async function generateStaticParams() {
   return [

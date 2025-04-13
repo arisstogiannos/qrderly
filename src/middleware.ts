@@ -33,7 +33,7 @@ export default  auth((req) => {
       return Response.redirect(new URL("/sign-up", req.nextUrl));
     }
   }
-if(!req.nextUrl.pathname.includes("/api") &&!req.nextUrl.pathname.includes("menu") && !req.nextUrl.pathname.includes("stripe")  && !req.nextUrl.pathname.includes("sitemap") ) {
+if(!req.nextUrl.pathname.includes("/api") && !req.nextUrl.pathname.includes("stripe")  && !req.nextUrl.pathname.includes("sitemap") ) {
   return handleI18nRouting(req)
 }
 

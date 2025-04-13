@@ -213,7 +213,10 @@ export async function createMenu(
   });
 
   revalidateTag("active-menu" + business.name);
-  revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/");
+  revalidateTag("active-menus");
+  revalidatePath("/en/" + business.name.replaceAll(" ", "-"));
+  revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/menu");
+  revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/smart-menu");
 
   const businessNameUrl = business.name.replaceAll(" ", "-")+'/'+(business.product==="QR_MENU"?"/menu":"/smart-menu?table=admin")
 
