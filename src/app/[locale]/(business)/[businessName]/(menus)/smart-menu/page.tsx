@@ -16,7 +16,7 @@ import ScanTracker from "../_components/ScanTracker";
 import ActiveOrder from "./_components/ActiveOrder";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-export const dynamic ="error"; // or false, to 404 on unknown paths
+export const revalidate =60; 
 
 export async function generateMetadata({
   params,

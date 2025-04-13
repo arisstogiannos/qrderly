@@ -12,7 +12,7 @@ import { cache } from "@/lib/cache";
 import ScanTracker from "../_components/ScanTracker";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-export const dynamic ="error"
+export const revalidate =60; 
 
 export async function generateStaticParams() {
   const menus = await getActiveMenusNotCached(["QR_MENU"]);

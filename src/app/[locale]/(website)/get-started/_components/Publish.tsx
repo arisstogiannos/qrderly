@@ -64,7 +64,6 @@ export default function Publish({
   } else if (isPending) {
     render = (
       <div className="w-full flex flex-col items-center pt-10 min-h-80">
-        <p>Wait a moment while we generte your menu.</p>
         <Loader className="h-16 mt-7" />
       </div>
     );
@@ -123,12 +122,12 @@ function Success({ url }: { url: string }) {
       </div>
       <div className="flex flex-col gap-3 lg:flex-row pb-5 lg:pb-0">
         <Button size={"lg"} asChild>
-          <IntlLink href={{params:{businessName:url},pathname:"/[businessName]/dashboard"}} replace={true} >
+          <IntlLink href={{params:{businessName:url.split("/")[0]},pathname:"/[businessName]/dashboard"}} replace={true} >
             Dashboard <ArrowRight />
           </IntlLink>
         </Button>
         <Button size={"lg"} asChild>
-          <Link href={url + "/menu"}  >
+          <Link href={"/en/"+url}  >
             Menu <ArrowRight />
           </Link>
         </Button>

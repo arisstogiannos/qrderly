@@ -215,7 +215,7 @@ export async function createMenu(
   revalidateTag("active-menu" + business.name);
   revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/");
 
-  const businessNameUrl = business.name.replaceAll(" ", "-");
+  const businessNameUrl = business.name.replaceAll(" ", "-")+'/'+business.product==="QR_MENU"?"/menu":"/smart-menu?table=admin"
 
   return {
     success: "Proccess Complete",

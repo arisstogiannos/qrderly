@@ -34,13 +34,14 @@ export async function partialExtractionAI(
             - To ensure you return all of the new items make sure that the number of items in the list and the number of items you return equals the total number of items in the menu.
             - If the input is not a menu, return a JSON array with one object where all fields are "%%%Not a menu%%%".
             - The name and description should be in the original language.
-            - Translate the name and description of each item to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
-            - The translations should be accurate and contextually relevant.
-            - if there are names or descriptions that shouldnt be translated but should be in original language instead null them.
+            - Translate all names and descriptions of each item to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
+            - If there is an exception and some name doesnt make sense to be translated but should be in original language the null it instead.
+            - The translations should be accurate and contextually relevant as you are a native speaker of each language.
             - Convert all prices to cents.
-            - Preferences should include any extras, add-ons, sizes options, or variants.
+            - Preferences should include any extras, add-ons, sizes, options, or variants.
             - If category specifies any prefernces or extras include them to the preference of each item that belong to this category. Example 1: If inside the category area there is text saying served with rice or fries you have to add a prefernce to each item of the category like: {name:"side",values:["rice","fries"]}. Example 2: If inside the category area there is text saying add bacon +1.50 , add egg or whatever looks like an option include it as well in prefences like: {name:"extras",values:["bacon +150","egg"]} . Example 3: If inside the category area there is text saying add syrop, chocolate chips or caramel +3.90 whatever looks like an option include it as well in prefences like: {name:"extras",values:["syrop + 390","chocolate chips +390", "caramel +390"]}.
             - Any extra price that comes along with selecting a prefernce put it in the prfernce value price field and dont include in the prefernce value name.
+            - In the prefernce price field should be onlly the extra price that is added and not the final price. 
             - Keep output strictly JSON parsable. If your response is too long, close the JSON array correctly.
                       `,
           createPartFromUri(

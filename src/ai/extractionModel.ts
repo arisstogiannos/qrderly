@@ -15,12 +15,13 @@ export async function extractAI(uploadedFile:File,languages:string[] | undefined
                   - Identify any prefernces, extras, sizes or variants of a menu item and put them in the prefernces field.
                   - Make sure you dont get confused with prefernces and descriptions of items. Distinguise them accuratly.
                   - Any extra price that comes along with selecting a prefernce put it in the prfernce value price field and dont include in the prefernce value name.
+                  - In the prefernce price field should be onlly the extra price that is added and not the final price. 
                   - If category specifies any prefernces or extras include them to the preference of each item that belong to this category. Example 1: If inside the category area there is text saying served with rice or fries you have to add a prefernce to each item of the category like: {name:"side",values:["rice","fries"]}. Example 2: If inside the category area there is text saying add bacon +1.50 , add egg or whatever looks like an option include it as well in prefences like: {name:"extras",values:["bacon +150","egg"]} . Example 3: If inside the category area there is text saying add syrop, chocolate chips or caramel +3.90 whatever looks like an option include it as well in prefences like: {name:"extras",values:["syrop + 390","chocolate chips +390", "caramel +390"]}
                   - If any description or preferences are missing, return them as null.
                   - Ensure you dont skip any items.
-                  - Translate the name and description of each item to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
-                  - The translations should be accurate and contextually relevant.
-                  - if there are names or descriptions that should NOT be translated but should be in original language instead null them. You have to make an accurate assessment for if the item needs translation or not
+                  - Translate all names and descriptions of each item to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
+                  - If there is an exception and some name doesnt make sense to be translated but should be in original language the null it instead.
+                  - The translations should be accurate and contextually relevant as you are a native speaker of each language.
                   - Convert all prices to cents (remove symbols like "$").
                   - Ensure the output strictly follows the JSON structure. Make sure the json output is well formated so it can be parsed by JSON.parse() later.
                   - If You reach your response token limit you have to return a response that is a valid array of json objects. So just remove the last menu item and properly close the json array.
