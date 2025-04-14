@@ -75,9 +75,9 @@ export default function Options({
                   />
                   <Label className="text-base capitalize font-normal">
                     {value.name}{" "}
-                    {value.price && value.price!=='0' && (
+                    {value.price && value.price !== "0" && (
                       <span className="text-muted">
-                        <DisplayPrice price={Number(value.price) }/>
+                        <DisplayPrice price={Number(value.price)} />
                       </span>
                     )}
                   </Label>
@@ -124,7 +124,13 @@ export function DefaultRadioGroup({
     const price = values.find((v) => v.name === e)?.price;
     setValue(e);
 
-    setPrice((prev) => prev + (Number.isNaN((Number(price) - localPrice))?0:(Number(price) - localPrice)));
+    setPrice(
+      (prev) =>
+        prev +
+        (Number.isNaN(Number(price) - localPrice)
+          ? 0
+          : Number(price) - localPrice)
+    );
     setLocalPrice(Number(price));
   }
 
@@ -166,9 +172,7 @@ export function MultipleChoiceGroup({
   useEffect(() => {
     let lp = 0;
 
-    if(selectedValues){
-
-      
+    if (selectedValues) {
       for (const value of selectedValues) {
         lp += Number(values.find((v) => v.name === value)?.price ?? 0);
       }
@@ -178,9 +182,12 @@ export function MultipleChoiceGroup({
   }, [selectedValues]);
 
   const handleChange = (name: string) => {
-
-      setSelectedValues((prev) =>
-         prev?.includes(name) ? prev.filter((v) => v !== name) : prev?[...prev, name]:[name]
+    setSelectedValues((prev) =>
+      prev?.includes(name)
+        ? prev.filter((v) => v !== name)
+        : prev
+          ? [...prev, name]
+          : [name]
     );
   };
 
@@ -198,7 +205,14 @@ export function MultipleChoiceGroup({
             htmlFor={`${name}-${value.name}`}
             className="text-base capitalize font-normal space-x-1"
           >
-            <span>{value.name}</span> <span className="opacity-80">+ {value.price && <DisplayPrice price={Number(value.price)}/>}</span>
+            <span>{value.name}</span>{" "}
+            {value.price && value.price !== "0" ? (
+              <span className="text-muted">
+                + <DisplayPrice price={parseInt(value.price)} />
+              </span>
+            ) : (
+              ""
+            )}
           </Label>
         </div>
       ))}

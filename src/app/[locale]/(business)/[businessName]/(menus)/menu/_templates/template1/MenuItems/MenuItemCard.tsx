@@ -43,12 +43,12 @@ export function MenuItemCard({
         <Card
           id={name}
           className={
-            "flex p-2 flex-row border-0  min-[390px]:min-w-[350px] max-w-full relative  h-[140px]  overflow-hidden bg-secondary text-background shadow-lg transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
+            "flex p-2 flex-row border-0  min-[390px]:min-w-[350px] max-w-full relative  h-[150px]  overflow-hidden bg-secondary text-background shadow-lg transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
           }
         >
           <div
             className={
-              "relative aspect-video w-[140px] h-full overflow-hidden rounded-xl"
+              "relative aspect-video min-w-[140px] max-w-[140px] h-full overflow-hidden rounded-xl"
             }
           >
             <CloudImage
@@ -60,15 +60,15 @@ export function MenuItemCard({
             />
           </div>
           <CardContent
-            className={"flex flex-col justify-between py-1 px-3  h-full"}
+            className={"flex flex-col justify-between py-1 pl-0 pr-2  h-full"}
           >
             <div className="space-y-1 lg:space-y-1">
-              <h3 className={"text-base lg:text-lg capitalize text-foreground"}>
+              <h3 className={"text-base lg:text-lg capitalize text-foreground line-clamp-2"}>
                 {name}
               </h3>
               <p
                 className={
-                  "line-clamp-2 text-sm text-muted-foreground lg:text-sm max-w-[140px]"
+                  "line-clamp-2 text-sm text-muted-foreground max-w-full"
                 }
               >
                 {description}

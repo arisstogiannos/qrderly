@@ -25,21 +25,19 @@ export default async function HowItWorks() {
         </p>
         <div className="md:gap-x-8 flex max-md:justify-between ">
           <MainButton
-            className=" md:text-2xl  text-sm font-medium"
+            className=" md:text-2xl  text-sm font-medium "
             asChild
           >
-            <Link href={"/get-started"} className="hover:translate-0"> {t("button1")}</Link>
+            <Link href={"/get-started"} className="hover:translate-0 text-nowrap"> {t("button1")}</Link>
           </MainButton>
           <Button
             variant={"outline"}
             asChild
-            className="text-sm  md:text-2xl py-5 md:py-7 pl-4 pr-2 gap-5 md:gap-20 justify-between rounded-full"
+            className="text-sm  md:text-2xl py-5 md:py-7 pl-4 pr-2 gap-3 md:gap-20 justify-between rounded-3xl"
           >
             <Link href={"/"}>
             {t("button2")}
-              <span className="h-8 md:h-10 w-12 md:w-16 bg-foreground rounded-full flex-center">
-                <ArrowRight className="text-background size-6 md:size-8" />
-              </span>
+                <ArrowRight className=" size-6 md:size-8" />
             </Link>
           </Button>
         </div>

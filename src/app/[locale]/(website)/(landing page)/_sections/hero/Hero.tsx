@@ -20,7 +20,7 @@ export default async function Hero() {
           />
         </div> */}
       </div>
-      <div className="space-y-5 mt-20">
+      <div className="space-y-5 mt-10 sm:mt-0 3xl:mt-20">
         <h1 className=" font-bold  text-4xl md:text-6xl leading-tight ">
           {t("title")}
         </h1>
@@ -38,8 +38,8 @@ export default async function Hero() {
             </span>{" "}
           </Link>
         </Button> */}
-        <MainButton className="mt-5 lg:mt-14 md:text-xl">
-          <Link href={"/get-started"} className="flex gap-4 items-center">
+        <MainButton className="mt-5 3xl:mt-14 md:text-xl">
+          <Link href={"/get-started"} className="flex gap-4 items-center size-full">
             {t("button")} <ArrowRight />
           </Link>
         </MainButton>

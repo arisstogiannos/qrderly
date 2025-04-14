@@ -6,7 +6,7 @@ export default function Nav() {
     <nav className=" z-50   space-y-2 bg-background-mockup/70  pt-4 text-text-mockup backdrop-blur-xl text-xs">
       <div className="flex items-center justify-between">
         <p className=" text-base  font-bold uppercase text-primary-mockup">Your Business</p>
-        <div className="flex items-center gap-x-2 ">
+        <div className="flex items-center gap-x-1">
           <div className="relative rounded-full bg-foreground-mockup p-2 text-text-mockup">
             <ShoppingBag size={"1.5em"} />
             <div className="absolute left-0 top-3/4 size-5 place-content-center  rounded-full bg-primary-mockup text-center text-xs">

@@ -17,7 +17,7 @@ export default function Products() {
         your customer experience today!
       </h4> */}
       <div className="grid grid-cols-1 xl:grid-cols-[auto_auto] grid-rows-[auto_auto] xl:grid-rows-1 gap-5 lg:gap-5 3xl:gap-10  xl:h-[510px] ">
-        <div className="flex flex-col gap-5  h-[450px] md:h-[500px] xl:h-[510px]">
+        <div className="flex flex-col gap-3 xl:gap-5  h-[450px] md:h-[500px] xl:h-[510px]">
           {productsData.map((product, i) => (
             <ProductCard
               key={i}

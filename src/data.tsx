@@ -18,7 +18,7 @@ import { ProductURL } from "./types";
 export const plandata = [
   {
     title: "QR Menu",
-    product:Product.QR_MENU,
+    product: Product.QR_MENU,
     billing: {
       yearly: {
         price: "€9/month",
@@ -56,7 +56,7 @@ export const plandata = [
   },
   {
     title: "Smart Ordering QR Menu",
-    product:Product.SMART_QR_MENU,
+    product: Product.SMART_QR_MENU,
     billing: {
       yearly: {
         price: "€14/month",
@@ -74,7 +74,7 @@ export const plandata = [
       "Generate 1 QR code per table for identification",
       "Customers can place orders directly from their phones",
       "Real-time order notifications for your staff",
-      "Indexed in search engines"
+      "Indexed in search engines",
     ],
     free: [
       "Unlimited Traffic",
@@ -93,7 +93,7 @@ export const plandata = [
   },
   {
     title: "Smart Self Service Menu",
-    product:Product.SELF_SERVICE_QR_MENU,
+    product: Product.SELF_SERVICE_QR_MENU,
     billing: {
       yearly: {
         price: "€16/month",
@@ -132,7 +132,7 @@ export const productsData = [
   {
     title: "QR Menu",
     desc: "Say goodbye to printed menus and hello to a modern, hassle-free dining experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
-    link:"qr-menu",
+    link: "qr-menu",
     shortDesc:
       "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
 
@@ -174,13 +174,12 @@ export const productsData = [
         video: "/videos/customizeable.webm",
         icon: <Palette size={"2rem"} />,
       },
-
     ],
   },
- 
+
   {
     title: "Smart Ordering QR Menu",
-    link:"smart-ordering-qr-menu",
+    link: "smart-ordering-qr-menu",
     desc: "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
     shortDesc:
       "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
@@ -239,7 +238,7 @@ export const productsData = [
   {
     title: "Self Service Smart Menu",
     desc: "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
-    link:"self-service-smart-menu",
+    link: "self-service-smart-menu",
 
     shortDesc:
       "Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
@@ -263,12 +262,12 @@ export const productsData = [
         video: "/videos/customizeable-no-cart.webm",
         icon: <Brush />,
       },
-        {
-          title: "Real-Time Dashboard",
-          desc: "Effortlessly update menu items, descriptions, and prices with just a few clicks. No need to reprint menus—changes reflect instantly across all customer devices.",
-          video: "/videos/dashboard-add-item.webm",
-          icon: <LayoutDashboard size={"2em"} />,
-        },
+      {
+        title: "Real-Time Dashboard",
+        desc: "Effortlessly update menu items, descriptions, and prices with just a few clicks. No need to reprint menus—changes reflect instantly across all customer devices.",
+        video: "/videos/dashboard-add-item.webm",
+        icon: <LayoutDashboard size={"2em"} />,
+      },
       {
         title: "Instant Digital Menu Access",
         desc: " Guests scan a QR code to view your menu instantly on their smartphones.",
@@ -346,4 +345,31 @@ export const productPath = {
   "qr-menu": "menu",
   "smart-ordering-qr-menu": "smart-menu",
   "self-service-smart-menu": "smart-menu",
+};
+
+export const themes = {
+  T1: [
+    "#0F172A,#1E293B,#3B82F6,#F8FAFC", // Professional & clean
+    "#111111,#161616,#591F5E,#F1F1F1", // Original Dark Plum
+    "#1F2937,#374151,#10B981,#F9FAFB", // Cool modern
+    "#F2E9E4,#C9ADA7,#9A8C98,#222222", // Blush/Muted Elegant
+    "#FAF3E0,#EBD9C4,#8A4B2D,#2D1E17",
+    "#CBD2A4,#E9EED9,#9A7E6F,#54473F", // Original Pastel Olive
+
+    "#F5F5F0,#DCE4D6,#5C8374,#2E3A2C",
+    "#FDF6EC,#D9BF77,#A44A3F,#2C2C2C", // 🥘 Rustic Mediterranean
+    "#FAF3E0,#FAD6A5,#FF6701,#1A120B", // 🍳 Bright Brunch Café
+  ],
+  T2: [
+    "#0F172A,#1E293B,#3B82F6,#F8FAFC", // Professional & clean
+    "#111111,#202020,#591F5E,#F1F1F1", // Original Dark Plum
+    "#1F2937,#374151,#10B981,#F9FAFB", // Cool modern
+    "#F2E9E4,#C9ADA7,#9A8C98,#222222", // Blush/Muted Elegant
+    "#FAF3E0,#EBD9C4,#8A4B2D,#2D1E17",
+    "#CBD2A4,#E9EED9,#9A7E6F,#54473F", // Original Pastel Olive
+
+    "#F5F5F0,#DCE4D6,#5C8374,#2E3A2C",
+    "#FDF6EC,#D9BF77,#A44A3F,#2C2C2C", // 🥘 Rustic Mediterranean
+    "#FAF3E0,#FAD6A5,#FF6701,#1A120B", // 🍳 Bright Brunch Café
+  ],
 };

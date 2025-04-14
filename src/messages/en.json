@@ -579,5 +579,10 @@
   "uploadMenuPage": {
     "title": "Upload Menu",
     "description": "Upload your menu items and categories easily."
+  },
+  "publish":{
+    "title":"",
+    "subtitle":"After Publishing go to menu items page to ensure that all of the menu items are generated correctly. Our AI is powerfull but it can always make mistakes."
   }
+
 }

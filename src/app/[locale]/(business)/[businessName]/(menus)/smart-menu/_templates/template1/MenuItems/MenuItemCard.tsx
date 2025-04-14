@@ -57,7 +57,7 @@ export function MenuItemCard({
         >
           <div
             className={
-              "relative aspect-video w-[140px] h-full overflow-hidden rounded-xl"
+              "relative aspect-video min-w-[140px] max-w-[140px] h-full overflow-hidden rounded-xl"
             }
           >
             <CloudImage

@@ -1,11 +1,13 @@
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 import { notFound, redirect } from "next/navigation";
 import React from "react";
 import Stripe from "stripe";
+import Confetti from "./Confetti";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -45,24 +47,35 @@ export default async function SuccessPage({
 
   //   const isSuccess = paymentIntent.status === "succeeded";
 
+ 
   return (
-    <section className="h-[80vh] flex items-center justify-center w-full">
-      <div className="flex  flex-col items-center text-myBlack gap-y-2">
-        <CheckCircle2 className="size-40 text-green-500 mb-4 " />
-        <h1 className="text-3xl font-bold text-center">Payment Successful</h1>
-        <p className="text-center max-w-lg">
-          Thank you for your purchase! You will receive an email with your
-          receipt and subscription information.
-        </p>
-        <Button asChild>
-          <Link
-            href={successPageLink }
-            className=" capitalize mt-6"
-          >
-            {successPageButton}
-          </Link>
-        </Button>
-      </div>
-    </section>
-  );
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-green-50 to-white p-4">
+      <Confetti />
+
+      <Card className="max-w-md w-full shadow-lg">
+        <CardHeader className="text-center pb-2">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <CheckCircle className="h-10 w-10 text-green-600" />
+          </div>
+          <CardTitle className="text-2xl font-bold text-green-700">Payment Successful!</CardTitle>
+          <CardDescription  className="text-base">Thank you for your subscription</CardDescription>
+        </CardHeader>
+        <CardContent className="text-center space-y-2 pb-4">
+          <p>Your subscription has been activated successfully.</p>
+          <p className="text-sm text-muted-foreground">
+            A confirmation email has been sent to your registered email address.
+          </p>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-4">
+          <Button asChild className="w-full bg-green-600 hover:bg-green-700">
+            <Link href={successPageLink}>{successPageButton}</Link>
+          </Button>
+          <Button asChild variant="outline" className="w-full">
+            <Link href="/account/subscription">View Subscription Details</Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  )
 }
+

@@ -28,11 +28,11 @@ export default function MenuItemOptions({
                 className=" text-base font-light capitalize list-inside  list-item"
               >
                 {value.name}{" "}
-                {value.price && value.price!=='0' && (
+                {value.price && value.price!=='0' ? (
                   <span className="text-muted">
-                    <DisplayPrice price={parseInt(value.price) } />
+                   + <DisplayPrice price={parseInt(value.price) } />
                   </span>
-                )}
+                ):""}
               </li>
             ))}
           </ul>

@@ -13,13 +13,13 @@ export  default async function Layout({
 }){
 
 
-  const banner = await  db.banner.findFirst()
+  const banner = await  db.banner.findFirst({where:{ targetTime:{gte:new Date()}}})
   return (
     <>
       {banner&&<Banner banner={banner}/>}
 
       <Navbar />
-      <main className=" font-[family-name:var(--font-instrument-sans)]  space-y-60 my-container  ">
+      <main className=" font-[family-name:var(--font-instrument-sans)]  space-y-40 my-container  ">
         {children}
       </main>
       <ScrollToTop/>

@@ -104,7 +104,7 @@ export default function UploadingForm({
           <Button
             disabled={isPending || !file}
             type="submit"
-            className="bg-foreground w-fit  text-lg rounded-full p-1 min-w-24 mt-auto ml-auto"
+            className="bg-foreground w-full sm:w-fit  text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto ml-auto"
             formAction={action}
           >
             {t("upload")} <Upload className="size-5" />
@@ -113,7 +113,7 @@ export default function UploadingForm({
           <div className="ml-auto space-x-5">
             <Button
               type="button"
-              className=" w-fit  text-lg rounded-full p-1 min-w-24 mt-auto"
+              className=" w-full sm:w-fit  text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto"
               onClick={() => router.push("customize-qr")}
             >
               {t("skip")} <ArrowRight className="size-5" />
@@ -121,7 +121,7 @@ export default function UploadingForm({
             <Button
               disabled={isPending || !file}
               type="submit"
-              className="bg-foreground w-fit  text-lg rounded-full p-1 min-w-24 mt-auto"
+              className="bg-foreground w-full sm:w-fit  text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto"
               formAction={action}
             >
               {t("next")} <ArrowRight className="size-5" />

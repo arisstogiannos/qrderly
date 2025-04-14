@@ -37,7 +37,7 @@ function Feature({
 
   return (
     <div ref={ref} className="space-y-5 text-background">
-      <div  className="flex gap-4 max-w-2xl xl:last-of-type:mb-60 ">
+      <div  className="flex gap-4 2xl:max-w-2xl xl:last-of-type:mb-60 ">
         <span className="bg-foreground size-10 lg:size-14 flex-center p-2 min-w-10 lg:min-w-14 md:mt-1 rounded-full text-primary ">
           {icon}
         </span>
@@ -59,7 +59,7 @@ function Feature({
 }
 function Video({ src }: { src: string }) {
   return (
-    <div className="w-full h-auto aspect-video sticky top-60 rounded-3xl xl:block hidden">
+    <div className="w-full h-auto aspect-video sticky top-36 3xl:top-60 rounded-3xl xl:block hidden">
       <AnimatePresence mode="popLayout">
         <motion.video
           key={src}

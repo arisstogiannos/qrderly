@@ -15,14 +15,12 @@ export const sendVerificationEmail = async (
 ) => {
   const confirmLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/account-verification?token=${verificationToken}`;
   
-  const html = await render(<EmailVerification confirmLink={confirmLink} />, {
-    pretty: true,
-  });
+
   await resend.emails.send({
     from: `Aris <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: "Email Verification",
-    react: html,
+    react: <EmailVerification confirmLink={confirmLink} />,
   });
 };
 

@@ -4,21 +4,9 @@ import { ErrorMessage } from "@/components/Messages";
 import { Menu, Template } from "@prisma/client";
 import CustomThemeMaker from "./CustomThemeMaker";
 import { useTranslations } from "next-intl";
+import { themes } from "@/data";
 
-const themes = {
-  T1: [
-    "#111111,#161616,#591F5E,#F1F1F1",
-    "#E3DCD5,#483832,#735045,#f1f1f1,#2a1d11",
-    "#CBD2A4,#E9EED9,#9A7E6F,#54473F",
-    "#371330,#133086,#441b32#f1f1f1",
-  ],
-  T2: [
-    "#111111,#202020,#591F5E,#F1F1F1",
-    "#E3DCD5,#c1b2aa,#735045,#111111,#2a1d11",
-    "#CBD2A4,#E9EED9,#9A7E6F,#54473F",
-    "#371330,#133086,#441b32#f1f1f1",
-  ],
-};
+
 
 export default function ThemeSettings({
   menu,
@@ -85,25 +73,9 @@ export default function ThemeSettings({
             </label>
           );
         })}
-        <label key={"custom"} id="custom-theme" className="cursor-pointer">
-          <input
-            type="radio"
-            name="theme"
-            value={"custom"}
-            checked={selectedTheme === "custom"}
-            className="hidden peer"
-            onChange={(e) => setSelectedTheme("custom")}
-          />
-          <div
-            className={`sm:size-24 size-20 overflow-hidden rounded-3xl peer-checked:text-black  border-4 transition-all peer-checked:border-black border-muted-foreground/50 flex-center text-muted-foreground/50`}
-          >
-            <Plus strokeWidth={"3px"} />
-          </div>
-        </label>
+       
       </div>
-      {selectedTheme === "custom" && (
-        <CustomThemeMaker defaultColors={menu?.theme.split(",")} />
-      )}
+        <CustomThemeMaker defaultColors={selectedTheme.split(",")} />
       {errors?.map((er) => {
         return (
           <ErrorMessage

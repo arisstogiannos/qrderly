@@ -17,7 +17,7 @@ export function ProductCard({
   return (
     <div
       onClick={onClick}
-      className={`rounded-4xl bg-accent flex flex-col justify-between gap-10 overflow-hidden transition-all duration-500 p-6 origin-top cursor-pointer ${
+      className={`md:rounded-4xl rounded-3xl bg-accent flex flex-col justify-between gap-10 overflow-hidden transition-all duration-500 p-6 origin-top cursor-pointer ${
         isSelected ? "h-full" : "h-20 md:h-24 lg:h-28"
       }`}
     >

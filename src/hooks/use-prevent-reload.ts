@@ -18,5 +18,5 @@ export function usePreventRefresh(
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [message]);
+  }, [message,shouldPrevent]);
 }

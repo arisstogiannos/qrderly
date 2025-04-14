@@ -5,27 +5,19 @@ import React, { useEffect, useState } from "react";
 export default function CustomThemeMaker({
   defaultColors,
 }: {
-  defaultColors?: string[];
+  defaultColors: string[];
 }) {
   const variables = ["background", "secondary", "primary", "text"];
   const [defaultValues, setDefaultValues] = useState<string[]>(
-    defaultColors ?? []
+    defaultColors
   );
 
-  useEffect(() => {
-    if (!defaultColors) {
-      const root = document.querySelector(":root") as HTMLElement;
-      var rs = getComputedStyle(root);
-      const defaultValuesArr: string[] = [];
-      variables.forEach((varName) => {
-        const variable = "--" + varName + "-mockup";
-        const color = rs.getPropertyValue(variable);
-        defaultValuesArr.push(color);
-      });
+  useEffect(()=>{
+    console.log(defaultColors)
+    setDefaultValues(defaultColors )
+  },[defaultColors])
 
-      setDefaultValues(defaultValuesArr);
-    }
-  }, []);
+
 
   function handleColorChange(color: string, varName: string) {
     const root = document.querySelector(":root") as HTMLElement;
@@ -37,7 +29,7 @@ export default function CustomThemeMaker({
 
   return (
     <div className="grid gap-3 w-52 transition-all">
-      <p className="text-sm sm:text-base text-muted-foreground">Custom</p>
+      <p className="text-sm sm:text-base text-muted-foreground">Customize</p>
       {variables.map((v, i) => (
         <div key={v} className="flex gap-2">
           <Label

@@ -34,8 +34,9 @@ export async function partialExtractionAI(
             - To ensure you return all of the new items make sure that the number of items in the list and the number of items you return equals the total number of items in the menu.
             - If the input is not a menu, return a JSON array with one object where all fields are "%%%Not a menu%%%".
             - The name and description should be in the original language.
-            - Translate all names and descriptions of each item to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
-            - If there is an exception and some name doesnt make sense to be translated but should be in original language the null it instead.
+            - Translate the name and description of all items to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
+            - Exception: If some name or description doesnt have a meaningfull translation but should be in original language then null it instead.
+            - Ensure that you dont skip translating any name or description that needs translation.
             - The translations should be accurate and contextually relevant as you are a native speaker of each language.
             - Convert all prices to cents.
             - Preferences should include any extras, add-ons, sizes, options, or variants.

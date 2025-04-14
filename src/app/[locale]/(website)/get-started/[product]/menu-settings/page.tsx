@@ -42,7 +42,7 @@ export default async function page({
     <form className="flex lg:justify-between lg:flex-row gap-x-40 flex-col-reverse min-h-[600px] gap-y-20">
       <div className="space-y-8">
         <h1 className="text-2xl font-medium">{t("title")}</h1>
-        <div className="flex flex-col gap-6 2xl:min-w-sm lg:max-w-xs max-h-[550px] overflow-y-auto ">
+        <div className="flex flex-col gap-6 2xl:min-w-sm pr-10 lg:max-w-sm max-h-[550px] overflow-y-auto ">
           <MenuSettingsForm
             businessId={result.business.id}
             product={productMap[product]}

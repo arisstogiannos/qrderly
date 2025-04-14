@@ -32,10 +32,12 @@ export default function MenuItemOptions({
                 className=" text-base font-light capitalize list-inside  list-item"
               >
                 {value.name}{" "}
-                {value.price && value.price!=='0' && (
-                  <span className="text-foreground/60 font-normal ml-1">
-                    + <DisplayPrice price={Number(value.price) } />
+                {value.price && value.price !== "0" ? (
+                  <span className="text-muted">
+                    + <DisplayPrice price={parseInt(value.price)} />
                   </span>
+                ) : (
+                  ""
                 )}
               </li>
             ))}

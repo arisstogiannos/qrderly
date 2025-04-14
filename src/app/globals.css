@@ -19,14 +19,13 @@
 @utility animate-float-slow {
   animation: float 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-@keyframes slideDown{
-  0%{
+@keyframes slideDown {
+  0% {
     scale: 0;
   }
-  100%{
+  100% {
     scale: 1;
   }
-
 }
 .scrollbar-hidden::-webkit-scrollbar {
   width: 0px; /* Adjust width of the scrollbar */
@@ -43,7 +42,6 @@
     transform: translatey(0px);
   }
 }
-
 
 @theme {
   --breakpoint-3xl: 100rem;
@@ -185,38 +183,90 @@
 }
 
 .backgroundMesh {
-  --_mesh-gradient-blend-mode: normal;
   clip-path: polygon(0 0, 100% 0, 100% 27%, 0 83%);
+  --_gradient-blend-mode: normal;
+  --_gradient-blur: 0px;
 
-  background: radial-gradient(
-      at 84.4925066118131% 28.34008097165992%,
-      #2094f3 0px,
+  background:
+    radial-gradient(at 3% 36%, #2550c4 0px, transparent 50%),
+    radial-gradient(
+      at 81.59582699666356% 9.31692164694131%,
+      #633ac2 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 10% 92%, #248ab3 0px, transparent 50%),
+    radial-gradient(at 10% 10%, #455de6 0px, transparent 50%),
+    radial-gradient(
+      at 92.72253067802677% 78.11605938907914%,
+      #32c3fc 0px,
       transparent 50%
     ),
     radial-gradient(
-      at 17.389362327358214% 17.543859649122805%,
-      #7a81ff 0px,
-      transparent 50%
-    ),
-    radial-gradient(
-      at 47.63091389950044% 60.72874493927125%,
-      #bdadd1 0px,
-      transparent 50%
-    ),
-    radial-gradient(
-      at 17.163679106670585% 76.24831309041835%,
-      #39ddfe 0px,
-      transparent 50%
-    ),
-    radial-gradient(
-        at 86.8245665589186% 91.09311740890689%,
-        #9257ff 0px,
+        at 52.12509832710695% 77.40126315279718%,
+        #420de0 0px,
         transparent 50%
       )
-      #ffffff;
-  mix-blend-mode: var(--_mesh-gradient-blend-mode);
+      #2d36ae;
+  mix-blend-mode: var(--_gradient-blend-mode);
+
+  opacity: 0.95;
   background-size: 200% 200%;
   animation: gradientan 8s linear infinite;
+}
+/* Large devices (desktops, 1024px and up) */
+@media (max-width: 1600px) {
+  .backgroundMesh {
+    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 100%);
+  }
+}
+@media (max-width: 600px) {
+  .backgroundMesh {
+    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 70%);
+    background:
+      radial-gradient(
+        at 51.72413603228304% 67.0367177267089%,
+        #3d6beb 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 15.737770071838058% 11.461310355787166%,
+        #7a4fe0 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 12% 95%, #248ab3 0px, transparent 50%),
+      radial-gradient(at 89% 53%, #455de6 0px, transparent 50%),
+      radial-gradient(
+        at 73.77706224759753% 70.96809702625963%,
+        #32c3fc 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 88.6126671560818% 13.784398123703506%,
+        #4492db 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+          at 6.214915569770444% 23.076749195368876%,
+          #1156f7 0px,
+          transparent 50%
+        )
+        #4c52e6;
+    opacity: 0.9;
+    background-size: 200% 200%;
+    animation: gradientan 8s linear infinite;
+  }
+}
+.noise {
+  background-image: var(--_noise-texture);
+  background-size: var(--_noise-size);
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.frosted-backdrop {
+  backdrop-filter: blur(var(--_gradient-blur)) contrast(100%) brightness(100%);
+  -webkit-backdrop-filter: blur(var(--_gradient-blur)) contrast(100%)
+    brightness(100%);
 }
 
 @keyframes gradientan {
@@ -254,7 +304,7 @@
   border-radius: 50%;
   display: inline-block;
   position: relative;
-  border:  0.2em solid;
+  border: 0.2em solid;
   border-color: var(--primary) var(--primary) transparent transparent;
   box-sizing: border-box;
   animation: rotation 1.6s linear infinite;
@@ -271,7 +321,8 @@
   margin: auto;
   border: 0.2em solid;
   /* border: 0.2em solid; */
-  border-color: transparent transparent var(--secondary-mockup) var(--secondary-mockup);
+  border-color: transparent transparent var(--secondary-mockup)
+    var(--secondary-mockup);
   width: 95%;
   height: 95%;
   /* width: 2.4em;

@@ -8,23 +8,24 @@ import { useSearchParams } from "next/navigation";
 import { Template } from "@prisma/client";
 import { getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
+import { themes } from "@/data";
 
 
-const themes = {
-  T1: [
-    "#155E95,#FFFFFF,#111111,#FFFFFF",
-    "#111111,#161616,#591F5E,#F1F1F1",
-    "#E3DCD5,#483832,#735045,#f1f1f1",
-    "#CBD2A4,#E9EED9,#9A7E6F,#54473F",
-    // "#371330,#133086,#441b32#f1f1f1",
-  ],
-  T2: [
-    "#591F5E,#111111,#202020,#F1F1F1",
-    "#E3DCD5,#c1b2aa,#735045,#111111",
-    "#CBD2A4,#E9EED9,#9A7E6F,#54473F",
-    "#371330,#133086,#441b32#f1f1f1",
-  ],
-};
+// const themes = {
+//   T1: [
+//     "#155E95,#FFFFFF,#111111,#FFFFFF",
+//     "#111111,#161616,#591F5E,#F1F1F1",
+//     "#E3DCD5,#483832,#735045,#f1f1f1",
+//     "#CBD2A4,#E9EED9,#9A7E6F,#54473F",
+//     // "#371330,#133086,#441b32#f1f1f1",
+//   ],
+//   T2: [
+//     "#591F5E,#111111,#202020,#F1F1F1",
+//     "#E3DCD5,#c1b2aa,#735045,#111111",
+//     "#CBD2A4,#E9EED9,#9A7E6F,#54473F",
+//     "#371330,#133086,#441b32#f1f1f1",
+//   ],
+// };
 
 export default  function Preview() {
   const searchParams = useSearchParams();
@@ -35,7 +36,7 @@ export default  function Preview() {
   function handleThemeChange(theme: string) {
     setSelectedTheme(theme);
     const themeColors = theme.split(",");
-    const variables = ["primary", "background", "secondary", "text"];
+    const variables = ["background", "secondary", "primary", "text"];
 
     const root = document.querySelector(":root") as HTMLElement;
     themeColors.forEach((c, i) => {

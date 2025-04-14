@@ -14,7 +14,7 @@ export default function CountdownTimer({onTimerEnd,targetDate}:{onTimerEnd:(v:bo
   const calculateTimeLeft = () => {
     const difference = +targetDate - +new Date() ;
 
-    if (difference < 1200 && difference>1) {
+    if (difference < 1200 && difference>1 || difference<0) {
       setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       onTimerEnd(true)
       return;

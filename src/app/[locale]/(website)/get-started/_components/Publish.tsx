@@ -8,7 +8,7 @@ import { ChooseTier } from "./ChooseTierModal";
 import { createMenu } from "../actions";
 import Loader from "@/components/Loader";
 import { ErrorMessage } from "@/components/Messages";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Rocket } from "lucide-react";
 import Link from "next/link";
 import { Link as IntlLink } from "@/i18n/navigation";
 
@@ -80,7 +80,6 @@ export default function Publish({
 
   return (
     <Modal
-    initialOpen
       title={
         !isPending && !state?.success && !publishedMenuBusiness ? "Publish" : ""
       }
@@ -91,16 +90,16 @@ export default function Publish({
       }
       classNames=" lg:w-fit min-w-fit pt-5   "
       trigger={
-        <form className="ml-auto" action={existingPaidSub ? action : ""}>
+        <form className="ml-auto w-full mt-auto" action={existingPaidSub ? action : ""}>
           <Button
             type={
               existingPaidSub && !state?.success && !publishedMenuBusiness
                 ? "submit"
                 : "button"
             }
-            className="rounded-full  max-2xl:text-xl "
+            className=" py-5  max-2xl:text-xl w-full sm:w-fit sm:rounded-full"
           >
-            {state?.success ? "View Qr" : "Publish"}
+            {state?.success ? "View Qr" :<> <Rocket/> Publish</>}
           </Button>
         </form>
       }
