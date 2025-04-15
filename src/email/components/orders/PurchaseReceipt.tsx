@@ -1,34 +1,189 @@
-
-import OrderInformation from "./OrderInformation";
-import { ProductURL } from "@/types";
-import { Subscription } from "@prisma/client";
 import {
   Body,
+  Button,
   Container,
   Head,
   Heading,
+  Hr,
   Html,
+  Img,
   Preview,
-  Tailwind,
-}   from "@react-email/components";
+  Section,
+  Text,
+} from "@react-email/components";
+import { Copyright } from "lucide-react";
 
+interface SubscriptionConfirmationEmailProps {
+  username: string;
+  planName: string;
+  planPrice: string;
+  billingCycle: string;
+  startDate: string;
+  dashboardUrl: string;
+}
 
+export const SubscriptionConfirmationEmail = ({
+  username = "John",
+  planName = "Professional",
+  planPrice = "$29",
+  billingCycle = "monthly",
+  startDate = "April 15, 2025",
+  dashboardUrl = "https://qrmenu.app/dashboard",
+}: SubscriptionConfirmationEmailProps) => {
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://scanby.cloud";
 
-
-export default function PurchaseReceiptEmail({ sub }: {sub:Subscription}) {
   return (
-    
     <Html>
-      <Preview>Download </Preview>
-      <Tailwind>
-        <Head />
-        <Body className="font-sans bg-white">
-          <Container className="max-w-xl">
-            <Heading>Purchase Receipt</Heading>
-            <OrderInformation sub={sub}  />
-          </Container>
-        </Body>
-      </Tailwind>
+      <Head />
+      <Preview>Your Scanby subscription is confirmed!</Preview>
+      <Body style={main}>
+        <Container style={container}>
+          <Img
+            src={`${baseUrl}/logo black.png`}
+            width="60"
+            height="40"
+            alt="Scanby"
+            style={logo}
+          />
+          <Heading style={h1}>Subscription Confirmed</Heading>
+          <Text style={text}>Hi {username},</Text>
+          <Text style={text}>
+            Thank you for subscribing to Scanby! Your {planName} plan
+            is now active.
+          </Text>
+          <Section style={boxContainer}>
+            <div style={box}>
+              <Text style={boxTitle}>Subscription Details</Text>
+              <Text style={boxContent}>
+                <strong>Plan:</strong> {planName}
+                <br />
+                <strong>Price:</strong> {planPrice} {billingCycle}
+                <br />
+                <strong>Start Date:</strong> {startDate}
+                <br />
+              </Text>
+            </div>
+          </Section>
+          <Text style={text}>
+            You now have access to all the features included in the {planName}{" "}
+            plan. You can start creating QR menus right away!
+          </Text>
+          <Section style={buttonContainer}>
+            <Button  style={button} href={dashboardUrl}>
+              Go to Dashboard
+            </Button>
+          </Section>
+          <Text style={text}>
+            If you have any questions about your subscription or need
+            assistance, please contact our support team at support@qrmenu.app.
+          </Text>
+          <Hr style={hr} />
+          <Text style={footer}>
+          <Copyright/> Scanby 20025
+
+          </Text>
+        </Container>
+      </Body>
     </Html>
   );
-}
+};
+
+export default SubscriptionConfirmationEmail;
+
+const main = {
+  backgroundColor: "#f6f9fc",
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
+  padding: "40px 0",
+};
+
+const container = {
+  backgroundColor: "#ffffff",
+  border: "1px solid #eee",
+  borderRadius: "5px",
+  boxShadow: "0 5px 10px rgba(20, 50, 70, 0.2)",
+  margin: "0 auto",
+  maxWidth: "600px",
+  padding: "20px",
+};
+
+const logo = {
+  margin: "0 auto 20px",
+  display: "block",
+};
+
+const h1 = {
+  color: "#1f2937",
+  fontSize: "24px",
+  fontWeight: "bold",
+  margin: "30px 0",
+  padding: "0",
+  textAlign: "center" as const,
+};
+
+const text = {
+  color: "#4b5563",
+  fontSize: "16px",
+  lineHeight: "24px",
+  margin: "16px 0",
+};
+
+const boxContainer = {
+  margin: "24px 0",
+};
+
+const box = {
+  backgroundColor: "#f9fafb",
+  border: "1px solid #e5e7eb",
+  borderRadius: "5px",
+  padding: "20px",
+};
+
+const boxTitle = {
+  color: "#1f2937",
+  fontSize: "16px",
+  fontWeight: "bold",
+  margin: "0 0 12px 0",
+};
+
+const boxContent = {
+  color: "#4b5563",
+  fontSize: "14px",
+  lineHeight: "22px",
+  margin: "0",
+};
+
+const buttonContainer = {
+  textAlign: "center" as const,
+  margin: "30px 0",
+};
+
+const button = {
+  backgroundColor: "#5046e4",
+  borderRadius: "4px",
+  color: "#fff",
+  display: "inline-block",
+  fontSize: "16px",
+  fontWeight: "bold",
+  textDecoration: "none",
+  padding:"10px",
+  textAlign: "center" as const,
+};
+
+const hr = {
+  borderColor: "#e5e7eb",
+  margin: "30px 0",
+};
+
+const footer = {
+  color: "#9ca3af",
+  fontSize: "12px",
+  lineHeight: "22px",
+  margin: "12px 0",
+  textAlign: "center" as const,
+  display:"flex",
+  alignItems:"center",
+  justifyItems:"center",
+  width:"100%",
+  gap:"10px"
+};

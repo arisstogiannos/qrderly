@@ -1,6 +1,6 @@
 import { plandata } from "@/data";
 import { db } from "@/db";
-import PurchaseReceiptEmail from "@/email/components/orders/PurchaseReceipt";
+import SubscriptionConfirmationEmail from "@/email/components/orders/PurchaseReceipt";
 import { BillingType, Product } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       from: `Aris <${process.env.SENDER_EMAIL as string}>`,
       to: email,
       subject: "Order Confirmation",
-      react: <PurchaseReceiptEmail sub={sub} />,
+      react: <SubscriptionConfirmationEmail billingCycle={sub.billing} planName={sub.product} planPrice={""} startDate={sub.purchasedAt.toLocaleDateString()} username="user" dashboardUrl=""  />,
     });
 
 

@@ -36,7 +36,7 @@ export async function resetPassword(prevState: any, formData: FormData) {
   }
 
   const resetToken = await generatePasswordResetToken(user.email);
-  await sendResetPasswordEmail(resetToken.email, resetToken.token);
+  await sendResetPasswordEmail(resetToken.email, resetToken.token, user.name);
 
   return { success: "Password reset email sent" };
 }

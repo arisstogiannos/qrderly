@@ -1,39 +1,38 @@
 import React from 'react'
 
-// import {
-//     Body,
-//     Button,
-//     Container,
-//     Head,
-//     Heading,
-//     Html,
-//     Preview,
-//     Section,
-//     Tailwind,
-//     Text,
-//   } from "@react-email/components";
+import {
+    Body,
+    Button,
+    Container,
+    Head,
+    Heading,
+    Html,
+    Preview,
+    Section,
+    Tailwind,
+    Text,
+  } from "@react-email/components";
 import { ContactDataType } from '@/email/mail';
 
 export default function ContactEmail({data}: {data: ContactDataType}) {
   return (
-    <div></div>
-    // <Html>
-    //   <Preview>Contact Form Email </Preview>
-    //   <Tailwind>
-    //     <Head />
-    //     <Body className="font-sans bg-white">
-    //       <Container className="max-w-xl">
-    //         <Heading>Contact Form email</Heading>
-    //         <Section className='space-y-8'>
-    //             <Text>{data.fullName}</Text>
-    //             <Text>{data.email}</Text>
-    //             <Text>{data.product}</Text>
-    //             <Text>{data.reason}</Text>
-    //             <Text>{data.message}</Text>
-    //         </Section>
-    //       </Container>
-    //     </Body>
-    //   </Tailwind>
-    // </Html>
+    <Html>
+      <Preview>Contact Form Email </Preview>
+      <Tailwind>
+        <Head />
+        <Body className="font-sans bg-white">
+          <Container className="max-w-xl">
+            <Heading>Contact Form email</Heading>
+            <Section className='space-y-8'>
+                <Text>{data.fullName}</Text>
+                <Text>{data.email}</Text>
+                <Text>{data.product}</Text>
+                <Text>{data.reason}</Text>
+                <Text>{data.message}</Text>
+            </Section>
+          </Container>
+        </Body>
+      </Tailwind>
+    </Html>
   )
 }

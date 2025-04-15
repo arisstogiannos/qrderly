@@ -13,21 +13,25 @@ import {
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
 
-interface PasswordResetEmailProps {
-  name: string;
-  resetLink: string;
+interface QrMenuCreatedEmailProps {
+  username: string;
+  menuName: string;
+  menuUrlPath:string
 }
 
-export const PasswordResetEmail = ({
-  resetLink,
-  name,
-}: PasswordResetEmailProps) => {
+export const QrMenuCreatedEmail = ({
+  username = "John",
+  menuName = "Summer Specials",
+  menuUrlPath ="menu"
+}: QrMenuCreatedEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://scanby.cloud";
+  const menuUrl = baseUrl+"/" + menuName.replaceAll(" ","-") +"/menu"
+  const dashboardUrl = baseUrl+"/" + menuName.replaceAll(" ","-")+"/dashboard"
 
   return (
     <Html>
       <Head />
-      <Preview>Reset your Scanby password</Preview>
+      <Preview>Your QR Menu "{menuName}" is ready!</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -37,24 +41,39 @@ export const PasswordResetEmail = ({
             alt="QR Menu Creator"
             style={logo}
           />
-          <Heading style={h1}>Reset your password</Heading>
-          <Text style={text}>Hi {name},</Text>
+          <Heading style={h1}>Your QR Menu is Ready!</Heading>
+          <Text style={text}>Hi {username},</Text>
           <Text style={text}>
-            We received a request to reset your password for your QR Menu
-            Creator account. Click the button below to set a new password:
+            Great news! Your QR menu "{menuName}" has been successfully created
+            and is now live.
+          </Text>
+          {/* <Section style={qrCodeContainer}>
+            <Img
+              src={qrCodeUrl}
+              width="200"
+              height="200"
+              alt="QR Code"
+              style={qrCode}
+            />
+          </Section> */}
+          <Text style={text}>
+            Your customers can now scan your QR code to view your digital menu.
+            You can print or download your QR code from your dashboard.
           </Text>
           <Section style={buttonContainer}>
-            <Button style={button} href={resetLink}>
-              Reset Password
+            <Button style={button} href={menuUrl}>
+              View Your Menu
             </Button>
           </Section>
           <Text style={text}>
-            If you didn't request a password reset, you can safely ignore this
-            email. Your password will remain unchanged.
+            Remember, you can update your menu anytime from your dashboard, and
+            the changes will be reflected instantly for your customers.
           </Text>
-          <Text style={text}>
-            This password reset link will expire in 1 hour.
-          </Text>
+          <Section style={buttonContainer}>
+            <Button style={secondaryButton} href={dashboardUrl}>
+              Go to Dashboard
+            </Button>
+          </Section>
           <Hr style={hr} />
           <Text style={footer}>
             <Copyright /> Scanby 20025
@@ -65,7 +84,7 @@ export const PasswordResetEmail = ({
   );
 };
 
-export default PasswordResetEmail;
+export default QrMenuCreatedEmail;
 
 const main = {
   backgroundColor: "#f6f9fc",
@@ -105,6 +124,17 @@ const text = {
   margin: "16px 0",
 };
 
+const qrCodeContainer = {
+  textAlign: "center" as const,
+  margin: "30px 0",
+};
+
+const qrCode = {
+  border: "1px solid #e5e7eb",
+  padding: "10px",
+  backgroundColor: "#ffffff",
+};
+
 const buttonContainer = {
   textAlign: "center" as const,
   margin: "30px 0",
@@ -118,8 +148,21 @@ const button = {
   fontSize: "16px",
   fontWeight: "bold",
   textDecoration: "none",
-  padding: "10px",
   textAlign: "center" as const,
+  padding: "10px",
+};
+
+const secondaryButton = {
+  backgroundColor: "#ffffff",
+  borderRadius: "4px",
+  border: "1px solid #5046e4",
+  color: "#5046e4",
+  display: "inline-block",
+  fontSize: "16px",
+  fontWeight: "bold",
+  textDecoration: "none",
+  textAlign: "center" as const,
+  padding: "10px",
 };
 
 const hr = {
@@ -133,9 +176,9 @@ const footer = {
   lineHeight: "22px",
   margin: "12px 0",
   textAlign: "center" as const,
-  display: "flex",
-  alignItems: "center",
-  justifyItems: "center",
-  width: "100%",
-  gap: "10px",
+  display:"flex",
+alignItems:"center",
+justifyItems:"center",
+width:"100%",
+gap:"10px"
 };

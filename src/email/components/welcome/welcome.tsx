@@ -1,54 +1,158 @@
-import React from "react";
 import {
-    Body,
-    Button,
-    Container,
-    Font,
-    Head,
-    Heading,
-    Html,
-    Img,
-    Preview,
-    Section,
-    Tailwind,
-    Text,
-  } from "@react-email/components";
+  Body,
+  Button,
+  Container,
+  Head,
+  Heading,
+  Hr,
+  Html,
+  Img,
+  Preview,
+  Section,
+  Text,
+} from "@react-email/components";
+import { Copyright } from "lucide-react";
 
-function Welcome({confirmLink}: {confirmLink: string}) {
-  return (
-    // <div></div>
-    <Html>
-      <Preview>Verification Email </Preview>
-      <Tailwind >
-        <Head />
-
-        <Body className="font-sans bg-white">
-          <Container  className="max-w-xl overflow-hidden font-[family-name:var(--font-instrument-sans)]">
-          <Img className="w-full" src="http://localhost:3001/Banner.png" alt="sss"/>
-          <Section className="mx-2">
-
-            <Heading className="font-medium ">Welcome to scanby! Let’s Get You Set Up</Heading>
-            <Container className="text-xl ml-0 flex md:text-3xl">
-
-            <Text className="m-0 leading-0 text-lg ">Hey [First Name],</Text>
-            <Text style={{lineHeight:1}} className="text-lg">Welcome to scanby – the easiest way to offer seamless, contactless ordering at your business! </Text>
-            </Container>
-            <Section className="flex leading-0">
-
-            <Text>Here’s what you can do next:</Text>
-            <Text style={{lineHeight:0.8}} className="m-0 p-0">✅ Set up your digital menu in minutes</Text>
-            <Text style={{lineHeight:0.8}}>✅ Generate & print your custom QR codes</Text>
-            <Text style={{lineHeight:0.8}}>✅ Start accepting contactless orders effortlessly</Text>
-            </Section>
-            <Section className="mt-5">
-            <Button className="bg-blue-900 rounded-full text-white text-lg py-2 px-4" href={confirmLink}>Dive In</Button>
-            </Section>
-          </Section>
-          </Container>
-        </Body>
-      </Tailwind>
-    </Html>
-  )
+interface WelcomeEmailProps {
+  username: string;
+  userEmail: string;
 }
 
-export default Welcome
+export const WelcomeEmail = ({
+  username = "John",
+  userEmail = "john@example.com",
+}: WelcomeEmailProps) => {
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://scanby.cloud";
+
+  return (
+    <Html>
+      <Head />
+      <Preview>Welcome to Scanby - Let's get started!</Preview>
+      <Body style={main}>
+        <Container style={container}>
+          <Img
+            src={`${baseUrl}/logo black.png`}
+            width="60"
+            height="40"
+            alt="Scanby"
+            style={logo}
+          />
+          <Heading style={h1}>Welcome to Scanby!</Heading>
+          <Text style={text}>Hi {username},</Text>
+          <Text style={text}>
+            Thank you for signing up for Scanby. We're excited to help
+            you create beautiful, digital menus for your restaurant or business.
+          </Text>
+          <Section style={buttonContainer}>
+            <Button style={button} href={`${baseUrl}/get-started`}>
+              Get Started
+            </Button>
+          </Section>
+          <Text style={text}>With Scanby, you can:</Text>
+          <ul style={list}>
+            <li style={listItem}>Create unlimited digital menus</li>
+            <li style={listItem}>Generate QR codes for easy customer access</li>
+            <li style={listItem}>Update your menu in real-time</li>
+            <li style={listItem}>Track menu views and customer engagement</li>
+          </ul>
+          <Text style={text}>
+            If you have any questions, simply reply to this email. We're here to
+            help!
+          </Text>
+          <Hr style={hr} />
+          <Text style={footer}>
+            <Copyright /> Scanby 20025
+          </Text>
+          <Text style={footer}>This email was sent to {userEmail}</Text>
+        </Container>
+      </Body>
+    </Html>
+  );
+};
+
+export default WelcomeEmail;
+
+const main = {
+  backgroundColor: "#f6f9fc",
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
+  padding: "40px 0",
+};
+
+const container = {
+  backgroundColor: "#ffffff",
+  border: "1px solid #eee",
+  borderRadius: "5px",
+  boxShadow: "0 5px 10px rgba(20, 50, 70, 0.2)",
+  margin: "0 auto",
+  maxWidth: "600px",
+  padding: "20px",
+};
+
+const logo = {
+  margin: "0 auto 20px",
+  display: "block",
+};
+
+const h1 = {
+  color: "#1f2937",
+  fontSize: "24px",
+  fontWeight: "bold",
+  margin: "30px 0",
+  padding: "0",
+  textAlign: "center" as const,
+};
+
+const text = {
+  color: "#4b5563",
+  fontSize: "16px",
+  lineHeight: "24px",
+  margin: "16px 0",
+};
+
+const buttonContainer = {
+  textAlign: "center" as const,
+  margin: "30px 0",
+};
+
+const button = {
+  backgroundColor: "#5046e4",
+  borderRadius: "4px",
+  color: "#fff",
+  display: "inline-block",
+  fontSize: "16px",
+  fontWeight: "bold",
+  textDecoration: "none",
+  textAlign: "center" as const,
+  padding: "10px",
+};
+
+const hr = {
+  borderColor: "#e5e7eb",
+  margin: "30px 0",
+};
+
+const footer = {
+  color: "#9ca3af",
+  fontSize: "12px",
+  lineHeight: "22px",
+  margin: "12px 0",
+  textAlign: "center" as const,
+  display: "flex",
+  alignItems: "center",
+  justifyItems: "center",
+  width: "100%",
+  gap: "10px",
+};
+
+const list = {
+  color: "#4b5563",
+  fontSize: "16px",
+  lineHeight: "24px",
+  margin: "16px 0",
+  padding: "0 0 0 20px",
+};
+
+const listItem = {
+  margin: "8px 0",
+};

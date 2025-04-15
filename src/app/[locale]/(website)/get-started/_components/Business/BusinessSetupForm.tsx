@@ -147,7 +147,7 @@ export default function BusinessSetupForm({
       <Button
         disabled={isPending}
         type="submit"
-        className="bg-foreground  w-full sm:w-fit sm:ml-auto text-lg rounded-lg h-10 sm:h-9 sm:rounded-full p-1 min-w-24"
+        className="bg-foreground  w-full sm:w-fit sm:ml-auto text-lg rounded-lg h-10 sm:h-9 sm:rounded-full  min-w-24"
       >
         {isPending ? (
           <Loader className="text-xs" />

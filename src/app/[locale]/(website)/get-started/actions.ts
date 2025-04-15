@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
+import { sendMenuCreatedEmail } from "@/email/mail";
 
 const businessSchema = z.object({
   name: z.string(),
@@ -48,13 +49,14 @@ export async function submitBusinessInfo(
   const session = await auth();
   const user = session?.user;
 
-  
   if (!user?.id) {
     redirect("/unauthorized");
   }
-  const freebusinesses = user.business.filter((b)=>b.subscription.billing==="FREETRIAL")
-  
-  if(freebusinesses.length>3){
+  const freebusinesses = user.business.filter(
+    (b) => b.subscription.billing === "FREETRIAL"
+  );
+
+  if (freebusinesses.length > 3) {
     return {
       error: "You have more than 3 free menus. You have to upgrade to pro.",
     };
@@ -215,7 +217,7 @@ export async function createMenu(
     };
   }
 
-  await db.menu.update({
+  const menu =await db.menu.update({
     where: { businessId: business.id },
     data: { published: true },
   });
@@ -226,8 +228,10 @@ export async function createMenu(
   revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/menu");
   revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/smart-menu");
 
-  const businessNameUrl = business.name.replaceAll(" ", "-")
-
+  const businessNameUrl = business.name.replaceAll(" ", "-");
+  if (user.email) {
+    await sendMenuCreatedEmail(user.email, user.name ?? "user", business.name, menu.type==="QR_MENU"?"menu":"smart-menu?table=admin");
+  }
   return {
     success: "Proccess Complete",
     businessNameUrl,

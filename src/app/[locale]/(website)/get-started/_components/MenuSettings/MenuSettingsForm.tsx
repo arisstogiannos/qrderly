@@ -83,7 +83,7 @@ export default function MenuSettingsForm({
       <Button
         disabled={isPending}
         type="submit"
-        className="bg-foreground w-full sm:w-fit ml-auto text-lg  p-1 min-w-24 mt-auto py-5 sm:rounded-full"
+        className="bg-foreground w-full sm:w-fit ml-auto text-lg  h-10 sm:h-9 min-w-24 mt-auto  sm:rounded-full"
         formAction={action}
       >
         {isPending ? (

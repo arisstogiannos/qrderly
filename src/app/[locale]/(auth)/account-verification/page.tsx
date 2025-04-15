@@ -16,7 +16,7 @@ export default async function AccountVerificationPage({
   }
  
   return (
-    <div className="flex w-full items-center justify-center">
+    <div className="flex w-full items-center justify-center bg-background rounded-3xl p-6">
       <div className="flex flex-col items-center justify-center gap-5">
         {result?.success && (
           <>

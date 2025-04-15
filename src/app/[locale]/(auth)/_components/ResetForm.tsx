@@ -56,7 +56,7 @@ export default function ResetForm({
           <Button
             disabled={isPending}
             type="submit"
-            className="mt-3 w-full p-6 text-lg"
+            className="mt-3 w-full  text-lg"
           >
             {isPending ? <Loader /> : t("sendResetCode")}
           </Button>

@@ -16,6 +16,7 @@ export default function RegisterForm() {
   const t = useTranslations("registerForm");
 
   const [formData, setFormData] = useState({
+    name:"",
     email: "",
     password: "",
     confirmPassword: "",
@@ -38,6 +39,22 @@ export default function RegisterForm() {
   return (
     <form action={registerAction}>
       <div className="flex flex-col gap-6">
+        <div className="grid gap-3">
+          <Label htmlFor="name">{t("name")}</Label>
+          <Input
+            autoComplete="name"
+            id="name"
+            name="name"
+            type="name"
+            placeholder={t("namePlaceholder")}
+            required
+            value={formData.name}
+            onChange={handleChange}
+          />
+          {state?.errors?.name?.map((er) => (
+            <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />
+          ))}
+        </div>
         <div className="grid gap-3">
           <Label htmlFor="email">{t("email")}</Label>
           <Input

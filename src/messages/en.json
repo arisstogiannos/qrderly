@@ -523,6 +523,8 @@
     "waiting": "Waiting"
   },
   "registerForm": {
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
     "email": "Email",
     "emailPlaceholder": "Enter your email",
     "password": "Password",

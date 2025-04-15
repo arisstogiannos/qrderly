@@ -5,12 +5,15 @@ import React from "react";
 import ResetPasswordEmail from "./components/auth/ResetPasswordEmail";
 import { z } from "zod";
 import ContactEmail from "./components/contact/ContactEmail";
+import WelcomeEmail from "./components/welcome/Welcome";
+import QrMenuCreatedEmail from "./components/Menu/MenuCreatedEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export const sendVerificationEmail = async (
   email: string,
-  verificationToken: string
+  verificationToken: string,
+  name:string
 ) => {
   const confirmLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/account-verification?token=${verificationToken}`;
   
@@ -19,13 +22,38 @@ export const sendVerificationEmail = async (
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: "Email Verification",
-    react: <EmailVerification confirmLink={confirmLink} />,
+    react: <EmailVerification verificationUrl={confirmLink} username={name} />,
+  });
+};
+export const sendWelcomeEmail = async (
+  email: string,
+  name:string
+) => {
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: "Email Verification",
+    react: <WelcomeEmail userEmail={email} username={name} />,
+  });
+};
+export const sendMenuCreatedEmail = async (
+  email: string,
+  name:string,
+  businessName:string,
+  menuUrlPath:string
+) => {
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: "Email Verification",
+    react: <QrMenuCreatedEmail  username={name} menuName={businessName} menuUrlPath={menuUrlPath} />,
   });
 };
 
 export const sendResetPasswordEmail = async (
   email: string,
-  resetToken: string
+  resetToken: string,
+  name:string
 ) => {
   const resetLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/reset-password?token=${resetToken}`;
 
@@ -33,7 +61,7 @@ export const sendResetPasswordEmail = async (
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: "Password Reset",
-    react: React.createElement(ResetPasswordEmail, { resetLink: resetLink }),
+    react: React.createElement(ResetPasswordEmail, { resetLink: resetLink, name }),
   });
 };
 

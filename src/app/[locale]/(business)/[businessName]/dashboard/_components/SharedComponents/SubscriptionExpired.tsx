@@ -46,7 +46,7 @@ export default function SubscriptionExpired({
                 business.id,
                 business?.subscription.id ?? "",
                 "/" + business.name.replaceAll(" ", "-") + "/dashboard",
-                "go back to dashboard"
+                "Go Back to Dashboard"
               )}
             >
               Subscribe Monthly {currentPlan.billing.monthly.price}
@@ -60,7 +60,7 @@ export default function SubscriptionExpired({
                 business.id,
                 business.subscription.id ?? "",
                 "/" + business.name.replaceAll(" ", "-") + "/dashboard",
-                "go back to dashboard"
+                "Go Back to Dashboard"
               )}
             >
               {/* <Link href={currentPlan.billing.yearly.payment_link}> */}

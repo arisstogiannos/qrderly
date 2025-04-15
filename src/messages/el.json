@@ -559,6 +559,8 @@
     "waiting": "Αναμονή"
   },
   "registerForm": {
+    "name": "Όνομα",
+    "namePlaceholder": "Εισάγετε το όνομα σας",
     "email": "Email",
     "emailPlaceholder": "Εισάγετε το email σας",
     "password": "Κωδικός",

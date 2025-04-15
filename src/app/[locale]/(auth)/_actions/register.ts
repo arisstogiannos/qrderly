@@ -5,7 +5,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/email/mail";
+import { sendVerificationEmail, sendWelcomeEmail } from "@/email/mail";
 
 
 
@@ -13,6 +13,7 @@ import { sendVerificationEmail } from "@/email/mail";
 // Register
 
 const registerSchema = z.object({
+  name:z.string(),
   email: z.string().email({ message: "Invalid email address" }).trim(),
   password: z
     .string()
@@ -41,7 +42,7 @@ export async function register(prevState: any, formData: FormData) {
       },
     };
   }
-  const { email, password } = result.data;
+  const { email, password,name } = result.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingUser = await db.user.findUnique({ where: { email } });
@@ -54,9 +55,9 @@ export async function register(prevState: any, formData: FormData) {
     };
   }
 
-  await db.user.create({
+  const user =await db.user.create({
     data: {
-      name:"",
+      name,
       email,
       password: hashedPassword,
       role:"ADMIN"
@@ -64,7 +65,8 @@ export async function register(prevState: any, formData: FormData) {
   });
 
   const verificationToken = await generateVerificationToken(email);
-  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+  await sendWelcomeEmail(verificationToken.email,user.name)
+  await sendVerificationEmail(verificationToken.email, verificationToken.token,user.name);
 
   return { success: "Confirmation email sent" };
 }

@@ -42,7 +42,7 @@ export default function UpgradeSubModal({
             business.id,
             business.subscription.id ?? "",
             "/"+business.name.replaceAll(" ","-")+"/dashboard",
-            "go back to Dashboard"
+            "Go Back to Dashboard"
           )}
         />
         <Plan
@@ -57,7 +57,7 @@ export default function UpgradeSubModal({
             business.id,
             business.subscription.id ?? "",
             "/"+business.name.replaceAll(" ","-")+"/dashboard",
-            "go back to Dashboard"
+            "Go Back to Dashboard"
           )}
         />
       </div>
