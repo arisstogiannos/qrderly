@@ -5,8 +5,8 @@ import React from "react";
 import ResetPasswordEmail from "./components/auth/ResetPasswordEmail";
 import { z } from "zod";
 import ContactEmail from "./components/contact/ContactEmail";
-import WelcomeEmail from "./components/welcome/Welcome";
 import QrMenuCreatedEmail from "./components/Menu/MenuCreatedEmail";
+import WelcomeEmail from "./components/welcome/WelcomeEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 

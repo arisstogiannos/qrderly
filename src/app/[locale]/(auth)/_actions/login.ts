@@ -51,6 +51,7 @@ export async function login(prevState: any, formData: FormData) {
     await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token,
+      existingUser.name
     );
     return { success: "Confirmation email sent" };
   }

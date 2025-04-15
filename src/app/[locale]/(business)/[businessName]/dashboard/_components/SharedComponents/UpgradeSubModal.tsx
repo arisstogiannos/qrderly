@@ -1,4 +1,4 @@
-import React from "react";
+import React, { startTransition, useState } from "react";
 import { Modal } from "./Modal";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
@@ -7,6 +7,7 @@ import { BillingType, Product } from "@prisma/client";
 import { BusinessExtended } from "@/types";
 import { plandata } from "@/data";
 import { createSession } from "@/app/[locale]/(website)/subscriptionActions";
+import Loader from "@/components/Loader";
 
 export default function UpgradeSubModal({
   business,
@@ -66,16 +67,25 @@ export default function UpgradeSubModal({
 }
 
 function Plan({ price, btnFn ,title,btn}: { price: string; btnFn: () => Promise<void>,title:string,btn:string }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+      setLoading(true);
+
+    btnFn().finally(() => {
+      setLoading(false);
+    });
+  };
   return (
     <div className="bg-background border-2 border-primary/20 p-6 rounded-3xl flex flex-col gap-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-3xl">
       <p className="text-lg font-bold">{title}</p>
       <p className="font-medium text-xl">{price}</p>
       <Button
-        onClick={btnFn}
-        // variant={"outline"}
-        className="rounded-lg  text-xl py-6 w-full whitespace-normal "
+        onClick={handleClick}
+        disabled={loading}
+        className="rounded-lg text-xl  w-full whitespace-normal"
       >
-        {btn}
+        {loading ? <Loader className="text-xs " /> : btn}
       </Button>
     </div>
   );

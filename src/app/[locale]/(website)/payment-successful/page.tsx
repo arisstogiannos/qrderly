@@ -71,7 +71,7 @@ export default async function SuccessPage({
             <Link href={successPageLink}>{successPageButton}</Link>
           </Button>
           <Button asChild variant="outline" className="w-full">
-            <Link href="/account/subscription">View Subscription Details</Link>
+            <Link href={"https://billing.stripe.com/p/login/test_14kcOi9HdbsYdSU6oo?prefilled_email="+user.email}>View Subscription Details</Link>
           </Button>
         </CardFooter>
       </Card>
