@@ -5,7 +5,6 @@ import React from "react";
 import ResetPasswordEmail from "./components/auth/ResetPasswordEmail";
 import { z } from "zod";
 import ContactEmail from "./components/contact/ContactEmail";
-import { render } from "@react-email/render";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -17,7 +16,7 @@ export const sendVerificationEmail = async (
   
 
   await resend.emails.send({
-    from: `Aris <${process.env.SENDER_EMAIL as string}>`,
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: "Email Verification",
     react: <EmailVerification confirmLink={confirmLink} />,
@@ -31,7 +30,7 @@ export const sendResetPasswordEmail = async (
   const resetLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/reset-password?token=${resetToken}`;
 
   await resend.emails.send({
-    from: `Aris <${process.env.SENDER_EMAIL as string}>`,
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: "Password Reset",
     react: React.createElement(ResetPasswordEmail, { resetLink: resetLink }),
@@ -66,7 +65,7 @@ export const sendContactEmail = async (
   }
 
   const emailStatus = await resend.emails.send({
-    from: `scanby App <${process.env.SENDER_EMAIL as string}>`,
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: process.env.ADMIN_EMAIL as string,
     subject: "Contact Form",
     react: React.createElement(ContactEmail, { data:result.data }),

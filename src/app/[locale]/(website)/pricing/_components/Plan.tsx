@@ -1,15 +1,22 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {Link} from "@/i18n/navigation";
-import React from "react";
+import { Link } from "@/i18n/navigation";
+import React, { Suspense, useEffect, useState } from "react";
 import { usePlanContext } from "./PlanContext";
-import { BusinessExtended, ProductURL } from "@/types";
-import { BillingType, Business, Product, UserRole } from "@prisma/client";
+import { ProductURL } from "@/types";
+import { BillingType } from "@prisma/client";
 import { productMap } from "@/data";
-import { User } from "next-auth";
-import { createFreeSubscription, createSession } from "../../subscriptionActions";
+import {
+  createFreeSubscription,
+  createSession,
+} from "../../subscriptionActions";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { db } from "@/db";
+import { getMenus } from "@/app/[locale]/(business)/[businessName]/_actions/menu";
+import { getSale } from "@/app/[locale]/banner";
 
 type thisProps = {
   plan: {
@@ -20,14 +27,135 @@ type thisProps = {
     };
     bullets: string[];
   };
-  user?: {
-    role: UserRole;
-    business: BusinessExtended[];
-  } & User;
+  index: number;
 };
 
-export default function Plan({ plan, user }: thisProps) {
+export const dynamic = "error";
+
+export default function Plan({ plan, index }: thisProps) {
   const { selectedPlanType } = usePlanContext();
+  const t = useTranslations("plandata");
+  const [showSale, setShowSale] = useState(false);
+
+  const {data} = useQuery({
+    queryFn:async()=>{
+        return await getSale()
+    },
+    queryKey:["banner"]
+
+  })
+
+  // Show sale after component mounts for animation
+  useEffect(() => {
+    if(data){
+      const t =setTimeout(() => {
+        setShowSale(true);
+      }, 500);
+      return ()=>clearTimeout(t)
+    }
+  }, [data]);
+
+  // Get the original price from translations
+  const originalPrice = t(`${plan.title}.billing.${selectedPlanType}.price`);
+
+  // Calculate the sale price (20% off)
+  // This assumes the price is in a format like "$99/month" or "€50"
+  const calculateSalePrice = (price: string) => {
+    // Extract the numeric part using regex
+    const numericMatch = price.match(/(\d+(\.\d+)?)/);
+    if (!numericMatch) return price;
+
+    const numericValue = Number.parseFloat(numericMatch[0]);
+    const saleValue = numericValue * 0.8; // 20% off
+
+    // Replace the original numeric value with the sale value
+    return price.replace(numericMatch[0], saleValue.toFixed(2));
+  };
+
+  const salePrice = calculateSalePrice(originalPrice);
+
+  return (
+    <section className="bg-background border-2 border-primary/20 p-6 rounded-3xl flex flex-col gap-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-3xl">
+      <h2 className="font-medium text-3xl h-20 ">{t(`${plan.title}.title`)}</h2>
+
+      {data ? (
+        <div className="flex  gap-2 flex-col mb-3">
+          {/* Original price with strikethrough, fades out */}
+          <span
+            className={`text-3xl font-semibold  transition-all duration-500  origin-left ${
+              showSale
+                ? "opacity-70 scale-80 line-through text-muted-foreground"
+                : "opacity-100"
+            }`}
+          >
+            {originalPrice}
+          </span>
+
+          {/* Sale price, fades in */}
+          <div className="flex items-center gap-2">
+            <span
+              className={`text-3xl font-bold text-primary transition-all duration-500  ${
+                showSale
+                  ? "opacity-100 scale-100"
+                  : "opacity-0 scale-90 -translate-x-4"
+              }`}
+            >
+              {salePrice}
+            </span>
+
+            {/* Sale badge */}
+            <span
+              className={`bg-primary text-background text-sm font-bold px-2 py-1 rounded-full transition-all duration-500 ${
+                showSale ? "opacity-100 scale-100" : "opacity-0 scale-50"
+              }`}
+            >
+              20% OFF
+            </span>
+          </div>
+        </div>
+      ) : (
+        <span
+          className={`text-3xl font-semibold  transition-all duration-500  origin-left mb-3`}
+        >
+          {originalPrice}
+        </span>
+      )}
+
+      <ul className="space-y-2 text-lg mb-10">
+        {plan.bullets.map((bullet, i) => (
+          <li key={bullet} className="flex gap-2 items-start">
+            <span className="bg-accent text-background size-6 lg:size-8 rounded-full p-1 min-w-6 lg:min-w-8 flex-center">
+              <span className="bg-primary text-background size-4 lg:size-5 rounded-full p-1 min-w-4 lg:min-w-5 flex-center">
+                <Check />
+              </span>
+            </span>
+            {t(`${plan.title}.bullets.${i + 1}`)}
+          </li>
+        ))}
+      </ul>
+
+      <Suspense fallback={<ButtonFallback />}>
+        <Buttons plan={plan} />
+      </Suspense>
+    </section>
+  );
+}
+
+function Buttons({
+  plan,
+}: {
+  plan: {
+    title: string;
+    billing: {
+      yearly: { price: string; payment_link: string; price_id: string };
+      monthly: { price: string; payment_link: string; price_id: string };
+    };
+    bullets: string[];
+  };
+}) {
+  const { selectedPlanType } = usePlanContext();
+  const { data: session } = useSession();
+  const t = useTranslations("plandata");
 
   const productUrl: ProductURL = plan.title
     .toLowerCase()
@@ -38,7 +166,7 @@ export default function Plan({ plan, user }: thisProps) {
   const product =
     productMap[plan.title.toLowerCase().replaceAll(" ", "-") as ProductURL];
 
-  const business = user?.business.find(
+  const business = session?.user?.business.find(
     (b) =>
       b.product === product &&
       b.subscription &&
@@ -46,79 +174,72 @@ export default function Plan({ plan, user }: thisProps) {
   );
 
   const businessId = business?.id ?? "";
-
-  // const [state, action, isPending] = useActionState(
-  //   createFreeSubscription.bind(null,  productUrl, businessId),
-  //   null
-  // );
-  const t = useTranslations("plandata")
-
   return (
-    <section className="bg-background border-2 border-primary/20 p-6 rounded-3xl flex flex-col gap-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-3xl">
-      <h2 className="font-medium text-3xl">{t(plan.title+'.title')}</h2>
-      <span className="text-3xl font-semibold">
-      {t(plan.title+".billing."+selectedPlanType+".price")}
-      </span>
-      <ul className="space-y-2 text-lg mb-10">
-        {plan.bullets.map((bullet,i) => (
-          <li key={bullet} className="flex  gap-2 items-start">
-            {/* <span className="bg-foreground size-3 shrink-0 rounded-full mt-2" /> */}
-            <span className="bg-accent  text-background size-6 lg:size-8 rounded-full p-1 min-w-6 lg:min-w-8  flex-center ">
-        <span className="bg-primary text-background size-4 lg:size-5 rounded-full p-1 min-w-4 lg:min-w-5  flex-center ">
-          <Check />
-        </span>
-      </span>
-            {t(plan.title+".bullets."+(i+1))}
-          </li>
-        ))}
-      </ul>
-      <div className=" flex flex-col gap-4 mt-auto">
+    <div className=" flex flex-col gap-4 mt-auto">
+      <Button
+        onClick={createSession.bind(
+          null,
+          plan.billing[selectedPlanType].price_id,
+          billing,
+          product,
+          "",
+          "",
+          "/get-started/" + productUrl + "/business-setup",
+          "create your menu"
+        )}
+        className="rounded-full bg-foreground text-xl py-6"
+      >
+        {t("button")}
+      </Button>
+
+      {!business ? (
+        <Button
+          variant={"outline"}
+          className="rounded-full  text-xl py-6 w-full"
+          onClick={createFreeSubscription.bind(null, productUrl, businessId)}
+          asChild
+        >
+          <Link
+            href={{
+              pathname: "/get-started/[product]/business-setup",
+              params: { product: productUrl },
+            }}
+          >
+            {t("free")}
+          </Link>
+        </Button>
+      ) : (
         <Button
           onClick={createSession.bind(
             null,
             plan.billing[selectedPlanType].price_id,
             billing,
             product,
-            "",
-           "",
-           "/get-started/"+productUrl+"/business-setup",
-           "create your menu"
+            businessId,
+            business?.subscription.id ?? "",
+            "/",
+            "go back to homepage"
           )}
-          className="rounded-full bg-foreground text-xl py-6"
+          variant={"outline"}
+          className="rounded-full  text-xl py-6 w-full whitespace-normal "
         >
-              {t("button")}
-              </Button>
-        {!business ? (
-          <Button
-            variant={"outline"}
-            className="rounded-full  text-xl py-6 w-full"
-            onClick={createFreeSubscription.bind(null, productUrl, businessId)}
-            asChild
-          >
-            <Link href={{pathname:"/get-started/[product]/business-setup",params:{product:productUrl}}}>
-              {t("free")}
-            </Link>
-          </Button>
-        ) : (
-          <Button
-            onClick={createSession.bind(
-              null,
-              plan.billing[selectedPlanType].price_id,
-              billing,
-              product,
-              businessId,
-              business?.subscription.id ?? "",
-              "/",
-              "go back to homepage"
-            )}
-            variant={"outline"}
-            className="rounded-full  text-xl py-6 w-full whitespace-normal "
-            
-          >
-           {t("upgrade",{business:business.name})}
-          </Button>
-        )}
-      </div>
-    </section>
+          {t("upgrade", { business: business.name })}
+        </Button>
+      )}
+    </div>
+  );
+}
+
+function ButtonFallback() {
+  return (
+    <div className=" flex flex-col gap-4 mt-auto animate-pulse">
+      <Button className="rounded-full bg-foreground text-xl py-6"></Button>
+
+      <Button
+        variant={"outline"}
+        className="rounded-full  text-xl py-6 w-full"
+        asChild
+      ></Button>
+    </div>
   );
 }

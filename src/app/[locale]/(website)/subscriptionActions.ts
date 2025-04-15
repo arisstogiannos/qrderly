@@ -14,6 +14,7 @@ export async function createFreeSubscription(
   businessId: string
 ) {
   const user = (await auth())?.user;
+console.log("sesss")
 
   if (!user?.id) {
     redirect("/sign-up");
@@ -80,14 +81,14 @@ export async function createSession(
   });
   
   const coupon = await stripe.coupons.retrieve(process.env.STRIPE_COUPON ??"").catch((err)=>null)
-console.log(coupon)
 
 
 
   const sessionParams: Stripe.Checkout.SessionCreateParams = {
     mode: "subscription",
-    // allow_promotion_codes:true,
-    // discounts:[{coupon:"a"}],
+    automatic_tax: {
+      enabled: true,
+    },
     metadata: {
       userId: user.id,
       billing,

@@ -87,7 +87,7 @@ export default function MenuSettingsForm({
         formAction={action}
       >
         {isPending ? (
-          <Loader className="text-xs h-[90%]" />
+          <Loader className="text-xs " />
         ) : menu ? (
           <>
             <Save />

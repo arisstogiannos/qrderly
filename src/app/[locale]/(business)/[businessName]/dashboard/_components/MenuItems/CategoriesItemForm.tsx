@@ -6,13 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useBusinessContext } from "@/context/BusinessProvider";
-import {
-  getCategories,
-  getCategoriesWithItemCount,
-} from "../../../_actions/categories";
 import { CategoryWithItemCount } from "@/types";
 
 export default function Categories({

@@ -7,30 +7,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
 import React, { startTransition } from "react";
-import { deleteMenuItem } from "../../../_actions/menu-items";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CheckCircle2, MoreVertical, TriangleAlert } from "lucide-react";
-import { useBusinessContext } from "@/context/BusinessProvider";
+import {  MoreVertical, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   deleteCategory,
-  getCategories,
-  getCategoriesWithItemCount,
 } from "../../../_actions/categories";
-import Loader from "@/components/Loader";
 import { Modal } from "../SharedComponents/Modal";
 import CategoriesForm from "./CategoriesForm";
 import DeleteModal from "../SharedComponents/DeleteModal";
 import {
   CategoryWithItemCount,
-  MenuItemWithCategory,
   Translation,
 } from "@/types";
 import { toast } from "sonner";

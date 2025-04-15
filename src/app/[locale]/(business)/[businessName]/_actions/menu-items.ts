@@ -38,19 +38,17 @@ const imageSchema = fileSchema.refine(
 
 const MenuItemSchema = z.object({
   name: z.string().min(1),
-  translateName: z.string().min(1).max(3),
+  translateName: z.string().max(2).optional(),
   description: z.string().optional(),
-  translateDescription: z.string().min(1).max(3),
+  translateDescription: z.string().max(2).optional(),
   categoryId: z.string().min(1),
   priceInCents: z.string().min(1),
   options: z.string().optional(),
   image: imageSchema.optional(),
   id: z.string().optional(),
-  // language:z.string()
 });
 type MenuItem = z.infer<typeof MenuItemSchema>;
 
-// Usage example:
 export async function upsertMenuItem(
   businessName: string,
   prev: any,
@@ -79,7 +77,6 @@ export async function upsertMenuItem(
     priceInCents,
     categoryId,
   } = result.data;
-
   try {
     const getCachedMenu = cache(
       getMenuByBusinessName,
@@ -97,9 +94,9 @@ export async function upsertMenuItem(
 
       if (srcLang) {
         const textToTranslate =
-          (translateName === "yes" ? name : "") +
+          (translateName  ? name : "") +
           "_" +
-          (translateDescription === "yes" ? description : "");
+          (translateDescription ? description : "");
 
         if (textToTranslate !== "_") {
           // try {

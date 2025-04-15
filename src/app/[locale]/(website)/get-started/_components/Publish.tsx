@@ -11,6 +11,7 @@ import { ErrorMessage } from "@/components/Messages";
 import { ArrowRight, Rocket } from "lucide-react";
 import Link from "next/link";
 import { Link as IntlLink } from "@/i18n/navigation";
+import { MainButton } from "../../(landing page)/_sections/hero/MainButton";
 
 export default function Publish({
   product,
@@ -63,7 +64,7 @@ export default function Publish({
     );
   } else if (isPending) {
     render = (
-      <div className="w-full flex flex-col items-center pt-10 min-h-80">
+      <div className="w-full min-w-lg flex flex-col items-center pt-10 min-h-80">
         <Loader className="h-16 mt-7" />
       </div>
     );
@@ -88,19 +89,23 @@ export default function Publish({
           ? "Choose tier to procced"
           : ""
       }
-      classNames=" lg:w-fit min-w-fit pt-5   "
+      classNames=" lg:w-fit min-w-fit pt-5"
       trigger={
-        <form className="ml-auto w-full mt-auto" action={existingPaidSub ? action : ""}>
-          <Button
+        <form className="ml-auto w-full sm:w-fit mt-auto " action={existingPaidSub ? action : ""}>
+          <MainButton 
+
             type={
               existingPaidSub && !state?.success && !publishedMenuBusiness
                 ? "submit"
                 : "button"
             }
-            className=" py-5  max-2xl:text-xl w-full sm:w-fit sm:rounded-full"
+            className=" max-2xl:text-xl w-full sm:w-fit "
           >
-            {state?.success ? "View Qr" :<> <Rocket/> Publish</>}
-          </Button>
+            <span className="w-full flex-center gap-x-3">
+
+            {state?.success ? "View" :<> <Rocket/> Publish</>}
+            </span>
+          </MainButton>
         </form>
       }
     >
@@ -114,11 +119,8 @@ function Success({ url }: { url: string }) {
   return (
     <div className="flex flex-col items-center gap-y-8">
       <div className="flex flex-col items-center gap-y-1 text-center">
-        <p className="text-4xl font-medium ">Success</p>
-        <p>
-          Your Menu is successfuly published. Jump right into your dashboard to
-          add your products.
-        </p>
+        <p className="text-4xl font-medium ">Successfuly Published!</p>
+
       </div>
       <div className="flex flex-col gap-3 lg:flex-row pb-5 lg:pb-0">
         <Button size={"lg"} asChild>

@@ -6,7 +6,6 @@ import React, {
   FormEvent,
   startTransition,
   useActionState,
-  useEffect,
   useState,
 } from "react";
 import { upsertMenuItem } from "../../../_actions/menu-items";
@@ -17,7 +16,6 @@ import { useBusinessContext } from "@/context/BusinessProvider";
 import Categories from "./CategoriesItemForm";
 import CloudImage from "@/components/CloudImage";
 import { useModalContext } from "@/context/ModalProvider";
-import { getQueryClient } from "../../../../../../../../react-query";
 import Options from "./Options";
 import TranslateCheckBox from "../SharedComponents/TranslateCheckBox";
 import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
@@ -45,16 +43,6 @@ export default function MenuItemForm({
   const [preview, setPreview] = useState<string | null>(null);
   const t = useTranslations("menuItemForm");
 
-  useEffect(() => {
-    if (state?.success) {
-      const queryClient = getQueryClient();
-      queryClient.invalidateQueries({
-        queryKey: ["menu-items"],
-      });
-    } else {
-      setOpen(true);
-    }
-  }, [state]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     const formData = new FormData(e.currentTarget);

@@ -8,10 +8,9 @@ add multiple images
 
 
 design publish page
-metatdata
-footer
-menufooter
-sitemap
+translations
+texts
+opengraph
 
 
 

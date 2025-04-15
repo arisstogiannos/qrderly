@@ -11,7 +11,6 @@ export default function I18nLanguageSelect({className,...props}:React.ComponentP
   const params = useParams();
   
   const [loading, setLoading] = useState(false);
-  const productParam = Array.isArray(params.product) ? params.product[0] : params.product;
   return (
     <Button
       onClick={() =>{
@@ -23,7 +22,7 @@ export default function I18nLanguageSelect({className,...props}:React.ComponentP
           { locale: params.locale === "en" ? "el" : "en",scroll:true, }
         )}
       }
-      className={cn("uppercase bg-foreground max-sm:px-3",className)}
+      className={cn("uppercase bg-foreground max-sm:h-9 max-sm:px-3",className)}
     >
       {loading ? <Loader className="text-xs" /> : params.locale === "en" ? "ελ" : "en"}
     </Button>

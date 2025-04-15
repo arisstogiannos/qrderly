@@ -70,23 +70,6 @@ export async function POST(req: NextRequest) {
       update: subscriptionData,
     });
 
-    // const {
-    //   subscriptions: [sub],
-    // } = await db.user.update({
-    //   where: { id: userId },
-    //   select: { subscriptions: {include:{business:true}, orderBy: { purchasedAt: "desc" }, take: 1 } },
-
-    //   data: {
-    //     subscriptions: {
-    //       upsert: {
-    //         where: query,
-    //         create: subscriptionData,
-    //         update: subscriptionData,
-    //       },
-    //     },
-    //   },
-    // });
-
     revalidateTag("active-menu" + sub?.business?.name);
 
     await resend.emails.send({
@@ -95,6 +78,8 @@ export async function POST(req: NextRequest) {
       subject: "Order Confirmation",
       react: <PurchaseReceiptEmail sub={sub} />,
     });
+
+
   } else if (event.type === "customer.subscription.deleted") {
     const subscription = await stripe.subscriptions.retrieve(
       event.data.object.id,
@@ -111,10 +96,11 @@ export async function POST(req: NextRequest) {
     });
 
     revalidateTag("active-menu" + sub?.business?.name);
+
+    
   } else if (event.type === "customer.subscription.updated") {
     const updatedSub = event.data.object;
     const newPlan = updatedSub.items.data[0].plan;
-    console.log(updatedSub.items.data[0].plan.id);
     const newSubProduct = plandata.find(
       (plan) =>
         plan.billing[newPlan.interval === "month" ? "monthly" : "yearly"]
@@ -126,17 +112,19 @@ export async function POST(req: NextRequest) {
         data: {
           billing: newPlan.interval === "month" ? "MONTHLY" : "YEARLY",
           product: newSubProduct.product,
-          purchasedAt:new Date(),
-          renewedAt:new Date(),
-          business:{update:{product:newSubProduct.product,menu:{update:{type:newSubProduct.product}}}}
+          purchasedAt: new Date(),
+          renewedAt: new Date(),
+          business: {
+            update: {
+              product: newSubProduct.product,
+              menu: { update: { type: newSubProduct.product } },
+            },
+          },
         },
-        select:{business:{select:{name:true}}}
+        select: { business: { select: { name: true } } },
       });
       revalidateTag("active-menu" + sub?.business?.name);
     }
-
-    // Get the current period end to set the new expiration date
-    const newExpireDate = new Date(updatedSub.current_period_end * 1000); // Stripe returns seconds
   }
 
   return new NextResponse();

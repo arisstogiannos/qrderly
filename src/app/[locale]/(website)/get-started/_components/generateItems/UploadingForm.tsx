@@ -110,7 +110,7 @@ export default function UploadingForm({
             {t("upload")} <Upload className="size-5" />
           </Button>
         ) : (
-          <div className="ml-auto space-x-5">
+          <div className="sm:ml-auto w-full space-y-2 space-x-5 ">
             <Button
               type="button"
               className=" w-full sm:w-fit  text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto"
@@ -155,7 +155,6 @@ function OverwriteExistingItemsSwitch() {
             defaultChecked={true}
             name={"overwrite"}
             className="peer hidden"
-            onChange={(v) => console.log(v.target.value)}
           />
           {t("no")}
         </Label>
@@ -163,7 +162,6 @@ function OverwriteExistingItemsSwitch() {
           <input
             type="radio"
             defaultValue="yes"
-            onChange={(v) => console.log(v.target.value)}
             name={"overwrite"}
             className="peer hidden "
           />

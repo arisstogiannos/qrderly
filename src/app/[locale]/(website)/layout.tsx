@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import Banner from "@/components/Banner";
 import { db } from "@/db";
 import ScrollToTop from "@/components/ScrollToTop";
+import { getSale } from "../banner";
 
 export  default async function Layout({
   children,
@@ -13,7 +14,7 @@ export  default async function Layout({
 }){
 
 
-  const banner = await  db.banner.findFirst({where:{ targetTime:{gte:new Date()}}})
+  const banner = await  getSale()
   return (
     <>
       {banner&&<Banner banner={banner}/>}

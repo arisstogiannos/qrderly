@@ -88,8 +88,9 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
           ))}
         </ul>
         <Button
-          onClick={() => setIsPending(true)}
           disabled={isPending}
+          onSubmit={()=>setIsPending(true)}
+          type="submit"
           formAction={createSession.bind(
             null,
             plan.billing[billingState === "MONTHLY" ? "monthly" : "yearly"]

@@ -8,13 +8,11 @@ import { useTranslations } from "next-intl";
 export default function Banner({banner}:{banner:bannertype}) {
   const [hidden, setHidden] = useState(false);
   const t = useTranslations("banner")
-  // t.markup('subtitle', {
-  //   important: (chunks) => `<b>${chunks}</b>`
-  // });
+
 
   return hidden ? null : (
-    <div className="w-screen  bg-foreground inset-0 sticky text-background -top-32 md:-top-20 ">
-      <div className="my-container flex flex-col md:py-1 py-2 sm:flex-row justify-between items-center">
+    <div className="w-screen  bg-foreground inset-0 sticky text-background -top-32 md:-top-20  ">
+      <div className="my-container flex flex-col md:py-1 py-2 sm:flex-row justify-between items-center 2xl:pr-10 3xl:pr-0">
         <span>
           {t("title")}
           <span className="max-md:hidden">

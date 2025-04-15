@@ -42,7 +42,6 @@ export function NavFooter({
 }) {
   const { isMobile } = useSidebar();
   const t = useTranslations("admin.navbar");
-  console.log(activeBusiness)
 
   return (
     <SidebarMenu>
@@ -128,7 +127,7 @@ export function NavFooter({
                 <Link
                   target="_blank"
                   href={
-                    "https://billing.stripe.com/p/login/test_14kcOi9HdbsYdSU6oo"
+                    "https://billing.stripe.com/p/login/test_14kcOi9HdbsYdSU6oo?prefilled_email="+user.email
                   }
                 >
                   <CreditCard />

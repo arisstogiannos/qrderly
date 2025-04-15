@@ -29,7 +29,7 @@ export async function getCategoriesWithItemCount(businessName: string) {
 
 const CategorySchema = z.object({
   name: z.string().min(1),
-  translateName: z.string().min(1).max(3),
+  translateName: z.string().max(2).optional(),
   description: z.string().optional(),
   id: z.string().optional(),
 });
@@ -64,7 +64,7 @@ export async function upsertCategory(
       const srcLang = languages.reverse().pop() as SourceLanguageCode;
 
       if (srcLang) {
-        const textToTranslate = translateName === "yes" ? name : null;
+        const textToTranslate = translateName ? name : null;
 
         if (textToTranslate) {
           const translationResult = await translateTextToMultipleDeepL(

@@ -13,7 +13,6 @@ export default function CustomThemeMaker({
   );
 
   useEffect(()=>{
-    console.log(defaultColors)
     setDefaultValues(defaultColors )
   },[defaultColors])
 

@@ -20,8 +20,8 @@ export default function UpgradeSubModal({
 
   return (
     <Modal
-      title="Upgrade To Pro"
-      subtitle="Choose billing cycle"
+      title={t("Upgrade to Pro")}
+      subtitle={t("Choose billing cycle")}
       trigger={
         <Button variant={"ghost"} className="w-full text-left justify-start font-medium">
           <Sparkles />
@@ -31,6 +31,8 @@ export default function UpgradeSubModal({
     >
       <div className="grid lg:grid-cols-2 gap-5">
         <Plan
+        title={t("monthly")}
+        btn={t("continue")}
           price={product.billing.monthly.price}
           btnFn={createSession.bind(
             null,
@@ -44,6 +46,8 @@ export default function UpgradeSubModal({
           )}
         />
         <Plan
+        title={t("yearly")}
+        btn={t("continue")}
           price={product.billing.yearly.price}
           btnFn={createSession.bind(
             null,
@@ -61,16 +65,17 @@ export default function UpgradeSubModal({
   );
 }
 
-function Plan({ price, btnFn }: { price: string; btnFn: () => Promise<void> }) {
+function Plan({ price, btnFn ,title,btn}: { price: string; btnFn: () => Promise<void>,title:string,btn:string }) {
   return (
     <div className="bg-background border-2 border-primary/20 p-6 rounded-3xl flex flex-col gap-6 shadow-xl hover:scale-105 transition-all duration-300 hover:shadow-3xl">
-      <p>{price}</p>
+      <p className="text-lg font-bold">{title}</p>
+      <p className="font-medium text-xl">{price}</p>
       <Button
         onClick={btnFn}
         // variant={"outline"}
-        className="rounded-full  text-xl py-6 w-full whitespace-normal "
+        className="rounded-lg  text-xl py-6 w-full whitespace-normal "
       >
-        Up
+        {btn}
       </Button>
     </div>
   );

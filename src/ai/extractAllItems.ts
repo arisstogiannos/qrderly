@@ -86,7 +86,6 @@ export async function extractAllItems(
         menuItems = menuItemsFirst;
 
         if (names) {
-          console.log(names);
           const revivedResponse = await partialExtractionAI(
             uploadedFile,
             languages,
@@ -104,15 +103,12 @@ export async function extractAllItems(
             revivedResponse.text
           );
 
-          console.log(remainingMenuItems.length);
 
           const deduplicatedremainingMenuItems = remainingMenuItems.filter(
             (it) => !names.includes(it.name)
           );
-          console.log(deduplicatedremainingMenuItems.length);
 
           menuItems = menuItems.concat(deduplicatedremainingMenuItems);
-          console.log(menuItems);
         }
 
         const categories = Array.from(

@@ -28,7 +28,7 @@ export default async function page({
         <h1 className="text-3xl font-medium">{t("title")}</h1>
         <SidebarTrigger className="xl:hidden" />
       </div>
-      <form className="flex lg:w-fit lg:flex-row gap-x-40 flex-col min-h-[600px] gap-y-20">
+      <form className="flex lg:w-fit lg:flex-row gap-x-40 flex-col-reverse min-h-[600px] gap-y-20">
         <div className="flex flex-col gap-6 2xl:min-w-sm lg:max-w-lg max-h-full overflow-y-auto ">
           <MenuSettingsForm
             businessId={business.id}
