@@ -32,7 +32,7 @@ export const sendWelcomeEmail = async (
   await resend.emails.send({
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
-    subject: "Email Verification",
+    subject: "Welcome to Scanby",
     react: <WelcomeEmail userEmail={email} username={name} />,
   });
 };
@@ -45,7 +45,7 @@ export const sendMenuCreatedEmail = async (
   await resend.emails.send({
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
-    subject: "Email Verification",
+    subject: "Menu Created Succesfuly",
     react: <QrMenuCreatedEmail  username={name} menuName={businessName} menuUrlPath={menuUrlPath} />,
   });
 };

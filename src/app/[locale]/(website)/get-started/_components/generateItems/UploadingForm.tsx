@@ -110,7 +110,7 @@ export default function UploadingForm({
             {t("upload")} <Upload className="size-5" />
           </Button>
         ) : (
-          <div className="sm:ml-auto w-full space-y-2 space-x-5 ">
+          <div className="sm:ml-auto w-full sm:w-fit space-y-2 space-x-5 ">
             <Button
               type="button"
               className=" w-full sm:w-fit  text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto"

@@ -66,3 +66,17 @@ export async function AnalyticsCard({
     </Card>
   );
 }
+export function AnalyticsCardSkeleton() {
+
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Analytics</CardTitle>
+      </CardHeader>
+      <CardContent className="h-[300px] w-full">
+       
+      </CardContent>
+    </Card>
+  );
+}

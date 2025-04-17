@@ -23,12 +23,12 @@ export const plandata = [
       yearly: {
         price: "€9/month",
         payment_link: "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
-        price_id: "price_1RCcdIP01OOv4UZmVJXgEIOe",
+        price_id: "price_1RE55fP01OOv4UZm3ZiOeT0q",
       },
       monthly: {
         price: "€12/month",
         payment_link: "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
-        price_id: "price_1RCcckP01OOv4UZmRve6z45C",
+        price_id: "price_1RE55fP01OOv4UZm1ybw7Zxy",
       },
     },
     bullets: [
@@ -61,12 +61,12 @@ export const plandata = [
       yearly: {
         price: "€14/month",
         payment_link: "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-        price_id: "price_1RCcg5P01OOv4UZmNRQB9uy4",
+        price_id: "price_1RE55aP01OOv4UZmdFEjU2IK",
       },
       monthly: {
         price: "€18/month",
         payment_link: "https://buy.stripe.com/test_eVa6p04wh6eB8OQaEG",
-        price_id: "price_1RCcf5P01OOv4UZmIhoeMexq",
+        price_id: "price_1RE55bP01OOv4UZmGsAmpuhW",
       },
     },
     bullets: [
@@ -98,12 +98,12 @@ export const plandata = [
       yearly: {
         price: "€16/month",
         payment_link: "https://buy.stripe.com/test_cN28x83sd9qN0ik4gg",
-        price_id: "price_1RCcjUP01OOv4UZm9VGok3b4",
+        price_id: "price_1RE55XP01OOv4UZmQfhk0VUW",
       },
       monthly: {
         price: "€20/month",
         payment_link: "https://buy.stripe.com/test_eVafZA4wh46t9SUfYZ",
-        price_id: "price_1RCcj7P01OOv4UZmp9UYVIQf",
+        price_id: "price_1RE55XP01OOv4UZmgkN2RXJS",
       },
     },
     bullets: [

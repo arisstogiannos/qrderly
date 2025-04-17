@@ -92,8 +92,7 @@ export function StatsCardsLoadingSkeleton({
           <CardTitle className="text-sm font-medium">QR Code Scans</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-accent animate-pulse h-9 w-20"></div>
-          <p className="text-xs text-muted-foreground">+12% from last month</p>
+          <div className="bg-accent animate-pulse h-7 w-20"></div>
         </CardContent>
       </Card>
 
@@ -103,8 +102,7 @@ export function StatsCardsLoadingSkeleton({
             <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-accent animate-pulse h-9 w-20"></div>
-            <p className="text-xs text-muted-foreground">+5% from last month</p>
+            <div className="bg-accent animate-pulse h-7 w-20"></div>
           </CardContent>
         </Card>
       )}
@@ -117,8 +115,7 @@ export function StatsCardsLoadingSkeleton({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-accent animate-pulse h-9 w-20"></div>
-            <p className="text-xs text-muted-foreground">+2% from last month</p>
+            <div className="bg-accent animate-pulse h-7 w-20"></div>
           </CardContent>
         </Card>
       )}
@@ -131,7 +128,7 @@ export function StatsCardsLoadingSkeleton({
               <CardTitle className="text-sm font-medium">Menu Items</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-accent animate-pulse h-9 w-20"></div>
+              <div className="bg-accent animate-pulse h-7 w-20"></div>
               <p className="text-xs text-muted-foreground">
                 +3 from last month
               </p>

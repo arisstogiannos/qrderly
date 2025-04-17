@@ -224,7 +224,7 @@ model Account {
 
 model Scan {
   id         String    @id @default(uuid())
-  businessId String?   @unique
+  businessId String?  
   business   Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
   // menuId     String
   // menu       Menu     @relation(fields: [menuId], references: [id])

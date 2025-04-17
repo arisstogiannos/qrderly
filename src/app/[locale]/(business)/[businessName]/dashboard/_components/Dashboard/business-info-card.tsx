@@ -13,8 +13,8 @@ export function BusinessInfoCard({business}:{business:BusinessExtended}) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('accountInformation')}</CardTitle>
-        <CardDescription>{t('manageDetails')}</CardDescription>
+        <CardTitle>{t('businessInfo')}</CardTitle>
+        {/* <CardDescription>{t('manageDetails')}</CardDescription> */}
       </CardHeader>
       <CardContent>
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -28,11 +28,11 @@ export function BusinessInfoCard({business}:{business:BusinessExtended}) {
           </div>
         </div>
       </CardContent>
-      <CardFooter>
+      {/* <CardFooter>
         <Button variant="outline" size="sm">
           {t('edit')}
         </Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 }

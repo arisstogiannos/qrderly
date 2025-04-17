@@ -10,7 +10,10 @@ import {
 } from "./_components/Dashboard/stats-cards";
 import { BusinessInfoCard } from "./_components/Dashboard/business-info-card";
 import { QrCodeCard } from "./_components/Dashboard/qr-code-card";
-import { AnalyticsCard } from "./_components/Dashboard/analytics-card";
+import {
+  AnalyticsCard,
+  AnalyticsCardSkeleton,
+} from "./_components/Dashboard/analytics-card";
 import { SubscriptionStatusCard } from "./_components/Dashboard/subscription-status-card";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { plandata } from "@/data";
@@ -50,7 +53,12 @@ export default async function page({
           )}
 
           {/* Analytics section */}
-          <AnalyticsCard isOrderingMenu={isOrderingMenu} business={business} />
+          <Suspense fallback={<AnalyticsCardSkeleton />}>
+            <AnalyticsCard
+              isOrderingMenu={isOrderingMenu}
+              business={business}
+            />
+          </Suspense>
 
           {/* Business and QR section */}
           <div className="grid gap-6 lg:grid-cols-2">
@@ -68,7 +76,7 @@ export default async function page({
           </div> */}
 
           {/* Subscription status */}
-          <SubscriptionStatusCard 
+          <SubscriptionStatusCard
             {...{
               billing: business.subscription.billing,
               price:
@@ -78,7 +86,7 @@ export default async function page({
                     : "yearly"
                 ].price ?? "",
               title: business.product,
-              scans:business.menu.noScans
+              scans: business.menu.noScans,
             }}
           />
         </div>

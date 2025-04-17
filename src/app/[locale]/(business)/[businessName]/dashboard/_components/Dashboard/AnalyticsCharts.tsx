@@ -15,13 +15,13 @@ import {
   Cell,
   Legend,
 } from "../chart";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 interface AnalyticsChartsProps {
   visitData: { name: string; visits: number }[];
   orderData: { name: string; orders: number }[] | null;
   menuItemData: { name: string; value: number }[] | null;
-  totalScans?:number
+  totalScans?: number;
 }
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -30,16 +30,16 @@ export default function AnalyticsCharts({
   orderData,
   menuItemData,
   visitData,
-  totalScans
+  totalScans,
 }: AnalyticsChartsProps) {
-  const t = useTranslations('dashboard');
+  const t = useTranslations("dashboard");
 
   return orderData && menuItemData ? (
     <Tabs defaultValue="visits">
       <TabsList>
-        <TabsTrigger value="visits">{t('menuVisits')}</TabsTrigger>
-        <TabsTrigger value="orders">{t('orders')}</TabsTrigger>
-        <TabsTrigger value="items">{t('popularItems')}</TabsTrigger>
+        <TabsTrigger value="visits">{t("menuVisits")}</TabsTrigger>
+        <TabsTrigger value="orders">{t("orders")}</TabsTrigger>
+        <TabsTrigger value="items">{t("popularItems")}</TabsTrigger>
       </TabsList>
       <TabsContent value="visits" className="mt-4">
         <div className="h-[300px]">
@@ -74,38 +74,52 @@ export default function AnalyticsCharts({
       </TabsContent>
       <TabsContent value="items" className="mt-4">
         <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={menuItemData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-                label={({ name, percent }) =>
-                  `${name} ${(percent * 100).toFixed(0)}%`
-                }
-              >
-                {menuItemData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
+          {menuItemData.length === 0 ? (
+            <div className="size-full flex-center">
+              <span>No Data Found</span>
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={menuItemData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) =>
+                    `${name} ${(percent * 100).toFixed(0)}%`
+                  }
+                >
+                  {menuItemData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </TabsContent>
     </Tabs>
   ) : (
     <div className="h-[300px] ">
-     {totalScans && <p className="font-medium text-lg mb-5">{t('totalScans')+": "+totalScans}</p>}
-      <ResponsiveContainer width="100%" height="90%" className={"-translate-x-8"}>
+      {totalScans && (
+        <p className="font-medium text-lg mb-5">
+          {t("totalScans") + ": " + totalScans}
+        </p>
+      )}
+      <ResponsiveContainer
+        width="100%"
+        height="90%"
+        className={"-translate-x-8"}
+      >
         <AreaChart data={visitData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />

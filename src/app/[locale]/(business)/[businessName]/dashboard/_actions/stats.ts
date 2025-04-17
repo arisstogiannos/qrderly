@@ -106,8 +106,8 @@ export async function getScansPerDay(businessId: string) {
 
   return scanData;
 }
-export async function getPopularItems(businessId: string) {
 
+export async function getPopularItems(businessId: string) {
 
   const popularItems = await db.menuItem.findMany({
     where: {
