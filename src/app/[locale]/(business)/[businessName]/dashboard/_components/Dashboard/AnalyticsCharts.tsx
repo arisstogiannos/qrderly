@@ -104,7 +104,7 @@ export default function AnalyticsCharts({
     </Tabs>
   ) : (
     <div className="h-[300px] ">
-     {totalScans && <p className="font-medium text-lg mb-5">{t('totalScans', { count: totalScans })}</p>}
+     {totalScans && <p className="font-medium text-lg mb-5">{t('totalScans')+": "+totalScans}</p>}
       <ResponsiveContainer width="100%" height="90%" className={"-translate-x-8"}>
         <AreaChart data={visitData}>
           <CartesianGrid strokeDasharray="3 3" />

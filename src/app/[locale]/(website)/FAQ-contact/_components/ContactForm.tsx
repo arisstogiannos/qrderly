@@ -154,7 +154,7 @@ export default function ContactForm() {
               }
             />
           )}
-          {state?.error && <ErrorMessage msg={state.error.message} />}
+          {state?.error && <ErrorMessage msg={state.error} />}
         </div>
         <input
           type="text"
