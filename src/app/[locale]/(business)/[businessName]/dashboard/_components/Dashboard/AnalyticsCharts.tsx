@@ -36,13 +36,13 @@ export default function AnalyticsCharts({
 
   return orderData && menuItemData ? (
     <Tabs defaultValue="visits">
-      <TabsList>
+      <TabsList className="max-w-72 min-[390px]:max-w-80 sm:max-w-fit overflow-x-auto justify-start">
         <TabsTrigger value="visits">{t("menuVisits")}</TabsTrigger>
         <TabsTrigger value="orders">{t("orders")}</TabsTrigger>
         <TabsTrigger value="items">{t("popularItems")}</TabsTrigger>
       </TabsList>
       <TabsContent value="visits" className="mt-4">
-        <div className="h-[300px]">
+        <div className="h-[300px] -translate-x-10">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={visitData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -60,7 +60,7 @@ export default function AnalyticsCharts({
         </div>
       </TabsContent>
       <TabsContent value="orders" className="mt-4">
-        <div className="h-[300px]">
+        <div className="h-[300px] -translate-x-10">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={orderData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -73,7 +73,7 @@ export default function AnalyticsCharts({
         </div>
       </TabsContent>
       <TabsContent value="items" className="mt-4">
-        <div className="h-[300px]">
+        <div className="h-[300px] -translate-x-10">
           {menuItemData.length === 0 ? (
             <div className="size-full flex-center">
               <span>No Data Found</span>
@@ -109,7 +109,7 @@ export default function AnalyticsCharts({
       </TabsContent>
     </Tabs>
   ) : (
-    <div className="h-[300px] ">
+    <div className="h-[300px] -translate-x-10">
       {totalScans && (
         <p className="font-medium text-lg mb-5">
           {t("totalScans") + ": " + totalScans}

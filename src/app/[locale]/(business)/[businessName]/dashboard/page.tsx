@@ -37,7 +37,7 @@ export default async function page({
         <h1 className="font-medium text-2xl">{t("title")}</h1>
         <SidebarTrigger className="xl:hidden" />
       </header>
-      <main className="flex-1 overflow-auto p-4 sm:p-6">
+      <main className="flex-1 overflow-auto mt-2">
         <div className="grid gap-6">
           {/* Toggle for demo purposes */}
 

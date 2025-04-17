@@ -50,7 +50,7 @@ export default async function AdminLayout({
       <SidebarInset className="bg-primary ">
         {/* <div className="flex h-svh overflow-hidden bg-primary text-foreground"> */}
 
-        <section className="my-container h-full  overflow-y-auto overflow-x-hidden rounded-xl bg-background w-full p-4 sm:p-10 sm:pb-0 ">
+        <section className="my-container h-full  overflow-y-auto overflow-x-hidden rounded-xl bg-background w-full p-2 sm:p-10 sm:pb-0 ">
           <SubscriptionExpired business={business} />
           {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
             <BusinessProvider businessName={businessName} business={business}>
