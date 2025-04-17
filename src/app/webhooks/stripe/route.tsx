@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     revalidateTag("active-menu" + sub?.business?.name);
 
     await resend.emails.send({
-      from: `Aris <${process.env.SENDER_EMAIL as string}>`,
+      from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
       to: email,
       subject: "Order Confirmation",
       react: <SubscriptionConfirmationEmail billingCycle={sub.billing} planName={sub.product} planPrice={""} startDate={sub.purchasedAt.toLocaleDateString()} username="user" dashboardUrl=""  />,

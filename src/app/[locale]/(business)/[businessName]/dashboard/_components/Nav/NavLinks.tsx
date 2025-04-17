@@ -31,7 +31,7 @@ export async function NavLinks({
 }) {
   const t = await getTranslations("admin.navbar")
   return (
-    <SidebarGroup className="mt-10 ">
+    <SidebarGroup className="mt-4">
       <SidebarMenu>
         {items.length > 1
           ? items.map((item) =>

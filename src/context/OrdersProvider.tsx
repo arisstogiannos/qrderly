@@ -36,8 +36,7 @@ export function OrdersProvider({
 
   useEffect(() => {
     setOrders(data ?? []);
-  }
-  ,[data]);
+    },[data]);
 
 
   return (

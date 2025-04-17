@@ -430,7 +430,31 @@
     "expires": "Expires",
     "edit": "Edit",
     "manage": "Manage",
-    "loading": "Loading"
+    "loading": "Loading",
+    "title":"Dashboard",
+    "qrCode": "QR Code",
+    "qrCodeDescription": "Download or share your menu QR code",
+    "customize": "Customize",
+    "qrCodeScans": "QR Code Scans",
+    "totalOrders": "Total Orders",
+    "totalSales": "Total Sales",
+    "menuVisits":"Scans",
+    "tables":"Tables",
+    "orders":"Orders",
+    "popularItems":"Popular Items",
+    "accountInformation":"Account Information",
+    "manageDetails":"Manage Details",
+    "subscription": {
+      "title": "Subscription",
+      "description": "Your current subscription details",
+      "freeTrial": "Free Trial",
+      "proPlan": "Pro Plan",
+      "billed": "billed",
+      "trafficLimit": "Scan Limit",
+      "unlimited": "Unlimited",
+      "remaining": "Remaining scans",
+      "manage": "Manage Subscription"
+    }
   },
   "menu settings": {
     "title": "Menu Settings",
@@ -589,6 +613,16 @@
   "publish":{
     "title":"",
     "subtitle":"After Publishing go to menu items page to ensure that all of the menu items are generated correctly. Our AI is powerfull but it can always make mistakes."
+  },
+  "subscription": {
+    "title": "Subscription",
+    "description": "Your current plan and usage",
+    "freeTrial": "Free Trial",
+    "proPlan": "Pro Plan",
+    "billed": "billed",
+    "trafficLimit": "Traffic Limit",
+    "unlimited": "Unlimited",
+    "remaining": "Remaining",
+    "manage": "Manage"
   }
-
 }

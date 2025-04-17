@@ -16,12 +16,21 @@ export const metadata = {
     "self-ordering menu",
     "digital self-service menu",
     "smart menu QR",
-    "contactless restaurant tech"
+    "contactless restaurant tech",
   ],
   openGraph: {
     title: "Self-Service Ordering Menu | Smart & Contactless Menus",
     description:
       "Offer full self-service with our QR menu and ordering platform. Fast setup and seamless customer experience.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "QR Ordering App Screenshot",
+      },
+    ],
+    locale: "en_US",
     type: "website",
   },
 };

@@ -4,8 +4,17 @@ import { plandata } from "@/data";
 import Plan from "./_components/Plan";
 import { PlanProvider } from "./_components/PlanContext";
 import { getTranslations } from "next-intl/server";
+import {setRequestLocale} from 'next-intl/server';
 
-export default async function Page() {
+export const dynamic = "error"
+ 
+
+
+export default async function page({params}:{params: Promise<{locale: string}>}) {
+  const locale = (await params).locale;
+ 
+  // Enable static rendering
+  setRequestLocale(locale);
   const t = await getTranslations("plandata");
   return (
     <PlanProvider>

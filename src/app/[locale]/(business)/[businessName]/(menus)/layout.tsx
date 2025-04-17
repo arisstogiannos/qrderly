@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import ScrollToTop from "@/components/ScrollToTop";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-export const revalidate =60; 
+// export const revalidate =60; 
 
 
 export async function generateStaticParams() {

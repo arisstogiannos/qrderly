@@ -20,14 +20,20 @@ import React, { useActionState } from "react";
 
 export default function ContactForm() {
   const [state, action, isPending] = useActionState(sendContactEmail, null);
-  const t = useTranslations("faq.contact-fields")
+  const t = useTranslations("faq.contact-fields");
   return (
     <div className="max-w-xl lg:min-w-xl bg-background p-6 rounded-3xl outline-2 outline-primary/10">
       <form action={action}>
         <div className="flex flex-col gap-6">
           <div className="grid gap-3">
             <Label htmlFor="fullname">{t("name")}</Label>
-            <Input id="fullname" name="fullName" defaultValue={state?.rawData?.fullName} type="fullname" required />
+            <Input
+              id="fullname"
+              name="fullName"
+              defaultValue={state?.rawData?.fullName}
+              type="fullname"
+              required
+            />
             {state?.errors?.fullName?.map((er) => {
               return (
                 <ErrorMessage
@@ -40,7 +46,13 @@ export default function ContactForm() {
           </div>
           <div className="grid gap-3">
             <Label htmlFor="email">{t("email")}</Label>
-            <Input id="email" name="email" defaultValue={state?.rawData?.email} type="email" required />
+            <Input
+              id="email"
+              name="email"
+              defaultValue={state?.rawData?.email}
+              type="email"
+              required
+            />
             {state?.errors?.email?.map((er) => {
               return (
                 <ErrorMessage
@@ -85,11 +97,15 @@ export default function ContactForm() {
             >
               <div className="flex gap-2">
                 <RadioGroupItem id="question" value="question" />
-                <Label htmlFor="question">{t("contact reason options.1")}</Label>
+                <Label htmlFor="question">
+                  {t("contact reason options.1")}
+                </Label>
               </div>
               <div className="flex gap-2">
                 <RadioGroupItem id="complain" value="complain" />
-                <Label htmlFor="complain">{t("contact reason options.2")}</Label>
+                <Label htmlFor="complain">
+                  {t("contact reason options.2")}
+                </Label>
               </div>
               <div className="flex gap-2">
                 <RadioGroupItem id="bug" value="bug" />
@@ -112,7 +128,12 @@ export default function ContactForm() {
           </div>
           <div className="grid gap-3">
             <Label htmlFor="message">{t("message")}</Label>
-            <Textarea defaultValue={state?.rawData?.message} name="message" id="message" required />
+            <Textarea
+              defaultValue={state?.rawData?.message}
+              name="message"
+              id="message"
+              required
+            />
             {state?.errors?.message?.map((er) => {
               return (
                 <ErrorMessage
@@ -128,11 +149,19 @@ export default function ContactForm() {
           </Button>
           {state?.success && (
             <SuccessMessage
-              msg={"Thank you for your feedback. We will get back to you as soon as possible!"}
+              msg={
+                "Thank you for your feedback. We will get back to you as soon as possible!"
+              }
             />
           )}
           {state?.error && <ErrorMessage msg={state.error.message} />}
         </div>
+        <input
+          type="text"
+          name="website"
+          className="hidden"
+          tabIndex={-1}
+        />
       </form>
     </div>
   );

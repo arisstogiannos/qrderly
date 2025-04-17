@@ -1,28 +1,12 @@
 "use client";
 import { startTransition } from "react";
 import { deleteMenuItem } from "../../../_actions/menu-items";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { CheckCircle2, Edit, MoreVertical, TriangleAlert } from "lucide-react";
-import { Modal } from "../SharedComponents/Modal";
-import CloudImage from "@/components/CloudImage";
-import { Button } from "@/components/ui/button";
+import {TriangleAlert } from "lucide-react";
 import { useFiltersContext } from "@/context/FiltersProvider";
-import MenuItemForm from "./MenuItemForm";
 import type { MenuItem } from "@prisma/client";
-import DeleteModal from "../SharedComponents/DeleteModal";
 import { toast } from "sonner";
 import type { CategoryWithItemCount, Translation } from "@/types";
-import TranslatedMenuItemForm from "./TranslatedMenuItemForm";
-import DisplayPrice from "@/components/DisplayPrice";
 import { useTranslations } from "next-intl";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MenuCategorySection from "./CategoryGroup";
 
 type MenuItemWithCategory = MenuItem & {

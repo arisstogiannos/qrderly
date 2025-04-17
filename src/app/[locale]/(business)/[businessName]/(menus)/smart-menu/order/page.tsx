@@ -17,7 +17,7 @@ export default async function page({
   const validOrder = await getOrderById(orderId);
   if (!validOrder) redirect("/unauthorized");
   return (
-    <section className="h-screen flex-center  w-full">
+    <section className="h-screen flex-center  w-full md:max-w-xl md:mx-auto">
       <div className="flex  flex-col items-center mx-5 w-full bg-secondary rounded-3xl p-6">
         <OrderTracking initial={validOrder} businessName={businessName} />
         <div className="w-full h-28 bg-background rounded-2xl flex-center text-primary text-3xl font-semibold">

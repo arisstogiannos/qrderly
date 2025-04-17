@@ -34,11 +34,11 @@ export const metadata = {
   openGraph: {
     title: "QR Ordering App - Browse & Order Seamlessly",
     description: "Transform your business customer experience with QR Menus with built-in Ordering System option.",
-    url: "https://your-qr-ordering-app.com",
+    url: "https://scanby.cloud",
     siteName: "Scanby",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "QR Ordering App Screenshot",
@@ -52,11 +52,11 @@ export const metadata = {
     site: "@yourTwitterHandle",
     title: "QR Ordering App - Contactless Food Ordering",
     description: "Scan, order, and enjoy a seamless dining experience.",
-    images: ["/twitter-card.jpg"],
+    images: ["/og-image.png"],
   },
 };
 export const dynamicParams = true; // or false, to 404 on unknown paths
-export const revalidate = 60
+// export const revalidate = 60
 
 export async function generateStaticParams() {
   return [

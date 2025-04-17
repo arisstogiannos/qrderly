@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { incrementMenuScans } from "../../_actions/menu";
 
-export default function ScanTracker({ menuId }: { menuId: string }) {
+export default function ScanTracker({ menuId,businessId }: { menuId: string ,businessId:string}) {
   const mutation = useMutation({
-    mutationFn: () => incrementMenuScans(menuId),
+    mutationFn: () => incrementMenuScans(menuId,businessId),
     retry: 3, // Retry up to 3 times if it fails
   });
 

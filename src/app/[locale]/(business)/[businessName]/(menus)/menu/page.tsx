@@ -1,7 +1,7 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import React from "react";
 import { getCategories } from "../../_actions/categories";
-import { getMenuItems } from "../../_actions/menu-items";
+import { getActiveMenuItems } from "../../_actions/menu-items";
 import {
   getActiveMenuNotCached,
   getActiveMenusNotCached,
@@ -12,7 +12,7 @@ import { cache } from "@/lib/cache";
 import ScanTracker from "../_components/ScanTracker";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-export const revalidate =60; 
+// export const revalidate =60; 
 
 export async function generateStaticParams() {
   const menus = await getActiveMenusNotCached(["QR_MENU"]);
@@ -51,8 +51,8 @@ export default async function page({
     }
   );
   const getCachedMenuItems = cache(
-    getMenuItems,
-    ["menu-items" + businessName],
+    getActiveMenuItems,
+    ["active-menu-items" + businessName],
     {
       tags: ["menu-items" + businessName],
     }
@@ -96,7 +96,7 @@ export default async function page({
           --accent: ${colors[4]};
         }
       `}</style>
-      <ScanTracker menuId={menu.id} />
+      <ScanTracker businessId={menu.businessId} menuId={menu.id} />
 
       {menu.template === "T1" ? (
         <Template1

@@ -7,13 +7,14 @@ design emails
 add multiple images
 
 
-design publish page
 translations
 texts
-opengraph image
+
+--- post live:
+
+stripe live mode prices/ sign api key , api keys
 live prices ids stripe
 submodal
-stripe live mode prices/ sign api key , api keys
 
 
 

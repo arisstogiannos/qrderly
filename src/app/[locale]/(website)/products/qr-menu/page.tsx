@@ -22,6 +22,15 @@ export const metadata:Metadata = {
     title: "Create a QR Menu in Minutes | Smart & Contactless Menus",
     description:
       "Launch your digital menu with a QR code in just 5 minutes. Ideal for cafés, restaurants, and hospitality businesses.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "QR Ordering App Screenshot",
+      },
+    ],
+    locale: "en_US",
     type: "website",
   },
 };

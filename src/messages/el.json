@@ -305,7 +305,7 @@
   },
   "preview": {
     "title": "Πλήρως προσαρμόσιμο & διαδραστικό μενού",
-    "subtitle": "Δημιουργήστε, Προσαρμόστε & Διαχειριστείτε το Ψηφιακό Μενού σας σε λίγα λεπτά! Προσφέρετε μια άψογη εμπειρία με ζωντανές επεξεργασίες, προσαρμόσιμα θέματα και υποστήριξη πολλαπλών γλωσσών.",
+    "subtitle": "Δημιουργήστε, Προσαρμόστε & Διαχειριστείτε το Ψηφιακό Μενού σας σε λίγα λεπτά! Προσφέρετε μια άψογη εμπειρία με ζωντανές επεργασίες, προσαρμόσιμα θέματα και υποστήριξη πολλαπλών γλωσσών.",
     "settings": { "1": "Διάταξη", "2": "Θέμα", "3": "Προσαρμογή" },
     "Template 1": "Διάταξη 1",
     "Template 2": "Διάταξη 2"
@@ -506,7 +506,33 @@
     "expires": "Λήγει",
     "edit": "Επεξεργασία",
     "manage": "Διαχείριση",
-    "loading": "Φόρτωση"
+    "loading": "Φόρτωση",
+    "title":"Πίνακας Διαχείρισης",
+    "qrCode": "QR Code",
+    "qrCodeDescription": "Κατέβασε το QR",
+    "customize": "Προσαρμογή",
+    "qrCodeScans": "Συνολικές Επισκέψεις",
+    "totalOrders": "Συνολικές Παραγγελίες",
+    "totalSales": "Συνολικές Πωλήσεις",
+    "menuVisits":"Επισκέψεις",
+    "orders":"Παραγγελίες",
+    "tables":"Τραπέζια",
+    "popularItems":"Δημοφιλή Προιόντα",
+    "accountInformation":"Πληροφορίες Λογαριασμού",
+    "manageDetails":"Διαχείριση",
+    "subscription": {
+      "title": "Συνδρομή",
+      "description": "Λεπτομέρειες της τρέχουσας συνδρομής σας",
+      "freeTrial": "Δωρεάν δοκιμή",
+      "proPlan": "Επαγγελματικό Πλάνο",
+      "billed": "χρεώνεται",
+      "trafficLimit": "Όριο Σαρώσεων",
+      "unlimited": "Απεριόριστο",
+      "remaining": "Απομείναντες σαρώσεις",
+      "manage": "Διαχείριση Συνδρομής"
+    }
+
+
   },
   "uploadingForm": {
     "title": "Ανεβάστε το μενού σας",
@@ -624,6 +650,16 @@
   "publish":{
     "title":"",
     "subtitle":"After Publishing go to menu items page to ensure that all of the menu items are generated correctly. Our AI is powerfull but it can always make mistakes."
+  },
+  "subscription": {
+    "title": "Συνδρομή",
+    "description": "Το τρέχον πλάνο και η χρήση σας",
+    "freeTrial": "Δωρεάν Δοκιμή",
+    "proPlan": "Pro Plan",
+    "billed": "χρεώνεται",
+    "trafficLimit": "Όριο Κίνησης",
+    "unlimited": "Απεριόριστο",
+    "remaining": "Υπόλοιπο",
+    "manage": "Διαχείριση"
   }
-
 }

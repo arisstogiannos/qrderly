@@ -3,7 +3,7 @@
 import { db } from "@/db";
 import { cache } from "@/lib/cache";
 import { Product } from "@prisma/client";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 
 export async function getMenu(businessName: string) {
   const menu = await db.menu.findFirst({
@@ -181,7 +181,7 @@ export const getActiveMenuNotCached =
   }
 
 
-  export async function incrementMenuScans(id:string){
+  export async function incrementMenuScans(id:string,businessId:string){
     await db.menu.update({
       where:{id},
       data:{
@@ -190,6 +190,9 @@ export const getActiveMenuNotCached =
         }
       }
     })
+    
+    await db.scan.create({data:{businessId}})
+    revalidateTag("scans"+businessId)
   }
 
 

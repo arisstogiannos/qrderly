@@ -1,22 +1,20 @@
 import { notFound, redirect } from "next/navigation";
 import React from "react";
 import { getCategories } from "../../_actions/categories";
-import { getMenuItems } from "../../_actions/menu-items";
+import { getActiveMenuItems, getMenuItems } from "../../_actions/menu-items";
 import {
   getActiveMenuNotCached,
-  getActiveMenus,
   getActiveMenusNotCached,
 } from "../../_actions/menu";
 import { cache } from "@/lib/cache";
 import { CartContextProvider } from "@/context/CartContext";
 import Template1 from "./_templates/template1/Template1";
-import Theme from "../_components/Theme";
 import Template2 from "./_templates/template2/Template2";
 import ScanTracker from "../_components/ScanTracker";
 import ActiveOrder from "./_components/ActiveOrder";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-export const revalidate =60; 
+// export const revalidate =60; 
 
 export async function generateMetadata({
   params,
@@ -72,8 +70,8 @@ export default async function page({
     }
   );
   const getCachedMenuItems = cache(
-    getMenuItems,
-    ["menu-items" + businessName],
+    getActiveMenuItems,
+    ["active-menu-items" + businessName],
     {
       tags: ["menu-items" + businessName],
     }
@@ -105,7 +103,7 @@ export default async function page({
           --accent: ${colors[4]};
           }
           `}</style>
-      <ScanTracker menuId={menu.id} />
+      <ScanTracker menuId={menu.id} businessId={menu.businessId} />
       <CartContextProvider>
         {menu.template === "T1" ? (
           <Template1

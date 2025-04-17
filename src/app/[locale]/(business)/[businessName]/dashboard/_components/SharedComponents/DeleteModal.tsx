@@ -30,7 +30,7 @@ export default function DeleteModal<T>({
       <DialogTrigger asChild>
         <Button
           variant={"destructive"}
-          className="w-full  px-0 py-4 "
+          className="w-full  px-0 py-4  hover:bg-red-700"
         >
          <Trash2/> {t("delete")}
         </Button>

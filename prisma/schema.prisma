@@ -79,7 +79,7 @@ model Business {
   product      Product       @default(QR_MENU)
   tables       String?
   currency     String        @default("EUR")
-  // Settings Settings[]
+  scans        Scan[]
 }
 
 model Subscription {
@@ -220,4 +220,13 @@ model Account {
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
+}
+
+model Scan {
+  id         String    @id @default(uuid())
+  businessId String?   @unique
+  business   Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  // menuId     String
+  // menu       Menu     @relation(fields: [menuId], references: [id])
+  date      DateTime @default(now())
 }

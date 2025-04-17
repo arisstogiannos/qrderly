@@ -1,20 +1,23 @@
 import DisplayPrice from "@/components/DisplayPrice";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency, formatCurrencyFromCents } from "@/lib/formatter";
+import Image from "next/image";
 import React from "react";
 
 export default function MenuItem({ index }: { index: number }) {
   return (
     <Card
       className={
-        "flex p-2 flex-row border-0 w-full relative  h-[100px]  overflow-hidden bg-foreground-mockup text-text-mockup shadow-lg  "
+        "flex p-2 flex-row border-0 w-full relative  h-[100px] gap-1  overflow-hidden bg-foreground-mockup text-text-mockup shadow-lg  "
       }
     >
       <div
         className={
-          "relative aspect-video w-[60px] h-full overflow-hidden rounded-xl"
+          "relative  w-[90px] h-full overflow-hidden rounded-xl"
         }
-      ></div>
+      >
+        <Image src={"/image-placeholder.png"} alt="placeholder" fill />
+      </div>
       <CardContent
         className={"flex flex-col justify-between py-1 px-3  h-full"}
       >

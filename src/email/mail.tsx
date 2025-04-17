@@ -70,7 +70,8 @@ const ContactInfoSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).trim(),
   product:z.string(),
   reason:z.string(),
-  message:z.string()
+  message:z.string(),
+  website:z.string().optional()
 })
 export type ContactDataType = z.infer<typeof ContactInfoSchema>;
 
@@ -92,19 +93,21 @@ export const sendContactEmail = async (
     };
   }
 
-  const emailStatus = await resend.emails.send({
-    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
-    to: process.env.ADMIN_EMAIL as string,
-    subject: "Contact Form",
-    react: React.createElement(ContactEmail, { data:result.data }),
-  });
-
-  if(emailStatus.error){
-    return {
-      error: emailStatus.error,
-      rawData
-      
-    };
+  if(!result.data.website){
+    const emailStatus = await resend.emails.send({
+      from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+      to: process.env.ADMIN_EMAIL as string,
+      subject: "Contact Form",
+      react: React.createElement(ContactEmail, { data:result.data }),
+    });
+    
+    if(emailStatus.error){
+      return {
+        error: "Something went wrong. Try again.",
+        rawData
+        
+      };
+    }
   }
   return {success:true}
 };

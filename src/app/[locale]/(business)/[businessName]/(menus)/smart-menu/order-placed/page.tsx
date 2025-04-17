@@ -14,7 +14,7 @@ export default async function page({
   const validOrder = await getOrderById(orderId);
   if (!validOrder) redirect("/unauthorized");
   return (
-    <section className="h-screen flex-center  w-full">
+    <section className="h-screen flex-center  w-full md:max-w-xl md:mx-auto">
       <div className="flex  flex-col items-center mx-5 w-full bg-secondary rounded-3xl p-6">
         <h2 className="text-3xl font-medium">Your Order is Received!</h2>
         {/* <p className="text-foreground/50 font-normal mx-auto text-center mt-1">

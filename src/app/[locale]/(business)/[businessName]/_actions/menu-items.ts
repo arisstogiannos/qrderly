@@ -17,7 +17,14 @@ import { getMenuByBusinessName } from "./menu";
 
 export async function getMenuItems(businessName: string) {
   const menuItems = await db.menuItem.findMany({
-    where: { menu: { business: { name: businessName } } },
+    where: {menu: { business: { name: businessName } } },
+    include: { category: { select: { name: true } } },
+  });
+  return menuItems;
+}
+export async function getActiveMenuItems(businessName: string) {
+  const menuItems = await db.menuItem.findMany({
+    where: {isAvailable:true, menu: { business: { name: businessName } } },
     include: { category: { select: { name: true } } },
   });
   return menuItems;
@@ -324,4 +331,10 @@ export async function deleteMenuItem(id: string, businessName: string) {
   if (menuItem.imagePath) await deleteImage(menuItem.imagePath);
   
   return { success: true };
+}
+
+
+export async function toggleActive(id:string,active:boolean,businessName:string){
+  await db.menuItem.update({where:{id},data:{isAvailable:active}})
+  revalidateTag("menu-items"+businessName)
 }
