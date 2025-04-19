@@ -191,7 +191,7 @@ export default function MenuItemForm({
           );
         })}
       </div>
-      {business.menu.template === "T1" && (
+      {business.menu?.template === "T1" && (
         <div className="space-y-2">
           <Label htmlFor="image">{t("image")}</Label>
           <label className="cursor-pointer mx-auto relative flex flex-col items-center justify-center border-dashed border-2 border-primary/50 rounded-lg w-full xl:w-[400] h-[250] bg-accent/50 hover:bg-accent hover:border-primary transition-colors">

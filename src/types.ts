@@ -66,13 +66,13 @@ export type FeatureType = {
 };
 
 export type BusinessExtended = Business & {
-  menu: Menu;
-  subscription: Subscription;
-  qr: QR;
+  menu: Menu | undefined;
+  subscription: Subscription | undefined;
+  qr: QR | undefined;
 };
 
 export type ExtendedSubscription = Subscription & {
-  business: BusinessExtended;
+  business: BusinessExtended | undefined;
 };
 
 export type ExtendedUser = {

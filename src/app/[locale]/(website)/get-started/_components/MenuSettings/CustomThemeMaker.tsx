@@ -8,22 +8,22 @@ export default function CustomThemeMaker({
   defaultColors: string[];
 }) {
   const variables = ["background", "secondary", "primary", "text"];
-  const [defaultValues, setDefaultValues] = useState<string[]>(
-    defaultColors
-  );
+  const [colors, setColors] = useState<string[]>(defaultColors);
 
-  useEffect(()=>{
-    setDefaultValues(defaultColors )
-  },[defaultColors])
+  useEffect(() => {
+    setColors(defaultColors);
+  }, [defaultColors]);
 
-
-
-  function handleColorChange(color: string, varName: string) {
+  function handleColorChange(color: string, index: number, varName: string) {
     const root = document.querySelector(":root") as HTMLElement;
     const variable = "--" + varName + "-mockup";
     if (root) {
       root.style.setProperty(variable, color);
     }
+
+    const updatedColors = [...colors];
+    updatedColors[index] = color;
+    setColors(updatedColors);
   }
 
   return (
@@ -37,9 +37,9 @@ export default function CustomThemeMaker({
           >
             {v}
             <Input
-              onChange={(e) => handleColorChange(e.target.value, v)}
+              value={colors[i]}
+              onChange={(e) => handleColorChange(e.target.value, i, v)}
               name={v}
-              defaultValue={defaultValues[i]}
               type="color"
               id={v}
               className=" w-28"

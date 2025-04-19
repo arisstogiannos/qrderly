@@ -78,15 +78,15 @@ export default async function page({
           {/* Subscription status */}
           <SubscriptionStatusCard
             {...{
-              billing: business.subscription.billing,
+              billing: business.subscription?.billing??"FREETRIAL",
               price:
                 plan?.billing[
-                  business.subscription.billing === "MONTHLY"
+                  business.subscription?.billing === "MONTHLY"
                     ? "monthly"
                     : "yearly"
                 ].price ?? "",
               title: business.product,
-              scans: business.menu.noScans,
+              scans: business.menu?.noScans ??0,
             }}
           />
         </div>

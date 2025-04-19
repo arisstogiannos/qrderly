@@ -53,7 +53,7 @@ export async function submitBusinessInfo(
     redirect("/unauthorized");
   }
   const freebusinesses = user.business.filter(
-    (b) => b.subscription.billing === "FREETRIAL"
+    (b) => b.subscription&&b.subscription.billing === "FREETRIAL"
   );
 
   if (freebusinesses.length > 3) {
@@ -174,7 +174,7 @@ export async function createMenu(
   }
 
   const business = user.business.find(
-    (b) => b.menu.published === false && b.product === productMap[product]
+    (b) => b.menu?.published === false && b.product === productMap[product]
   );
 
   if (!business) {

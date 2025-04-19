@@ -21,7 +21,7 @@ export default async function page({
       </div>
       <div className="grid gap-y-8 lg:grid-cols-2">
         <div className="max-w-xl ">
-          <QrCreator business={business} url={business.qr.link} />
+          <QrCreator business={business} url={business.qr?.link??""} />
         </div>
         
         {business.product === "SMART_QR_MENU" && (

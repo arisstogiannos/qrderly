@@ -167,7 +167,7 @@ export default function MenuCategorySection({
                 </DropdownMenu>
               </div>
 
-              {business.menu.template === "T1" ? (
+              {business.menu?.template === "T1" ? (
                 <div className="relative max-w-28 min-w-28 min-h-28 max-h-28 rounded-xl overflow-hidden">
                   {item.imagePath !== "pending" ? (
                     <CloudImage

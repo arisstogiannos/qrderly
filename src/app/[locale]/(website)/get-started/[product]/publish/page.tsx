@@ -59,90 +59,38 @@ export default async function page({
               </div>
             </div>
             <h1 className="text-4xl font-bold text-slate-900 mb-4">
-              Your Menu is Ready to Go Live!
+            {t("heading")}
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              You're just one step away from having your digital menu accessible
-              to your customers. Launch your menu and start delighting your
-              guests!
+            {t("description")}
+
             </p>
           </div>
         </div>
 
-        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <Card className=" bg-accent p-6 border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-blue-100 p-3 rounded-full mb-4">
-                <Eye className="h-6 w-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Preview Menu</h3>
-              <p className="text-slate-500 text-sm mb-4">
-                Take a final look at your menu before publishing
-              </p>
-              <Button variant="outline" className="w-full">
-                Preview <ExternalLink className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </Card>
-
-          <Card className=" bg-accent p-6 border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-purple-100 p-3 rounded-full mb-4">
-                <QrCode className="h-6 w-6 text-purple-600" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">QR Code Ready</h3>
-              <p className="text-slate-500 text-sm mb-4">
-                Your unique QR code will be generated on publish
-              </p>
-              <div className="border-2 border-dashed border-slate-200 p-4 rounded-lg w-full flex justify-center">
-                <div className="w-16 h-16 bg-slate-100 flex items-center justify-center rounded">
-                  <QrCode className="h-8 w-8 text-slate-400" />
-                </div>
-              </div>
-            </div>
-          </Card>
-
-          <Card className=" bg-accent p-6 border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-green-100 p-3 rounded-full mb-4">
-                <Smartphone className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Mobile Optimized</h3>
-              <p className="text-slate-500 text-sm mb-4">
-                Your menu looks great on all devices
-              </p>
-              <div className="border-2 border-slate-200 rounded-xl w-12 h-20 flex items-center justify-center">
-                <div className="w-8 h-14 bg-slate-100 rounded"></div>
-              </div>
-            </div>
-          </Card>
-        </div> */}
-
-        {/* Tip Box */}
         <Card className="  mb-12 overflow-hidden border-amber-200 bg-gradient-to-r from-yellow-50 to-yellow-100 py-0">
           <div className="p-4 flex items-start gap-4">
             <div className="shrink-0 bg-amber-200 p-2 rounded-full">
               <Lightbulb className="h-6 w-6 text-amber-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-amber-900 mb-2">Pro Tip</h3>
+              <h3 className="font-semibold text-amber-900 mb-2">              {t("proTipTitle")}
+              </h3>
               <p className="text-amber-800">
-                After publishing, visit your menu items page to ensure
-                everything is generated correctly. Our AI is powerful, but it's
-                always good to review the results. You can manually edit and fix whatever you need with our easy to use interface.
+              {t("proTipDescription")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2 items-end">
                 <span className="text-amber-800">
-                  Review:
+                {t("reviewLabel")}
                 </span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-200 text-amber-800">
-                  Items belong to right category
+                {t("reviewItemCategory")}
                 </span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-200 text-amber-800">
-                  Prices
+                {t("reviewPrices")}
                 </span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-200 text-amber-800">
-                  Names / Descriptions
+                {t("reviewNamesDescriptions")}
                 </span>
              
               </div>

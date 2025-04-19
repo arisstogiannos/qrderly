@@ -1,7 +1,6 @@
 import { Category, MenuItem } from "@prisma/client";
 import { MenuItemCard } from "./MenuItemCard";
 import { Suspense } from "react";
-import { Translation } from "@/types";
 import CategoryDisplay from "../../../../_components/CateroryDisplay";
 
 export async function MenuItems({
@@ -20,7 +19,7 @@ export async function MenuItems({
   });
 
   menuItems.forEach((product) => {
-    menuItemsByCategory[product.categoryId].push(product);
+    menuItemsByCategory[product.categoryId]?.push(product);
   });
 
   return (

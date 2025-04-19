@@ -38,7 +38,7 @@ export default async function page({
             menu={business.menu}
           />
         </div>
-        <Mockup initialTemplate={business.menu.template} />
+        <Mockup initialTemplate={business.menu?.template ??"T1"} />
       </form>
     </div>
   );

@@ -60,7 +60,7 @@ export async function AnalyticsCard({
           menuItemData={menuItemData}
           orderData={orderData}
           visitData={visitData}
-          totalScans={!isOrderingMenu ? business.menu.noScans : undefined}
+          totalScans={!isOrderingMenu ? business.menu?.noScans : undefined}
         />
       </CardContent>
     </Card>

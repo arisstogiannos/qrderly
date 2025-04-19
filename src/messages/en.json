@@ -612,8 +612,14 @@
     "description": "Upload your menu items and categories easily."
   },
   "publish":{
-    "title":"",
-    "subtitle":"After Publishing go to menu items page to ensure that all of the menu items are generated correctly. Our AI is powerfull but it can always make mistakes."
+    "heading": "Your Menu is Ready to Go Live!",
+    "description": "You're just one step away from having your digital menu accessible to your customers. Launch your menu and start delighting your guests!",
+    "proTipTitle": "Pro Tip",
+    "proTipDescription": "After publishing, visit your menu items page to ensure everything is generated correctly. Our AI is powerful, but it's always good to review the results. You can manually edit and fix whatever you need with our easy to use interface.",
+    "reviewLabel": "Review:",
+    "reviewItemCategory": "Items belong to right category",
+    "reviewPrices": "Prices",
+    "reviewNamesDescriptions": "Names / Descriptions"
   },
   "subscription": {
     "title": "Subscription",
@@ -625,5 +631,78 @@
     "unlimited": "Unlimited",
     "remaining": "Remaining",
     "manage": "Manage"
+  },
+  "metadata": {
+    "main": {
+      "title": "Smart QR Menu & Ordering System",
+      "description": "Set up a digital QR menu in under 5 minutes. Upload a PDF or image and instantly generate a menu where your customers can scan and even order from. Get started for free - No Credit Card Required",
+      "keywords": {
+        "0": "QR menu",
+        "1": "digital menu",
+        "2": "smart ordering",
+        "3": "self-service menu",
+        "4": "self-service ordering system",
+        "5": "ordering system",
+        "6": "QR menu with ordering system",
+        "7": "AI menu generator",
+        "8": "5-minute menu setup",
+        "9": "QR code menu",
+        "10": "contactless ordering system",
+        "11": "online menu creatoor"
+      },
+      "ogTitle": "Smart QR Menu & Ordering System",
+      "ogDescription": "Transform your business customer experience with QR Menus with built-in Ordering System option.",
+      "ogAlt": "QR Ordering App Screenshot",
+      "twitterTitle": "Smart QR Menu & Ordering System",
+      "twitterDescription": "Transform your business customer experience with QR Menus with built-in Ordering System option."
+    },
+    "qrMenu": {
+      "title": "Create a QR Menu in Minutes | Smart & Contactless Menus",
+      "description": "Easily create a custom QR menu for your business in under 5 minutes. Perfect for restaurants, cafés, and bars looking to offer contactless digital menus.",
+      "keywords": {
+        "0": "QR menu",
+        "1": "digital menu",
+        "2": "restaurant menu creator",
+        "3": "qr code menu generator",
+        "4": "contactless menu",
+        "5": "smart menu",
+        "6": "menu builder for restaurants"
+      },
+      "ogTitle": "Create a QR Menu in Minutes | Smart & Contactless Menus",
+      "ogDescription": "Launch your digital menu with a QR code in just 5 minutes. Ideal for cafés, restaurants, and hospitality businesses.",
+      "ogAlt": "QR Ordering App Screenshot"
+    },
+    "ordering": {
+      "title": "Smart QR Menu with Ordering System | Easy Setup in 5 Min",
+      "description": "Combine your QR menu with a smart ordering system. Customers can scan, browse, and order — all from their phones. No apps, no fuss.",
+      "keywords": {
+        "0": "ordering system",
+        "1": "QR menu with ordering",
+        "2": "digital ordering",
+        "3": "ordering QR",
+        "4": "Qr menu generator",
+        "5": "smart menu",
+        "6": "qr menu ordering system"
+      },
+      "ogTitle": "Smart QR Menu with Ordering System | Easy Setup in 5 Minutes",
+      "ogDescription": "Create a digital menu with built-in ordering in minutes. Streamline your business service with our smart QR menu system.",
+      "ogAlt": "QR Ordering App Screenshot"
+    },
+    "selfService": {
+      "title": "Self-Service Ordering Menu | Smart & Contactless Menus",
+      "description": "Empower your customers with self-service ordering. Let them scan, order, and enjoy—no waiters, no apps. Easy QR setup in minutes.",
+      "keywords": {
+        "0": "self-service ordering",
+        "1": "qr ordering system",
+        "2": "restaurant automation",
+        "3": "self-ordering menu",
+        "4": "digital self-service menu",
+        "5": "smart menu QR",
+        "6": "contactless restaurant tech"
+      },
+      "ogTitle": "Self-Service Ordering Menu | Smart & Contactless Menus",
+      "ogDescription": "Offer full self-service with our QR menu and ordering platform. Fast setup and seamless customer experience.",
+      "ogAlt": "QR Ordering App Screenshot"
+    }
   }
 }

@@ -64,7 +64,7 @@ export function NavFooter({
             href={
               "/en/" +
               activeBusiness.name.replaceAll(" ", "-") +
-              (activeBusiness.menu.type === "QR_MENU"
+              (activeBusiness.menu?.type === "QR_MENU"
                 ? "/menu"
                 : "/smart-menu?table=admin")
             }
@@ -113,7 +113,7 @@ export function NavFooter({
             align="end"
             sideOffset={4}
           >
-            {activeBusiness.subscription.billing === "FREETRIAL" ? (
+            {activeBusiness.subscription?.billing === "FREETRIAL" ? (
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                   <UpgradeSubModal business={activeBusiness} />

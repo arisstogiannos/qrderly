@@ -9,111 +9,82 @@ import { cache as cacheReact } from "react";
 import { extractAI } from "./extractionModel";
 import { safeParse } from "./helpers";
 import { partialExtractionAI } from "./partialExtractionModel";
+import { getImageBlob } from "@/cloudinary";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 
-const fileSchema = z.instanceof(File, { message: "Required" });
-const imageSchema = fileSchema.refine(
-  (file) =>
-    file.size > 0 &&
-    (file.type.startsWith("image/") || file.type.startsWith("application/pdf")),
-  { message: "Not a valid file.Please try again" }
-);
-
-const UploadSchema = z.object({
-  file: imageSchema,
-});
 
 export async function extractAllItems(
   businessName: string,
+  cloudinaryIDs:string[],
   prevstate: any,
   formData: FormData
 ) {
-  const result = UploadSchema.safeParse(Object.fromEntries(formData));
-  if (!result.success) {
-    console.error(result.error.flatten().fieldErrors.file);
-    return { error: result.error.flatten().fieldErrors.file?.[0] };
-  }
-  const { file } = result?.data;
-  if (file) {
-    // const blob = await getImageBlob('ifbgsql6v6xapcjooypt')
-    // if (!blob) {
-    //   throw new Error("Failed to fetch image from Cloudinary");
-    // }
 
-    // ✅ Convert the fetched image to Blob
-    // const blob = await response.blob();
+  // const blob = await getImageBlob(cloudinaryID)
+  //   if (!blob) {
+  //     return { error: 'Error uploading image. Try again' };
+  //   }
 
-    // ✅ Convert File to Blob
-    const arrayBuffer = await file.arrayBuffer();
-    const blob = new Blob([arrayBuffer], { type: file.type });
-
-    // ✅ Upload to Gemini API
-    const uploadedFile = await ai.files.upload({
-      file: blob, // Upload the Blob
-    });
-
-    const getMenuCached = cacheReact(getMenuByBusinessName);
+  //   const uploadedFile = await ai.files.upload({
+  //     file: blob,
+  //   });
 
     const menu = await getMenuByBusinessName(businessName);
     const languages = menu?.languages.split(",");
     const srcLang = languages?.reverse().pop();
 
-    let menuItems: MenuItemAI[] = [];
+    let allMenuItems: MenuItemAI[] = [];
 
-    if (uploadedFile && uploadedFile.uri && uploadedFile.mimeType && menu) {
-      const response = await extractAI(uploadedFile, languages);
-
-      if (typeof response === "string") {
-        return { error: response,noNewItems:3 };
+    for (const cloudinaryID of cloudinaryIDs) {
+      const blob = await getImageBlob(cloudinaryID);
+      if (!blob) {
+        return { error: `Error fetching image from Cloudinary: ${cloudinaryID}` };
       }
-
-      if (response.text) {
-        if (response.text.includes("%%%Not a menu%%%"))
-          return {
-            error:
-              "The provided file is not a menu. Please upload a valid file",
-          };
-
-        const { menuItems: menuItemsFirst, names } = safeParse(response.text);
-        if (menuItemsFirst.length === 0)
-          return {
-            error:
-              "Your menu is too big. Try uploading a smaller part of your menu.",noNewItems:3,success:false
-          };
-
-        menuItems = menuItemsFirst;
-
-        if (names) {
-          const revivedResponse = await partialExtractionAI(
-            uploadedFile,
-            languages,
-            names
-          );
-
-          if (typeof revivedResponse === "string") {
-            return { error: revivedResponse,success:false,noNewItems:0 };
-          }
-
-          if (!revivedResponse.text) {
-            return { error: "error",success:false,noNewItems:0 };
-          }
-          const { menuItems: remainingMenuItems, names: names2 } = safeParse(
-            revivedResponse.text
-          );
-
-
-          const deduplicatedremainingMenuItems = remainingMenuItems.filter(
-            (it) => !names.includes(it.name)
-          );
-
-          menuItems = menuItems.concat(deduplicatedremainingMenuItems);
+  
+      const uploadedFile = await ai.files.upload({ file: blob });
+  
+      const response = await extractAI(uploadedFile, languages);
+      if (typeof response === "string") {
+        return { error: response, success: false };
+      }
+  
+      if (response.text?.includes("%%%Not a menu%%%")) {
+        return {
+          error: "One of the uploaded files is not a valid menu.",
+          success: false,
+        };
+      }
+  
+      const { menuItems: parsedItems, names } = safeParse(response.text || "");
+  
+      if (names?.length && uploadedFile) {
+        const revivedResponse = await partialExtractionAI(uploadedFile, languages, names);
+  
+        if (typeof revivedResponse === "string") {
+          return { error: revivedResponse, success: false };
         }
+  
+        const { menuItems: remainingItems } = safeParse(revivedResponse.text || "");
+        const deduped = remainingItems.filter((it) => !names.includes(it.name));
+        allMenuItems.push(...parsedItems, ...deduped);
+      } else {
+        allMenuItems.push(...parsedItems);
+      }
+    }
+  
+    if (allMenuItems.length === 0) {
+      return {
+        error: "No menu items could be extracted from the uploaded files.",
+        success: false,
+        noNewItems: 0,
+      };
+    }
 
         const categories = Array.from(
           new Map(
-            menuItems.map((item) => [
+            allMenuItems.map((item) => [
               item.category,
               {
                 name: item.category,
@@ -131,14 +102,13 @@ export async function extractAllItems(
         if (createdCategories.data) {
           const result = await createMenuItems(
             businessName,
-            menuItems,
+            allMenuItems,
             createdCategories.data
           );
 
-          return {...result,success:true,noNewItems:menuItems.length};
+          return {...result,success:true,noNewItems:allMenuItems.length};
         }
-      }
-    }
-  }
+      
+    
   return { success: "s" };
 }

@@ -34,7 +34,7 @@ export default function LanguageSelect({
         {languagesList.map((l) => (
           <DropdownMenuItem
             onClick={() => updateSearchParams("l",l) }
-            className="uppercase text-foreground"
+            className="uppercase text-foreground hover:text-primary"
             key={l}
           >
             {l}

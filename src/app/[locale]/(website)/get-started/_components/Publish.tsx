@@ -35,7 +35,7 @@ export default function Publish({
   );
 
   const publishedMenuBusiness = user.business.find(
-    (b) => b.id === businessId && b.menu.published
+    (b) => b.id === businessId && b.menu?.published
   );
   // console.log(existingPaidSub)
 

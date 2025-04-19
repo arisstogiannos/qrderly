@@ -14,7 +14,7 @@ export default function QrDisplay({
 
   const [qrCode, setQrCode] = useState<QRCodeStyling | null>(null);
 
-  const qrOptions = JSON.parse(qr.qrOptions) as Options;
+  const qrOptions = JSON.parse(qr?.qrOptions??"") as Options;
 
   useEffect(() => {
     const qr = new QRCodeStyling({ ...qrOptions, width: 200, height: 200 });
@@ -48,7 +48,7 @@ export default function QrDisplay({
           ctx.fillText("table", canvas.width - 5, canvas.height - 3); // Position text
         }
         ctx.textAlign = "left";
-        ctx.fillText(qr.text, 5, canvas.height - 3, (canvas.width * 3) / 4); // Position text
+        ctx.fillText(qr?.text??"", 5, canvas.height - 3, (canvas.width * 3) / 4); // Position text
       }, 100);
     }
   }, [qrCode, business]);

@@ -6,8 +6,6 @@ import CustomThemeMaker from "./CustomThemeMaker";
 import { useTranslations } from "next-intl";
 import { themes } from "@/data";
 
-
-
 export default function ThemeSettings({
   menu,
   template,
@@ -17,7 +15,7 @@ export default function ThemeSettings({
   template: Template;
   errors: string[] | undefined;
 }) {
-  const t = useTranslations("menu settings")
+  const t = useTranslations("menu settings");
   const [selectedTheme, setSelectedTheme] = useState<string>(
     menu?.theme ?? themes[template][0]
   );
@@ -73,9 +71,8 @@ export default function ThemeSettings({
             </label>
           );
         })}
-       
       </div>
-        <CustomThemeMaker defaultColors={selectedTheme.split(",")} />
+      <CustomThemeMaker defaultColors={selectedTheme.split(",")} />
       {errors?.map((er) => {
         return (
           <ErrorMessage

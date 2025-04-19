@@ -3,7 +3,6 @@
 import { useActionState, useEffect, useState } from "react";
 import Uploader from "./Uploader";
 import { Button } from "@/components/ui/button";
-import Loader from "@/components/Loader";
 import { ArrowRight, CheckCircleIcon, Upload } from "lucide-react";
 import { ErrorMessage } from "@/components/Messages";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
@@ -16,6 +15,7 @@ import { extractAllItems } from "@/ai/extractAllItems";
 import { extractSomeItems } from "@/ai/extractSomeItems";
 import { Category } from "@prisma/client";
 import { toast } from "sonner";
+import { uploadImageClientSide } from "@/lib/utils";
 
 export default function UploadingForm({
   businessName,
@@ -27,28 +27,34 @@ export default function UploadingForm({
   existingCategories?: Category[];
 }) {
   const [file, setFile] = useState<File>();
+  const [cloudinaryPublicIDs, setCloudinaryPublicIDs] = useState<string[]>();
   const [state, action, isPending] = useActionState(
-    existingItems && existingCategories
+    existingItems && existingCategories 
       ? extractSomeItems.bind(
           null,
           businessName,
           existingCategories,
-          existingItems
+          existingItems,
+          cloudinaryPublicIDs??[]
         )
-      : extractAllItems.bind(null, businessName),
+      : extractAllItems.bind(null, businessName,cloudinaryPublicIDs??[]),
     null
   );
   const router = useRouter();
   const t = useTranslations("uploadingForm");
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (state?.error) {
       setFile(undefined);
+      setCloudinaryPublicIDs(undefined);
     }
-    if (state?.success ) {
-      if(existingItems){
-        setFile(undefined);
-        toast(t("toast",{newItems:state.noNewItems ?? 0}),{
+    if (state?.success) {
+      setFile(undefined);
+      setCloudinaryPublicIDs(undefined);
+
+      if (existingItems) {
+        toast(t("toast", { newItems: state.noNewItems ?? 0 }), {
           duration: 10000,
           icon: <CheckCircleIcon />,
           position: "bottom-right",
@@ -57,16 +63,27 @@ export default function UploadingForm({
             color: "darkgreen",
             borderColor: "darkgreen",
           },
-          closeButton:true
-        })
-
-      }else{
+          closeButton: true,
+        });
+      } else {
         router.push("customize-qr");
-
       }
     }
   }, [state]);
 
+  const handleUpload = async (selectedFiles: File[]) => {
+    setFile(selectedFiles[0]);
+    setIsUploading(true);
+    try {
+      const uploadedImageUrls = await Promise.all(
+        selectedFiles.map((file) => file.type.includes("image/")? uploadImageClientSide(file):null).filter((file)=>file!==null)
+      );
+      setCloudinaryPublicIDs(uploadedImageUrls);
+    } catch (error) {
+      console.error("Cloudinary upload failed", error);
+    }
+    setIsUploading(false);
+  };
   return (
     <form action={action} className="flex flex-col  justify-center gap-y-10 ">
       {/* {existingItems && <OverwriteExistingItemsSwitch />} */}
@@ -84,25 +101,27 @@ export default function UploadingForm({
       <div className=" grid lg:grid-cols-2 gap-10">
         <Uploader
           uploadedFile={file}
-          onUpload={setFile}
+          onUpload={handleUpload}
           fileType="image/"
           placeholder="/image-placeholder.png"
           title={t("imageTitle")}
           description={t("imageDescription")}
+          isUploading={isUploading}
         />
         <Uploader
           uploadedFile={file}
-          onUpload={setFile}
+          onUpload={handleUpload}
           fileType="application/pdf"
           placeholder="/pdf-placeholder.png"
           title={t("pdfTitle")}
           description={t("pdfDescription")}
+          isUploading={isUploading}
         />
       </div>
       <div className="w-full flex flex-col xl:flex-row gap-y-5 justify-between items-center">
         {existingItems ? (
           <Button
-            disabled={isPending || !file}
+            disabled={isPending || !file || isUploading}
             type="submit"
             className="bg-foreground w-full sm:w-fit  text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto ml-auto"
             formAction={action}
@@ -119,7 +138,7 @@ export default function UploadingForm({
               {t("skip")} <ArrowRight className="size-5" />
             </Button>
             <Button
-              disabled={isPending || !file}
+              disabled={isPending || !file || isUploading}
               type="submit"
               className="bg-foreground w-full sm:w-fit  text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto"
               formAction={action}

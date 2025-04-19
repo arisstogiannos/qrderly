@@ -1,22 +1,11 @@
 
 all orders filtering 
-
-design emails
-
-
-add multiple images
-
-
 translations
 texts
 
---- post live:
+server 5 mb 
 
-stripe live mode prices/ sign api key , api keys
-live prices ids stripe
-submodal
-
-
+videos
 
 
 DONE multiple prefernce/ extras + price

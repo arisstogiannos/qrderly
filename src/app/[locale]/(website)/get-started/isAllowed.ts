@@ -43,7 +43,7 @@ export async function checkUser(product: ProductURL): Promise<{
         { tags: ["generate-items" + b.name] }
       );
       const menuItems = await getMenuItemsByMenuIdCached(b.menu.id);
-      
+
       if (menuItems.length === 0)
         return { business: b, redirect: "emptyMenu", user };
 
@@ -55,11 +55,11 @@ export async function checkUser(product: ProductURL): Promise<{
     }
   }
 
-  const publishedBusinesses = businesses.filter((b) => b.menu.published);
+  const publishedBusinesses = businesses.filter((b) => b.menu?.published);
 
   const latestBusiness = publishedBusinesses.reduce((latest, business) =>
-    business.subscription?.purchasedAt >
-    (latest?.subscription?.purchasedAt ?? 0)
+    business.subscription &&
+    business.subscription.purchasedAt > (latest?.subscription?.purchasedAt ?? 0)
       ? business
       : latest
   );

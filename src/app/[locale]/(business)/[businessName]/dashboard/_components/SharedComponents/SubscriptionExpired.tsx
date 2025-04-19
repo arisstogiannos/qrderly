@@ -16,7 +16,7 @@ export default function SubscriptionExpired({
 }: {
   business: BusinessExtended;
 }) {
-  const isExpired = business.subscription.hasExpired;
+  const isExpired = business.subscription?.hasExpired;
   let currentPlan = null;
   if (isExpired) {
     currentPlan = plandata.find(
@@ -44,7 +44,7 @@ export default function SubscriptionExpired({
                 "MONTHLY",
                 business.product,
                 business.id,
-                business?.subscription.id ?? "",
+                business?.subscription?.id ?? "",
                 "/" + business.name.replaceAll(" ", "-") + "/dashboard",
                 "Go Back to Dashboard"
               )}
@@ -58,7 +58,7 @@ export default function SubscriptionExpired({
                 "YEARLY",
                 business.product,
                 business.id,
-                business.subscription.id ?? "",
+                business.subscription?.id ?? "",
                 "/" + business.name.replaceAll(" ", "-") + "/dashboard",
                 "Go Back to Dashboard"
               )}

@@ -83,7 +83,7 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
                         href={
                           "/en/" +
                           b.name.replaceAll(" ", "-") +
-                          (b.menu.type === "QR_MENU"
+                          (b.menu?.type === "QR_MENU"
                             ? "/menu"
                             : "/smart-menu?table=admin")
                         }

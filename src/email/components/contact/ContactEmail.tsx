@@ -29,6 +29,7 @@ export default function ContactEmail({data}: {data: ContactDataType}) {
                 <Text>{data.product}</Text>
                 <Text>{data.reason}</Text>
                 <Text>{data.message}</Text>
+                <Text>{"is bot: "+data.phone}</Text>
             </Section>
           </Container>
         </Body>

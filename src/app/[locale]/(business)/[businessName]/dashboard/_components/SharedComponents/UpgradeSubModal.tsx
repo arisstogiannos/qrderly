@@ -41,7 +41,7 @@ export default function UpgradeSubModal({
             BillingType.MONTHLY,
             product.product,
             business.id,
-            business.subscription.id ?? "",
+            business.subscription?.id ?? "",
             "/"+business.name.replaceAll(" ","-")+"/dashboard",
             "Go Back to Dashboard"
           )}
@@ -56,7 +56,7 @@ export default function UpgradeSubModal({
             BillingType.YEARLY,
             product.product,
             business.id,
-            business.subscription.id ?? "",
+            business.subscription?.id ?? "",
             "/"+business.name.replaceAll(" ","-")+"/dashboard",
             "Go Back to Dashboard"
           )}

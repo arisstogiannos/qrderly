@@ -26,7 +26,7 @@ export default async function page({
 
   const categories = await getCategoriesCached(businessName);
   // const geMenuItmesCached = cache(getMenuItems,["menu-items",  businessName ],{tags:["menu-items", businessName]});
-  const languages = business.menu.languages
+  const languages = business.menu?.languages??""
 
   return (
     <FiltersProvider languages={languages}>

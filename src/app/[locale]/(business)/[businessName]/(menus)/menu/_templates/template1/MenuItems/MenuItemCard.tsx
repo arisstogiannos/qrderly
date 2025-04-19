@@ -79,6 +79,7 @@ export function MenuItemCard({
             </span>
           </CardContent>
         </Card>
+        </ModalTrigger>
         <MenuItemModal
           menuItem={{
             id,
@@ -113,7 +114,6 @@ export function MenuItemCard({
             }}
           />
         </MenuItemModal>
-      </ModalTrigger>
     </CardModalProvider>
   );
 }

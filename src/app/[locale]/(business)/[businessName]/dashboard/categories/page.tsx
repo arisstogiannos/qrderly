@@ -26,7 +26,7 @@ export default async function page({
   const { business } = await checkUserAuthorized(businessName);
 
   return (
-    <FiltersProvider languages={business.menu.languages}>
+    <FiltersProvider languages={business.menu?.languages??""}>
       <CategoriesPage categories={categories} businessName={businessName} />
     </FiltersProvider>
   );

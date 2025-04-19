@@ -53,7 +53,7 @@ export const verifyToken = async (token: string) => {
     };
   }
 
-  await db.user.update({
+  const user = await db.user.update({
     where: {
       email: verificationToken.email,
     },
@@ -63,7 +63,7 @@ export const verifyToken = async (token: string) => {
     },
   });
 
-  return { success: true};
+  return { success: true ,userName:user.name,email:verificationToken.email};
 };
 
 export const verifyResetToken = async (token: string) => {

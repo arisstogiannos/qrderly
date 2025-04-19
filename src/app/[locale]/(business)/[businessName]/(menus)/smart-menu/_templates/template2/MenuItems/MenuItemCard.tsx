@@ -82,6 +82,7 @@ export function MenuItemCard({
             )}
           </CardContent>
         </Card>
+        </ModalTrigger>
         <MenuItemModal
           withImage={false}
           menuItem={{
@@ -94,7 +95,6 @@ export function MenuItemCard({
             translations,
           }}
         />
-      </ModalTrigger>
     </CardModalProvider>
   );
 }

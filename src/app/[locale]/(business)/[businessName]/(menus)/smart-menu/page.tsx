@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import React from "react";
 import { getCategories } from "../../_actions/categories";
-import { getActiveMenuItems, getMenuItems } from "../../_actions/menu-items";
+import { getActiveMenuItems } from "../../_actions/menu-items";
 import {
   getActiveMenuNotCached,
   getActiveMenusNotCached,
@@ -16,18 +16,22 @@ import ActiveOrder from "./_components/ActiveOrder";
 export const dynamicParams = true; // or false, to 404 on unknown paths
 // export const revalidate =60; 
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ businessName: string }>;
-}) {
+export async function generateMetadata({ params }:{params:Promise<{businessName:string}>}) {
   const businessName = (await params).businessName.replaceAll("-", " ");
 
-  const description = `Check out our menu`;
-
   return {
-    title: businessName + " | Online Menu",
-    description,
+    metadataBase: new URL('https://www.scanby.cloud'),
+    title: `${businessName} | Online Menu`,
+    description: `Check out our menu`,
+    openGraph: {
+      title: `${businessName} | Online Menu`,
+      description: `Check out our menu`,
+      url: `https://www.scanby.cloud/en/${businessName}/smart-menu`,
+      siteName: 'Scanby',
+    },
+    twitter: {
+      card: 'summary_large_image',
+    },
   };
 }
 

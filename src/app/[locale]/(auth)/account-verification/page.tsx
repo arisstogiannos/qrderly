@@ -3,6 +3,7 @@ import { verifyToken } from "@/lib/tokens";
 import {Link} from "@/i18n/navigation";
 
 import React from "react";
+import { sendWelcomeEmail } from "@/email/mail";
 
 export default async function AccountVerificationPage({
   searchParams,
@@ -14,6 +15,8 @@ export default async function AccountVerificationPage({
   if (token) {
     result = await verifyToken(token);
   }
+
+  if(result?.success) await sendWelcomeEmail(result.email,result.userName)
  
   return (
     <div className="flex w-full items-center justify-center bg-background rounded-3xl p-6">

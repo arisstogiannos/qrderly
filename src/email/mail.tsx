@@ -71,7 +71,7 @@ const ContactInfoSchema = z.object({
   product:z.string(),
   reason:z.string(),
   message:z.string(),
-  website:z.string().optional()
+  phone:z.string().optional()
 })
 export type ContactDataType = z.infer<typeof ContactInfoSchema>;
 
@@ -93,7 +93,7 @@ export const sendContactEmail = async (
     };
   }
 
-  if(!result.data.website){
+  if(result.data.phone ===""){
     const emailStatus = await resend.emails.send({
       from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
       to: process.env.ADMIN_EMAIL as string,

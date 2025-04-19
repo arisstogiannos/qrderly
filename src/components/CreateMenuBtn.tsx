@@ -22,7 +22,7 @@ export default function CreateMenuBtn({
     (sub) =>
       sub.billing !== "FREETRIAL" &&
       (!sub.businessId ||
-        !business.find((b) => b.id === sub.businessId)?.menu.published)
+        !business.find((b) => b.id === sub.businessId)?.menu?.published)
   );
 
 

@@ -21,7 +21,7 @@ export default function LanguageSelect() {
       </SelectTrigger>
       <SelectContent className="bg-background">
         {languagesList.map((l) => (
-          <SelectItem value={l} className="uppercase text-foreground" key={l}>
+          <SelectItem value={l} className="uppercase text-foreground " key={l}>
             {l}
           </SelectItem>
         ))}

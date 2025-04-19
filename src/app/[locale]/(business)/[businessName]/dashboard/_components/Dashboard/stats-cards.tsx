@@ -33,7 +33,7 @@ export async function StatsCards({
       revalidate: 3600,
     }
   );
-  const totalScans = business.menu.noScans;
+  const totalScans = business.menu?.noScans;
 
   const [totalOrders, totalRevenue] = await Promise.all([
     getTotalOrdersCache(business.id),

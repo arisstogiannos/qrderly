@@ -7,13 +7,10 @@ import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail, sendWelcomeEmail } from "@/email/mail";
 
-
-
-
 // Register
 
 const registerSchema = z.object({
-  name:z.string(),
+  name: z.string(),
   email: z.string().email({ message: "Invalid email address" }).trim(),
   password: z
     .string()
@@ -33,7 +30,7 @@ export async function register(prevState: any, formData: FormData) {
       errors: result.error.flatten().fieldErrors,
     };
   }
-  
+
   if (result.data.confirmPassword !== result.data.password) {
     return {
       errors: {
@@ -42,7 +39,7 @@ export async function register(prevState: any, formData: FormData) {
       },
     };
   }
-  const { email, password,name } = result.data;
+  const { email, password, name } = result.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingUser = await db.user.findUnique({ where: { email } });
@@ -55,18 +52,22 @@ export async function register(prevState: any, formData: FormData) {
     };
   }
 
-  const user =await db.user.create({
+  const user = await db.user.create({
     data: {
       name,
       email,
       password: hashedPassword,
-      role:"ADMIN"
+      role: "ADMIN",
     },
   });
 
   const verificationToken = await generateVerificationToken(email);
-  await sendWelcomeEmail(verificationToken.email,user.name)
-  await sendVerificationEmail(verificationToken.email, verificationToken.token,user.name);
+
+  await sendVerificationEmail(
+    verificationToken.email,
+    verificationToken.token,
+    user.name
+  );
 
   return { success: "Confirmation email sent" };
 }

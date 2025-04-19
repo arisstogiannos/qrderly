@@ -216,7 +216,7 @@ function Buttons({
             billing,
             product,
             businessId,
-            business?.subscription.id ?? "",
+            business?.subscription?.id ?? "",
             "/",
             "go back to homepage"
           )}

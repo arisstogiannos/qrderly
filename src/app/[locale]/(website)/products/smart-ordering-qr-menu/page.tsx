@@ -1,39 +1,49 @@
 import React from "react";
 import ProductPage from "../_components/ProductPage";
 import { productsData } from "@/data";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 
 export const dynamic = "error";
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('metadata');
 
-export const metadata: Metadata = {
-  title: "Smart QR Menu with Ordering System | Easy Setup in 5 Min",
-  description:
-    "Combine your QR menu with a smart ordering system. Customers can scan, browse, and order — all from their phones. No apps, no fuss.",
-  keywords: [
-    "smart ordering system",
-    "QR menu with ordering",
-    "digital ordering",
-    "ordering QR",
-    "Qr menu generator",
-    "contactless ordering",
-    "qr menu ordering system",
-  ],
-  openGraph: {
-    title: "Smart QR Menu with Ordering System | Easy Setup in 5 Minutes",
-    description:
-      "Create a digital menu with built-in ordering in minutes. Streamline your business service with our smart QR menu system.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "QR Ordering App Screenshot",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
+  const meta = t.raw('ordering') as {
+    title: string;
+    description: string;
+    keywords: Record<string, string>;
+    ogTitle: string;
+    ogDescription: string;
+    ogAlt: string;
+  };
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    keywords: Object.values(meta.keywords),
+    openGraph: {
+      title: meta.ogTitle,
+      description: meta.ogDescription,
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: meta.ogAlt,
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@yourTwitterHandle',
+      title: meta.ogTitle,
+      description: meta.ogDescription,
+      images: ['/og-image.png'],
+    },
+  };
+}
 
   // openGraph: {
   //   title: "QR Ordering App - Order Food Seamlessly",
@@ -58,7 +68,6 @@ export const metadata: Metadata = {
   //   description: "Scan, order, and enjoy a seamless dining experience.",
   //   images: ["/twitter-card.jpg"],
   // },
-};
 
 export default async function page({
   params,
