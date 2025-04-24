@@ -311,8 +311,8 @@
     "title": "fully customizable & interactive menu",
     "subtitle": "No More Outdated PDFs – Create, Personalize & Manage Your Digital Menu in Minutes! Offer a Seamless Experience with Live Edits, Custom Themes, and Multilingual Support.",
     "settings": { "1": "Template", "2": "Theme", "3": "Customize" },
-    "Template 1": "Template 1",
-    "Template 2": "Template 2"
+    "Template 1": "With Images",
+    "Template 2": "No Images"
   },
   "navbar": {
     "Products": "Products",
@@ -704,5 +704,9 @@
       "ogDescription": "Offer full self-service with our QR menu and ordering platform. Fast setup and seamless customer experience.",
       "ogAlt": "QR Ordering App Screenshot"
     }
+  },
+  "stats":{
+    "title":"Businesses Trust Our App",
+    "subtitile":"Our platform is the preferred solution for a diverse range of hospitality businesses:"
   }
 }

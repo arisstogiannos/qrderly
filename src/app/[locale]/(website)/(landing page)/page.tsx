@@ -26,11 +26,11 @@ export default async function IndexPage({
       <ChooseUs />
       <Products />
       <Suspense>
-        <Preview />
+      <Preview />
       </Suspense>
       <SomeFeatures />
       <HowItWorks />
-      <BusinessStats/>
+      {/* <BusinessStats/> */}
       {/* <Testimonials /> */}
       {/* <WhoIsThisFor/> */}
     </>

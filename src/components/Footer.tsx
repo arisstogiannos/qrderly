@@ -31,7 +31,7 @@ export default function Footer() {
         <div className="flex flex-col gap-y-2">
           <Image src={"/QrCodeWhite.svg"} height={80} width={80} alt="logo" />
           <p className="text-4xl">Scanby</p>
-          <a href="mailto:webmaster@example.com">scanby@info.com</a>
+          <a href="mailto:info@scanby.cloud">info@scanby.cloud</a>
           <Social />
         </div>
         <div className="flex gap-16 py-8 lg:col-start-3 xl:justify-end">
@@ -70,12 +70,14 @@ export default function Footer() {
         </div>
         <div className="h-full place-content-end overflow-hidden col-span-full">
           <div className="text-sm flex justify-between mt-auto pb-2">
-            <p>Created By Aris Stogiannos</p>
+            <a target="_blank" href="https://aris-stogiannos.gr">Created By Aris Stogiannos</a>
             <p>©2025 scanby</p>
           </div>
           <hr />
           <p className="uppercase text-6xl font-semibold py-5 text-center xl:text-8xl">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-violet-500">
             go digital
+            </span>
           </p>
         </div>
       </div>

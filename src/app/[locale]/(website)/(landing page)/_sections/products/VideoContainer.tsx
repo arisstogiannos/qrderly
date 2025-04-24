@@ -3,9 +3,9 @@ import { useEffect } from "react";
 
 const VideoContainer = ({ selectedProduct }: { selectedProduct: number }) => {
   const videos = [
-    { src: "/videos/QR animation.webm", idN: "des" },
-    { src: "/videos/smart QR animation.webm", idN: "seo" },
-    { src: "/videos/self-service.webm", idN: "dev" },
+    { src: "/videos/QR animation.webm", idN: "qrMenu" },
+    { src: "/videos/order.webm", idN: "smartMenu" },
+    { src: "/videos/self-service.webm", idN: "selfServiceMenu" },
   ];
   useEffect(() => {
     if (
@@ -40,7 +40,7 @@ const VideoContainer = ({ selectedProduct }: { selectedProduct: number }) => {
               transition={{ duration: 0.5 }}
               id={video.idN}
               preload="auto"
-              loop
+              // loop
               autoPlay
               playsInline
               muted

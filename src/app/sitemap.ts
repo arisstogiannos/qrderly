@@ -16,6 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...getEntries("/"),
+    ...getEntries("/en"),
+    ...getEntries("/el"),
     ...getEntries("/FAQ-contact"),
     ...getEntries("/get-started"),
     ...getEntries("/login"),
@@ -35,6 +37,7 @@ function getEntries(href: Href):MetadataRoute.Sitemap{
   return routing.locales.map((locale) => ({
     url: getUrl(href, locale),
     alternates: {
+
 
       languages: Object.fromEntries(
         routing.locales.map((cur) => [cur, getUrl(href, cur)])

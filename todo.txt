@@ -1,11 +1,9 @@
 
-all orders filtering 
-translations
-texts
+
 
 server 5 mb 
-
 videos
+faq
 
 
 DONE multiple prefernce/ extras + price

@@ -55,7 +55,7 @@ export default  function Preview() {
     <section className="grid grid-rows-[auto_auto] lg:grid-cols-2 grid-cols-1  gap-20 relative w-full ">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-[120%] bg-foreground -z-10" />
       <div className="space-y-4 max-sm:hidden">
-        <p className="font-medium text-6xl text-background capitalize leading-[1.2]">
+        <p className="font-medium text-5xl text-background capitalize leading-[1.2]">
           {t("title")}
         </p>
         <p className="text-xl font-normal  text-background/70">

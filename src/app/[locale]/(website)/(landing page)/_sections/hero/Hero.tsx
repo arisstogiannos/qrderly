@@ -49,7 +49,7 @@ export default async function Hero() {
         <div className=" absolute -right-60 top-20 xl:top-0 xl:-right-96 w-[520px] md:w-[650px] lg:w-[850px] xl:w-[1000px] h-auto aspect-video ">
           <Image
             quality={100}
-            src={"/Menu items2.png"}
+            src={"/Menu-items.webp"}
             fill
             alt="dasboard mockup"
             className="object-contain animate-float-slow  backdrop-blur-xs rounded-3xl overflow-hidden"
