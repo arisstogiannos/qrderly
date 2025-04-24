@@ -64,6 +64,7 @@ export async function getImageBlob(publicId:string) {
     
   } catch (error) {
     console.error('Error processing image:', error);
+    return null
   }
 }
 

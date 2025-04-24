@@ -72,8 +72,12 @@ export default function Options({
                   <RadioGroupItem
                     value={value.name}
                     className="border-primary"
+                    id={`${option.name}-${value.name}`}
                   />
-                  <Label className="text-base capitalize font-normal">
+                  <Label
+                    htmlFor={`${option.name}-${value.name}`}
+                    className="text-base capitalize font-normal"
+                  >
                     {value.name}{" "}
                     {value.price && value.price !== "0" && (
                       <span className="text-muted">
@@ -118,20 +122,30 @@ export function DefaultRadioGroup({
 
   useEffect(() => {
     setValue(defaultValue);
+    const price = values.find((v) => v.name === defaultValue)?.price;
+    console.log(price);
+    if (price) {
+      setLocalPrice(Number(price));
+    }
+    setPrice((prev) => prev + (Number(price) - localPrice));
   }, [defaultValue]);
 
   function handleChange(e: string) {
     const price = values.find((v) => v.name === e)?.price;
-    setValue(e);
-
+    console.log("price", price);
+    console.log("price diff", - localPrice);
     setPrice(
       (prev) =>
         prev +
         (Number.isNaN(Number(price) - localPrice)
-          ? 0
+          ?
+
+            
+             (-localPrice)
           : Number(price) - localPrice)
     );
-    setLocalPrice(Number(price));
+    setValue(e);
+    setLocalPrice(!Number.isNaN(Number(price))?Number(price):0);
   }
 
   return (

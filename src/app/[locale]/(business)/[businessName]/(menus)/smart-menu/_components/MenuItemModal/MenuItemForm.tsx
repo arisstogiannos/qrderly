@@ -32,7 +32,7 @@ export default function MenuItemOptionsForm({
 
   useEffect(() => {
     setPrice(menuItem.priceInCents);
-  }, []);
+  }, [menuItem.priceInCents]);
 
   const existingMenuItem = existingMenuItems.find(
     (item) => item.id === cartItemVersionId

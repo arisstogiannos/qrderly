@@ -43,7 +43,15 @@ export async function extractAllItems(
         return { error: `Error fetching image from Cloudinary: ${cloudinaryID}` };
       }
   
-      const uploadedFile = await ai.files.upload({ file: blob });
+      const uploadedFile = await ai.files.upload({ file: blob }).catch((err) => {
+        console.error("Error uploading file to AI:", err);
+        return null;
+      }
+      );
+
+      if(!uploadedFile) {
+        return { error: "Error uploading file to AI", success: false };
+      }
   
       const response = await extractAI(uploadedFile, languages);
       if (typeof response === "string") {
@@ -110,5 +118,5 @@ export async function extractAllItems(
         }
       
     
-  return { success: "s" };
+  return { success: true };
 }
