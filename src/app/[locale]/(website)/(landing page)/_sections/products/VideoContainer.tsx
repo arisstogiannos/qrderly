@@ -40,7 +40,7 @@ const VideoContainer = ({ selectedProduct }: { selectedProduct: number }) => {
               transition={{ duration: 0.5 }}
               id={video.idN}
               preload="auto"
-              // loop
+              loop
               autoPlay
               playsInline
               muted

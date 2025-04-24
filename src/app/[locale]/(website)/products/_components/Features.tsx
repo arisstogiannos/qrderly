@@ -51,7 +51,7 @@ function Feature({
         muted
         playsInline
         loop
-        className="xl:hidden  "
+        className="xl:hidden  rounded-3xl"
         src={video}
       />
     </div>
@@ -69,6 +69,7 @@ function Video({ src }: { src: string }) {
           transition={{ duration: 0.5 }}
           autoPlay
           muted
+          loop
           playsInline
           src={src}
           className="object-fill rounded-3xl"
