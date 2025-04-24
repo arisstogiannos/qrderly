@@ -1,6 +1,8 @@
 "use client";
 
 import { Template } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { set } from "zod";
 
 export default function ColorPicker({
   value,
@@ -12,6 +14,10 @@ export default function ColorPicker({
   template:Template
 }) {
   const variables = ["primary", "background", "secondary", "text"];
+  const [currColor, setCurrColor] = useState(value);
+  useEffect(() => {
+    setCurrColor(value);
+  }, [value]);
 
   function handleColorChange(color: string) {
     const root = document.querySelector(":root") as HTMLElement;
@@ -19,6 +25,7 @@ export default function ColorPicker({
     if (root) {
       root.style.setProperty(variable, color);
     }
+    setCurrColor(color);
   }
   
 
@@ -27,7 +34,7 @@ export default function ColorPicker({
       type="color"
       onChange={(e) => handleColorChange(e.target.value)}
       name={"color"}
-      defaultValue={value}
+      value={currColor}
       className="rounded-lg border-none appearance-none max-sm:w-10"
     />
   );

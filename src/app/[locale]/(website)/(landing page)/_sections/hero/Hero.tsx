@@ -39,7 +39,10 @@ export default async function Hero() {
           </Link>
         </Button> */}
         <MainButton className="mt-5 3xl:mt-14 md:text-xl">
-          <Link href={"/get-started"} className="flex gap-4 items-center size-full">
+          <Link
+            href={"/get-started"}
+            className="flex gap-4 items-center size-full"
+          >
             {t("button")} <ArrowRight />
           </Link>
         </MainButton>
@@ -48,12 +51,13 @@ export default async function Hero() {
         <div className="absolute lg:top-36  xl:top-20 top-32 left-0 xl:left-20 bg-black/35 lg:bg-black/40 blur-3xl w-full lg:w-[150%] h-[50%] lg:h-[80%] xl:h-3/4 "></div>
         <div className=" absolute -right-60 top-20 xl:top-0 xl:-right-96 w-[520px] md:w-[650px] lg:w-[850px] xl:w-[1000px] h-auto aspect-video ">
           <Image
-            quality={100}
-            src={"/Menu-items.webp"}
+            src="/Menu-items.webp"
+            alt="dashboard mockup"
             fill
             priority
-            alt="dasboard mockup"
-            className="object-contain animate-float-slow  backdrop-blur-xs rounded-3xl overflow-hidden"
+            quality={100}
+            sizes="(max-width: 768px) 520px, (max-width: 1024px) 650px, (max-width: 1280px) 850px, 1000px"
+            className="object-contain animate-float-slow backdrop-blur-xs rounded-3xl overflow-hidden"
           />
         </div>
         <div className="  absolute -left-5 top-24 md:top-40 lg:top-32 lg:left-5 w-[200px] md:w-[200px] lg:w-[220px] lg:h-[450px] xl:w-[250px] h-[300px] xl:h-[500px]  ">
