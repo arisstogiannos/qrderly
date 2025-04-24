@@ -94,7 +94,7 @@ export default function UploadingForm({
               {t("dialogTitle")}
             </DialogTitle>
           </DialogHeader>
-          <ProgressSteps taskIsRunning={isPending} time={existingItems?3000:7000} />
+          <ProgressSteps taskIsRunning={isPending} time={existingItems?((cloudinaryPublicIDs?.length??1)*1500)+3000:((cloudinaryPublicIDs?.length??1)*1500)+7000} />
           {/* <Loader className="h-12 text-sm mx-auto" /> */}
         </DialogContent>
       </Dialog>

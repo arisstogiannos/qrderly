@@ -2,7 +2,7 @@
 
 import crypto from "crypto";
 
-const secret = process.env.SECRET_KEY!;
+const secret = process.env.TABLE_ENCRYPTION_KEY!;
 
 export async function encryptTable(tableId: string) {
   const payload = tableId;

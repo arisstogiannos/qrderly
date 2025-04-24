@@ -69,7 +69,7 @@ export default function Publish({
     );
   } else if (isPending) {
     render = (
-      <div className="w-full min-w-lg flex flex-col items-center pt-10 min-h-80">
+      <div className="w-full md:min-w-lg flex flex-col items-center pt-10 min-h-80">
         <Loader className="h-16 mt-7" />
       </div>
     );
