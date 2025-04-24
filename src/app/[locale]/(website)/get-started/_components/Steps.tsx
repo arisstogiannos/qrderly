@@ -4,9 +4,11 @@ import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { ArrowRight, Check } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export default function AnimatedStepper() {
   const steps = ["business setup", "menu settings", "generate items", "customize qr", "publish"]
+  const t = useTranslations("get started")
 
   const pathname = usePathname()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -102,7 +104,7 @@ export default function AnimatedStepper() {
                     index === activeIndex ? "text-primary" : index < activeIndex ? "text-foreground" : "text-gray-500",
                   )}
                 >
-                  {step}
+                  {t(step)}
                 </p>
               </div>
             </div>

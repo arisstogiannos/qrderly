@@ -53,7 +53,7 @@ export function SubscriptionStatusCard({
                 <Link
                   target="_blank"
                   href={
-                    "https://billing.stripe.com/p/login/test_14kcOi9HdbsYdSU6oo?prefilled_email=" 
+                    "https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg" 
                   }
                 >
                   <Stars />

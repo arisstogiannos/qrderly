@@ -1,5 +1,6 @@
 "use client";
 import QrDownLoad from "@/app/[locale]/(website)/get-started/_components/qr/QrDownLoad";
+import { encryptTable } from "@/lib/table-crypt";
 import { BusinessExtended } from "@/types";
 import QRCodeStyling, { DotType, Options } from "qr-code-styling";
 import React, { useEffect, useRef, useState } from "react";
@@ -13,13 +14,21 @@ export default function QrDisplay({
   const qrRef = useRef<HTMLDivElement | null>(null);
 
   const [qrCode, setQrCode] = useState<QRCodeStyling | null>(null);
+  const [encodedAdminTableId, setEncodedAdminTableId] = useState("");
 
   const qrOptions = JSON.parse(qr?.qrOptions??"") as Options;
 
   useEffect(() => {
-    const qr = new QRCodeStyling({ ...qrOptions, width: 200, height: 200 });
+    async function encryptAdmin() {
+      const encryptedTable = await encryptTable("admin|"+business.name);
+      if (encryptedTable && encodedAdminTableId==="") {
+        setEncodedAdminTableId(encryptedTable);
+      }
+    }
+    encryptAdmin()
+    const qr = new QRCodeStyling({ ...qrOptions,data:qrOptions.data+"?table="+encodedAdminTableId, width: 200, height: 200 });
     setQrCode(qr);
-  }, []);
+  }, [encodedAdminTableId]);
 
   useEffect(() => {
     if (qrCode && qrRef.current) {

@@ -51,6 +51,7 @@ export default async function Hero() {
             quality={100}
             src={"/Menu-items.webp"}
             fill
+            priority
             alt="dasboard mockup"
             className="object-contain animate-float-slow  backdrop-blur-xs rounded-3xl overflow-hidden"
           />

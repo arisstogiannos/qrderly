@@ -125,7 +125,7 @@ export default async function page({
           />
         )}
       </CartContextProvider>
-     {menu.type==="SELF_SERVICE_QR_MENU"&& <ActiveOrder businessName={businessName}  />}
+     <ActiveOrder menuType={menu.type} businessName={businessName}  />
     </main>
   );
 }

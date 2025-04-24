@@ -11,6 +11,7 @@ import { z } from "zod";
 import { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
 import { sendMenuCreatedEmail } from "@/email/mail";
+import { encryptTable } from "@/lib/table-crypt";
 
 const businessSchema = z.object({
   name: z.string(),
@@ -53,7 +54,7 @@ export async function submitBusinessInfo(
     redirect("/unauthorized");
   }
   const freebusinesses = user.business.filter(
-    (b) => b.subscription&&b.subscription.billing === "FREETRIAL"
+    (b) => b.subscription && b.subscription.billing === "FREETRIAL"
   );
 
   if (freebusinesses.length > 3) {
@@ -73,7 +74,8 @@ export async function submitBusinessInfo(
         currency: data.currency,
       },
     });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return {
       error: "Something went wrong!",
     };
@@ -217,7 +219,7 @@ export async function createMenu(
     };
   }
 
-  const menu =await db.menu.update({
+  const menu = await db.menu.update({
     where: { businessId: business.id },
     data: { published: true },
   });
@@ -229,12 +231,21 @@ export async function createMenu(
   revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/smart-menu");
 
   const businessNameUrl = business.name.replaceAll(" ", "-");
+  const adminEncryptedTableId = await encryptTable("admin|" + business.name)
   if (user.email) {
-    await sendMenuCreatedEmail(user.email, user.name ?? "user", business.name, menu.type==="QR_MENU"?"menu":"smart-menu?table=admin");
+    await sendMenuCreatedEmail(
+      user.email,
+      user.name ?? "user",
+      business.name,
+      menu.type === "QR_MENU"
+        ? "menu"
+        : ("smart-menu?table=" + adminEncryptedTableId)
+    );
   }
   return {
     success: "Proccess Complete",
     businessNameUrl,
+    adminEncryptedTableId
   };
 }
 

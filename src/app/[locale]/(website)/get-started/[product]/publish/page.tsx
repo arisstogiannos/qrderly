@@ -59,11 +59,10 @@ export default async function page({
               </div>
             </div>
             <h1 className="text-4xl font-bold text-slate-900 mb-4">
-            {t("heading")}
+              {t("heading")}
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            {t("description")}
-
+              {t("description")}
             </p>
           </div>
         </div>
@@ -74,25 +73,22 @@ export default async function page({
               <Lightbulb className="h-6 w-6 text-amber-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-amber-900 mb-2">              {t("proTipTitle")}
+              <h3 className="font-semibold text-amber-900 mb-2">
+                {" "}
+                {t("proTipTitle")}
               </h3>
-              <p className="text-amber-800">
-              {t("proTipDescription")}
-              </p>
+              <p className="text-amber-800">{t("proTipDescription")}</p>
               <div className="mt-4 flex flex-wrap gap-2 items-end">
-                <span className="text-amber-800">
-                {t("reviewLabel")}
+                <span className="text-amber-800">{t("reviewLabel")}</span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-200 text-amber-800">
+                  {t("reviewItemCategory")}
                 </span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-200 text-amber-800">
-                {t("reviewItemCategory")}
+                  {t("reviewPrices")}
                 </span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-200 text-amber-800">
-                {t("reviewPrices")}
+                  {t("reviewNamesDescriptions")}
                 </span>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-200 text-amber-800">
-                {t("reviewNamesDescriptions")}
-                </span>
-             
               </div>
             </div>
           </div>

@@ -159,7 +159,7 @@ export const productsData = [
       {
         title: "Instant Digital Menu Access",
         desc: "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required—just fast, convenient, and touch-free browsing.",
-        video: "/videos/scan-browse.webm",
+        video: "/videos/QR animation.webm",
         icon: <Smartphone size={"2rem"} />,
       },
       {
@@ -171,7 +171,7 @@ export const productsData = [
       {
         title: "Customizable Themes",
         desc: "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests.",
-        video: "/videos/customizeable.webm",
+        video: "/videos/customizeable-no-cart.webm",
         icon: <Palette size={"2rem"} />,
       },
     ],
@@ -198,10 +198,16 @@ export const productsData = [
         icon: <Brain size={"2rem"} />,
       },
       {
-        title: "Customizable Themes",
-        desc: "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests.",
-        video: "/videos/customizeable.webm",
-        icon: <Palette size={"2em"} />,
+        title: "Multi-Language Support",
+        desc: "Cater to international customers with multilingual menus. Guests can switch between languages improving accessibility and customer satisfaction.",
+        video: "/videos/multi-language.webm",
+        icon: <TranslationIcon />,
+      },
+      {
+        title: "Seamless QR Ordering",
+        desc: "Guests can browse, select items, and place orders directly from the digital menu.",
+        video: "/videos/order.webm",
+        icon: <OrderIcon color="#155e95" />,
       },
       {
         title: "Real-Time Dashboard",
@@ -212,26 +218,20 @@ export const productsData = [
       {
         title: "Instant Digital Menu Access",
         desc: "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required—just fast, convenient, and touch-free browsing.",
-        video: "/videos/scan-browse.webm",
+        video: "/videos/QR animation.webm",
         icon: <Smartphone size={"2em"} />,
       },
       {
-        title: "Multi-Language Support",
-        desc: "Cater to international customers with multilingual menus. Guests can switch between languages improving accessibility and customer satisfaction.",
-        video: "/videos/multi-language.webm",
-        icon: <TranslationIcon />,
-      },
-      {
-        title: "Seamless QR Ordering",
-        desc: "Guests can browse, select items, and place orders directly from the digital menu.",
-        video: "/videos/order.webm",
-        icon: <OrderIcon />,
+        title: "Customizable Themes",
+        desc: "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests.",
+        video: "/videos/customizeable-no-cart.webm",
+        icon: <Palette size={"2em"} />,
       },
       {
         title: "Real-Time Order Management",
         desc: " Orders appear instantly in your Admin Dashboard, ensuring smooth operations.",
-        video: "/videos/multi-language.webm",
-        icon: <OrderReceiveIcon />,
+        video: "/videos/receive-order.webm",
+        icon: <OrderReceiveIcon color="#155e95" />,
       },
     ],
   },
@@ -271,7 +271,7 @@ export const productsData = [
       {
         title: "Instant Digital Menu Access",
         desc: " Guests scan a QR code to view your menu instantly on their smartphones.",
-        video: "/videos/scan-browse.webm",
+        video: "/videos/QR animation.webm",
         icon: <Brush />,
       },
       {

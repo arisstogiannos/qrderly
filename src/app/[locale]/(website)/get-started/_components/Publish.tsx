@@ -22,7 +22,6 @@ export default function Publish({
   user: ExtendedUser;
   businessId: string;
 }) {
-  productMap[product]
   const selectedProduct = plandata.find(
     (p) => p.product === productMap[product]
   );
@@ -58,7 +57,13 @@ export default function Publish({
     render = (
       <Success
         url={
-          state?.businessNameUrl +(product==="qr-menu"?"/menu":"/smart-menu?table=admin" )||  publishedMenuBusiness?.name.replaceAll(" ", "-") +(product==="qr-menu"?"/menu":"/smart-menu?table=admin" )
+          !!state
+            ? state?.businessNameUrl +
+              (product === "qr-menu"
+                ? "/menu"
+                : "/smart-menu?table=" + state.adminEncryptedTableId)
+            : publishedMenuBusiness?.name.replaceAll(" ", "-") +
+              (product === "qr-menu" ? "/menu" : "/smart-menu?table=admin")
         }
       />
     );
@@ -91,9 +96,11 @@ export default function Publish({
       }
       classNames=" lg:w-fit min-w-fit pt-5"
       trigger={
-        <form className="ml-auto w-full sm:w-fit mt-auto " action={existingPaidSub ? action : ""}>
-          <MainButton 
-
+        <form
+          className="ml-auto w-full sm:w-fit mt-auto "
+          action={existingPaidSub ? action : ""}
+        >
+          <MainButton
             type={
               existingPaidSub && !state?.success && !publishedMenuBusiness
                 ? "submit"
@@ -102,8 +109,14 @@ export default function Publish({
             className=" max-2xl:text-xl w-full sm:w-fit "
           >
             <span className="w-full flex-center gap-x-3">
-
-            {state?.success ? "View" :<> <Rocket/> Publish</>}
+              {state?.success ? (
+                "View"
+              ) : (
+                <>
+                  {" "}
+                  <Rocket /> Publish
+                </>
+              )}
             </span>
           </MainButton>
         </form>
@@ -120,16 +133,21 @@ function Success({ url }: { url: string }) {
     <div className="flex flex-col items-center gap-y-8">
       <div className="flex flex-col items-center gap-y-1 text-center">
         <p className="text-4xl font-medium ">Successfuly Published!</p>
-
       </div>
       <div className="flex flex-col gap-3 lg:flex-row pb-5 lg:pb-0">
         <Button size={"lg"} asChild>
-          <IntlLink href={{params:{businessName:url.split("/")[0]},pathname:"/[businessName]/dashboard"}} replace={true} >
+          <IntlLink
+            href={{
+              params: { businessName: url.split("/")[0] },
+              pathname: "/[businessName]/dashboard",
+            }}
+            replace={true}
+          >
             Dashboard <ArrowRight />
           </IntlLink>
         </Button>
         <Button size={"lg"} asChild>
-          <Link href={"/en/"+url}  >
+          <Link href={"/en/" + url}>
             Menu <ArrowRight />
           </Link>
         </Button>

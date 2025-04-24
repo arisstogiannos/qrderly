@@ -495,7 +495,12 @@
   },
   "get started": {
     "title": "Choose the product you want to pocceed with. Get started for free and see what’s right for you!",
-    "button": "Get Started for Free"
+    "button": "Get Started for Free",
+    "business setup":"business setup",
+    "menu settings":"menu settings",
+    "generate items":"Upload Menu",
+    "customize qr":"customize qr",
+    "publish":"publish"
   },
   "uploadingForm": {
     "overwrite":"Overwrite existing items",
@@ -525,6 +530,7 @@
     "no": "No"
   },
   "businessSetupForm": {
+    "title":"Businesses Setup",
     "businessName": "Business Name",
     "businessNameHint": "It will be used as a URL for your menu. Example: scanby.io/mybusiness/menu",
     "businessNameValidation": "Only letters, numbers, dashes (-), underscores (_), dots (.) and tildes (~) are allowed.",

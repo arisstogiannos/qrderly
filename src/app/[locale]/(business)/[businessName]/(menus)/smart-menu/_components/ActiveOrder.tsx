@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Product } from "@prisma/client";
 
-export default function ActiveOrder({businessName}:{businessName:string}) {
+export default function ActiveOrder({businessName,menuType}:{businessName:string;  menuType: Product;
+}) {
   const [activeOrder,setActiveOrder] = useState<string | undefined>(undefined);
   useEffect(() => {
     const orderCookie = document.cookie
@@ -21,7 +23,7 @@ export default function ActiveOrder({businessName}:{businessName:string}) {
       dragConstraints={{ left: 0, right: 300, top: 0, bottom: 500 }}
     >
       <Link
-        href={"smart-menu/order?order=" + activeOrder}
+        href={`smart-menu/${menuType==="SELF_SERVICE_QR_MENU"?"order":"order-placed"}?order=` + activeOrder}
         className="size-full flex-center text-center "
       >
         Active

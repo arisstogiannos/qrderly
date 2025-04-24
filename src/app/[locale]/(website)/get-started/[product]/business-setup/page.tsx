@@ -3,6 +3,7 @@ import BusinessSetupForm from "../../_components/Business/BusinessSetupForm";
 import { ProductURL } from "@/types";
 import { checkUser } from "../../isAllowed";
 import { notFound, redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 export default async function page({
   params,
@@ -11,6 +12,7 @@ export default async function page({
 }) {
   const product = (await params).product;
   if (!product) notFound();
+
 
   const result = await checkUser(product);
 
@@ -31,9 +33,11 @@ export default async function page({
     }
   }
 
+  const t = await getTranslations("businessSetupForm")
+
   return (
     <section className="space-y-5 md:min-w-xl">
-      <h1 className="text-2xl font-medium">Business Setup</h1>
+      <h1 className="text-2xl font-medium">{t("title")}</h1>
       <BusinessSetupForm product={product} />
     </section>
   );

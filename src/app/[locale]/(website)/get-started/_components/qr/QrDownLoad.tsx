@@ -9,6 +9,7 @@ import { BusinessExtended } from "@/types";
 
 import JSZip from "jszip";
 import { useTranslations } from "next-intl";
+import { encryptTable } from "@/lib/table-crypt";
 
 export default function QrDownLoad({
   qrCode,
@@ -23,9 +24,10 @@ export default function QrDownLoad({
   if (!qrCode) return null;
 
   const downloadQR = async () => {
+    const encryptedTableId = await encryptTable("self-service|"+business.name); // Encrypt table ID
     const tempQRCode = new QRCodeStyling({
       ...qrCode._options,
-      data: qrCode._options.data + "?table=" + text,
+      data: qrCode._options.data+ "?table=" + encryptedTableId,
     });
   
     const qrBlob = await tempQRCode.getRawData("png");
@@ -78,6 +80,7 @@ export default function QrDownLoad({
     }, "image/png");
   };
   
+//c2VsZi1zZXJ2aWNlOmJkZjFiNmRhMTgyZDhmZDMzN2E1MGNkYmM1ODRjMWRhMDYyYzA5OGJhOWQ2NzQ0NWQ0NTViZGE2ZjM5MWI5OWY
 
   const downloadMultipleQRAsZip = async () => {
     if (!business.tables || !qrCode) return;
@@ -86,9 +89,10 @@ export default function QrDownLoad({
     const zip = new JSZip();
   
     for (let t of tables) {
+      const encryptedTableId = await encryptTable(t+'|'+business.name); // Encrypt table ID
       const tempQRCode = new QRCodeStyling({
         ...qrCode._options,
-        data: qrCode._options.data + "?table=" + t,
+        data: qrCode._options.data + "?table=" + encryptedTableId,
       });
   
       let qrData = await tempQRCode.getRawData("png");

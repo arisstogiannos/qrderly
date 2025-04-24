@@ -24,7 +24,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { signOut, signOutDashboard } from "@/app/[locale]/(auth)/_actions/login";
+import {
+  signOut,
+  signOutDashboard,
+} from "@/app/[locale]/(auth)/_actions/login";
 import { BusinessExtended, ExtendedUser } from "@/types";
 
 import Image from "next/image";
@@ -32,6 +35,8 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import I18nLanguageSelect from "@/components/I18nLanguageSelect";
 import UpgradeSubModal from "../SharedComponents/UpgradeSubModal";
+import { useEffect, useState } from "react";
+import { encryptTable } from "@/lib/table-crypt";
 
 export function NavFooter({
   user,
@@ -41,7 +46,18 @@ export function NavFooter({
   activeBusiness: BusinessExtended;
 }) {
   const { isMobile } = useSidebar();
+  const [adminEncryptedTableId, setAdminEncryptedTableId] = useState("");
   const t = useTranslations("admin.navbar");
+
+  useEffect(() => {
+    async function encryptAdmin() {
+      const decryptedTable = await encryptTable("admin|"+activeBusiness.name);
+      if (decryptedTable) {
+        setAdminEncryptedTableId(decryptedTable);
+      }
+    }
+    encryptAdmin();
+  }, [activeBusiness]);
 
   return (
     <SidebarMenu>
@@ -66,7 +82,7 @@ export function NavFooter({
               activeBusiness.name.replaceAll(" ", "-") +
               (activeBusiness.menu?.type === "QR_MENU"
                 ? "/menu"
-                : "/smart-menu?table=admin")
+                : "/smart-menu?table="+adminEncryptedTableId)
             }
             target="_blank"
           >
@@ -84,22 +100,21 @@ export function NavFooter({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-
-                {user.image ? (
-              <div className="size-8">
+              {user.image ? (
+                <div className="size-8">
                   <Image
-                  src={user.image}
-                  alt="profile"
-                  width={32}
-                  height={32}
-                  className="rounded-full"
+                    src={user.image}
+                    alt="profile"
+                    width={32}
+                    height={32}
+                    className="rounded-full"
                   />
-                  </div>
-                ) : (
-                  <div className="size-8 rounded-lg bg-foreground text-background flex-center">
+                </div>
+              ) : (
+                <div className="size-8 rounded-lg bg-foreground text-background flex-center">
                   <User2 className="size-6" />
-              </div>
-                )}
+                </div>
+              )}
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-sm">{user.email}</span>
@@ -127,7 +142,8 @@ export function NavFooter({
                 <Link
                   target="_blank"
                   href={
-                    "https://billing.stripe.com/p/login/test_14kcOi9HdbsYdSU6oo?prefilled_email="+user.email
+                    "https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=" +
+                    user.email
                   }
                 >
                   <CreditCard />

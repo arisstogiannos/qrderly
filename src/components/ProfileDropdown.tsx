@@ -48,7 +48,8 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
               <Link
                 target="_blank"
                 href={
-                  "https://billing.stripe.com/p/login/test_14kcOi9HdbsYdSU6oo"
+                  "https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=" +
+                  session.user.email
                 }
               >
                 <Stars />

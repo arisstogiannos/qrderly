@@ -70,9 +70,8 @@ function Video({ src }: { src: string }) {
           autoPlay
           muted
           playsInline
-          loop
           src={src}
-          className="object-fill"
+          className="object-fill rounded-3xl"
         ></motion.video>
       </AnimatePresence>
     </div>

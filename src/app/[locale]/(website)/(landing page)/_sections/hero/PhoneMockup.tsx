@@ -27,6 +27,7 @@ export default function PhoneMockup() {
               quality={100}
               src="/image.png"
               fill
+              priority
               alt="iphone mockup"
               className="object-contain lg:backdrop-blur-xs rounded-3xl overflow-hidden"
             />
@@ -43,6 +44,7 @@ export default function PhoneMockup() {
               quality={100}
               src="/Template 2.png"
               fill
+              priority
               alt="iphone mockup"
               className="object-contain lg:backdrop-blur-xs rounded-3xl overflow-hidden"
             />

@@ -1,6 +1,6 @@
 "use client";
 import { ShoppingBag } from "lucide-react";
-import React, { Suspense, useActionState, useState } from "react";
+import React, { Suspense, useActionState, useEffect, useState } from "react";
 import {
   Sheet,
   SheetClose,
@@ -21,6 +21,7 @@ import Loader from "@/components/Loader";
 import { Product } from "@prisma/client";
 import DisplayPrice from "@/components/DisplayPrice";
 import { usePreventRefresh } from "@/hooks/use-prevent-reload";
+import {  decryptTable } from "@/lib/table-crypt";
 
 // type Product = {
 //   id: string;
@@ -45,9 +46,13 @@ export default function Cart({
   menuType: Product;
 }) {
   const [open, setOpen] = useState(false);
+  const [validTable, setValidTable] = useState<string | null>(null);
   const table = useSearchParams().get("table");
   const { cartItems } = useCartContext();
-  usePreventRefresh("Cart items will be lost if you reload. Do you want to continue?",cartItems.length>0)
+  usePreventRefresh(
+    "Cart items will be lost if you reload. Do you want to continue?",
+    cartItems.length > 0
+  );
 
   let total = 0;
   let noItems = 0;
@@ -66,6 +71,18 @@ export default function Cart({
     ),
     null
   );
+
+  useEffect(() => {
+    async function checkValidTable() {
+      if (table) {
+        const decryptedTable = await decryptTable(table,businessName);
+        if (decryptedTable ) {
+          setValidTable(decryptedTable);
+        } 
+      }
+    }
+    checkValidTable();
+  }, [table]);
 
   // if(!table) throw new Error("Please scan the Qr Code again.")
 
@@ -99,25 +116,21 @@ export default function Cart({
         <SheetFooter className="mt-auto px-0">
           <form action={action}>
             <Button
-              disabled={
-                cartItems.length === 0 ||
-                (!table && menuType === "SMART_QR_MENU") ||
-                isPending
-              }
+              disabled={cartItems.length === 0 || !validTable || isPending}
               type="submit"
-              className="w-full capitalize"
+              className="w-full "
             >
-              {table || menuType === "SELF_SERVICE_QR_MENU" ? (
+              {validTable ? (
                 isPending ? (
                   <Loader />
                 ) : (
                   <span>
                     {" "}
-                    Complete Order <DisplayPrice price={total } />
+                    Complete Order <DisplayPrice price={total} />
                   </span>
                 )
               ) : (
-                <span>You can only order by scanning qr</span>
+                <span >Scan a QR to order</span>
               )}
             </Button>
           </form>

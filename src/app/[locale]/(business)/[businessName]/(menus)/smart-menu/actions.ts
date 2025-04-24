@@ -49,8 +49,9 @@ export async function submitOrder(
     },
   });
   revalidateTag("orders" + businessName);
-   (await cookies()).set(businessName+"order", order.id,{expires:new Date().setHours(new Date().getHours() + 2)});
-   (await cookies()).set(businessName+"last-order", order.id,{expires:new Date().setHours(new Date().getHours() + 2)});
+  const cookieStore = await cookies()
+   cookieStore.set(businessName+"order", order.id,{expires:new Date().setHours(new Date().getHours() + 2)});
+   cookieStore.set(businessName+"last-order", order.id,{expires:new Date().setMonth(new Date().getMonth() + 12)});
 
   if (menu?.type === "SELF_SERVICE_QR_MENU") {
     redirect(

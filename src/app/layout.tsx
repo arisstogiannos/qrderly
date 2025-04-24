@@ -26,22 +26,23 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 
   return {
+    metadataBase: new URL('https://www.scanby.cloud/'),
     title: meta.title,
     description: meta.description,
     keywords: Object.values(meta.keywords),
     authors: [{ name: 'Aris Stogiannos', url: 'https://aris-stogiannos.gr' }],
     icons: {
       icon: '/favicon.ico',
-      apple: '/apple-touch-icon.png',
     },
     openGraph: {
       title: meta.ogTitle,
       description: meta.ogDescription,
-      url: 'https://scanby.cloud',
+      url: 'https://www.scanby.cloud/',
       siteName: 'Scanby',
       images: [
         {
-          url: '/og-image.png',
+          url: '/opengraph-image.png',
+          secureUrl:'/opengraph-image.png',
           width: 1200,
           height: 630,
           alt: meta.ogAlt,
@@ -55,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
       site: '@yourTwitterHandle',
       title: meta.twitterTitle,
       description: meta.twitterDescription,
-      images: ['/og-image.png'],
+      images: ['/opengraph-image.png'],
     },
   };
 }

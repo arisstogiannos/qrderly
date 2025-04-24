@@ -4,7 +4,7 @@ import { productsData } from "@/data";
 import { getTranslations } from "next-intl/server";
 
 export default async function SomeFeatures() {
-  const someFeatures = productsData[0].features.slice(0,4);
+  const someFeatures = productsData[1].features.slice(0,4);
   const t = await getTranslations("productsData.features")
   return (
     <div className="space-y-8">
