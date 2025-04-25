@@ -97,7 +97,7 @@ export default function Publish({
     );
   }
 
-  return inngestJob.status === "Running" ? (
+  return inngestJob?.status === "Running" ? (
     <div className="w-full flex-center gap-2">
       <Loader className="text-[10px] h-9" />
       <p className=" animate-pulse">
