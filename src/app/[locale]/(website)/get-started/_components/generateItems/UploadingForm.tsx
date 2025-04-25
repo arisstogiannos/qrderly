@@ -18,7 +18,7 @@ import { uploadImageClientSide } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
 import { inngest } from "@/inngest/client";
 import { getRunOutput, InngestRun } from "@/inngest/status";
-import { startInngestJobServerAction } from "@/inngest/actions";
+import { startExtractSomeItems, startInngestJobServerAction } from "@/inngest/actions";
 
 export default function UploadingForm({
   businessName,
@@ -47,7 +47,7 @@ export default function UploadingForm({
       const uploadedImageUrls = await Promise.all(
         selectedFiles
           .map((file) =>
-            file.type.includes("image/") ? uploadImageClientSide(file) : null
+            file.type.includes("image/") ? uploadImageClientSide(file) : uploadImageClientSide(file)
           )
           .filter((file) => file !== null)
       );
@@ -65,10 +65,24 @@ export default function UploadingForm({
     setJobId(jobId);
 
     try {
-      const { eventId } = await startInngestJobServerAction({
-        businessName,
-        cloudinaryPublicIDs,
-      });
+      let eventId: any;
+      if(existingItems && existingCategories && existingItems.length > 0) {
+        const {eventId:temp} = await startExtractSomeItems({
+          businessName,
+          cloudinaryPublicIDs,
+          existingCategories,
+          existingItems
+        });
+        eventId = temp
+      }else{
+        const {eventId:temp} = await startInngestJobServerAction({
+          businessName,
+          cloudinaryPublicIDs,
+        });
+        eventId = temp
+
+      }
+ 
 
       console.log(eventId);
 

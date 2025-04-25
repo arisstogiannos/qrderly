@@ -33,13 +33,12 @@ export async function partialExtractionAI(
             - It is **IMPORTANT** to return all of the **new** items that there are in the menu and are not included in the list.
             - To ensure you return all of the new items make sure that the number of items in the list and the number of items you return equals the total number of items in the menu.
             - If the input is not a menu, return a JSON array with one object where all fields are "%%%Not a menu%%%".
-            - The name and description should be in the original language.
             - Translate the name and description of all items to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
-            - Exception: If some name or description doesnt have a meaningfull translation but should be in original language then null it instead.
             - Ensure that you dont skip translating any name or description that needs translation.
             - The translations should be accurate and contextually relevant as you are a native speaker of each language.
             - Convert all prices to cents.
-            - Preferences should include any extras, add-ons, sizes, options, or variants.
+            - Preferences should include any extras, add-ons, sizes, sides, options, ingredients or variants.
+            - if there are products that users have to assemble the their self by picking ingredients then put the ingredients into prefernces. Example: if the menu item is a crepe and the menu has all the ingredients that can be used then put them in the prefernces field and create a prefernce for each category of ingredients. Example: meat: chicken, beef, pork / cheese: mozzarela, parmezan, feta and so on create a prefernce for each category of ingredients.
             - If category specifies any prefernces or extras include them to the preference of each item that belong to this category. Example 1: If inside the category area there is text saying served with rice or fries you have to add a prefernce to each item of the category like: {name:"side",values:["rice","fries"]}. Example 2: If inside the category area there is text saying add bacon +1.50 , add egg or whatever looks like an option include it as well in prefences like: {name:"extras",values:["bacon +150","egg"]} . Example 3: If inside the category area there is text saying add syrop, chocolate chips or caramel +3.90 whatever looks like an option include it as well in prefences like: {name:"extras",values:["syrop + 390","chocolate chips +390", "caramel +390"]}.
             - Any extra price that comes along with selecting a prefernce put it in the prfernce value price field and dont include in the prefernce value name.
             - In the prefernce price field should be onlly the extra price that is added and not the final price. 

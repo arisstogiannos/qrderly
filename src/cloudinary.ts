@@ -52,6 +52,7 @@ export async function getImageBlob(publicId:string) {
 
     // Step 2: Download the image data
     const response = await fetch(imageUrl);
+    console.log(response)
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);
     }

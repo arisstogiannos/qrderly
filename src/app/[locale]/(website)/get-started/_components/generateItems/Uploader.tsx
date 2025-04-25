@@ -46,7 +46,6 @@ export default function Uploader({
     fileInputRef.current.value = "";
   }
 
-
   return (
     <div
       className={`flex flex-col gap-4 p-4 border-2 border-accent hover:border-primary/50  transition-all duration-300 rounded-lg shadow-md hover:shadow-xl`}
@@ -63,31 +62,37 @@ export default function Uploader({
             </div>
           ) : (
             <div
-            className="grid gap-2"
-            style={{
-              gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(previewImages.length))}, 1fr)`,
-            }}
-          >
-            {previewImages.map((image, idx) => (
-              <div key={idx} className="aspect-square w-full">
-                <Image
-                  src={image}
-                  alt={`Uploaded image ${idx + 1}`}
-                  className="w-full h-full object-cover rounded-lg"
-                  width={500}
-                  height={500}
-                />
-              </div>
-            ))}
-          </div>
+              className="grid gap-2"
+              style={{
+                gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(previewImages.length))}, 1fr)`,
+              }}
+            >
+              {previewImages.map((image, idx) => (
+                <div key={idx} className="aspect-square w-full">
+                  <Image
+                    src={image}
+                    alt={`Uploaded image ${idx + 1}`}
+                    className="w-full h-full object-cover rounded-lg"
+                    width={500}
+                    height={500}
+                  />
+                </div>
+              ))}
+            </div>
           )
         ) : hasFile ? (
-          <div className="flex flex-col items-center">
-            <span className="text-gray-500 truncate max-w-xs">
-              📄 {uploadedFile.name}
-            </span>
-            <span className="text-xs text-gray-400">(PDF uploaded)</span>
-          </div>
+          isUploading ? (
+            <div className="size-full grid bg-accent animate-pulse flex-center">
+              <Loader className="h-20" />
+            </div>
+          ) : (
+            <div className="flex flex-col items-center">
+              <span className="text-gray-500 truncate max-w-xs">
+                📄 {uploadedFile.name}
+              </span>
+              <span className="text-xs text-gray-400">(PDF uploaded)</span>
+            </div>
+          )
         ) : (
           <div className=" flex flex-col items-center gap-4 ">
             <Image
@@ -103,10 +108,9 @@ export default function Uploader({
         <input
           ref={fileInputRef} // Reference input field
           type="file"
-          accept={fileType==="image/"?"image/*":"application/pdf"}
+          accept={fileType === "image/" ? "image/*" : "application/pdf"}
           name={hasFile ? "file" : ""}
           multiple
-          
           className="hidden"
           onChange={handleFileChange}
         />
