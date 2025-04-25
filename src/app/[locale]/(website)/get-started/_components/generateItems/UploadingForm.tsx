@@ -18,6 +18,7 @@ import { uploadImageClientSide } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
 import { inngest } from "@/inngest/client";
 import { getRunOutput, InngestRun } from "@/inngest/status";
+import { startInngestJobServerAction } from "@/inngest/actions";
 
 export default function UploadingForm({
   businessName,
@@ -31,13 +32,13 @@ export default function UploadingForm({
   const [file, setFile] = useState<File>();
   const [cloudinaryPublicIDs, setCloudinaryPublicIDs] = useState<string[]>();
   const [jobId, setJobId] = useState<string | null>(null);
-  const [ingestRunResult, setIngestRunResult] = useState<InngestRun | null>(null);
+  const [ingestRunResult, setIngestRunResult] = useState<InngestRun | null>(
+    null
+  );
   const [isUploading, setIsUploading] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
   const t = useTranslations("uploadingForm");
-
-
 
   const handleUpload = async (selectedFiles: File[]) => {
     setFile(selectedFiles[0]);
@@ -63,40 +64,38 @@ export default function UploadingForm({
     const jobId = uuidv4();
     setJobId(jobId);
 
-    const { ids } = await inngest.send({
-      name: "app/extractall.items",
-      data: {
+    try {
+      const { eventId } = await startInngestJobServerAction({
         businessName,
-        cloudinaryIDs: cloudinaryPublicIDs,
-        formData: {},
-        jobId,
-      },
-    });
-
-    console.log(ids)
-
-    const inngestJobOutput = await getRunOutput(ids[0]);
-
-    setIngestRunResult(inngestJobOutput);
-    
-    if (!existingItems && inngestJobOutput.status==="Timeout") {
-      
-      router.push("customize-qr");
-    }
-    if (existingItems && inngestJobOutput.status==="Completed") {
-      toast(t("toast", { newItems:  inngestJobOutput.output.noNewItems}), {
-        duration: 10000,
-        icon: <CheckCircleIcon />,
-        position: "bottom-right",
-        style: {
-          backgroundColor: "#C9F8BB",
-          color: "darkgreen",
-          borderColor: "darkgreen",
-        },
-        closeButton: true,
+        cloudinaryPublicIDs,
       });
-    } else if(inngestJobOutput.status==="Completed") {
-      router.push("customize-qr");
+
+      console.log(eventId);
+
+      const inngestJobOutput = await getRunOutput(eventId);
+
+      setIngestRunResult(inngestJobOutput);
+
+      if (!existingItems && inngestJobOutput.status === "Timeout") {
+        router.push("customize-qr");
+      }
+      if (existingItems && inngestJobOutput.status === "Completed") {
+        toast(t("toast", { newItems: inngestJobOutput.output.noNewItems }), {
+          duration: 10000,
+          icon: <CheckCircleIcon />,
+          position: "bottom-right",
+          style: {
+            backgroundColor: "#C9F8BB",
+            color: "darkgreen",
+            borderColor: "darkgreen",
+          },
+          closeButton: true,
+        });
+      } else if (inngestJobOutput.status === "Completed") {
+        router.push("customize-qr");
+      }
+    } catch (err) {
+      console.error("Error in Inngest job", err);
     }
     setIsProcessing(false);
     setFile(undefined);
@@ -116,7 +115,7 @@ export default function UploadingForm({
           <ProgressSteps
             taskIsRunning={isProcessing}
             time={
-              existingItems&&existingItems.length>0
+              existingItems && existingItems.length > 0
                 ? (cloudinaryPublicIDs?.length ?? 1) * 1000 + 3000
                 : (cloudinaryPublicIDs?.length ?? 1) * 1000 + 7000
             }
@@ -174,7 +173,10 @@ export default function UploadingForm({
             </Button>
           </div>
         )}
-        {ingestRunResult?.status === "Failed" || ingestRunResult?.status ==="Cancelled" && <ErrorMessage msg={ingestRunResult.error} />}
+        {ingestRunResult?.status === "Failed" ||
+          (ingestRunResult?.status === "Cancelled" && (
+            <ErrorMessage msg={ingestRunResult.error} />
+          ))}
       </div>
     </form>
   );

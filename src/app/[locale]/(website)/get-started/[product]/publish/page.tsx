@@ -1,7 +1,6 @@
-import Image from "next/image";
+"use server"
 import React from "react";
 import { ProductURL } from "@/types";
-
 import { checkUser } from "../../isAllowed";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -9,15 +8,9 @@ import Publish from "../../_components/Publish";
 import { Card } from "@/components/ui/card";
 import {
   CheckCircle2,
-  ExternalLink,
-  Eye,
   Lightbulb,
-  QrCode,
-  Smartphone,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { cookies } from "next/headers";
-import { useQuery } from "@tanstack/react-query";
 
 export default async function page({
   params,
