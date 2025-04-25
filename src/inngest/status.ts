@@ -20,7 +20,7 @@ export async function getRunOutput(eventId: string): Promise<InngestRun> {
   while (runs[0]?.status !== "Completed") {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     timeElapsed += 1;
-    if (timeElapsed > 40) {
+    if (timeElapsed > 10) {
         (await cookies()).set({
           name: "inngestEventId",value:eventId,expires: new Date(Date.now() + 1000 * 60 * 20 ),
         })
