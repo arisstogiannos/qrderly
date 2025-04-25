@@ -44,6 +44,7 @@
     "cmdk": "^1.0.0",
     "deepl-node": "^1.17.3",
     "framer-motion": "^12.4.10",
+    "inngest": "^3.35.1",
     "jspdf": "^3.0.1",
     "jszip": "^3.10.1",
     "lucide-react": "^0.477.0",

@@ -3,7 +3,7 @@ import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_compo
 import { Button } from "@/components/ui/button";
 import { plandata, productMap } from "@/data";
 import { ExtendedUser, ProductURL } from "@/types";
-import React, { ReactNode, useActionState } from "react";
+import React, { ReactNode, useActionState, useEffect } from "react";
 import { ChooseTier } from "./ChooseTierModal";
 import { createMenu } from "../actions";
 import Loader from "@/components/Loader";
@@ -12,19 +12,33 @@ import { ArrowRight, Rocket } from "lucide-react";
 import Link from "next/link";
 import { Link as IntlLink } from "@/i18n/navigation";
 import { MainButton } from "../../(landing page)/_sections/hero/MainButton";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Publish({
   product,
   user,
   businessId,
+  inngestJobId,
 }: {
   product: ProductURL;
   user: ExtendedUser;
   businessId: string;
+  inngestJobId?: string;
 }) {
   const selectedProduct = plandata.find(
     (p) => p.product === productMap[product]
   );
+
+  const { data: inngestJob } = useQuery({
+    queryKey: [inngestJobId],
+    enabled: !!inngestJobId,
+    queryFn: async () =>
+      await fetch("/api/inngest-job-status?eventId=" + inngestJobId).then(
+        (res) => res.json()
+      ),
+    refetchInterval: (query) =>
+      query.state.data?.status === "Running" ? 1000 : false,
+  });
 
   const existingPaidSub = user.subscriptions.find(
     (s) =>
@@ -36,7 +50,6 @@ export default function Publish({
   const publishedMenuBusiness = user.business.find(
     (b) => b.id === businessId && b.menu?.published
   );
-  // console.log(existingPaidSub)
 
   const [state, action, isPending] = useActionState(
     existingPaidSub
@@ -84,7 +97,15 @@ export default function Publish({
     );
   }
 
-  return (
+  return inngestJob.status === "Running" ? (
+    <div className="w-full flex-center gap-2">
+      <Loader className="text-[10px] h-9" />
+      <p className=" animate-pulse">
+        Please wait a moment to finalize your menu. This will take from 1 to 2
+        minutes.
+      </p>
+    </div>
+  ) : (
     <Modal
       title={
         !isPending && !state?.success && !publishedMenuBusiness ? "Publish" : ""

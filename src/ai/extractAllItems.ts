@@ -10,6 +10,7 @@ import { extractAI } from "./extractionModel";
 import { safeParse } from "./helpers";
 import { partialExtractionAI } from "./partialExtractionModel";
 import { getImageBlob } from "@/cloudinary";
+import { cookies } from "next/headers";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -21,16 +22,6 @@ export async function extractAllItems(
   prevstate: any,
   formData: FormData
 ) {
-
-  // const blob = await getImageBlob(cloudinaryID)
-  //   if (!blob) {
-  //     return { error: 'Error uploading image. Try again' };
-  //   }
-
-  //   const uploadedFile = await ai.files.upload({
-  //     file: blob,
-  //   });
-
     const menu = await getMenuByBusinessName(businessName);
     const languages = menu?.languages.split(",");
     const srcLang = languages?.reverse().pop();
@@ -113,7 +104,7 @@ export async function extractAllItems(
             allMenuItems,
             createdCategories.data
           );
-
+          // (await cookies()).delete("inngestEventId");
           return {...result,success:true,noNewItems:allMenuItems.length};
         }
       

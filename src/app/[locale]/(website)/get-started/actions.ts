@@ -12,6 +12,8 @@ import { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
 import { sendMenuCreatedEmail } from "@/email/mail";
 import { encryptTable } from "@/lib/table-crypt";
+import { getRunOutput } from "@/inngest/status";
+import { cookies } from "next/headers";
 
 const businessSchema = z.object({
   name: z.string(),
@@ -185,6 +187,16 @@ export async function createMenu(
         "You dont have a business to create menu for-Either you havent create any business either you already have menus for all your businesses",
     };
   }
+
+  // const runningJob = (await cookies()).get("inngestEventId");
+  // if (runningJob) {
+  //   const job = await getRunOutput(runningJob.value);
+  //   if (job.status !== "Completed") {
+  //     return {
+  //       error: "Something went wrong with menu creation",
+  //     };
+  //   }
+  // }
 
   const existingSub = user.subscriptions.find(
     (s) =>

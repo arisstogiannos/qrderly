@@ -16,6 +16,8 @@ import {
   Smartphone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cookies } from "next/headers";
+import { useQuery } from "@tanstack/react-query";
 
 export default async function page({
   params,
@@ -42,6 +44,20 @@ export default async function page({
   //   redirect("/get-started/" + product + "/business-setup");
   // }
 
+  const runningInngestJobId = (await cookies()).get("inngestEventId")?.value;
+
+  // if (runningInngestJobId) {
+  //   let isRunning = true;
+  //   while (isRunning) {
+  //     const runningInngestJobId = (await cookies()).get(
+  //       "inngestEventId"
+  //     )?.value;
+  //     if (!runningInngestJobId) {
+  //       isRunning = false;
+  //     }
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
+  //   }
+  // }
   return (
     <div className="">
       <div className="max-w-4xl mx-auto">
@@ -97,6 +113,7 @@ export default async function page({
           businessId={result.business.id}
           product={product}
           user={result.user}
+          inngestJobId={runningInngestJobId}
         />
         {/* Publish Button */}
       </div>

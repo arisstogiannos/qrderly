@@ -508,6 +508,7 @@
     "yes":"Yes",
     "no":"No",
     "toast":"{newItems} new items added! Review them on the Menu Items page. You can always make manual changes.",
+    
     "title": "Upload your menu",
     "upload":"Upload",
     "dialogTitle": "Our AI is proccessing your menu. This will take a few seconds.",
