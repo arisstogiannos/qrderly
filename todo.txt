@@ -5,6 +5,7 @@ server 5 mb
 videos
 faq
 
+ai ingest timout
 
 DONE multiple prefernce/ extras + price
 DONE dashboard translates edit
