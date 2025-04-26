@@ -83,9 +83,9 @@ export const routing = defineRouting({
       el: "/[businessName]/πίνακας ελέγχου/ρυθμίσεις",
       en: "/[businessName]/dashboard/settings",
     },
-    "/[businessName]/dashboard/qr-settings": {
+    "/[businessName]/dashboard/qr": {
       el: "/[businessName]/πίνακας ελέγχου/ρυθμίσεις-qr",
-      en: "/[businessName]/dashboard/qr-settings",
+      en: "/[businessName]/dashboard/qr",
     },
     "/[businessName]/dashboard/live-orders": {
       el: "/[businessName]/πίνακας ελέγχου/ζωντανές-παραγγελίες",

@@ -518,8 +518,8 @@
     "description": "Our AI will automatically populate your menu for you. All you have to do is upload an image or PDF. If you want to manually insert all the items, click skip.",
     "skip": "Skip",
     "next": "Next",
-    "imageTitle": "Image",
-    "imageDescription": "Ensure the image is clear and the menu is readable for the best results.",
+    "imageTitle": "Image (1-5)",
+    "imageDescription": "Ensure the image is clear and the menu is readable for the best results. If you have more than 5 images you can upload them later.",
     "pdfTitle": "PDF",
     "pdfDescription": "Upload a PDF file from your device for the best results. Ensure the document is clear and readable."
   },

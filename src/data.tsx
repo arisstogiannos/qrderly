@@ -109,7 +109,6 @@ export const plandata = [
     bullets: [
       "All features of the Smart QR Menu plan",
       "Customers receive notification when their order is ready",
-      "Customers can place orders for takeaway",
     ],
     free: [
       "Unlimited Traffic",

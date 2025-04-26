@@ -18,7 +18,7 @@ export function QrCodeCard({ business }: { business: BusinessExtended }) {
           <CardDescription>{t('qrCodeDescription')}</CardDescription>
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={{params:{businessName:business.name},pathname:"/[businessName]/dashboard/qr-settings"}}>
+          <Link href={{params:{businessName:business.name},pathname:"/[businessName]/dashboard/qr"}}>
           {t('customize')}
           </Link>
         </Button>

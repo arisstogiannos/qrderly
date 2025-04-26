@@ -66,7 +66,7 @@ export default function Cart({
       cartItems,
       businessName,
       total,
-      table ?? ""
+      validTable ?? ""
       // menuType === "SELF_SERVICE_QR_MENU" ? "Takeaway" : (table ?? "")
     ),
     null
