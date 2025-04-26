@@ -123,7 +123,6 @@ export function DefaultRadioGroup({
   useEffect(() => {
     setValue(defaultValue);
     const price = values.find((v) => v.name === defaultValue)?.price;
-    console.log(price);
     if (price) {
       setLocalPrice(Number(price));
     }
@@ -132,8 +131,6 @@ export function DefaultRadioGroup({
 
   function handleChange(e: string) {
     const price = values.find((v) => v.name === e)?.price;
-    console.log("price", price);
-    console.log("price diff", - localPrice);
     setPrice(
       (prev) =>
         prev +

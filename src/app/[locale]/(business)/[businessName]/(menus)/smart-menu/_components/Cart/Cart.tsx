@@ -18,7 +18,7 @@ import { CartItem } from "./CartItem";
 import { submitOrder } from "../../actions";
 import { useSearchParams } from "next/navigation";
 import Loader from "@/components/Loader";
-import { Product } from "@prisma/client";
+import { Product, Template } from "@prisma/client";
 import DisplayPrice from "@/components/DisplayPrice";
 import { usePreventRefresh } from "@/hooks/use-prevent-reload";
 import {  decryptTable } from "@/lib/table-crypt";
@@ -40,10 +40,10 @@ import {  decryptTable } from "@/lib/table-crypt";
 
 export default function Cart({
   businessName,
-  menuType,
+  menuTemplate,
 }: {
   businessName: string;
-  menuType: Product;
+  menuTemplate: Template;
 }) {
   const [open, setOpen] = useState(false);
   const [validTable, setValidTable] = useState<string | null>(null);
@@ -105,7 +105,7 @@ export default function Cart({
             {cartItems.length > 0 ? (
               <>
                 {cartItems.map((item) => (
-                  <CartItem key={item.id} item={item} />
+                  <CartItem key={item.id} item={item} displayImage={menuTemplate==="T1"} />
                 ))}
               </>
             ) : (

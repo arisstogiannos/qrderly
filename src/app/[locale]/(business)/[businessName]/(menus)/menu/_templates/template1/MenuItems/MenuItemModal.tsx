@@ -44,7 +44,7 @@ export default function MenuItemModal({
 
   return(
     <Dialog open={open} onOpenChange={setOpen}>
-    <DialogContent className="overflow-hidden rounded-t-3xl border-0 bg-secondary text-foreground focus:outline-none p-0"
+    <DialogContent className="overflow-hidden  border-0 bg-background text-foreground focus:outline-none p-0"
 >
       <div className="scrollbar-hidden max-h-[90vh]  overflow-y-auto pb-20 min-[350px]:max-h-[80vh] relative">
         <div className="relative aspect-video h-auto w-full overflow-hidden rounded-lg">

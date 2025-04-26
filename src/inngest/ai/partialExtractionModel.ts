@@ -13,19 +13,28 @@ export async function partialExtractionAI(
   languages: string[] | undefined,
   existingMenuItemNames: string[]
 ) {
+  let finalResponse = "";
+
+  console.log("Existing menu item names: ", existingMenuItemNames);
+
   const forbiddenItemsStr = existingMenuItemNames
     .map((name) => `"${name}"`)
     .join(", ");
 
-  return await ai.models
-    .generateContent({
+    const work = (async () => {
+      const response = await ai.models
+        .generateContentStream({
       model: "gemini-2.0-flash",
       contents: [
+        createPartFromUri(
+          uploadedFile.uri ?? "",
+          uploadedFile.mimeType ?? ""
+        ),
         createUserContent([
           `
-            You are a menu parser AI. The user is giving you an image or PDF of a restaurant menu. Your task is to extract only the **new** menu items that are not already present in the user's existing menu.
+            You are a menu parser AI that creates a digital menu from a physical. The user is giving you an image or PDF of a menu. Your task is to extract only the **new** menu items that are not already present in the user's existing menu. You have to successfully find and return the new items in the menu. The user will provide you with a list of existing menu items that should be excluded from the response. You have to be very accurate and precise in your extraction and translation. 
             
-            - Do **NOT** include any menu items whose name exactly matches any of the names in the following list: [${forbiddenItemsStr}]
+            - IMPORTANT: Do **NOT** include any menu items in your response whose name exactly matches any of the names in the following list: [${forbiddenItemsStr}]
             - If a menu item’s name matches any name in this list, completely skip that item.
             - Return ONLY items that are new (not in the list above).
             - For each returned item, extract name, description, priceInCents, category, categoryDescription, preferences, and translations.
@@ -38,20 +47,15 @@ export async function partialExtractionAI(
             - The translations should be accurate and contextually relevant as you are a native speaker of each language.
             - Convert all prices to cents.
             - Preferences should include any extras, add-ons, sizes, sides, options, ingredients or variants.
+            - Each prefernce value should include only one prefernce and not many with the same price. This ensure that user can select them separately to order.
             - if there are products that users have to assemble the their self by picking ingredients then put the ingredients into prefernces. Example: if the menu item is a crepe and the menu has all the ingredients that can be used then put them in the prefernces field and create a prefernce for each category of ingredients. Example: meat: chicken, beef, pork / cheese: mozzarela, parmezan, feta and so on create a prefernce for each category of ingredients.
             - If category specifies any prefernces or extras include them to the preference of each item that belong to this category. Example 1: If inside the category area there is text saying served with rice or fries you have to add a prefernce to each item of the category like: {name:"side",values:["rice","fries"]}. Example 2: If inside the category area there is text saying add bacon +1.50 , add egg or whatever looks like an option include it as well in prefences like: {name:"extras",values:["bacon +150","egg"]} . Example 3: If inside the category area there is text saying add syrop, chocolate chips or caramel +3.90 whatever looks like an option include it as well in prefences like: {name:"extras",values:["syrop + 390","chocolate chips +390", "caramel +390"]}.
             - Any extra price that comes along with selecting a prefernce put it in the prfernce value price field and dont include in the prefernce value name.
-            - In the prefernce price field should be onlly the extra price that is added and not the final price. 
-            - Keep output strictly JSON parsable. If your response is too long, close the JSON array correctly.
-                      `,
-          createPartFromUri(
-            uploadedFile.uri ?? "",
-            uploadedFile.mimeType ?? ""
-          ),
+            - In the prefernce price field should be only the extra price that is added and not the final price.`,
         ]),
       ],
       config: {
-        systemInstruction: `Your task is to extract menu items from a scanned menu file. Do not include any item whose name exactly matches the forbidden list provided by the user: [${forbiddenItemsStr}]. Than you have to accurately translate the menu items to the languages specified in the request. You have to be very accurate and precise in your translations.`,
+        systemInstruction: `Your task is to extract menu items from a scanned menu file so a digital menu can be created. Users will be able to order from the menu so you have to do be extremely accurate while extracting the info. Do not include any item whose name exactly matches any name in the following list: [${forbiddenItemsStr}]. Its really important not to include any of these items in the response so we dont have duplicates. Then you have to accurately translate the menu items to the languages specified in the request.`,
 
         responseMimeType: "application/json",
         responseSchema: {
@@ -182,6 +186,17 @@ export async function partialExtractionAI(
     })
     .catch((err) => {
       console.error("Ai Overloaded: ", err);
-      return "Our Ai is overloaded right now. Please try again in a few seconds. If the problem persists try again later.";
+      return {error:"Our Ai is overloaded right now. Please try again in a few seconds. If the problem persists try again later."};
     });
+  if ('error' in response) return response;
+  for await (const chunk of response) {
+    finalResponse += chunk.text;
+  }
+  return finalResponse;
+})();
+
+return await Promise.race<string | {error:string}>([
+ work,
+  new Promise<string>((resolve) => setTimeout(() => resolve(finalResponse), 49000)),
+]);
 }

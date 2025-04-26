@@ -15,9 +15,6 @@ export default function MenuItemModalFooter({
   const { increaseItemQuantity, decreaseItemQuantity } = useCartContext();
   const { price } = useCardModalContext();
 
-  useEffect(() => {
-    console.log(price)
-  }, [price]);
 
   return (
     <div className="fixed bottom-0 left-0 w-full bg-gradient-to-t from-background from-60% to-transparent p-4 ">

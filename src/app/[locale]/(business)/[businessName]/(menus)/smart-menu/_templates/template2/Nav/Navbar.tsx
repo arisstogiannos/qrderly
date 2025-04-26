@@ -32,7 +32,7 @@ export function Navbar({
             />
           </Suspense>
           <Suspense>
-            <Cart menuType={menu.type} businessName={businessName} />
+            <Cart menuTemplate={menu.template} businessName={businessName} />
           </Suspense>
         </div>
       </div>

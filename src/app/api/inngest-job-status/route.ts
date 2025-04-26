@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const response = await fetch(`https://api.inngest.com/v1/events/${eventId}/runs`, {
+    const response = await fetch(`http://localhost:8288/v1/events/${eventId}/runs`, {
       headers: {
         Authorization: `Bearer ${process.env.INNGEST_SIGNING_KEY}`,
         "Content-Type": "application/json",

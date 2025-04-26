@@ -55,7 +55,7 @@ export function MenuItemCard({
             "flex p-2 flex-row border-0  min-[390px]:min-w-[350px] max-w-full relative  h-[140px]  overflow-hidden bg-secondary text-foreground shadow-lg transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
           }
         >
-          <div
+          {imagePath&&<div
             className={
               "relative aspect-video min-w-[140px] max-w-[140px] h-full overflow-hidden rounded-xl"
             }
@@ -67,7 +67,7 @@ export function MenuItemCard({
               alt={name}
               sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"}
             />
-          </div>
+          </div>}
           <CardContent
             className={"flex flex-col justify-between py-1 px-3  h-full"}
           >

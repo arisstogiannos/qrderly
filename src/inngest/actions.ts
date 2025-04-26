@@ -1,10 +1,10 @@
-'use server';
+"use server";
 
 import { inngest } from "@/inngest/client";
 import { Category } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
-export async function startInngestJobServerAction({
+export async function startExtractAllItems({
   businessName,
   cloudinaryPublicIDs,
 }: {
@@ -34,14 +34,13 @@ export async function startExtractSomeItems({
   businessName,
   cloudinaryPublicIDs,
   existingCategories,
-  existingItems
+  existingItems,
 }: {
-        businessName: string,
-        existingCategories: Category[],
-        existingItems: string[],
-        cloudinaryPublicIDs: string[], // now array
-
-    }) {
+  businessName: string;
+  existingCategories: Category[];
+  existingItems: string[];
+  cloudinaryPublicIDs: string[]; // now array
+}) {
   const jobId = uuidv4();
 
   try {

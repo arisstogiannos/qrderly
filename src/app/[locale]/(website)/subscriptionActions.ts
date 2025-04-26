@@ -14,7 +14,6 @@ export async function createFreeSubscription(
   businessId: string
 ) {
   const user = (await auth())?.user;
-console.log("sesss")
 
   if (!user?.id) {
     redirect("/sign-up");

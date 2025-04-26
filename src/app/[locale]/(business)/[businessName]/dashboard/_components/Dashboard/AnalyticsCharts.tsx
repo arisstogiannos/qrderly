@@ -42,7 +42,7 @@ export default function AnalyticsCharts({
         <TabsTrigger value="items">{t("popularItems")}</TabsTrigger>
       </TabsList>
       <TabsContent value="visits" className="mt-4">
-        <div className="h-[300px] -translate-x-10">
+        <div className="h-[300px] max-sm:-translate-x-6">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={visitData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -60,7 +60,7 @@ export default function AnalyticsCharts({
         </div>
       </TabsContent>
       <TabsContent value="orders" className="mt-4">
-        <div className="h-[300px] -translate-x-10">
+        <div className="h-[300px] max-sm:-translate-x-6">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={orderData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -73,7 +73,7 @@ export default function AnalyticsCharts({
         </div>
       </TabsContent>
       <TabsContent value="items" className="mt-4">
-        <div className="h-[300px] -translate-x-10">
+        <div className="h-[300px] ">
           {menuItemData.length === 0 ? (
             <div className="size-full flex-center">
               <span>No Data Found</span>
@@ -109,7 +109,7 @@ export default function AnalyticsCharts({
       </TabsContent>
     </Tabs>
   ) : (
-    <div className="h-[300px] -translate-x-10">
+    <div className="h-[300px] max-sm:-translate-x-6">
       {totalScans && (
         <p className="font-medium text-lg mb-5">
           {t("totalScans") + ": " + totalScans}

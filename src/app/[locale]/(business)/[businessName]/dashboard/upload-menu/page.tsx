@@ -30,7 +30,7 @@ export default async function page({
     }
   );
 
-  const t = await getTranslations();
+  const t = await getTranslations("uploadMenuPage");
   const menuItems = await getMenuItmesCached(businessName);
 
   const existingItemsNames = menuItems.map((it) => it.name);
@@ -38,7 +38,10 @@ export default async function page({
   return (
     <div className="space-y-16">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-medium">{t("uploadMenuPage.title")}</h1>
+        <div>
+          <h1 className="text-3xl font-medium">{t("title")}</h1>
+          {existingItemsNames.length > 0 && <p className="mt-2">{t("description")}</p>}
+        </div>
         <SidebarTrigger className="xl:hidden" />
       </div>
       <div className="max-w-fit">

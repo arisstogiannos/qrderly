@@ -1,5 +1,6 @@
+import { extractAllItemsJob } from "@/inngest/ai/extractAllItems";
+import { extractSomeItemsJob } from "@/inngest/ai/extractSomeItems";
 import { inngest } from "@/inngest/client";
-import { extractAllItemsJob, extractSomeItemsJob } from "@/inngest/functions";
 import { serve } from "inngest/next";
 
 

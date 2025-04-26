@@ -15,14 +15,14 @@
     "price": "Price",
     "priceDesc": "(in cents e.g 1.50$ -> 150)",
     "options": "Options",
-    "image": "Image",
+    "image": "Images (1-5)",
     "optional": "optional",
     "nameValidation": "Underscore (_) is not allowed",
     "descriptionValidation": "Underscore (_) is not allowed",
     "namePlaceholder": "Enter the menu item's name",
     "descriptionPlaceholder": "Enter the menu item's description",
     "pricePlaceholder": "Enter the menu item's price",
-    "imagePlaceholder": "Click to upload image",
+    "imagePlaceholder": "Click to upload images",
     "save": "Save"
   },
   "categoriesPage": {
@@ -443,7 +443,7 @@
     "tables":"Tables",
     "orders":"Orders",
     "popularItems":"Popular Items",
-    "businessInfo":"Busbusiness Information",
+    "businessInfo":"Business Information",
     "manageDetails":"Manage Details",
     "subscription": {
       "title": "Subscription",
@@ -512,6 +512,9 @@
     "title": "Upload your menu",
     "upload":"Upload",
     "dialogTitle": "Our AI is proccessing your menu. This will take a few seconds.",
+    "failedImagesDialogTitle": "The following image(s) failed to get proccessed",
+    "failedImagesDialogDesc": "The image(s) below were not processed because they contain way too many products. You can try uploading smaller pieces of your menu later from the dashboard.",
+    "failedImagesDialogBtn": "I Understand",
     "description": "Our AI will automatically populate your menu for you. All you have to do is upload an image or PDF. If you want to manually insert all the items, click skip.",
     "skip": "Skip",
     "next": "Next",
@@ -616,7 +619,7 @@
   },
   "uploadMenuPage": {
     "title": "Upload Menu",
-    "description": "Upload your menu items and categories easily."
+    "description": "You can upload the same menu to add any missing items. Only the new items will be added."
   },
   "publish":{
     "heading": "Your Menu is Ready to Go Live!",
@@ -626,7 +629,10 @@
     "reviewLabel": "Review:",
     "reviewItemCategory": "Items belong to right category",
     "reviewPrices": "Prices",
-    "reviewNamesDescriptions": "Names / Descriptions"
+    "reviewNamesDescriptions": "Names / Descriptions",
+    "success":"Your menu is live!",
+    "visitMenu":"Visit your menu",
+    "visitDashboard":"Visit your dashboard"
   },
   "subscription": {
     "title": "Subscription",

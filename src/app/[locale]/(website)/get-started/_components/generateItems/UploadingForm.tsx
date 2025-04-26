@@ -6,19 +6,18 @@ import Uploader from "./Uploader";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircleIcon, Upload } from "lucide-react";
 import { ErrorMessage } from "@/components/Messages";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import ProgressSteps from "./Progress";
-import { Label } from "@/components/ui/label";
 import { Category } from "@prisma/client";
 import { toast } from "sonner";
-import { uploadImageClientSide } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
-import { inngest } from "@/inngest/client";
 import { getRunOutput, InngestRun } from "@/inngest/status";
-import { startExtractSomeItems, startInngestJobServerAction } from "@/inngest/actions";
+import { startExtractAllItems, startExtractSomeItems } from "@/inngest/actions";
+import { uploadImageClientSide } from "@/lib/uploadImageClient";
+import FailedImagesModal from "./FailedImagesModal";
+import Dialog from "./Dialog";
 
 export default function UploadingForm({
   businessName,
@@ -31,6 +30,7 @@ export default function UploadingForm({
 }) {
   const [file, setFile] = useState<File>();
   const [cloudinaryPublicIDs, setCloudinaryPublicIDs] = useState<string[]>();
+  const [failedImages, setFailedImages] = useState<string[]>();
   const [jobId, setJobId] = useState<string | null>(null);
   const [ingestRunResult, setIngestRunResult] = useState<InngestRun | null>(
     null
@@ -46,9 +46,8 @@ export default function UploadingForm({
     try {
       const uploadedImageUrls = await Promise.all(
         selectedFiles
-          .map((file) =>
-            file.type.includes("image/") ? uploadImageClientSide(file) : uploadImageClientSide(file)
-          )
+          .slice(0, 5) // Limit to 5 files
+          .map((file) => uploadImageClientSide(file))
           .filter((file) => file !== null)
       );
       setCloudinaryPublicIDs(uploadedImageUrls);
@@ -66,47 +65,58 @@ export default function UploadingForm({
 
     try {
       let eventId: any;
-      if(existingItems && existingCategories && existingItems.length > 0) {
-        const {eventId:temp} = await startExtractSomeItems({
+      if (existingItems && existingCategories && existingItems.length > 0) {
+        console.log("extracr some")
+        const { eventId: temp } = await startExtractSomeItems({
           businessName,
           cloudinaryPublicIDs,
           existingCategories,
-          existingItems
+          existingItems,
         });
-        eventId = temp
-      }else{
-        const {eventId:temp} = await startInngestJobServerAction({
+        eventId = temp;
+      } else {
+        const { eventId: temp } = await startExtractAllItems({
           businessName,
           cloudinaryPublicIDs,
         });
-        eventId = temp
-
+        eventId = temp;
       }
- 
 
-      console.log(eventId);
 
       const inngestJobOutput = await getRunOutput(eventId);
 
       setIngestRunResult(inngestJobOutput);
 
-      if (!existingItems && inngestJobOutput.status === "Timeout") {
-        router.push("customize-qr");
-      }
-      if (existingItems && inngestJobOutput.status === "Completed") {
-        toast(t("toast", { newItems: inngestJobOutput.output.noNewItems }), {
-          duration: 10000,
-          icon: <CheckCircleIcon />,
-          position: "bottom-right",
-          style: {
-            backgroundColor: "#C9F8BB",
-            color: "darkgreen",
-            borderColor: "darkgreen",
-          },
-          closeButton: true,
-        });
-      } else if (inngestJobOutput.status === "Completed") {
-        router.push("customize-qr");
+      if (inngestJobOutput.status === "Completed" && inngestJobOutput.output.success) {
+        if (
+          inngestJobOutput.output.faildImages &&
+          inngestJobOutput.output.faildImages.length > 0
+        ) {
+          setFailedImages(inngestJobOutput.output.faildImages);
+          return;
+        }
+
+        if (existingItems) {
+          toast(t("toast", { newItems: inngestJobOutput.output.noNewItems }), {
+            duration: 10000,
+            icon: <CheckCircleIcon />,
+            position: "bottom-right",
+            style: {
+              backgroundColor: "#C9F8BB",
+              color: "darkgreen",
+              borderColor: "darkgreen",
+            },
+            closeButton: true,
+          });
+          setJobId(null);
+          setIsProcessing(false);
+          setFile(undefined);
+          setCloudinaryPublicIDs(undefined);
+          return;
+        }
+        if (inngestJobOutput.status === "Completed") {
+          router.push("customize-qr");
+        }
       }
     } catch (err) {
       console.error("Error in Inngest job", err);
@@ -114,28 +124,21 @@ export default function UploadingForm({
     setIsProcessing(false);
     setFile(undefined);
     setCloudinaryPublicIDs(undefined);
-    setJobId(null);
+
   };
 
   return (
     <form className="flex flex-col justify-center gap-y-10">
-      <Dialog open={!!jobId}>
-        <DialogContent closeable={false}>
-          <DialogHeader>
-            <DialogTitle className="text-lg font-semibold text-left">
-              {t("dialogTitle")}
-            </DialogTitle>
-          </DialogHeader>
-          <ProgressSteps
-            taskIsRunning={isProcessing}
-            time={
-              existingItems && existingItems.length > 0
-                ? (cloudinaryPublicIDs?.length ?? 1) * 1000 + 3000
-                : (cloudinaryPublicIDs?.length ?? 1) * 1000 + 7000
-            }
-          />
-        </DialogContent>
-      </Dialog>
+      <Dialog
+        runningTime={
+          existingItems && existingItems.length > 0
+            ? (cloudinaryPublicIDs?.length ?? 1) * 1000 + 3000
+            : (cloudinaryPublicIDs?.length ?? 1) * 1000 + 7000
+        }
+        isProcessing={isProcessing}
+        jobId={jobId}
+        failedImages={failedImages}
+      />
 
       <div className="grid lg:grid-cols-2 gap-10">
         <Uploader
@@ -158,7 +161,7 @@ export default function UploadingForm({
         />
       </div>
 
-      <div className="w-full flex flex-col xl:flex-row gap-y-5 justify-between items-center">
+      <div className="w-full flex flex-col xl:flex-row-reverse gap-5 justify-between items-center">
         {existingItems ? (
           <Button
             disabled={isUploading || !file || isProcessing}
@@ -187,10 +190,13 @@ export default function UploadingForm({
             </Button>
           </div>
         )}
-        {ingestRunResult?.status === "Failed" ||
+        {ingestRunResult?.status === "Failed" || 
           (ingestRunResult?.status === "Cancelled" && (
             <ErrorMessage msg={ingestRunResult.error} />
           ))}
+        {(ingestRunResult?.status==="Completed" && ingestRunResult.output.error) && (
+            <ErrorMessage msg={ingestRunResult.output.error} />
+          )}
       </div>
     </form>
   );

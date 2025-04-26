@@ -116,11 +116,7 @@ export default function Uploader({
         />
       </label>
 
-      {hasFile && (
-        <p className="text-sm text-gray-600 truncate max-w-64">
-          Selected file: <strong>{uploadedFile.name}</strong>
-        </p>
-      )}
+  
     </div>
   );
 }

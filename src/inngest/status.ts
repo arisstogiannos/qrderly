@@ -1,12 +1,9 @@
 "use server";
-
-import { cookies } from "next/headers";
-
 export type InngestRunStatus = "Completed" | "Cancelled" | "Failed" | "Timeout";
 export type InngestRun =
   | {
       status: "Completed";
-      output: { noNewItems: number; success: boolean };
+      output: { noNewItems: number; success: boolean; faildImages?:string[], error?:string };
     }
   | {
       status: "Cancelled" | "Failed" | "Timeout";
@@ -16,18 +13,10 @@ export type InngestRun =
 
 export async function getRunOutput(eventId: string): Promise<InngestRun> {
   let runs = await getRuns(eventId);
-  let timeElapsed = 0;
   while (runs[0]?.status !== "Completed") {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    timeElapsed += 1;
-    if (timeElapsed > 30) {
-        (await cookies()).set({
-          name: "inngestEventId",value:eventId,expires: new Date(Date.now() + 1000 * 60 * 20 ),
-        })
-      return { error: "Function run timed out", status: "Timeout" };
-    }
+
     runs = await getRuns(eventId);
-    console.log(runs)
     if (runs[0]?.status === "Failed" || runs[0]?.status === "Cancelled") {
       return { error: "Function run timed out", status: runs[0].status };
     }

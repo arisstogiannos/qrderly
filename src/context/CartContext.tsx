@@ -1,7 +1,6 @@
 "use client";
 
-import { Cart, CartItem, MenuItemRequired } from "@/types";
-import { MenuItem } from "@prisma/client";
+import {  CartItem, MenuItemRequired } from "@/types";
 import React, {
   createContext,
   ReactNode,

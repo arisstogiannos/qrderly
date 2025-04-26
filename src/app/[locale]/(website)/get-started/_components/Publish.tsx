@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Link as IntlLink } from "@/i18n/navigation";
 import { MainButton } from "../../(landing page)/_sections/hero/MainButton";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
 export default function Publish({
   product,
@@ -29,16 +30,16 @@ export default function Publish({
     (p) => p.product === productMap[product]
   );
 
-  const { data: inngestJob } = useQuery({
-    queryKey: [inngestJobId],
-    enabled: !!inngestJobId,
-    queryFn: async () =>
-      await fetch("/api/inngest-job-status?eventId=" + inngestJobId).then(
-        (res) => res.json()
-      ),
-    refetchInterval: (query) =>
-      query.state.data?.status === "Running" ? 1000 : false,
-  });
+  // const { data: inngestJob } = useQuery({
+  //   queryKey: [inngestJobId],
+  //   enabled: !!inngestJobId,
+  //   queryFn: async () =>
+  //     await fetch("/api/inngest-job-status?eventId=" + inngestJobId).then(
+  //       (res) => res.json()
+  //     ),
+  //   refetchInterval: (query) =>
+  //     query.state.data?.status === "Running" ? 1000 : false,
+  // });
 
   const existingPaidSub = user.subscriptions.find(
     (s) =>
@@ -97,15 +98,16 @@ export default function Publish({
     );
   }
 
-  return inngestJob?.status === "Running" ? (
-    <div className="w-full flex-center gap-2">
-      <Loader className="text-[10px] h-9" />
-      <p className=" animate-pulse">
-        Please wait a moment to finalize your menu. This will take from 1 to 2
-        minutes.
-      </p>
-    </div>
-  ) : (
+  // return inngestJob?.status === "Running" ? (
+  //   <div className="w-full flex-center gap-2">
+  //     <Loader className="text-[10px] h-9" />
+  //     <p className=" animate-pulse">
+  //       Please wait a moment to finalize your menu. This will take from 1 to 2
+  //       minutes.
+  //     </p>
+  //   </div>
+  // ) : (
+  return (
     <Modal
       title={
         !isPending && !state?.success && !publishedMenuBusiness ? "Publish" : ""
@@ -147,13 +149,15 @@ export default function Publish({
       {state?.error && <ErrorMessage msg={state.error} />}
     </Modal>
   );
+  // );
 }
 
 function Success({ url }: { url: string }) {
+  const t = useTranslations("publish");
   return (
     <div className="flex flex-col items-center gap-y-8">
       <div className="flex flex-col items-center gap-y-1 text-center">
-        <p className="text-4xl font-medium ">Successfuly Published!</p>
+        <p className="text-4xl font-medium ">{t("success")}</p>
       </div>
       <div className="flex flex-col gap-3 lg:flex-row pb-5 lg:pb-0">
         <Button size={"lg"} asChild>
@@ -164,12 +168,12 @@ function Success({ url }: { url: string }) {
             }}
             replace={true}
           >
-            Dashboard <ArrowRight />
+           {t("visitDashboard")} <ArrowRight />
           </IntlLink>
         </Button>
         <Button size={"lg"} asChild>
           <Link href={"/en/" + url}>
-            Menu <ArrowRight />
+          {t("visitMenu")} <ArrowRight />
           </Link>
         </Button>
       </div>

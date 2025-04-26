@@ -18,7 +18,6 @@ export async function GET() {
     process.env.CLOUDINARY_API_SECRET!
   );
 
-  console.log(signature)
 
   return NextResponse.json({
     signature,

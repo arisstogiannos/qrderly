@@ -8,8 +8,14 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import DisplayPrice from "@/components/DisplayPrice";
 
-export function CartItem({ item }: { item: CartItemType }) {
-  const { menuItem, quantity, id,price } = item;
+export function CartItem({
+  item,
+  displayImage,
+}: {
+  item: CartItemType;
+  displayImage: boolean;
+}) {
+  const { menuItem, quantity, id, price } = item;
   const context = useCartContext();
   const increaseContextItemQuantity = context?.increaseItemQuantity;
   const decreaseContextItemQuantity = context?.decreaseItemQuantity;
@@ -28,16 +34,18 @@ export function CartItem({ item }: { item: CartItemType }) {
   }
 
   return (
-    <div className="flex w-full gap-x-5 rounded-lg bg-secondary p-2 duration-1000">
-      <div className="relative size-20 overflow-hidden rounded-lg object-fill md:size-28">
-        <CloudImage
-          src={menuItem.imagePath ?? ""}
-          fill
-          className="absolute inset-0 object-cover"
-          alt={menuItem.name}
-        />
-      </div>
-      <div className="flex w-1/2 flex-col gap-y-0">
+    <div className="flex w-full gap-x-5 rounded-lg bg-secondary p-2 h-[120px] duration-1000">
+      {(displayImage && menuItem.imagePath) && (
+        <div className="relative size-20 overflow-hidden rounded-lg object-fill md:size-28">
+          <CloudImage
+            src={menuItem.imagePath }
+            fill
+            className="absolute inset-0 object-cover"
+            alt={menuItem.name}
+          />
+        </div>
+      )}
+      <div className="flex  flex-col gap-y-0">
         <span className="capitalize">
           {existingTranslation
             ? translationsAsJson[lang].name
@@ -49,13 +57,13 @@ export function CartItem({ item }: { item: CartItemType }) {
         <div className="mt-auto flex items-center gap-x-3">
           <Button
             onClick={handleDecrease}
-            className="size-5 cursor-pointer rounded-md bg-primary p-3 text-white"
+            className=" h-7 w-7 xl:h-7 cursor-pointer rounded-md bg-primary p-0 text-white"
           >
             <MinusIcon />
           </Button>
           {quantity}
           <Button
-            className="text-white size-5 cursor-pointer rounded-md bg-primary p-3"
+            className="text-white h-7 w-7 xl:h-7 cursor-pointer rounded-md bg-primary p-0"
             onClick={handleIncrease}
           >
             <PlusIcon />
@@ -64,7 +72,7 @@ export function CartItem({ item }: { item: CartItemType }) {
       </div>
       <div className="ml-auto">
         <span className="">
-          <DisplayPrice price={(price ) * quantity}/>
+          <DisplayPrice price={price * quantity} />
         </span>
       </div>
     </div>

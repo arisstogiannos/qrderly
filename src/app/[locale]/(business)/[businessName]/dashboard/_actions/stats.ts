@@ -111,14 +111,15 @@ export async function getPopularItems(businessId: string) {
 
   const popularItems = await db.menuItem.findMany({
     where: {
-      menu:{business:{id:businessId}}
+      menu:{business:{id:businessId}},
+      
     },
     select:{_count:{select:{orderItems:true}},name:true},
     orderBy:{orderItems:{_count:"desc"}},
     take:4
   });
 
-  return popularItems.flatMap((it)=>({name:it.name,value:it._count.orderItems}))
+  return popularItems.filter((it)=>it._count.orderItems>0).flatMap((it)=>({name:it.name,value:it._count.orderItems}))
 }
 
 
