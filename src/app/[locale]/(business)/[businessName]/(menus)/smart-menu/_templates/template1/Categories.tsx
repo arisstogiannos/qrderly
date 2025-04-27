@@ -88,7 +88,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
               ref={(el) => {
                 if (el) linksRef.current[category.id] = el;
               }}
-              className={`rounded-full px-5 py-2 text-sm font-medium capitalize transition-colors lg:text-base xl:hover:bg-primary ${
+              className={`rounded-full px-5 py-2 text-nowrap text-sm font-medium capitalize transition-colors lg:text-base xl:hover:bg-primary ${
                 currentCategory === category.id ? "bg-primary" : "bg-primary/30"
               }`}
               onClick={() => handleClick(category.id)}

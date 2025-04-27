@@ -610,13 +610,14 @@
     "resetLinkSent": "A reset link has been sent to your email!"
   },
   "createMenuBtn": {
-    "signUp": "Εγγραφή",
-    "createMenu": "Δημιουργία Μενού",
-    "modalTitle": "Δημιουργία μενού για το {product}",
-    "modalSubtitle": "Έχετε μια συνδρομή για το {product}, αλλά δεν το έχετε δημοσιεύσει ακόμα. Συνεχίστε ή δημιουργήστε νέο μενού για άλλο προϊόν.",
-    "createDifferentMenu": "Δημιουργία διαφορετικού μενού",
-    "continue": "Συνέχεια"
+    "signUp": "Sign Up",
+    "createMenu": "Create Menu",
+    "modalTitle": "Create menu for {product}",
+    "modalSubtitle": "You have a subscription for {product}, but you haven't published it yet. Continue or create a new menu for another product.",
+    "createDifferentMenu": "Create different menu",
+    "continue": "Continue"
   },
+  
   "uploadMenuPage": {
     "title": "Upload Menu",
     "description": "You can upload the same menu to add any missing items. Only the new items will be added."
