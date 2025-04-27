@@ -10,7 +10,7 @@ export const VerificationEmail = ({
   username = "user ",
   verificationUrl,
 }: VerificationEmailProps) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://scanby.cloud"
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud"
 
   return (
     <Html>
@@ -36,7 +36,7 @@ export const VerificationEmail = ({
           <Text style={text}>This verification link will expire in 24 hours.</Text>
           <Hr style={hr} />
           <Text style={footer}>
-          <Copyright/> Scanby 20025
+          <Copyright/> Scanby 2025
 
           </Text>
         </Container>

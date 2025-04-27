@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/db";
+import { sendTrialEndedEmail } from "@/email/mail";
 import { cache } from "@/lib/cache";
 import { Product } from "@prisma/client";
 import { revalidateTag, unstable_cache } from "next/cache";
@@ -177,12 +178,14 @@ export const getActiveMenuNotCached =
     });
 
 
+
+
     return menu;
   }
 
 
   export async function incrementMenuScans(id:string,businessId:string){
-    await db.menu.update({
+   const menu = await db.menu.update({
       where:{id},
       data:{
         noScans:{
@@ -193,6 +196,20 @@ export const getActiveMenuNotCached =
     
     await db.scan.create({data:{businessId}})
     revalidateTag("scans"+businessId)
+    return menu.noScans
+  }
+  export async function deactivateMenu(businessName:string){
+    revalidateTag("active-menu"+businessName)
+    const user = await db.user.findFirst({
+      where: {
+       business:{some:{name:businessName}},
+      },
+    });
+    if(user){
+      await sendTrialEndedEmail(user.email,user.name,businessName)
+    }
+
+
   }
 
 

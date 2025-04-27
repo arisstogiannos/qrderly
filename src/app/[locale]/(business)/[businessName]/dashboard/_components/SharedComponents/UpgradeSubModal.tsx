@@ -29,8 +29,9 @@ export default function UpgradeSubModal({
           {t("Upgrade to Pro")}
         </Button>
       }
+      classNames="pt-5"
     >
-      <div className="grid lg:grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-2 gap-5 ">
         <Plan
         title={t("monthly")}
         btn={t("continue")}

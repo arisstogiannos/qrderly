@@ -24,7 +24,7 @@ export const QrMenuCreatedEmail = ({
   menuName = "Summer Specials",
   menuUrlPath ="menu"
 }: QrMenuCreatedEmailProps) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://scanby.cloud";
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
   const menuUrl = baseUrl+"/" + menuName.replaceAll(" ","-") +"/menu"
   const dashboardUrl = baseUrl+"/" + menuName.replaceAll(" ","-")+"/dashboard"
 
@@ -76,7 +76,7 @@ export const QrMenuCreatedEmail = ({
           </Section>
           <Hr style={hr} />
           <Text style={footer}>
-            <Copyright /> Scanby 20025
+            <Copyright /> Scanby 2025
           </Text>
         </Container>
       </Body>

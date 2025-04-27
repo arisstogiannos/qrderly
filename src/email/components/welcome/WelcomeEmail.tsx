@@ -22,7 +22,7 @@ export const WelcomeEmail = ({
   username = "John",
   userEmail = "john@example.com",
 }: WelcomeEmailProps) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://scanby.cloud";
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
 
   return (
     <Html>
@@ -61,7 +61,7 @@ export const WelcomeEmail = ({
           </Text>
           <Hr style={hr} />
           <Text style={footer}>
-            <Copyright /> Scanby 20025
+            <Copyright /> Scanby 2025
           </Text>
           <Text style={footer}>This email was sent to {userEmail}</Text>
         </Container>

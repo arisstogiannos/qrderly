@@ -13,59 +13,70 @@ import {
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
 
-interface PasswordResetEmailProps {
-  name: string;
-  resetLink: string;
+interface TrialEndedEmailProps {
+  username: string;
+  userEmail: string;
+  businessName: string;
 }
 
-export const PasswordResetEmail = ({
-  resetLink,
-  name,
-}: PasswordResetEmailProps) => {
+export const TrialEndedEmail = ({
+  username = "John",
+  userEmail = "john@example.com",
+  businessName = "Your Business Name",
+
+}: TrialEndedEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
 
   return (
     <Html>
       <Head />
-      <Preview>Reset your Scanby password</Preview>
+      <Preview>Your Scanby trial has ended - Upgrade to continue</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
             src={`${baseUrl}/logo black.png`}
             width="60"
             height="40"
-            alt="QR Menu Creator"
+            alt="Scanby"
             style={logo}
           />
-          <Heading style={h1}>Reset your password</Heading>
-          <Text style={text}>Hi {name},</Text>
+          <Heading style={h1}>Your Free Trial Has Ended</Heading>
+          <Text style={text}>Hi {username},</Text>
           <Text style={text}>
-            We received a request to reset your password for your QR Menu
-            Creator account. Click the button below to set a new password:
+            Congratulations on reaching 200 menu scans on {businessName} with Scanby! 🎉
           </Text>
+          <Text style={text}>
+            Your free trial has now ended. To continue offering digital menus to your customers without interruption, please upgrade your plan.
+          </Text>
+
           <Section style={buttonContainer}>
-            <Button style={button} href={resetLink}>
-              Reset Password
+            <Button style={button} href={`${baseUrl}/${businessName.replaceAll(" ","-")}/dashboard`}>
+              Upgrade Now
             </Button>
           </Section>
+
           <Text style={text}>
-            If you didn't request a password reset, you can safely ignore this
-            email. Your password will remain unchanged.
+            With a paid plan, you'll continue to enjoy unlimited scans
           </Text>
+
           <Text style={text}>
-            This password reset link will expire in 1 hour.
+            Need help or have questions? Just reply to this email — our team is ready to assist you!
           </Text>
+
           <Hr style={hr} />
           <Text style={footer}>
             <Copyright /> Scanby 2025
           </Text>
+          <Text style={footer}>This email was sent to {userEmail}</Text>
         </Container>
       </Body>
     </Html>
   );
 };
 
-export default PasswordResetEmail;
+export default TrialEndedEmail;
+
+
 
 const main = {
   backgroundColor: "#f6f9fc",
@@ -105,6 +116,17 @@ const text = {
   margin: "16px 0",
 };
 
+const qrCodeContainer = {
+  textAlign: "center" as const,
+  margin: "30px 0",
+};
+
+const qrCode = {
+  border: "1px solid #e5e7eb",
+  padding: "10px",
+  backgroundColor: "#ffffff",
+};
+
 const buttonContainer = {
   textAlign: "center" as const,
   margin: "30px 0",
@@ -118,8 +140,21 @@ const button = {
   fontSize: "16px",
   fontWeight: "bold",
   textDecoration: "none",
-  padding: "10px",
   textAlign: "center" as const,
+  padding: "10px",
+};
+
+const secondaryButton = {
+  backgroundColor: "#ffffff",
+  borderRadius: "4px",
+  border: "1px solid #5046e4",
+  color: "#5046e4",
+  display: "inline-block",
+  fontSize: "16px",
+  fontWeight: "bold",
+  textDecoration: "none",
+  textAlign: "center" as const,
+  padding: "10px",
 };
 
 const hr = {
@@ -133,9 +168,9 @@ const footer = {
   lineHeight: "22px",
   margin: "12px 0",
   textAlign: "center" as const,
-  display: "flex",
-  alignItems: "center",
-  justifyItems: "center",
-  width: "100%",
-  gap: "10px",
+  display:"flex",
+alignItems:"center",
+justifyItems:"center",
+width:"100%",
+gap:"10px"
 };

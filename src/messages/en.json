@@ -729,5 +729,11 @@
   "stats":{
     "title":"Businesses Trust Our App",
     "subtitile":"Our platform is the preferred solution for a diverse range of hospitality businesses:"
+  },
+  "subExpired":{
+    "title":"Your subscription has expired",
+    "description":"Please renew your subscription to make your menu live again.",
+    "monthly":"Subscribe Monthly {price}",
+    "yearly":"Subscribe Yearly {price}"
   }
 }

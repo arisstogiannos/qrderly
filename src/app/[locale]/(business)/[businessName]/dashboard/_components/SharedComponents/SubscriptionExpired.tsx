@@ -1,3 +1,4 @@
+"use client";
 import { createSession } from "@/app/[locale]/(website)/subscriptionActions";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { plandata, productMap } from "@/data";
 import { BusinessExtended, ProductURL } from "@/types";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 export default function SubscriptionExpired({
@@ -16,7 +18,11 @@ export default function SubscriptionExpired({
 }: {
   business: BusinessExtended;
 }) {
-  const isExpired = business.subscription?.hasExpired;
+  const isExpired =
+    business.subscription?.hasExpired ||
+    (business.subscription?.billing === "FREETRIAL" &&
+      business.menu &&
+      business.menu?.noScans >= 200);
   let currentPlan = null;
   if (isExpired) {
     currentPlan = plandata.find(
@@ -26,17 +32,16 @@ export default function SubscriptionExpired({
         ] === business.product
     );
   }
+  const t = useTranslations("subExpired");
   return (
     currentPlan && (
-      <Dialog defaultOpen={true}>
-        <DialogContent>
+      <Dialog defaultOpen={!!currentPlan}>
+        <DialogContent className="w-fit">
           <DialogHeader>
-            <DialogTitle>Your subscription has expired</DialogTitle>
-            <DialogDescription>
-              Please renew your subscription to make your menu live again
-            </DialogDescription>
+            <DialogTitle>{t("title")}</DialogTitle>
+            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-col mt-4">
             <Button
               onClick={createSession.bind(
                 null,
@@ -48,8 +53,9 @@ export default function SubscriptionExpired({
                 "/" + business.name.replaceAll(" ", "-") + "/dashboard",
                 "Go Back to Dashboard"
               )}
+              className="h-12 lg:h-12"
             >
-              Subscribe Monthly {currentPlan.billing.monthly.price}
+              {t("monthly", { price: currentPlan.billing.monthly.price })}
             </Button>
             <Button
               onClick={createSession.bind(
@@ -62,10 +68,9 @@ export default function SubscriptionExpired({
                 "/" + business.name.replaceAll(" ", "-") + "/dashboard",
                 "Go Back to Dashboard"
               )}
+              className="h-12 lg:h-12"
             >
-              {/* <Link href={currentPlan.billing.yearly.payment_link}> */}
-              Subscribe Yearly {currentPlan.billing.yearly.price}
-              {/* </Link> */}
+              {t("yearly", { price: currentPlan.billing.yearly.price })}
             </Button>
           </div>
         </DialogContent>

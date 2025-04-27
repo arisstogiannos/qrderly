@@ -30,7 +30,7 @@ export const SubscriptionConfirmationEmail = ({
   startDate = "April 15, 2025",
   dashboardUrl = "https://qrmenu.app/dashboard",
 }: SubscriptionConfirmationEmailProps) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://scanby.cloud";
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
 
   return (
     <Html>
@@ -79,7 +79,7 @@ export const SubscriptionConfirmationEmail = ({
           </Text>
           <Hr style={hr} />
           <Text style={footer}>
-          <Copyright/> Scanby 20025
+          <Copyright/> Scanby 2025
 
           </Text>
         </Container>

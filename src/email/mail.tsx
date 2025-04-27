@@ -7,6 +7,7 @@ import { z } from "zod";
 import ContactEmail from "./components/contact/ContactEmail";
 import QrMenuCreatedEmail from "./components/Menu/MenuCreatedEmail";
 import WelcomeEmail from "./components/welcome/WelcomeEmail";
+import TrialEndedEmail from "./components/trialEnded/TrialEndedEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -34,6 +35,18 @@ export const sendWelcomeEmail = async (
     to: email,
     subject: "Welcome to Scanby",
     react: <WelcomeEmail userEmail={email} username={name} />,
+  });
+};
+export const sendTrialEndedEmail = async (
+  email: string,
+  name:string,
+  businessName:string,
+) => {
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: "Welcome to Scanby",
+    react: <TrialEndedEmail businessName={businessName} userEmail={email} username={name} />,
   });
 };
 export const sendMenuCreatedEmail = async (

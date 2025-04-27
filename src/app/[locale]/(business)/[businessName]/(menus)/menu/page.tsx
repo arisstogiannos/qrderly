@@ -96,7 +96,7 @@ export default async function page({
           --accent: ${colors[4]};
         }
       `}</style>
-      <ScanTracker businessId={menu.businessId} menuId={menu.id} />
+      <ScanTracker businessName={businessName} businessId={menu.businessId} menuId={menu.id} />
 
       {menu.template === "T1" ? (
         <Template1
