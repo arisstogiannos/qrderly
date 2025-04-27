@@ -175,6 +175,7 @@ export default function UploadingForm({
           <div className="sm:ml-auto w-full sm:w-fit space-y-2 space-x-5">
             <Button
               type="button"
+              variant={"outline"}
               className="w-full sm:w-fit text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto"
               onClick={() => router.push("customize-qr")}
             >

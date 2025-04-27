@@ -295,29 +295,14 @@ export const faqData = [
       "Yes! With our QR Menu with Ordering feature, customers can browse, select items, and place orders directly from their phones. Orders are instantly sent to your admin dashboard, allowing you to manage them in real-time.",
   },
   {
-    question: "How does online ordering for delivery & takeaway work?",
-    answer:
-      "We provide you with a custom online ordering page where customers can place orders for delivery or pickup. No third-party commissions—just direct sales through your platform. Payments are processed securely via Stripe.",
-  },
-  {
     question: "Do I need technical knowledge to set this up?",
     answer:
       "Not at all! Our system is user-friendly and requires no coding skills. You can manage menus, orders, and settings easily from your admin dashboard.",
   },
   {
-    question: "How are payments processed?",
-    answer:
-      "We integrate with Stripe to handle all payments securely. Customers can pay online, and funds go directly to your Stripe account.",
-  },
-  {
     question: "Can I update my menu anytime?",
     answer:
       "Yes! You can add, edit, or remove items instantly from your admin dashboard. Changes are updated in real-time, so your customers always see the latest version of your menu.",
-  },
-  {
-    question: "Is there a commission fee on my sales?",
-    answer:
-      "No, we don’t take a percentage of your sales! You keep 100% of your earnings, minus standard Stripe processing fees.",
   },
   {
     question: "Can I use this for multiple locations?",

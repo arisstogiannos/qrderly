@@ -20,7 +20,7 @@ export default async function Hero() {
           />
         </div> */}
       </div>
-      <div className="space-y-5 mt-10 sm:mt-0 3xl:mt-20">
+      <div className="space-y-5 mt-10 sm:mt-0 3xl:mt-10">
         <h1 className=" font-bold  text-4xl md:text-6xl leading-tight ">
           {t("title")}
         </h1>

@@ -14,13 +14,13 @@ export default function PhoneMockup() {
   }, [curr, setCurr]);
   return (
     <div className="">
-     <AnimatePresence mode="wait">
+     <AnimatePresence mode="popLayout">
         {curr === 0 ? (
           <motion.div
             key="image1"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0,transition:{duration: 0.4} }}
-            exit={{ opacity: 0, x: 10,transition:{duration: 0.2} }}
+            initial={{ opacity: 0.5, filter: "blur(20px)"}}
+            animate={{ opacity: 1, filter: "blur(0px)",transition:{duration: 0.5} }}
+            exit={{ opacity: 0,  filter: "blur(20px)",transition:{duration: 0.3} }}
             className="absolute w-full h-full"
           >
             <Image
@@ -35,9 +35,9 @@ export default function PhoneMockup() {
         ) : (
           <motion.div
             key="image2"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0,transition:{duration: 0.4} }}
-            exit={{ opacity: 0, x: 10,transition:{duration: 0.2} }}
+            initial={{ opacity: 0.5, filter: "blur(20px)"}}
+            animate={{ opacity: 1, filter: "blur(0px)",transition:{duration: 0.5} }}
+            exit={{ opacity: 0,  filter: "blur(20px)",transition:{duration: 0.3} }}
             className="absolute w-full h-full"
           >
             <Image

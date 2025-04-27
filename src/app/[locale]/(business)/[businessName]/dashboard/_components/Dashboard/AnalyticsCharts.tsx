@@ -24,7 +24,7 @@ interface AnalyticsChartsProps {
   totalScans?: number;
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#524DF0", "#2F2BC2", "#080492", "#06036C"];
 
 export default function AnalyticsCharts({
   orderData,

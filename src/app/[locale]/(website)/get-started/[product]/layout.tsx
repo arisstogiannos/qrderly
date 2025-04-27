@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import Steps from "../_components/Steps";
-import Image from "next/image";
 
 
 export default async function layout({ children }: { children: ReactNode }) {

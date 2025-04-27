@@ -11,8 +11,8 @@ export default async function FAQAccordition() {
   const t = await getTranslations("faq")
   return (
     <Accordion type="single" >
-    {faqData.map((faq,i) => (
-        <AccordionItem key={faq.answer} value={t("faq"+(i+1)+".question")} className=" bg-background rounded-2xl border-0 mb-2 px-4">
+    {[1,2,3,4,5,6,7,8,9,10].map((i) => (
+        <AccordionItem key={i} value={t("faq"+(i+1)+".question")} className=" bg-background rounded-2xl border-0 mb-2 px-4">
         <AccordionTrigger className="text-xl">{t("faq"+(i+1)+".question")}</AccordionTrigger>
         <AccordionContent className="text-lg">
           {t("faq"+(i+1)+".answer")}
