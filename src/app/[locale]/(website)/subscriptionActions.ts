@@ -109,7 +109,8 @@ export async function createSession(
   };
 
   if(coupon){
-    sessionParams.discounts = [{coupon:coupon.id}]
+    // sessionParams.discounts = [{coupon:coupon.id}]
+    sessionParams.allow_promotion_codes = true;
   }else{
     sessionParams.allow_promotion_codes = true;
   }
