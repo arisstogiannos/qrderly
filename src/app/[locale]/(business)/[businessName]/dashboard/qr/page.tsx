@@ -17,7 +17,7 @@ export default async function page({
     <div className="space-y-10">
       <div className="flex items-center justify-between">
         <h1 className="font-medium text-2xl">{t("title")}</h1>
-        <SidebarTrigger className="xl:hidden" />
+        <SidebarTrigger className="lg:hidden" />
       </div>
       <div className="grid gap-y-8 lg:grid-cols-2">
         <div className="max-w-xl ">

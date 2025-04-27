@@ -42,7 +42,7 @@ export default async function page({
           <h1 className="text-3xl font-medium">{t("title")}</h1>
           {existingItemsNames.length > 0 && <p className="mt-2">{t("description")}</p>}
         </div>
-        <SidebarTrigger className="xl:hidden" />
+        <SidebarTrigger className="lg:hidden" />
       </div>
       <div className="max-w-fit">
         <UploadingForm

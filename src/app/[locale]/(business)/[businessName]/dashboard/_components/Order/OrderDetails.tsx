@@ -31,10 +31,13 @@ export default function OrderDetails({
   }, [currOrder]);
 
   useEffect(() => {
-    if (orders && orders.length > 0) {
-      setCurrOrder(orders.at(0));
-    } else {
-      setCurrOrder(undefined);
+    if(!currOrder){
+
+      if ( orders && orders.length > 0) {
+        setCurrOrder(orders.at(0));
+      } else {
+        setCurrOrder(undefined);
+      }
     }
   }, [orders]);
 

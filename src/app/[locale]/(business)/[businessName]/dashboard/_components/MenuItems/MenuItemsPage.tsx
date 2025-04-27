@@ -51,7 +51,7 @@ export default function MenuItemsPage({
       <div className="flex justify-between lg:flex-row flex-col gap-y-4">
         <div className="flex items-center justify-between">
           <h1 className="font-medium text-2xl">{t("title")}</h1>
-          <SidebarTrigger className="xl:hidden" />
+          <SidebarTrigger className="lg:hidden" />
         </div>
         <div className="md:flex lg:gap-10 gap-4 contents">
           <Filters />

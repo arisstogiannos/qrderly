@@ -35,7 +35,7 @@ export default async function page({
     <div className="flex flex-1 flex-col">
       <header className="flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:px-6">
         <h1 className="font-medium text-2xl">{t("title")}</h1>
-        <SidebarTrigger className="xl:hidden" />
+        <SidebarTrigger className="lg:hidden" />
       </header>
       <main className="flex-1 overflow-auto mt-2">
         <div className="grid gap-6">
