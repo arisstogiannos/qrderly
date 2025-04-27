@@ -109,7 +109,7 @@ export default function AnalyticsCharts({
       </TabsContent>
     </Tabs>
   ) : (
-    <div className="h-[300px] max-sm:-translate-x-6">
+    <div className="h-[300px] ">
       {totalScans && (
         <p className="font-medium text-lg mb-5">
           {t("totalScans") + ": " + totalScans}
