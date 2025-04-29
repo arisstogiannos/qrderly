@@ -72,7 +72,7 @@ export async function createSession(
   if (!user?.id) redirect("/sign-up");
 
   // ✅ Generate success URL with session ID placeholder
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const successUrl = `${baseUrl}/payment-successful?session_id={CHECKOUT_SESSION_ID}&successPageLink=${encodeURIComponent(successPageLink)}&successPageButton=${encodeURIComponent(successPageButton)}`;
   const customer = await stripe.customers.list({
     email: user.email ?? "",

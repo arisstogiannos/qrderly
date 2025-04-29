@@ -200,6 +200,7 @@ export const getActiveMenuNotCached =
   }
   export async function deactivateMenu(businessName:string){
     revalidateTag("active-menu"+businessName)
+    revalidateTag("active-menus")
     const user = await db.user.findFirst({
       where: {
        business:{some:{name:businessName}},
