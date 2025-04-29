@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
-
+import { Analytics } from "@vercel/analytics/react"
 import Banner from "@/components/Banner";
 import ScrollToTop from "@/components/ScrollToTop";
 import { getSale } from "../banner";
@@ -23,6 +23,7 @@ export default async function Layout({
       <ScrollToTop />
       <Footer />
       <Toaster />
+      <Analytics/>
     </>
   );
 }

@@ -8,6 +8,7 @@ import {
 } from "../_actions/menu";
 import { notFound } from "next/navigation";
 import ScrollToTop from "@/components/ScrollToTop";
+import ExpiredMenu from "./_components/ExpiredMenu";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
 // export const revalidate =60; 
@@ -49,7 +50,7 @@ export default async function layout({
   const menu = await getActiveMenu(businessName);
 
   if (!menu) {
-    return <div>NMot found sorry</div>
+    return <ExpiredMenu/>
   }
 
   const colors = menu.theme.split(",");

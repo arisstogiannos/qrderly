@@ -12,6 +12,7 @@ import Template1 from "./_templates/template1/Template1";
 import Template2 from "./_templates/template2/Template2";
 import ScanTracker from "../_components/ScanTracker";
 import ActiveOrder from "./_components/ActiveOrder";
+import ExpiredMenu from "../_components/ExpiredMenu";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
 // export const revalidate =60; 
@@ -82,7 +83,7 @@ export default async function page({
   );
 
   if (!menu) {
-    return <div>not fo</div>
+    return <ExpiredMenu/>
   }
 
   if (menu.type === "QR_MENU") {
