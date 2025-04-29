@@ -82,7 +82,7 @@ export default async function page({
   );
 
   if (!menu) {
-    return <div>This menu is deactivated</div>;
+    return <div>not fo</div>
   }
 
   if (menu.type === "QR_MENU") {

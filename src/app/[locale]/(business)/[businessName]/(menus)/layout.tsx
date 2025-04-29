@@ -49,7 +49,7 @@ export default async function layout({
   const menu = await getActiveMenu(businessName);
 
   if (!menu) {
-    notFound();
+    return <div>NMot found sorry</div>
   }
 
   const colors = menu.theme.split(",");
