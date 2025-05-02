@@ -30,7 +30,7 @@ export default async function IndexPage({
       </Suspense>
       <SomeFeatures />
       <HowItWorks />
-      {/* <BusinessStats/> */}
+       <BusinessStats/>
       {/* <Testimonials /> */}
       {/* <WhoIsThisFor/> */}
     </>

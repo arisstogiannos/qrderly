@@ -105,7 +105,7 @@
       "Logout": "Logout",
       "Subscriptions": "Subscriptions",
       "Upgrade to Pro": "Upgrade to Pro",
-      "Choose billing cycle":"Choose billing cycle",
+      "Choose billing cycle": "Choose billing cycle",
       "yearly": "Yearly (save 20%)",
       "monthly": "Monthly",
       "continue": "Continue",
@@ -143,8 +143,8 @@
     }
   },
   "Hero": {
-    "title": "Transform Your Bussiness with Smart QR Menus & Online Ordering",
-    "subtitle": "Instantly set up your interactive QR menu and ordering system — with our powerful AI, transform your printed menu into a digital menu in minutes!",
+    "title": "Transform Your Business with Smart QR Menus with Ordering System",
+    "subtitle": "Instantly set up your interactive QR menu with or without ordering system — with our powerful AI, transform your printed menu into a digital menu in minutes!",
     "button": "Get Started for Free"
   },
   "WhyUs": {
@@ -190,48 +190,47 @@
         "4": "other"
       }
     },
-  
-      "faq1": {
-        "question": "How does the Scanby QR menu work exactly?",
-        "answer": "Once you upload your menu, Scanby generates a unique QR code for your business. Simply print it and place it on your tables, counters, or menus. Customers scan it with their smartphone camera and instantly view your digital menu—no app downloads required, just instant access."
-      },
-      "faq2": {
-        "question": "Can customers place orders directly through the QR menu?",
-        "answer": "Absolutely! With our QR Menu + Ordering feature, customers can browse your digital menu, select their items, and place their orders straight from their phones. Orders show up instantly on your Scanby dashboard for you to manage, accept, and prepare."
-      },
-      "faq3": {
-        "question": "Is it difficult to set up? I’m not very tech-savvy.",
-        "answer": "Not at all! Scanby is designed for everyone—even if you have zero technical experience. Setup takes minutes, and you can easily manage your menus, orders, and settings from our intuitive, user-friendly admin dashboard."
-      },
-      "faq4": {
-        "question": "Can I update my menu after it’s live?",
-        "answer": "Yes! You have full control to update your digital menu anytime. Whether it's adding a new item, adjusting prices, or highlighting specials, all changes happen in real-time—your customers always see the freshest version."
-      },
-      "faq5": {
-        "question": "Can I use Scanby if I run multiple locations or franchises?",
-        "answer": "Definitely! Scanby lets you manage multiple venues from a single account. Each location gets its own menu, QR codes, and settings—all organized neatly in your dashboard."
-      },
-      "faq6": {
-        "question": "What happens if I need help setting everything up or troubleshooting?",
-        "answer": "We’ve got your back! Scanby offers easy-to-follow setup guides, tutorial videos, and a friendly support team ready to assist you whenever needed. Our goal is to make your onboarding smooth and stress-free."
-      },
-      "faq7": {
-        "question": "What devices do customers need to use Scanby QR menus?",
-        "answer": "Customers just need a smartphone with a camera—no apps or special software needed. Our QR codes work universally with iPhones and Androids."
-      },
-      "faq8": {
-        "question": "Is the menu customizable to match my restaurant’s brand?",
-        "answer": "Yes! With Scanby, you can customize fonts, colors, menu layouts, and even add your logo. Create a digital menu that truly fits your venue’s unique style."
-      },
-      "faq9": {
-        "question": "Is the QR sticker customizable to match my business's brand?",
-        "answer": "Of course! Scanby lets you asjust colors, shapes, and even add your logo to the QR code."
-      },
-      "faq10": {
-        "question": "Can i use Scanby for my self service business?",
-        "answer": "Yes! Scanby supports a full self-service experience. Clients can scan, order and receive notification when their order is ready. No waiting or long queues."
-      }
-        
+
+    "faq1": {
+      "question": "How does the Scanby QR menu work exactly?",
+      "answer": "Once you upload your menu, Scanby generates a unique QR code for your business. Simply print it and place it on your tables, counters, or menus. Customers scan it with their smartphone camera and instantly view your digital menu—no app downloads required, just instant access."
+    },
+    "faq2": {
+      "question": "Can customers place orders directly through the QR menu?",
+      "answer": "Absolutely! With our QR Menu + Ordering feature, customers can browse your digital menu, select their items, and place their orders straight from their phones. Orders show up instantly on your Scanby dashboard for you to manage, accept, and prepare."
+    },
+    "faq3": {
+      "question": "Is it difficult to set up? I’m not very tech-savvy.",
+      "answer": "Not at all! Scanby is designed for everyone—even if you have zero technical experience. Setup takes minutes, and you can easily manage your menus, orders, and settings from our intuitive, user-friendly admin dashboard."
+    },
+    "faq4": {
+      "question": "Can I update my menu after it’s live?",
+      "answer": "Yes! You have full control to update your digital menu anytime. Whether it's adding a new item, adjusting prices, or highlighting specials, all changes happen in real-time—your customers always see the freshest version."
+    },
+    "faq5": {
+      "question": "Can I use Scanby if I run multiple locations or franchises?",
+      "answer": "Definitely! Scanby lets you manage multiple venues from a single account. Each location gets its own menu, QR codes, and settings—all organized neatly in your dashboard."
+    },
+    "faq6": {
+      "question": "What happens if I need help setting everything up or troubleshooting?",
+      "answer": "We’ve got your back! Scanby offers easy-to-follow setup guides, tutorial videos, and a friendly support team ready to assist you whenever needed. Our goal is to make your onboarding smooth and stress-free."
+    },
+    "faq7": {
+      "question": "What devices do customers need to use Scanby QR menus?",
+      "answer": "Customers just need a smartphone with a camera—no apps or special software needed. Our QR codes work universally with iPhones and Androids."
+    },
+    "faq8": {
+      "question": "Is the menu customizable to match my restaurant’s brand?",
+      "answer": "Yes! With Scanby, you can customize fonts, colors, menu layouts, and even add your logo. Create a digital menu that truly fits your venue’s unique style."
+    },
+    "faq9": {
+      "question": "Is the QR sticker customizable to match my business's brand?",
+      "answer": "Of course! Scanby lets you asjust colors, shapes, and even add your logo to the QR code."
+    },
+    "faq10": {
+      "question": "Can i use Scanby for my self service business?",
+      "answer": "Yes! Scanby supports a full self-service experience. Clients can scan, order and receive notification when their order is ready. No waiting or long queues."
+    }
   },
   "banner": {
     "title": "🚀 Limited-Time Launch Sale! 🎉",
@@ -437,7 +436,7 @@
     "edit": "Edit",
     "manage": "Manage",
     "loading": "Loading",
-    "title":"Dashboard",
+    "title": "Dashboard",
     "qrCode": "QR Code",
     "qrCodeDescription": "Download or share your menu QR code",
     "customize": "Customize",
@@ -445,12 +444,12 @@
     "totalOrders": "Total Orders",
     "totalSales": "Total Sales",
     "totalScans": "Total Scans",
-    "menuVisits":"Scans",
-    "tables":"Tables",
-    "orders":"Orders",
-    "popularItems":"Popular Items",
-    "businessInfo":"Business Information",
-    "manageDetails":"Manage Details",
+    "menuVisits": "Scans",
+    "tables": "Tables",
+    "orders": "Orders",
+    "popularItems": "Popular Items",
+    "businessInfo": "Business Information",
+    "manageDetails": "Manage Details",
     "subscription": {
       "title": "Subscription",
       "description": "Your current subscription details",
@@ -502,21 +501,21 @@
   "get started": {
     "title": "Choose the product you want to pocceed with. Get started for free and see what’s right for you!",
     "button": "Get Started for Free",
-    "business setup":"business setup",
-    "menu settings":"menu settings",
-    "generate items":"Upload Menu",
-    "customize qr":"customize qr",
-    "publish":"publish"
+    "business setup": "business setup",
+    "menu settings": "menu settings",
+    "generate items": "Upload Menu",
+    "customize qr": "customize qr",
+    "publish": "publish"
   },
   "uploadingForm": {
-    "overwrite":"Overwrite existing items",
-    "overwriteDesc":"Any existing items in your menu that match a new item will be overwriten.",
-    "yes":"Yes",
-    "no":"No",
-    "toast":"{newItems} new items added! Review them on the Menu Items page. You can always make manual changes.",
-    
+    "overwrite": "Overwrite existing items",
+    "overwriteDesc": "Any existing items in your menu that match a new item will be overwriten.",
+    "yes": "Yes",
+    "no": "No",
+    "toast": "{newItems} new items added! Review them on the Menu Items page. You can always make manual changes.",
+
     "title": "Upload your menu",
-    "upload":"Upload",
+    "upload": "Upload",
     "dialogTitle": "Our AI is proccessing your menu. This will take a few seconds.",
     "failedImagesDialogTitle": "The following image(s) failed to get proccessed",
     "failedImagesDialogDesc": "The image(s) below were not processed because they contain way too many products. You can try uploading smaller pieces of your menu later from the dashboard.",
@@ -540,7 +539,7 @@
     "no": "No"
   },
   "businessSetupForm": {
-    "title":"Businesses Setup",
+    "title": "Businesses Setup",
     "businessName": "Business Name",
     "businessNameHint": "It will be used as a URL for your menu. Example: scanby.io/mybusiness/menu",
     "businessNameValidation": "Only letters, numbers, dashes (-), underscores (_), dots (.) and tildes (~) are allowed.",
@@ -623,12 +622,12 @@
     "createDifferentMenu": "Create different menu",
     "continue": "Continue"
   },
-  
+
   "uploadMenuPage": {
     "title": "Upload Menu",
     "description": "You can upload the same menu to add any missing items. Only the new items will be added."
   },
-  "publish":{
+  "publish": {
     "heading": "Your Menu is Ready to Go Live!",
     "description": "You're just one step away from having your digital menu accessible to your customers. Launch your menu and start delighting your guests!",
     "proTipTitle": "Pro Tip",
@@ -637,9 +636,9 @@
     "reviewItemCategory": "Items belong to right category",
     "reviewPrices": "Prices",
     "reviewNamesDescriptions": "Names / Descriptions",
-    "success":"Your menu is live!",
-    "visitMenu":"Visit your menu",
-    "visitDashboard":"Visit your dashboard"
+    "success": "Your menu is live!",
+    "visitMenu": "Visit your menu",
+    "visitDashboard": "Visit your dashboard"
   },
   "subscription": {
     "title": "Subscription",
@@ -726,14 +725,23 @@
       "ogAlt": "QR Ordering App Screenshot"
     }
   },
-  "stats":{
-    "title":"Businesses Trust Our App",
-    "subtitile":"Our platform is the preferred solution for a diverse range of hospitality businesses:"
+  "stats": {
+    "title": "Businesses Trust Our App",
+    "subtitile": "Our platform is designed to help businesses like:",
+    "button": "Get Started for Free",
+    "Bars": "Bars",
+    "Cafes": "Cafes",
+    "Restaurants": "Restaurants",
+    "Hotels": "Hotels",
+    "Self-Service": "Self Service",
+    "Food Trucks": "Food Trucks",
+    "Takeaway": "Takeaway",
+    "beach service": "Beach Service"
   },
-  "subExpired":{
-    "title":"Your subscription has expired",
-    "description":"Please renew your subscription to make your menu live again.",
-    "monthly":"Subscribe Monthly {price}",
-    "yearly":"Subscribe Yearly {price}"
+  "subExpired": {
+    "title": "Your subscription has expired",
+    "description": "Please renew your subscription to make your menu live again.",
+    "monthly": "Subscribe Monthly {price}",
+    "yearly": "Subscribe Yearly {price}"
   }
 }
