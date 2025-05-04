@@ -36,6 +36,7 @@ export default async function page({
             srcLanguages={srcLanguages}
             targetLanguages={trgtLanguages}
             menu={business.menu}
+            setup={false}
           />
         </div>
         <Mockup initialTemplate={business.menu?.template ??"T1"} />
