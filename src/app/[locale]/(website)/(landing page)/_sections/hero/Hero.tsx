@@ -48,7 +48,7 @@ export default async function Hero() {
         </MainButton>
       </div>
       <div className=" relative max-md:left-1/2 max-md:-translate-x-1/2 h-full max-md:w-screen max-lg:overflow-x-hidden overflow-y-visible">
-        <div className="absolute lg:top-36  xl:top-20 top-32 left-0 xl:left-20 bg-black/35 lg:bg-black/40 blur-3xl w-full lg:w-[150%] h-[50%] lg:h-[80%] xl:h-3/4 "></div>
+        <div className="absolute lg:top-36  xl:top-20 top-32 left-0 xl:left-20 bg-black/35 lg:bg-black/40 blur-3xl w-full lg:w-[150%] h-[50%] lg:h-[80%] xl:h-3/4 "/>
         <div className=" absolute -right-60 top-20 xl:top-0 xl:-right-96 w-[520px] md:w-[650px] lg:w-[850px] xl:w-[1000px] h-auto aspect-video ">
           <Image
             src="/Menu-items.webp"

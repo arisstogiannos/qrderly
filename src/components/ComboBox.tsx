@@ -101,6 +101,8 @@ export function ComboBox<T extends Record<string, string>>({
     }));
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState<undefined | string>(defaultValue)
+
+    console.log(value)
    
     return (
         <>
@@ -129,9 +131,9 @@ export function ComboBox<T extends Record<string, string>>({
                     <CommandItem
                     
                     key={item.value}
-                    value={item.value}
+                    value={item.label}
                     onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue)
+                        setValue(currentValue === value ? "" : formattedList.find((item) => item.label === currentValue)?.value)
                         setOpen(false)
                     }}
                     >

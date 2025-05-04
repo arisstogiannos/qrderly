@@ -3,7 +3,7 @@ import { MinusIcon, PlusIcon } from "lucide-react";
 import React from "react";
 import { useCartContext } from "@/context/CartContext";
 import CloudImage from "@/components/CloudImage";
-import { CartItem as CartItemType, Translation } from "@/types";
+import type{ CartItem as CartItemType, Translation } from "@/types";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import DisplayPrice from "@/components/DisplayPrice";
@@ -24,7 +24,7 @@ export function CartItem({
   const translationsAsJson: Translation | null = item.menuItem.translations
     ? JSON.parse(item.menuItem.translations)
     : null;
-  const existingTranslation = translationsAsJson && translationsAsJson[lang];
+  const existingTranslation = !!translationsAsJson?.[lang] ;
 
   function handleIncrease() {
     increaseContextItemQuantity(id, quantity);
@@ -34,7 +34,7 @@ export function CartItem({
   }
 
   return (
-    <div className="flex w-full gap-x-5 rounded-lg bg-secondary p-2 h-[120px] duration-1000">
+    <div className="flex w-full gap-x-5 rounded-lg bg-secondary p-3 h-[120px] duration-1000">
       {(displayImage && menuItem.imagePath) && (
         <div className="relative size-20 overflow-hidden rounded-lg object-fill md:size-28">
           <CloudImage

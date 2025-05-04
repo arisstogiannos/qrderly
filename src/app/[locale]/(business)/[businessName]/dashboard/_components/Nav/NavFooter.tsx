@@ -6,6 +6,8 @@ import {
   CreditCard,
   Eye,
   LogOut,
+  Trash,
+  TriangleAlert,
   User2,
 } from "lucide-react";
 
@@ -37,6 +39,11 @@ import I18nLanguageSelect from "@/components/I18nLanguageSelect";
 import UpgradeSubModal from "../SharedComponents/UpgradeSubModal";
 import { useEffect, useState } from "react";
 import { encryptTable } from "@/lib/table-crypt";
+import { Modal } from "../SharedComponents/Modal";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { deleteAccount } from "../../_actions/deleteAccount";
+import { Button } from "@/components/ui/button";
+import { deleteBusiness } from "../../_actions/deleteBusiness";
 
 export function NavFooter({
   user,
@@ -47,6 +54,7 @@ export function NavFooter({
 }) {
   const { isMobile } = useSidebar();
   const [adminEncryptedTableId, setAdminEncryptedTableId] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false)
   const t = useTranslations("admin.navbar");
 
   useEffect(() => {
@@ -147,12 +155,16 @@ export function NavFooter({
                   }
                 >
                   <CreditCard />
-                  Subscriptions
+                  {t("Subscriptions") }
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeleting(true)}>
+                <Trash />
+               {t("deleteAccount")}
+              </DropdownMenuItem>
+              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeleting(true)}>
+                <Trash />
+               {t("deleteBusiness") + " " + activeBusiness.name}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -163,6 +175,44 @@ export function NavFooter({
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
+      <DeleteAccountModal isOpen={isDeleting} setIsOpen={setIsDeleting} />
+      <DeleteBusinessModal isOpen={isDeleting} setIsOpen={setIsDeleting} businessId={activeBusiness.id} />
     </SidebarMenu>
   );
+}
+
+function DeleteAccountModal({isOpen, setIsOpen}:{isOpen:boolean, setIsOpen: (isOpen:boolean)=>void}){
+  const t = useTranslations("admin.navbar")
+  return <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>{t("deleteAccount")}</DialogTitle>
+        <DialogDescription>
+          {t("deleteAccountDesc")}
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button variant="destructive" autoFocus={false} onClick={()=>deleteAccount()}>{t("deleteAccount")}</Button>
+      </DialogFooter>
+    </DialogContent>
+ 
+  </Dialog>
+}
+
+function DeleteBusinessModal({isOpen, setIsOpen, businessId}:{isOpen:boolean, setIsOpen: (isOpen:boolean)=>void, businessId:string }){
+  const [isDeleting, setIsDeleting] = useState(false)
+  const t = useTranslations("admin.navbar")
+  return <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2 "><TriangleAlert className="size-5" /> {t("deleteBusiness")}</DialogTitle>
+        <DialogDescription>
+          {t("deleteBusinessDesc")}
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button variant="destructive" autoFocus={false} disabled={isDeleting} onClick={()=>{setIsDeleting(true); deleteBusiness(businessId)} }>{t("deleteBusiness")}</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 }

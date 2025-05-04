@@ -7,16 +7,19 @@ import { getTranslations } from "next-intl/server";
 
 export default async function page({
   params,
+  searchParams,
 }: {
   params: Promise<{ product: ProductURL }>;
+  searchParams: Promise<{ b: string }>;
 }) {
   const product = (await params).product;
   if (!product) notFound();
 
+  const b = (await searchParams).b;
 
   const result = await checkUser(product);
 
-  if (result) {
+  if (result && !b) {
     if (result.redirect === "businessWithoutMenu") {
       redirect("/get-started/" + product + "/menu-settings");
     }
@@ -32,13 +35,16 @@ export default async function page({
       redirect("/get-started/" + product + "/generate-items");
     }
   }
+  if(b && b!==result?.business.id){
+    redirect("/unauthorized")
+  }
 
   const t = await getTranslations("businessSetupForm")
 
   return (
     <section className="space-y-5 md:min-w-xl">
       <h1 className="text-2xl font-medium">{t("title")}</h1>
-      <BusinessSetupForm product={product} />
+      <BusinessSetupForm existingBusiness={result?.business} product={product} />
     </section>
   );
 }

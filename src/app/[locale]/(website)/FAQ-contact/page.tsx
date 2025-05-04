@@ -6,8 +6,7 @@ import ContactForm from "./_components/ContactForm";
 import { Button } from "@/components/ui/button";
 
 import { ArrowRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import {setRequestLocale} from 'next-intl/server';
+import { getTranslations,setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 
 export const dynamic = "error"

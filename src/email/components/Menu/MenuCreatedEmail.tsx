@@ -12,26 +12,28 @@ import {
   Text,
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 interface QrMenuCreatedEmailProps {
   username: string;
   menuName: string;
-  menuUrlPath:string
+  menuUrlPath: string;
 }
 
-export const QrMenuCreatedEmail = ({
+export const QrMenuCreatedEmail = async ({
   username = "John",
   menuName = "Summer Specials",
-  menuUrlPath ="menu"
+  menuUrlPath = "menu"
 }: QrMenuCreatedEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
-  const menuUrl = baseUrl+"/" + menuName.replaceAll(" ","-") +"/menu"
-  const dashboardUrl = baseUrl+"/" + menuName.replaceAll(" ","-")+"/dashboard"
+  const menuUrl = baseUrl + "/" + menuName.replaceAll(" ", "-") + "/menu";
+  const dashboardUrl = baseUrl + "/" + menuName.replaceAll(" ", "-") + "/dashboard";
+  const t = await getTranslations("emails.menuCreated");
 
   return (
     <Html>
       <Head />
-      <Preview>Your QR Menu "{menuName}" is ready!</Preview>
+      <Preview>{t("subject", { menuName })}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -41,12 +43,9 @@ export const QrMenuCreatedEmail = ({
             alt="QR Menu Creator"
             style={logo}
           />
-          <Heading style={h1}>Your QR Menu is Ready!</Heading>
-          <Text style={text}>Hi {username},</Text>
-          <Text style={text}>
-            Great news! Your QR menu "{menuName}" has been successfully created
-            and is now live.
-          </Text>
+          <Heading style={h1}>{t("heading")}</Heading>
+          <Text style={text}>{t("greeting", { username })}</Text>
+          <Text style={text}>{t("message", { menuName })}</Text>
           {/* <Section style={qrCodeContainer}>
             <Img
               src={qrCodeUrl}
@@ -56,22 +55,16 @@ export const QrMenuCreatedEmail = ({
               style={qrCode}
             />
           </Section> */}
-          <Text style={text}>
-            Your customers can now scan your QR code to view your digital menu.
-            You can print or download your QR code from your dashboard.
-          </Text>
+          <Text style={text}>{t("customerInfo")}</Text>
           <Section style={buttonContainer}>
             <Button style={button} href={menuUrl}>
-              View Your Menu
+              {t("viewButton")}
             </Button>
           </Section>
-          <Text style={text}>
-            Remember, you can update your menu anytime from your dashboard, and
-            the changes will be reflected instantly for your customers.
-          </Text>
+          <Text style={text}>{t("updateInfo")}</Text>
           <Section style={buttonContainer}>
             <Button style={secondaryButton} href={dashboardUrl}>
-              Go to Dashboard
+              {t("dashboardButton")}
             </Button>
           </Section>
           <Hr style={hr} />
@@ -176,9 +169,9 @@ const footer = {
   lineHeight: "22px",
   margin: "12px 0",
   textAlign: "center" as const,
-  display:"flex",
-alignItems:"center",
-justifyItems:"center",
-width:"100%",
-gap:"10px"
+  display: "flex",
+  alignItems: "center",
+  justifyItems: "center",
+  width: "100%",
+  gap: "10px"
 };

@@ -12,22 +12,24 @@ import {
   Text,
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 interface WelcomeEmailProps {
   username: string;
   userEmail: string;
 }
 
-export const WelcomeEmail = ({
+export const WelcomeEmail = async ({
   username = "John",
   userEmail = "john@example.com",
 }: WelcomeEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
+  const t = await getTranslations("emails.welcome");
 
   return (
     <Html>
       <Head />
-      <Preview>Welcome to Scanby - Let's get started!</Preview>
+      <Preview>{t("subject")}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -37,28 +39,21 @@ export const WelcomeEmail = ({
             alt="Scanby"
             style={logo}
           />
-          <Heading style={h1}>Welcome to Scanby!</Heading>
-          <Text style={text}>Hi {username},</Text>
-          <Text style={text}>
-            Thank you for signing up for Scanby. We're excited to help
-            you create beautiful, digital menus for your restaurant or business.
-          </Text>
+          <Heading style={h1}>{t("heading")}</Heading>
+          <Text style={text}>{t("greeting", { username })}</Text>
+          <Text style={text}>{t("message")}</Text>
           <Section style={buttonContainer}>
             <Button style={button} href={`${baseUrl}/get-started`}>
-              Get Started
+              {t("button")}
             </Button>
           </Section>
-          <Text style={text}>With Scanby, you can:</Text>
+          <Text style={text}>{t("features.heading")}</Text>
           <ul style={list}>
-            <li style={listItem}>Create unlimited digital menus</li>
-            <li style={listItem}>Generate QR codes for easy customer access</li>
-            <li style={listItem}>Update your menu in real-time</li>
-            <li style={listItem}>Track menu views and customer engagement</li>
+            {t.raw("features.items").map((item: string, index: number) => (
+              <li key={index} style={listItem}>{item}</li>
+            ))}
           </ul>
-          <Text style={text}>
-            If you have any questions, simply reply to this email. We're here to
-            help!
-          </Text>
+          <Text style={text}>{t("support")}</Text>
           <Hr style={hr} />
           <Text style={footer}>
             <Copyright /> Scanby 2025

@@ -1,5 +1,6 @@
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 import React from "react";
 
@@ -24,7 +25,8 @@ const products = [
   },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const t = await getTranslations("navbar");
   return (
     <footer className=" bg-foreground text-background rounded-t-3xl pt-10 mt-40 px-4 sm:px-0">
       <div className="my-container grid grid-rows-3 grid-cols-1 lg:grid-cols-3 lg:grid-rows-2">
@@ -36,7 +38,7 @@ export default function Footer() {
         </div>
         <div className="flex gap-16 py-8 lg:col-start-3 xl:justify-end">
           <div className="capitalize flex flex-col gap-2">
-            <p className="text-xl">products</p>
+            <p className="text-xl">{t("Products")}</p>
             {products.map((p) => (
               <Link
                 key={p.title}
@@ -48,11 +50,11 @@ export default function Footer() {
                     | "/products/qr-menu"
                 }
               >
-                {p.title}
+                {t(`${p.title}.title`)}
               </Link>
             ))}
           </div>
-          <div className="capitalize flex flex-col gap-2">
+          {/* <div className="capitalize flex flex-col gap-2">
             <p className="text-xl">Sitemap</p>
             <Link className="text-background/80 text-lg" href={"/"}>
               Home
@@ -66,17 +68,23 @@ export default function Footer() {
             <Link className="text-background/80 text-lg" href={"/"}>
               FAQ
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className="h-full place-content-end overflow-hidden col-span-full">
           <div className="text-sm flex justify-between mt-auto pb-2">
-            <a target="_blank" href="https://aris-stogiannos.gr">Created By Aris Stogiannos</a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://aris-stogiannos.gr"
+            >
+              Created By Aris Stogiannos
+            </a>
             <p>©2025 scanby</p>
           </div>
           <hr />
           <p className="uppercase text-6xl font-semibold py-5 text-center xl:text-8xl">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-violet-500">
-            go digital
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-violet-500">
+              go digital
             </span>
           </p>
         </div>
@@ -88,30 +96,45 @@ export default function Footer() {
 function Social() {
   return (
     <div className="flex gap-4">
-      <div className="p-3 border border-background rounded-full">
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://www.facebook.com/profile.php?id=61576011171289"
+        className="p-3 border border-background rounded-full"
+      >
         <Image
           src={"/icons/facebook.png"}
           width={20}
           height={20}
           alt="facebook logo"
         />
-      </div>
-      <div className="p-3 border border-background rounded-full">
+      </a>
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://www.instagram.com/scanby_menu"
+        className="p-3 border border-background rounded-full"
+      >
         <Image
           src={"/icons/instagram.png"}
           width={20}
           height={20}
           alt="instagram logo"
         />
-      </div>
-      <div className="p-3 border border-background rounded-full">
+      </a>
+      {/* <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://www.discord.com/scanby.cloud"
+        className="p-3 border border-background rounded-full"
+      >
         <Image
           src={"/icons/discord.png"}
           width={20}
           height={20}
           alt="discord logo"
         />
-      </div>
+      </a> */}
     </div>
   );
 }

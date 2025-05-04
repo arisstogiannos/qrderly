@@ -25,6 +25,7 @@ export function BusinessInfoCard({business}:{business:BusinessExtended}) {
               {business.location}
             </p>
             <p className="text-sm text-muted-foreground">{business.type}</p>
+            <p className="text-sm text-muted-foreground">{business.currency}</p>
           </div>
         </div>
       </CardContent>

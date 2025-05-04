@@ -17,7 +17,6 @@ import {
 import { SubscriptionStatusCard } from "./_components/Dashboard/subscription-status-card";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { plandata } from "@/data";
-
 export default async function page({
   params,
 }: {
@@ -26,6 +25,7 @@ export default async function page({
   const businessName = (await params).businessName.replaceAll("-", " ");
   const { business } = await checkUserAuthorized(businessName);
   const isOrderingMenu = business.product !== "QR_MENU";
+
 
   const t = await getTranslations("dashboard");
 

@@ -110,7 +110,11 @@
       "monthly": "Monthly",
       "continue": "Continue",
       "menus": "Menus",
-      "Orders": "Orders"
+      "Orders": "Orders",
+      "deleteBusiness": "Delete Business",
+      "deleteBusinessDesc": "This action will delete your business and all associated data. This includes your business data, including menu, items, and settings.",
+      "deleteAccount": "Delete Account",
+      "deleteAccountDesc": "This action will delete your account and all associated data. This includes all your businesses data, including all your menus, items, and settings."
     },
     "menu items": {
       "title": "Menu Items",
@@ -153,7 +157,7 @@
     "bullets": {
       "1": {
         "title": "Create & Customize Instantly",
-        "subtitle": "Upload a photo or PDF of your printed menu, and we’ll instantly turn it into a digital version using AI—no technical skills required."
+        "subtitle": "Upload a photo or PDF of your printed menu, and we'll instantly turn it into a digital version using AI—no technical skills required."
       },
       "2": {
         "title": "Customizable & Multilingual",
@@ -172,7 +176,7 @@
 
   "faq": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Can't find the answer you are looking for? Reach out to us",
+    "subtitle": "Can't find the answer you are looking for? Reach out to us",
     "button": "Get in Touch",
     "contact": "Contact",
     "description": "Feel free to reach out to us for any questions and we will get back to you as soon as possible!",
@@ -200,11 +204,11 @@
       "answer": "Absolutely! With our QR Menu + Ordering feature, customers can browse your digital menu, select their items, and place their orders straight from their phones. Orders show up instantly on your Scanby dashboard for you to manage, accept, and prepare."
     },
     "faq3": {
-      "question": "Is it difficult to set up? I’m not very tech-savvy.",
+      "question": "Is it difficult to set up? I'm not very tech-savvy.",
       "answer": "Not at all! Scanby is designed for everyone—even if you have zero technical experience. Setup takes minutes, and you can easily manage your menus, orders, and settings from our intuitive, user-friendly admin dashboard."
     },
     "faq4": {
-      "question": "Can I update my menu after it’s live?",
+      "question": "Can I update my menu after it's live?",
       "answer": "Yes! You have full control to update your digital menu anytime. Whether it's adding a new item, adjusting prices, or highlighting specials, all changes happen in real-time—your customers always see the freshest version."
     },
     "faq5": {
@@ -213,15 +217,15 @@
     },
     "faq6": {
       "question": "What happens if I need help setting everything up or troubleshooting?",
-      "answer": "We’ve got your back! Scanby offers easy-to-follow setup guides, tutorial videos, and a friendly support team ready to assist you whenever needed. Our goal is to make your onboarding smooth and stress-free."
+      "answer": "We've got your back! Scanby offers easy-to-follow setup guides, tutorial videos, and a friendly support team ready to assist you whenever needed. Our goal is to make your onboarding smooth and stress-free."
     },
     "faq7": {
       "question": "What devices do customers need to use Scanby QR menus?",
       "answer": "Customers just need a smartphone with a camera—no apps or special software needed. Our QR codes work universally with iPhones and Androids."
     },
     "faq8": {
-      "question": "Is the menu customizable to match my restaurant’s brand?",
-      "answer": "Yes! With Scanby, you can customize fonts, colors, menu layouts, and even add your logo. Create a digital menu that truly fits your venue’s unique style."
+      "question": "Is the menu customizable to match my restaurant's brand?",
+      "answer": "Yes! With Scanby, you can customize fonts, colors, menu layouts, and even add your logo. Create a digital menu that truly fits your venue's unique style."
     },
     "faq9": {
       "question": "Is the QR sticker customizable to match my business's brand?",
@@ -301,8 +305,8 @@
       "title": "Self Service Smart Menu",
       "longTitle": "Self Service Smart Menu",
 
-      "desc": "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
-      "shortDesc": "Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
+      "desc": "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
+      "shortDesc": "Customers can scan, order from their table, and receive notification when it's ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
       "videoPath": "/smart QR animation.webm",
       "steps": {
         "step1": "Set Up Your Online Store - Customize your menu, pricing, and branding by following the exact same steps as setting up a QR menu.",
@@ -475,7 +479,8 @@
     "Theme": "Theme",
     "Customize": "Customize",
     "Save": "Save",
-    "Next": "Next"
+    "back": "Back",
+    "next": "Next"
   },
   "qr settings": {
     "qr shape": {
@@ -499,7 +504,7 @@
     "Next": "Next"
   },
   "get started": {
-    "title": "Choose the product you want to pocceed with. Get started for free and see what’s right for you!",
+    "title": "Choose the product you want to pocceed with. Get started for free and see what's right for you!",
     "button": "Get Started for Free",
     "business setup": "business setup",
     "menu settings": "menu settings",
@@ -599,9 +604,13 @@
       "oauth": "Try logging in the same way you signed up."
     }
   },
+  "auth": {
+    "backToHomepage": "Back to Homepage"
+  },
   "registerPage": {
     "title": "Register",
-    "subtitle": "Create an account"
+    "subtitle": "Create an account and have your menu online in a few minutes.",
+    "back": "Back"
   },
   "loginPage": {
     "title": "Welcome back",
@@ -743,5 +752,85 @@
     "description": "Please renew your subscription to make your menu live again.",
     "monthly": "Subscribe Monthly {price}",
     "yearly": "Subscribe Yearly {price}"
+  },
+  "emails": {
+    "verification": {
+      "subject": "Verify your email address for Scanby",
+      "heading": "Verify your email address",
+      "greeting": "Hi {username}",
+      "message": "Please verify your email address to complete your Scanby account setup. This helps us confirm you're a real person and secures your account.",
+      "button": "Verify Email Address",
+      "disclaimer": "If you didn't create an account with Scanby, you can safely ignore this email.",
+      "expiry": "This verification link will expire in 24 hours."
+    },
+    "feedback": {
+      "subject": "We'd love your feedback on your experience with Scanby",
+      "heading": "Tell us what you think",
+      "greeting": "Hi {username}",
+      "message": "Thanks for using Scanby! We'd love to hear your thoughts on your experience so far. Your feedback helps us improve and serve you better.",
+      "button": "Give Feedback",
+      "note": "Your response should only take a minute or two. We really appreciate your time!"
+    },
+    "menuCreated": {
+      "subject": "Your QR Menu \"{menuName}\" is ready!",
+      "heading": "Your QR Menu is Ready!",
+      "greeting": "Hi {username}",
+      "message": "Great news! Your QR menu \"{menuName}\" has been successfully created and is now live.",
+      "customerInfo": "Your customers can now scan your QR code to view your digital menu. You can print or download your QR code from your dashboard.",
+      "viewButton": "View Your Menu",
+      "updateInfo": "Remember, you can update your menu anytime from your dashboard, and the changes will be reflected instantly for your customers.",
+      "dashboardButton": "Go to Dashboard"
+    },
+    "passwordReset": {
+      "subject": "Reset your Scanby password",
+      "heading": "Reset your password",
+      "greeting": "Hi {name}",
+      "message": "We received a request to reset your password for your QR Menu Creator account. Click the button below to set a new password:",
+      "button": "Reset Password",
+      "disclaimer": "If you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.",
+      "expiry": "This password reset link will expire in 1 hour."
+    },
+    "welcome": {
+      "subject": "Welcome to Scanby - Let's get started!",
+      "heading": "Welcome to Scanby!",
+      "greeting": "Hi {username}",
+      "message": "Thank you for signing up for Scanby. We're excited to help you create beautiful, digital menus for your restaurant or business.",
+      "button": "Get Started",
+      "features": {
+        "heading": "With Scanby, you can:",
+        "items": [
+          "Create unlimited digital menus",
+          "Generate QR codes for easy customer access",
+          "Update your menu in real-time",
+          "Track menu views and customer engagement"
+        ]
+      },
+      "support": "If you have any questions, simply reply to this email. We're here to help!"
+    },
+    "subscriptionConfirmation": {
+      "subject": "Your Scanby subscription is confirmed!",
+      "heading": "Subscription Confirmed",
+      "greeting": "Hi {username}",
+      "message": "Thank you for subscribing to Scanby! Your {planName} plan is now active.",
+      "details": {
+        "heading": "Subscription Details",
+        "plan": "Plan: {planName}",
+        "price": "Price: {planPrice} {billingCycle}",
+        "startDate": "Start Date: {startDate}"
+      },
+      "accessInfo": "You now have access to all the features included in the {planName} plan. You can start creating QR menus right away!",
+      "button": "Go to Dashboard",
+      "support": "If you have any questions about your subscription or need assistance, please contact our support team at support@qrmenu.app."
+    },
+    "trialEnded": {
+      "subject": "Your Scanby trial has ended - Upgrade to continue",
+      "heading": "Your Free Trial Has Ended",
+      "greeting": "Hi {username}",
+      "congratsMessage": "Congratulations on reaching 200 menu scans on {businessName} with Scanby! 🎉",
+      "message": "Your free trial has now ended. To continue offering digital menus to your customers without interruption, please upgrade your plan.",
+      "button": "Upgrade Now",
+      "benefits": "With a paid plan, you'll continue to enjoy unlimited scans",
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!"
+    }
   }
 }

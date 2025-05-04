@@ -19,14 +19,17 @@ import Loader from "@/components/Loader";
 import TablesSetup from "./TablesSetup";
 import { supportedCurrencies } from "@/lib/formatter";
 import { useTranslations } from "next-intl";
+import { Business } from "@prisma/client";
 
 export default function BusinessSetupForm({
   product,
+  existingBusiness,
 }: {
   product: ProductURL;
+  existingBusiness?: Business;
 }) {
   const [state, action, isPending] = useActionState(
-    submitBusinessInfo.bind(null, product),
+    submitBusinessInfo.bind(null, product, existingBusiness?.id),
     null
   );
   const t = useTranslations("businessSetupForm");
@@ -45,6 +48,7 @@ export default function BusinessSetupForm({
           name="name"
           type="text"
           required
+          defaultValue={existingBusiness?.name}
         />
         {state?.errors?.name?.map((er) => {
           return (
@@ -58,9 +62,9 @@ export default function BusinessSetupForm({
       </div>
       <div className="grid gap-3">
         <Label htmlFor="type">{t("businessType")}</Label>
-        <Select name="type" required>
+        <Select name="type" required defaultValue={existingBusiness?.type}>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder={t("businessTypePlaceholder")} />
+            <SelectValue placeholder={t("businessTypePlaceholder")}  />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={"restaurant"}>{t("restaurant")}</SelectItem>
@@ -80,8 +84,8 @@ export default function BusinessSetupForm({
       </div>
       <div className="grid gap-3">
         <Label htmlFor="currency">{t("currency")}</Label>
-        <Select name="currency" required>
-          <SelectTrigger className="w-full">
+        <Select name="currency" required defaultValue={existingBusiness?.currency}>
+          <SelectTrigger className="w-full" >
             <SelectValue placeholder={t("currencyPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
@@ -105,7 +109,7 @@ export default function BusinessSetupForm({
 
       <div className="grid gap-3">
         <Label htmlFor="country">{t("country")}</Label>
-        <Input id="country" name="country" type="text" required />
+        <Input id="country" name="country" type="text" required defaultValue={existingBusiness?.location.split("-")[0]} />
         {state?.errors?.country?.map((er) => {
           return (
             <ErrorMessage
@@ -118,7 +122,7 @@ export default function BusinessSetupForm({
       </div>
       <div className="grid gap-3">
         <Label htmlFor="city">{t("city")}</Label>
-        <Input id="city" name="city" type="text" required />
+        <Input id="city" name="city" type="text" required defaultValue={existingBusiness?.location.split("-")[1]} />
         {state?.errors?.city?.map((er) => {
           return (
             <ErrorMessage

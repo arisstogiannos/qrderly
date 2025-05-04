@@ -12,6 +12,7 @@ import {
   Text,
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 interface TrialEndedEmailProps {
   username: string;
@@ -19,18 +20,18 @@ interface TrialEndedEmailProps {
   businessName: string;
 }
 
-export const TrialEndedEmail = ({
+export const TrialEndedEmail = async ({
   username = "John",
   userEmail = "john@example.com",
   businessName = "Your Business Name",
-
 }: TrialEndedEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
+  const t = await getTranslations("emails.trialEnded");
 
   return (
     <Html>
       <Head />
-      <Preview>Your Scanby trial has ended - Upgrade to continue</Preview>
+      <Preview>{t("subject")}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -40,28 +41,19 @@ export const TrialEndedEmail = ({
             alt="Scanby"
             style={logo}
           />
-          <Heading style={h1}>Your Free Trial Has Ended</Heading>
-          <Text style={text}>Hi {username},</Text>
-          <Text style={text}>
-            Congratulations on reaching 200 menu scans on {businessName} with Scanby! 🎉
-          </Text>
-          <Text style={text}>
-            Your free trial has now ended. To continue offering digital menus to your customers without interruption, please upgrade your plan.
-          </Text>
+          <Heading style={h1}>{t("heading")}</Heading>
+          <Text style={text}>{t("greeting", { username })}</Text>
+          <Text style={text}>{t("congratsMessage", { businessName })}</Text>
+          <Text style={text}>{t("message")}</Text>
 
           <Section style={buttonContainer}>
-            <Button style={button} href={`${baseUrl}/${businessName.replaceAll(" ","-")}/dashboard`}>
-              Upgrade Now
+            <Button style={button} href={`${baseUrl}/${businessName.replaceAll(" ", "-")}/dashboard`}>
+              {t("button")}
             </Button>
           </Section>
 
-          <Text style={text}>
-            With a paid plan, you'll continue to enjoy unlimited scans
-          </Text>
-
-          <Text style={text}>
-            Need help or have questions? Just reply to this email — our team is ready to assist you!
-          </Text>
+          <Text style={text}>{t("benefits")}</Text>
+          <Text style={text}>{t("support")}</Text>
 
           <Hr style={hr} />
           <Text style={footer}>
@@ -75,8 +67,6 @@ export const TrialEndedEmail = ({
 };
 
 export default TrialEndedEmail;
-
-
 
 const main = {
   backgroundColor: "#f6f9fc",
@@ -116,17 +106,6 @@ const text = {
   margin: "16px 0",
 };
 
-const qrCodeContainer = {
-  textAlign: "center" as const,
-  margin: "30px 0",
-};
-
-const qrCode = {
-  border: "1px solid #e5e7eb",
-  padding: "10px",
-  backgroundColor: "#ffffff",
-};
-
 const buttonContainer = {
   textAlign: "center" as const,
   margin: "30px 0",
@@ -136,19 +115,6 @@ const button = {
   backgroundColor: "#5046e4",
   borderRadius: "4px",
   color: "#fff",
-  display: "inline-block",
-  fontSize: "16px",
-  fontWeight: "bold",
-  textDecoration: "none",
-  textAlign: "center" as const,
-  padding: "10px",
-};
-
-const secondaryButton = {
-  backgroundColor: "#ffffff",
-  borderRadius: "4px",
-  border: "1px solid #5046e4",
-  color: "#5046e4",
   display: "inline-block",
   fontSize: "16px",
   fontWeight: "bold",
@@ -168,9 +134,9 @@ const footer = {
   lineHeight: "22px",
   margin: "12px 0",
   textAlign: "center" as const,
-  display:"flex",
-alignItems:"center",
-justifyItems:"center",
-width:"100%",
-gap:"10px"
+  display: "flex",
+  alignItems: "center",
+  justifyItems: "center",
+  width: "100%",
+  gap: "10px",
 };

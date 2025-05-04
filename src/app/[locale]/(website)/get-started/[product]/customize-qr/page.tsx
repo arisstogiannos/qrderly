@@ -1,40 +1,50 @@
-import Image from "next/image";
 import React from "react";
 import { ProductURL } from "@/types";
 
 import { checkUser } from "../../isAllowed";
 import { notFound, redirect } from "next/navigation";
-import Publish from "../../_components/Publish";
 import QrCreator from "../../_components/qr/QrCreator";
 import { productPath } from "@/data";
-
+import { getTranslations } from "next-intl/server";
+import BackButton from "../../_components/BackButton";
 export default async function page({
   params,
+  searchParams,
 }: {
   params: Promise<{ product: ProductURL }>;
+  searchParams: Promise<{ b: string }>;
 }) {
   const product = (await params).product;
   if (!product) notFound();
+
+  const b = (await searchParams).b;
+
+  const t = await getTranslations("qr settings");
 
   const result = await checkUser(product);
 
   if (!result) {
     redirect("/get-started/" + product + "/business-setup");
   }
-  if (result.redirect === "noUnsetBusiness") {
-    redirect("/get-started/" + product + "/business-setup");
+  
+  if (!b) {
+    if (result.redirect === "noUnsetBusiness") {
+      redirect("/get-started/" + product + "/business-setup");
+    }
+    if (result?.redirect === "businessWithoutMenu") {
+      redirect("/get-started/" + product + "/menu-settings");
+    }
+    // if (result.redirect === "emptyMenu") {
+    //   redirect("/get-started/" + product + "/generate-items");
+    // }
+    if (result.redirect === "unpublishedMenu") {
+      redirect("/get-started/" + product + "/publish");
+    }
+  } else {
+    if (b !== result.business.id) {
+      redirect("/unauthorized");
+    }
   }
-  if (result?.redirect === "businessWithoutMenu") {
-    redirect("/get-started/" + product + "/menu-settings");
-  }
-  // if (result.redirect === "emptyMenu") {
-  //   redirect("/get-started/" + product + "/generate-items");
-  // }
-  if (result.redirect === "unpublishedMenu") {
-    redirect("/get-started/" + product + "/publish");
-  }
-
-
 
   const url =
     process.env.NEXT_PUBLIC_SERVER_URL +
@@ -45,8 +55,14 @@ export default async function page({
 
   return (
     <section className="flex flex-col lg:min-w-xl max-w-7xl gap-y-6">
-      <h1 className="text-2xl font-medium">Customize Your QR Code</h1>
-      <QrCreator business={result.business} product={product}  url={url} />
+      <div className="flex items-center gap-x-5">
+        <h1 className="text-2xl font-medium">{t("title")}</h1>
+        <BackButton
+          href={`/get-started/${product}/generate-items`}
+          businessId={result.business.id}
+        />
+      </div>
+      <QrCreator business={result.business} product={product} url={url} />
     </section>
   );
 }

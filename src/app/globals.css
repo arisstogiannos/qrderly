@@ -321,8 +321,8 @@
   margin: auto;
   border: 0.2em solid;
   /* border: 0.2em solid; */
-  border-color: transparent transparent var(--secondary-mockup)
-    var(--secondary-mockup);
+  border-color: transparent transparent var(--foreground)
+    var(--foreground);
   width: 95%;
   height: 95%;
   /* width: 2.4em;

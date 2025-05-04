@@ -20,21 +20,23 @@ export default function MenuSettingsForm({
   menu,
   srcLanguages,
   targetLanguages,
+  setup,
 }: {
   srcLanguages: readonly Language[];
   targetLanguages: readonly Language[];
   businessId: string;
   product: Product;
   menu?: Menu;
+  setup: boolean;
 }) {
   const [state, action, isPending] = useActionState(
-    submitMenuSettings.bind(null, businessId, product, menu),
+    submitMenuSettings.bind(null, businessId, product, menu, setup),
     null
   );
   const template: Template = (useSearchParams().get("t") as Template) ?? "T1";
 
   useEffect(() => {
-    if (menu) {
+    if (!setup) {
       if (state?.success) {
         toast(state.success, {
           duration: 1500,
@@ -59,8 +61,8 @@ export default function MenuSettingsForm({
         });
       }
     }
-  }, [menu, state]);
-  const t = useTranslations("menu settings")
+  }, [menu, state, setup]);
+  const t = useTranslations("menu settings");
 
   return (
     <>
@@ -78,7 +80,12 @@ export default function MenuSettingsForm({
       <ThemeSettings
         menu={menu}
         template={template}
-        errors={state?.errors?.theme}
+        errors={[
+          ...(state?.errors?.primary ?? []),
+          ...(state?.errors?.background ?? []),
+          ...(state?.errors?.foreground ?? []),
+          ...(state?.errors?.text ?? []),
+        ]}
       />
       <Button
         disabled={isPending}
@@ -88,14 +95,14 @@ export default function MenuSettingsForm({
       >
         {isPending ? (
           <Loader className="text-xs " />
-        ) : menu ? (
+        ) : !setup ? (
           <>
             <Save />
             {t("Save")}
           </>
         ) : (
           <>
-            Next <ArrowRight className="size-5" />
+            {t("next")} <ArrowRight className="size-5" />
           </>
         )}
       </Button>

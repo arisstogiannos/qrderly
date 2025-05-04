@@ -11,6 +11,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import { cookies } from "next/headers";
+import BackButton from "../../_components/BackButton";
 
 export default async function page({
   params,
@@ -37,7 +38,7 @@ export default async function page({
   //   redirect("/get-started/" + product + "/business-setup");
   // }
 
-  const runningInngestJobId = (await cookies()).get("inngestEventId")?.value;
+  // const runningInngestJobId = (await cookies()).get("inngestEventId")?.value;
 
   // if (runningInngestJobId) {
   //   let isRunning = true;
@@ -54,6 +55,10 @@ export default async function page({
   return (
     <div className="">
       <div className="max-w-4xl mx-auto">
+        <BackButton
+          href={`/get-started/${product}/customize-qr`}
+          businessId={result.business.id}
+        />
         {/* Confetti-style header */}
         <div className="relative mb-12 text-center">
           <div className="absolute inset-0 flex items-center justify-center opacity-10">
@@ -106,7 +111,7 @@ export default async function page({
           businessId={result.business.id}
           product={product}
           user={result.user}
-          inngestJobId={runningInngestJobId}
+          // inngestJobId={runningInngestJobId}
         />
         {/* Publish Button */}
       </div>

@@ -23,10 +23,10 @@ export async function generateMetadata({ params }:{params:Promise<{businessName:
   return {
     metadataBase: new URL('https://www.scanby.cloud'),
     title: `${businessName} | Online Menu`,
-    description: `Check out our menu`,
+    description: 'Check out our menu',
     openGraph: {
       title: `${businessName} | Online Menu`,
-      description: `Check out our menu`,
+      description: 'Check out our menu',
       url: `https://www.scanby.cloud/en/${businessName}/smart-menu`,
       siteName: 'Scanby',
     },
@@ -60,25 +60,25 @@ export default async function page({
 
   const getActiveMenu = cache(
     getActiveMenuNotCached,
-    ["active-menu" + businessName],
+    [`active-menu${businessName}`],
     {
-      tags: ["active-menu" + businessName],
+      tags: [`active-menu${businessName}`],
     }
   );
   const menu = await getActiveMenu(businessName);
 
   const getCachedCategories = cache(
     getCategories,
-    ["categories" + businessName],
+    [`categories${businessName}`],
     {
-      tags: ["categories" + businessName],
+      tags: [`categories${businessName}`],
     }
   );
   const getCachedMenuItems = cache(
     getActiveMenuItems,
-    ["active-menu-items" + businessName],
+    [`active-menu-items${businessName}`],
     {
-      tags: ["menu-items" + businessName],
+      tags: [`menu-items${businessName}`],
     }
   );
 
@@ -87,7 +87,7 @@ export default async function page({
   }
 
   if (menu.type === "QR_MENU") {
-    redirect("/en/" + businessName + "/menu");
+    redirect(`/en/${businessName}/menu`);
   }
 
   const [categories, products] = await Promise.all([

@@ -72,7 +72,7 @@ export default function ThemeSettings({
           );
         })}
       </div>
-      <CustomThemeMaker defaultColors={selectedTheme.split(",")} />
+      <CustomThemeMaker defaultColors={ selectedTheme.split(",")}  />
       {errors?.map((er) => {
         return (
           <ErrorMessage

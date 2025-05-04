@@ -12,22 +12,24 @@ import {
   Text,
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 interface PasswordResetEmailProps {
   name: string;
   resetLink: string;
 }
 
-export const PasswordResetEmail = ({
+export const PasswordResetEmail = async ({
   resetLink,
   name,
 }: PasswordResetEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
+  const t = await getTranslations("emails.passwordReset");
 
   return (
     <Html>
       <Head />
-      <Preview>Reset your Scanby password</Preview>
+      <Preview>{t("subject")}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -37,24 +39,16 @@ export const PasswordResetEmail = ({
             alt="QR Menu Creator"
             style={logo}
           />
-          <Heading style={h1}>Reset your password</Heading>
-          <Text style={text}>Hi {name},</Text>
-          <Text style={text}>
-            We received a request to reset your password for your QR Menu
-            Creator account. Click the button below to set a new password:
-          </Text>
+          <Heading style={h1}>{t("heading")}</Heading>
+          <Text style={text}>{t("greeting", { name })}</Text>
+          <Text style={text}>{t("message")}</Text>
           <Section style={buttonContainer}>
             <Button style={button} href={resetLink}>
-              Reset Password
+              {t("button")}
             </Button>
           </Section>
-          <Text style={text}>
-            If you didn't request a password reset, you can safely ignore this
-            email. Your password will remain unchanged.
-          </Text>
-          <Text style={text}>
-            This password reset link will expire in 1 hour.
-          </Text>
+          <Text style={text}>{t("disclaimer")}</Text>
+          <Text style={text}>{t("expiry")}</Text>
           <Hr style={hr} />
           <Text style={footer}>
             <Copyright /> Scanby 2025

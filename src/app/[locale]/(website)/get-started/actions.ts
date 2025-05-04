@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
-import { sendMenuCreatedEmail } from "@/email/mail";
+import { sendFeedbackEmail, sendMenuCreatedEmail } from "@/email/mail";
 import { encryptTable } from "@/lib/table-crypt";
 import { getRunOutput } from "@/inngest/status";
 import { cookies } from "next/headers";
@@ -26,6 +26,7 @@ const businessSchema = z.object({
 
 export async function submitBusinessInfo(
   product: ProductURL,
+  existingBusinessId: string | undefined,
   prevstate: any,
   formData: FormData
 ) {
@@ -38,49 +39,70 @@ export async function submitBusinessInfo(
   }
 
   const data = result.data;
-  const existingBusiness = await db.business.findFirst({
-    where: { name: data.name },
-  });
-
-  if (existingBusiness) {
-    return {
-      errors: {
-        name: ["bussiness name already exists. Try adding a number"],
-      },
-    };
-  }
-  const session = await auth();
-  const user = session?.user;
-
-  if (!user?.id) {
-    redirect("/unauthorized");
-  }
-  const freebusinesses = user.business.filter(
-    (b) => b.subscription && b.subscription.billing === "FREETRIAL"
-  );
-
-  if (freebusinesses.length > 3) {
-    return {
-      error: "You have more than 3 free menus. You have to upgrade to pro.",
-    };
-  }
-  try {
-    await db.business.create({
-      data: {
-        name: data.name,
-        location: data.country + " - " + data.city,
-        type: data.type,
-        userId: user.id,
-        product: productMap[product],
-        tables: data.tables,
-        currency: data.currency,
-      },
+  if (!existingBusinessId) {
+    const existingBusiness = await db.business.findUnique({
+      where: { name: data.name },
     });
-  } catch (err) {
-    console.error(err);
-    return {
-      error: "Something went wrong!",
-    };
+
+    if (existingBusiness) {
+      return {
+        errors: {
+          name: ["bussiness name already exists. Try adding a number"],
+        },
+      };
+    }
+    const session = await auth();
+    const user = session?.user;
+
+    if (!user?.id) {
+      redirect("/unauthorized");
+    }
+    const freebusinesses = user.business.filter(
+      (b) => b.subscription && b.subscription.billing === "FREETRIAL"
+    );
+
+    if (freebusinesses.length > 3) {
+      return {
+        error: "You have more than 3 free menus. You have to upgrade to pro.",
+      };
+    }
+    try {
+      await db.business.create({
+        data: {
+          name: data.name,
+          location: data.country + " - " + data.city,
+          type: data.type,
+          userId: user.id,
+          product: productMap[product],
+          tables: data.tables,
+          currency: data.currency,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      return {
+        error: "Something went wrong!",
+      };
+    }
+  } else {
+    try {
+      await db.business.update({
+        where: { id: existingBusinessId },
+        data: {
+          name: data.name,
+          location: data.country + " - " + data.city,
+          type: data.type,
+          currency: data.currency,
+          tables: data.tables,
+
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      return {
+        error: "Something went wrong!",
+      };
+    }
   }
   redirect(`/get-started/${product}/menu-settings`);
   // return { success: true };
@@ -90,7 +112,6 @@ const menuSettingsSchema = z.object({
   defaultLanguage: z.string().nonempty({ message: "Required field" }),
   language: z.string().nonempty({ message: "Required field" }),
   template: z.string().nonempty({ message: "Required field" }),
-  theme: z.string().nonempty({ message: "Required field" }),
   background: z.string().optional(),
   foreground: z.string().optional(),
   primary: z.string().optional(),
@@ -100,6 +121,7 @@ export async function submitMenuSettings(
   businessId: string,
   product: Product,
   menu: Menu | undefined,
+  setup: boolean,
   prevstate: any,
   formData: FormData
 ) {
@@ -113,7 +135,6 @@ export async function submitMenuSettings(
   const {
     defaultLanguage,
     language,
-    theme,
     background,
     foreground,
     primary,
@@ -123,11 +144,9 @@ export async function submitMenuSettings(
 
   let selectedTheme;
 
-  if (theme !== "custom") {
-    selectedTheme = theme;
-  } else {
-    selectedTheme = background + "," + foreground + "," + primary + "," + text;
-  }
+
+  selectedTheme = background + "," + foreground + "," + primary + "," + text;
+
 
   try {
     if (menu) {
@@ -157,7 +176,7 @@ export async function submitMenuSettings(
       error: "Something went wrong",
     };
   }
-  if (!menu) redirect(`/get-started/${productMapURL[product]}/generate-items`);
+  if (setup) redirect(`/get-started/${productMapURL[product]}/generate-items`);
 
   const session = await getSession();
 
@@ -245,14 +264,21 @@ export async function createMenu(
   const businessNameUrl = business.name.replaceAll(" ", "-");
   const adminEncryptedTableId = await encryptTable("admin|" + business.name)
   if (user.email) {
-    await sendMenuCreatedEmail(
-      user.email,
-      user.name ?? "user",
-      business.name,
-      menu.type === "QR_MENU"
-        ? "menu"
-        : ("smart-menu?table=" + adminEncryptedTableId)
-    );
+    await Promise.all([
+
+      sendMenuCreatedEmail(
+        user.email,
+        user.name ?? "user",
+        business.name,
+        menu.type === "QR_MENU"
+          ? "menu"
+          : ("smart-menu?table=" + adminEncryptedTableId)
+      ),
+      sendFeedbackEmail(
+        user.email,
+        user.name ?? "user",
+      )
+    ])
   }
   return {
     success: "Proccess Complete",

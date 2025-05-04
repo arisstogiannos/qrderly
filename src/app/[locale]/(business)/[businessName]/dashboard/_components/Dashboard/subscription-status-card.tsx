@@ -47,7 +47,7 @@ export function SubscriptionStatusCard({
               <p className="text-sm">
                 {t("subscription.trafficLimit")}: {isFreeTrial ? "200 scans" : t("subscription.unlimited")}
               </p>
-              <p className="text-sm">{t("subscription.remaining")}: {200 - scans}</p>
+              {isFreeTrial ?<p className="text-sm">{t("subscription.remaining")}: {200 - scans}</p> : null}
 
               <Button className="w-full mt-4" asChild>
                 <Link

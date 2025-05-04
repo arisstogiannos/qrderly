@@ -12,6 +12,7 @@ import {
   Text,
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 interface SubscriptionConfirmationEmailProps {
   username: string;
@@ -22,7 +23,7 @@ interface SubscriptionConfirmationEmailProps {
   dashboardUrl: string;
 }
 
-export const SubscriptionConfirmationEmail = ({
+export const SubscriptionConfirmationEmail = async ({
   username = "John",
   planName = "Professional",
   planPrice = "$29",
@@ -31,11 +32,12 @@ export const SubscriptionConfirmationEmail = ({
   dashboardUrl = "https://qrmenu.app/dashboard",
 }: SubscriptionConfirmationEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
+  const t = await getTranslations("emails.subscriptionConfirmation");
 
   return (
     <Html>
       <Head />
-      <Preview>Your Scanby subscription is confirmed!</Preview>
+      <Preview>{t("subject")}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -45,42 +47,32 @@ export const SubscriptionConfirmationEmail = ({
             alt="Scanby"
             style={logo}
           />
-          <Heading style={h1}>Subscription Confirmed</Heading>
-          <Text style={text}>Hi {username},</Text>
-          <Text style={text}>
-            Thank you for subscribing to Scanby! Your {planName} plan
-            is now active.
-          </Text>
+          <Heading style={h1}>{t("heading")}</Heading>
+          <Text style={text}>{t("greeting", { username })}</Text>
+          <Text style={text}>{t("message", { planName })}</Text>
           <Section style={boxContainer}>
             <div style={box}>
-              <Text style={boxTitle}>Subscription Details</Text>
+              <Text style={boxTitle}>{t("details.heading")}</Text>
               <Text style={boxContent}>
-                <strong>Plan:</strong> {planName}
+                {t("details.plan", { planName })}
                 <br />
-                <strong>Price:</strong> {planPrice} {billingCycle}
+                {t("details.price", { planPrice, billingCycle })}
                 <br />
-                <strong>Start Date:</strong> {startDate}
+                {t("details.startDate", { startDate })}
                 <br />
               </Text>
             </div>
           </Section>
-          <Text style={text}>
-            You now have access to all the features included in the {planName}{" "}
-            plan. You can start creating QR menus right away!
-          </Text>
+          <Text style={text}>{t("accessInfo", { planName })}</Text>
           <Section style={buttonContainer}>
-            <Button  style={button} href={dashboardUrl}>
-              Go to Dashboard
+            <Button style={button} href={dashboardUrl}>
+              {t("button")}
             </Button>
           </Section>
-          <Text style={text}>
-            If you have any questions about your subscription or need
-            assistance, please contact our support team at support@qrmenu.app.
-          </Text>
+          <Text style={text}>{t("support")}</Text>
           <Hr style={hr} />
           <Text style={footer}>
-          <Copyright/> Scanby 2025
-
+            <Copyright /> Scanby 2025
           </Text>
         </Container>
       </Body>
@@ -166,7 +158,7 @@ const button = {
   fontSize: "16px",
   fontWeight: "bold",
   textDecoration: "none",
-  padding:"10px",
+  padding: "10px",
   textAlign: "center" as const,
 };
 
@@ -181,9 +173,9 @@ const footer = {
   lineHeight: "22px",
   margin: "12px 0",
   textAlign: "center" as const,
-  display:"flex",
-  alignItems:"center",
-  justifyItems:"center",
-  width:"100%",
-  gap:"10px"
+  display: "flex",
+  alignItems: "center",
+  justifyItems: "center",
+  width: "100%",
+  gap: "10px",
 };

@@ -30,7 +30,7 @@ export default async function HowItWorks() {
           >
             <Link href={"/get-started"} className="hover:translate-0 text-nowrap"> {t("button1")}</Link>
           </MainButton>
-          <Button
+          {/* <Button
             variant={"outline"}
             asChild
             className="text-sm  md:text-2xl py-5 md:py-7 pl-4 pr-2 gap-3 md:gap-20 justify-between rounded-3xl"
@@ -39,7 +39,7 @@ export default async function HowItWorks() {
             {t("button2")}
                 <ArrowRight className=" size-6 md:size-8" />
             </Link>
-          </Button>
+          </Button> */}
         </div>
       </div>
       <ul className=" space-y-5 lg:space-y-8 xl:pl-28 pt-14 xl:pt-0 md:pr-20 lg:pr-0">
@@ -48,7 +48,7 @@ export default async function HowItWorks() {
             <span className="flex-center size-8 p-5 md:size-10 md:p-6 bg-foreground text-background rounded-full text-lg md:text-2xl">
               {i + 1}
             </span>
-            <p className="text-lg md:text-3xl mt-1 xl:text-2xl"> {t("bullets."+(i+1).toString())}</p>
+            <p className="text-lg md:text-3xl mt-1 xl:text-2xl"> {t(`bullets.${i + 1}`)}</p>
           </li>
         ))}
       </ul>
