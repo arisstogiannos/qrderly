@@ -5,14 +5,14 @@ import {
   useRef,
   useActionState,
 } from "react";
-import QRCodeStyling, { CornerDotType, CornerSquareType, DotType, dotTypes, Options } from "qr-code-styling";
+import QRCodeStyling, { CornerDotType, CornerSquareType, DotType, Options } from "qr-code-styling";
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Save } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { saveQR } from "../../actions";
-import { BusinessExtended, ProductURL } from "@/types";
+import type { BusinessExtended, ProductURL } from "@/types";
 import Loader from "@/components/Loader";
 
 import QrDownLoad from "./QrDownLoad";
@@ -161,7 +161,7 @@ export default function QrCreator({
       </div>
 
       <div className="space-y-4 sm:max-w-[320px] w-full">
-        <div ref={qrRef} className="bg-gray-100  inline-block "></div>
+        <div ref={qrRef} className="bg-gray-100  inline-block "/>
         <QrDownLoad text={text} business={business} qrCode={qrCode} />
       </div>
 

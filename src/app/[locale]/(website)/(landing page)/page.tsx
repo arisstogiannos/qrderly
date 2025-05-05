@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import BusinessStats from "./_sections/BusinessStats";
 
+
 export default async function IndexPage({
   params,
 }: {

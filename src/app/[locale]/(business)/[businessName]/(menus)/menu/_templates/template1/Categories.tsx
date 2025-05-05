@@ -1,6 +1,6 @@
 "use client";
-import { Translation } from "@/types";
-import { Category } from "@prisma/client";
+import type { Translation } from "@/types";
+import type { Category } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -15,9 +15,9 @@ export default function Categories({ categories }: { categories: Category[] }) {
   const isUserClicking = useRef(false); // Prevent scroll effect on click
 
   useEffect(() => {
-    categories.forEach(
-      (cat) => (sectionsRef.current[cat.id] = document.getElementById(cat.id))
-    );
+    for (const cat of categories) {
+      sectionsRef.current[cat.id] = document.getElementById(cat.id);
+    }
 
     const handleScroll = () => {
       if (isUserClicking.current) return; // Prevent auto-scroll when user clicks
@@ -82,7 +82,8 @@ export default function Categories({ categories }: { categories: Category[] }) {
                 ? translationsAsJson[lang].name
                 : category.name;
           return (
-            <button
+            <button 
+              type="button"
               key={category.id}
               ref={(el) => {
                 if (el) linksRef.current[category.id] = el;

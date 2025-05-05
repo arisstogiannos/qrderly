@@ -2,13 +2,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useCartContext } from "@/context/CartContext";
 import CloudImage from "@/components/CloudImage";
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import { CardModalProvider } from "@/context/CardModalProvider";
 import MenuItemModal, {
   ModalTrigger,
 } from "../../../_components/MenuItemModal/MenuItemModal";
 import { useSearchParams } from "next/navigation";
-import { Translation } from "@/types";
+import type { Translation } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
 
 export function MenuItemCard({
@@ -29,14 +29,14 @@ export function MenuItemCard({
 
   const existingTranslation = lang && translationsAsJson && translationsAsJson[lang];
   name =
-    existingTranslation && translationsAsJson[lang].name && translationsAsJson[lang].name !== "null"
-      ? translationsAsJson[lang].name
+    existingTranslation && translationsAsJson[lang]?.name && translationsAsJson[lang]?.name !== "null"
+      ? translationsAsJson[lang]?.name
       : name;
   description =
     existingTranslation &&
-    translationsAsJson[lang].description &&
-    translationsAsJson[lang].description !== "null"
-      ? translationsAsJson[lang].description
+    translationsAsJson[lang]?.description &&
+    translationsAsJson[lang]?.description !== "null"  
+      ? translationsAsJson[lang]?.description
       : description;
 
   let quantity = 0;

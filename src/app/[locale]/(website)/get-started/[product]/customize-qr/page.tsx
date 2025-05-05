@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductURL } from "@/types";
+import type { ProductURL } from "@/types";
 
 import { checkUser } from "../../isAllowed";
 import { notFound, redirect } from "next/navigation";
@@ -24,21 +24,21 @@ export default async function page({
   const result = await checkUser(product);
 
   if (!result) {
-    redirect("/get-started/" + product + "/business-setup");
+    redirect(`/get-started/${product}/business-setup`);
   }
   
   if (!b) {
     if (result.redirect === "noUnsetBusiness") {
-      redirect("/get-started/" + product + "/business-setup");
+      redirect(`/get-started/${product}/business-setup`);
     }
     if (result?.redirect === "businessWithoutMenu") {
-      redirect("/get-started/" + product + "/menu-settings");
+      redirect(`/get-started/${product}/menu-settings`);
     }
     // if (result.redirect === "emptyMenu") {
     //   redirect("/get-started/" + product + "/generate-items");
     // }
     if (result.redirect === "unpublishedMenu") {
-      redirect("/get-started/" + product + "/publish");
+      redirect(`/get-started/${product}/publish`);
     }
   } else {
     if (b !== result.business.id) {
@@ -47,11 +47,7 @@ export default async function page({
   }
 
   const url =
-    process.env.NEXT_PUBLIC_SERVER_URL +
-    "/en/" +
-    result.business.name.replaceAll(" ", "-") +
-    "/" +
-    productPath[product];
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/${result.business.name.replaceAll(" ", "-")}/${productPath[product]}`;
 
   return (
     <section className="flex flex-col lg:min-w-xl max-w-7xl gap-y-6">

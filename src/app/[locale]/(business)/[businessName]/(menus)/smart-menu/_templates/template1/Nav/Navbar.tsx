@@ -1,18 +1,17 @@
-
 import { Suspense } from "react";
 import { SearchBar } from "./Search";
 import LanguageSelect from "@/app/[locale]/(business)/[businessName]/(menus)/_components/LanguageSelect";
 import Cart from "../../../_components/Cart/Cart";
-import { Menu } from "@prisma/client";
+import type { Menu } from "@prisma/client";
 
 export function Navbar({
   businessName,
-  menu
+  menu,
 }: {
   businessName: string;
-  menu:Menu
+  menu: Menu;
 }) {
-  if (!menu.languages) return <div></div>;
+  if (!menu.languages) return null;
   return (
     <nav className="my-container z-50 sticky  space-y-10 bg-background/70 py-5 text-foreground backdrop-blur-xl ">
       <div className="flex items-center justify-between">
@@ -24,7 +23,7 @@ export function Navbar({
             <LanguageSelect languages={menu.languages} />
           </Suspense>
           <Suspense>
-          <Cart menuTemplate={menu.template} businessName={businessName} />
+            <Cart menuTemplate={menu.template} businessName={businessName} />
           </Suspense>
         </div>
       </div>

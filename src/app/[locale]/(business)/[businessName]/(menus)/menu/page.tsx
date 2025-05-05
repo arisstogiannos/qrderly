@@ -13,15 +13,17 @@ import ScanTracker from "../_components/ScanTracker";
 import ExpiredMenu from "../_components/ExpiredMenu";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-// export const revalidate =60; 
+// export const revalidate =60;
 
 export async function generateStaticParams() {
   const menus = await getActiveMenusNotCached(["QR_MENU"]);
 
-  return menus.map((menu) => ({
-    locale: "en",
-    businessName: String(menu.business.name).replaceAll(" ", "-"),
-  }));
+  return menus.flatMap((menu) =>
+    ["en", "el"].map((locale) => ({
+      locale,
+      businessName: String(menu.business.name).replaceAll(" ", "-"),
+    }))
+  );
 }
 
 export async function generateMetadata({
@@ -31,10 +33,9 @@ export async function generateMetadata({
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
 
-
   return {
-    title: businessName + " | Online Menu",
-     description: `Explore ${businessName}'s full menu online.`
+    title: `${businessName} | Online Menu`,
+    description: `Explore ${businessName}'s full menu online.`,
   };
 }
 
@@ -46,30 +47,30 @@ export default async function page({
   const businessName = (await params).businessName.replaceAll("-", " ");
   const getCachedCategories = cache(
     getCategories,
-    ["categories" + businessName],
+    [`categories${businessName}`],
     {
-      tags: ["categories" + businessName],
+      tags: [`categories${businessName}`],
     }
   );
   const getCachedMenuItems = cache(
     getActiveMenuItems,
-    ["active-menu-items" + businessName],
+    [`active-menu-items${businessName}`],
     {
-      tags: ["menu-items" + businessName],
+      tags: [`menu-items${businessName}`],
     }
   );
   const getActiveMenu = cache(
     getActiveMenuNotCached,
-    ["active-menu" + businessName],
+    [`active-menu${businessName}`],
     {
-      tags: ["active-menu" + businessName],
+      tags: [`active-menu${businessName}`],
     }
   );
 
   const menu = await getActiveMenu(businessName);
 
   if (!menu) {
-    return <ExpiredMenu/>
+    return <ExpiredMenu />;
   }
 
   // if (menu.type === "SMART_QR_MENU" || menu.type === "SELF_SERVICE_QR_MENU") {
@@ -97,7 +98,11 @@ export default async function page({
           --accent: ${colors[4]};
         }
       `}</style>
-      <ScanTracker businessName={businessName} businessId={menu.businessId} menuId={menu.id} />
+      <ScanTracker
+        businessName={businessName}
+        businessId={menu.businessId}
+        menuId={menu.id}
+      />
 
       {menu.template === "T1" ? (
         <Template1

@@ -4,10 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { getOrderById } from "../../../_actions/orders";
 import CheckAnimation from "@/components/CheckAnimation";
-import { Order } from "@prisma/client";
-import { OrderWithItems, RequiredOrder } from "@/types";
+import type { RequiredOrder } from "@/types";
+import { useTranslations } from "next-intl";
 
-export default function OrderTracking({ initial,businessName }: { initial: RequiredOrder ;businessName:string}) {
+
+export default function OrderTracking({
+  initial,
+  businessName,
+}: {
+  initial: RequiredOrder;
+  businessName: string;
+}) {
   const { data: order, isLoading } = useQuery({
     queryKey: [initial.id],
     queryFn: async () => await getOrderById(initial.id),
@@ -15,10 +22,10 @@ export default function OrderTracking({ initial,businessName }: { initial: Requi
       query.state.data?.status === "PENDING" ? 5000 : false,
     initialData: initial,
   });
+  const t = useTranslations("menus.order");
   useEffect(() => {
     if (order?.status === "COMPLETED") {
-      document.cookie =
-        businessName+"order=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      document.cookie = `${businessName}order=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
 
       const playAudio = async () => {
         try {
@@ -36,9 +43,9 @@ export default function OrderTracking({ initial,businessName }: { initial: Requi
   if (!order) return null;
   return order.status === "PENDING" || isLoading ? (
     <>
-      <h2 className="text-3xl font-medium">Order Received!</h2>
+      <h2 className="text-3xl font-medium">{t("orderReceived")}</h2>
       <p className="text-foreground/50 font-normal">
-        We'll notify you when your order is ready!
+        {t("orderReceivedDescription")}
       </p>
       <div className="my-4">
         <PreparingAnimation />
@@ -46,9 +53,9 @@ export default function OrderTracking({ initial,businessName }: { initial: Requi
     </>
   ) : (
     <>
-      <h2 className="text-3xl font-medium">Your Order is Ready!</h2>
+      <h2 className="text-3xl font-medium">{t("orderReady")}</h2>
       <p className="text-foreground/50 font-normal mx-auto text-center mt-1">
-        Please show the order number when collecting your order
+        {t("orderReadyDescription")}
       </p>
       <div className="my-4">
         <CheckAnimation />

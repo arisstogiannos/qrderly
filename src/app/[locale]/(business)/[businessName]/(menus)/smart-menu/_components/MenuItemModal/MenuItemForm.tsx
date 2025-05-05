@@ -1,11 +1,11 @@
 "use client";
 import { cn } from "@/lib/utils";
 
-import { FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 
 import { useCartContext } from "@/context/CartContext";
 
-import { MenuItemRequired } from "@/types";
+import type { MenuItemRequired } from "@/types";
 
 import { toast } from "sonner";
 import MenuItemVersionsInCart from "./MenuItemVersionsInCart";

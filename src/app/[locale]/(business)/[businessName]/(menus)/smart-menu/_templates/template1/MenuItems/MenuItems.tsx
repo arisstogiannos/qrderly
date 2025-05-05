@@ -13,14 +13,14 @@ export async function MenuItems({
   const menuItemsByCategory: Record<string, MenuItem[]> = {};
   const categoriess = categories;
 
-  categoriess.forEach((category) => {
+  for (const category of categoriess) {
     const categoryName = category.id;
     menuItemsByCategory[categoryName] = [];
-  });
+  }
 
-  menuItems.forEach((product) => {
+  for (const product of menuItems) {
     menuItemsByCategory[product.categoryId]?.push(product);
-  });
+  }
 
   return (
     <div className="my-container space-y-10 text-foreground  min-h-screen">

@@ -45,10 +45,16 @@ export async function generateStaticParams() {
     "SELF_SERVICE_QR_MENU",
   ]);
 
-  return menus.map((menu) => ({
-    locale: "en",
-    businessName: String(menu.business.name).replaceAll(" ", "-"),
-  }));
+  return menus.flatMap((menu) => [
+    {
+      locale: "en",
+      businessName: String(menu.business.name).replaceAll(" ", "-"),
+    },
+    {
+      locale: "el",
+      businessName: String(menu.business.name).replaceAll(" ", "-"),
+    },
+  ]);
 }
 
 export default async function page({

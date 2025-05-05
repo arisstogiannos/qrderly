@@ -1,24 +1,25 @@
 "use client";
 
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { SearchIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { Translation } from "@/types";
+import type { Translation } from "@/types";
 import { SearchModal } from "./SearchModal";
 import { getMenuItems } from "@/app/[locale]/(business)/[businessName]/_actions/menu-items";
-
+import { useTranslations } from "next-intl";
 export function SearchBar({ businessName }: { businessName: string }) {
   const [query, setQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<MenuItem[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const t = useTranslations("menus.search");
 
   const searchParams = useSearchParams();
   const lang = searchParams.get("l") ?? "";
 
   const { data: items } = useQuery({
-    queryKey: ["menu-items"+businessName],
+    queryKey: [`menu-items${businessName}`],
     queryFn: async () => {
       const menuItems = await getMenuItems(businessName);
       return menuItems;
@@ -40,7 +41,7 @@ export function SearchBar({ businessName }: { businessName: string }) {
       <SearchIcon />
       <input
         type="text"
-        placeholder="Search"
+        placeholder={t("placeholder")}
         className="bg-transparent placeholder:text-primary/70 w-full focus:outline-none"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -62,14 +63,14 @@ function filter(products: MenuItem[], lang: string, query: string) {
     const translationsAsJson: Translation | null = p.translations
       ? JSON.parse(p.translations)
       : null;
-    const existingTranslation = translationsAsJson && translationsAsJson[lang];
+    const existingTranslation = translationsAsJson?.[lang];
 
-    let condition;
+    let condition: boolean | undefined;
 
     if (existingTranslation) {
       condition =
-        (translationsAsJson[lang].name?.toLowerCase().includes(query.toLowerCase()) ||
-          translationsAsJson[lang].description?.toLowerCase().includes(query.toLowerCase())) &&
+        (existingTranslation.name?.toLowerCase().includes(query.toLowerCase()) ||
+          existingTranslation.description?.toLowerCase().includes(query.toLowerCase())) &&
         query !== "";
     } else {
       condition =

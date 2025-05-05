@@ -1,5 +1,5 @@
 import DisplayPrice from "@/components/DisplayPrice";
-import { MenuItemRequired, Option } from "@/types";
+import type { MenuItemRequired, Option } from "@/types";
 
 const deserializeOptions = (str: string | null): Option[] => {
   try {
@@ -19,7 +19,7 @@ export default function MenuItemOptions({
   return (
     <div className="space-y-7">
       {deserializedOptions.map((option, index) => (
-        <div key={index} className="grid gap-4">
+          <div key={index} className="grid gap-4">
           <p className="text-base font-normal capitalize">{option.name}</p>
           <ul className="space-y-2 list-disc ">
             {option.values.map((value, i) => (
@@ -30,7 +30,7 @@ export default function MenuItemOptions({
                 {value.name}{" "}
                 {value.price && value.price!=='0' ? (
                   <span className="text-muted">
-                   + <DisplayPrice price={parseInt(value.price) } />
+                   + <DisplayPrice price={Number.parseInt(value.price) } />
                   </span>
                 ):""}
               </li>

@@ -11,7 +11,7 @@ export function Navbar({
   languages: string | undefined;
   businessName: string;
 }) {
-  if (!languages) return <div></div>;
+  if (!languages) return null;
   return (
     <nav className="my-container z-50 sticky  space-y-10 bg-background/70 py-5 text-foreground backdrop-blur-xl ">
     <div className="flex items-center justify-between">

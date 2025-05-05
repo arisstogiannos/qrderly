@@ -1,12 +1,12 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import CloudImage from "@/components/CloudImage";
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import { CardModalProvider } from "@/context/CardModalProvider";
 import MenuItemModal, { ModalTrigger } from "./MenuItemModal";
 import MenuItemOptions from "./MenuItemOptions";
 import MenuItemModalHeader from "./MenuItemModalHeader";
-import { Translation } from "@/types";
+import type { Translation } from "@/types";
 import { useSearchParams } from "next/navigation";
 import DisplayPrice from "@/components/DisplayPrice";
 
@@ -25,7 +25,7 @@ export function MenuItemCard({
     ? JSON.parse(translations)
     : null;
 
-  const existingTranslation = lang && translationsAsJson && translationsAsJson[lang];
+  const existingTranslation = lang && translationsAsJson?.[lang];
   name =
     existingTranslation && translationsAsJson[lang].name && translationsAsJson[lang].name !== "null"
       ? translationsAsJson[lang].name
@@ -33,9 +33,9 @@ export function MenuItemCard({
 
   description =
     existingTranslation &&
-    translationsAsJson[lang].description &&
-    translationsAsJson[lang].description !== "null"
-      ? translationsAsJson[lang].description
+    translationsAsJson?.[lang].description &&
+    translationsAsJson?.[lang].description !== "null"
+      ? translationsAsJson?.[lang].description
       : description;
   return (
     <CardModalProvider>

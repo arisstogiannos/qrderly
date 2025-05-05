@@ -7,11 +7,11 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import CloudImage from "@/components/CloudImage";
 import { useCardModalContext } from "@/context/CardModalProvider";
 import MenuItemOptionsForm from "./MenuItemForm";
-import { MenuItemRequired } from "@/types";
+import type { MenuItemRequired } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent } from "@/components/ui/dialog";

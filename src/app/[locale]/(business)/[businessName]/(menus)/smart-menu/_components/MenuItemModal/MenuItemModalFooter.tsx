@@ -3,9 +3,9 @@ import DisplayPrice from "@/components/DisplayPrice";
 import { Button } from "@/components/ui/button";
 import { useCardModalContext } from "@/context/CardModalProvider";
 import { useCartContext } from "@/context/CartContext";
-import { CartItem } from "@/types";
+import type { CartItem } from "@/types";
 import { Edit2, MinusIcon, PlusIcon, X } from "lucide-react";
-import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export default function MenuItemModalFooter({
   item,
@@ -14,6 +14,7 @@ export default function MenuItemModalFooter({
 }) {
   const { increaseItemQuantity, decreaseItemQuantity } = useCartContext();
   const { price } = useCardModalContext();
+  const t = useTranslations("menus.order");
 
 
   return (
@@ -43,7 +44,7 @@ export default function MenuItemModalFooter({
             type="submit"
             className="flex  items-center justify-center gap-3 capitalize grow"
           >
-            Update order <DisplayPrice price={price} />
+            {t("updateOrder")} <DisplayPrice price={price} />
             <Edit2 />
           </Button>
         ) : (
@@ -51,7 +52,7 @@ export default function MenuItemModalFooter({
             type="submit"
             className="flex w-full items-center justify-center gap-3 capitalize"
           >
-            Add to Cart <DisplayPrice price={price} />
+            {t("addToCart")} <DisplayPrice price={price} />
             {/* <AddToCartIcon /> */}
           </Button>
         )}

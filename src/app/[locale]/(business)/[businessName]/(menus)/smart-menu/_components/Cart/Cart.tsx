@@ -18,11 +18,11 @@ import { CartItem } from "./CartItem";
 import { submitOrder } from "../../actions";
 import { useSearchParams } from "next/navigation";
 import Loader from "@/components/Loader";
-import { Product, Template } from "@prisma/client";
+import type { Template } from "@prisma/client";
 import DisplayPrice from "@/components/DisplayPrice";
 import { usePreventRefresh } from "@/hooks/use-prevent-reload";
 import {  decryptTable } from "@/lib/table-crypt";
-
+import { useTranslations } from "next-intl";
 // type Product = {
 //   id: string;
 //   name: string;
@@ -49,17 +49,18 @@ export default function Cart({
   const [validTable, setValidTable] = useState<string | null>(null);
   const table = useSearchParams().get("table");
   const { cartItems } = useCartContext();
+  const t = useTranslations("menus.cart");
   usePreventRefresh(
-    "Cart items will be lost if you reload. Do you want to continue?",
+    t("preventReload"),
     cartItems.length > 0
   );
 
   let total = 0;
   let noItems = 0;
-  cartItems.forEach((item) => {
+  for (const item of cartItems) {
     total += item.quantity * item.price;
     noItems += item.quantity;
-  });
+  }
   const [state, action, isPending] = useActionState(
     submitOrder.bind(
       null,
@@ -95,10 +96,10 @@ export default function Cart({
         </div>
       </SheetTrigger>
       <SheetContent className=" bg-background text-foreground px-2 max-md:w-[350px] flex flex-col  pt-6 border-0">
-        <SheetTitle className="mb-3 ">Order Items</SheetTitle>
+        <SheetTitle className="mb-3 ">{t("title")}</SheetTitle>
         <SheetDescription className="sr-only">
           {" "}
-          List of the items you want to order
+          {t("listOfItems")}
         </SheetDescription>
         <div className="scrollbar-hidden lg:scrollbarContainer flex flex-col overflow-y-auto h-full gap-4 mb-10 rounded-xl ">
           <Suspense>
@@ -109,7 +110,7 @@ export default function Cart({
                 ))}
               </>
             ) : (
-              <span>Empty</span>
+              <span>{t("empty")}</span>
             )}
           </Suspense>
         </div>
@@ -126,11 +127,11 @@ export default function Cart({
                 ) : (
                   <span>
                     {" "}
-                    Complete Order <DisplayPrice price={total} />
+                    {t("completeOrder")} <DisplayPrice price={total} />
                   </span>
                 )
               ) : (
-                <span >Scan a QR to order</span>
+                <span >{t("scanQR")}</span>
               )}
             </Button>
           </form>

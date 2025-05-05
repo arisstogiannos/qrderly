@@ -5,13 +5,13 @@ import QRCodeStyling from "qr-code-styling";
 import { Button } from "@/components/ui/button";
 import {  Download } from "lucide-react";
 
-import { BusinessExtended } from "@/types";
+import type { BusinessExtended } from "@/types";
 
 import JSZip from "jszip";
 import { useTranslations } from "next-intl";
 import { encryptTable } from "@/lib/table-crypt";
 
-export default function QrDownLoad({
+export default function  QrDownLoad({
   qrCode,
   business,
   text
@@ -24,10 +24,10 @@ export default function QrDownLoad({
   if (!qrCode) return null;
 
   const downloadQR = async () => {
-    const encryptedTableId = await encryptTable("self-service|"+business.name); // Encrypt table ID
+    const encryptedTableId = await encryptTable(`self-service|${business.name}`); // Encrypt table ID
     const tempQRCode = new QRCodeStyling({
       ...qrCode._options,
-      data: qrCode._options.data+ "?table=" + encryptedTableId,
+      data: `${qrCode._options.data}?table=${encryptedTableId}`,
     });
   
     const qrBlob = await tempQRCode.getRawData("png");
@@ -72,7 +72,7 @@ export default function QrDownLoad({
       if (!blob) return;
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = `scanby_qr.png`;
+      link.download = "scanby_qr.png";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -89,10 +89,10 @@ export default function QrDownLoad({
     const zip = new JSZip();
   
     for (let t of tables) {
-      const encryptedTableId = await encryptTable(t+'|'+business.name); // Encrypt table ID
+      const encryptedTableId = await encryptTable(`${t}|${business.name}`); // Encrypt table ID
       const tempQRCode = new QRCodeStyling({
         ...qrCode._options,
-        data: qrCode._options.data + "?table=" + encryptedTableId,
+        data: `${qrCode._options.data}?table=${encryptedTableId}`,
       });
   
       let qrData = await tempQRCode.getRawData("png");

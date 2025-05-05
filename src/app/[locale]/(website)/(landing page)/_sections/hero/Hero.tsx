@@ -38,7 +38,6 @@ export default async function Hero() {
             // @ts-expect-error
 
             href={"/Bruncherie/smart-menu"}
-            locale={"en"}
             className="flex gap-4 items-center size-full "
             target="_blank"
             rel="noopener noreferrer"

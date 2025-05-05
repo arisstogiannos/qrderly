@@ -887,5 +887,29 @@
       },
       "email": "Please enter a valid email address"
     }
+  },
+  "menus": {
+    "search": {
+      "placeholder": "Search"
+    },
+    "cart": {
+      "title": "Order Items",
+      "listOfItems": "List of the items you want to order",
+      "empty": "Empty",
+      "scanQR": "Scan a QR to order",
+      "completeOrder": "Complete Order",
+      "preventReload": "Cart items will be lost if you reload. Do you want to continue?"
+    },
+    "order": {
+      "orderReceived": "We Received your Order!",
+      "orderSummary": "Order Summary",
+      "totalPrice": "Total Price",
+      "orderNumber": "Order #{orderId}",
+      "orderReceivedDescription": "We'll notify you when your order is ready!",
+      "orderReady": "Your Order is Ready!",
+      "orderReadyDescription": "Please show the order number when collecting your order",
+      "updateOrder": "Update Order",
+      "addToCart": "Add to Cart"
+    }
   }
 }

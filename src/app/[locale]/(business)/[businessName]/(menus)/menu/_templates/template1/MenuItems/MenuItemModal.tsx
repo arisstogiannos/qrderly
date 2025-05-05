@@ -1,13 +1,12 @@
 "use client";
 
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import CloudImage from "@/components/CloudImage";
 import { useCardModalContext } from "@/context/CardModalProvider";
-import { MenuItemRequired } from "@/types";
+import type { MenuItemRequired } from "@/types";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
-import { X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export default function MenuItemModal({
   children,
