@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeft } from "lucide-react";
-import React, { ReactNode } from "react";
 import { getTranslations,setRequestLocale } from "next-intl/server";
+import type { ReactNode } from "react";
 
 
 

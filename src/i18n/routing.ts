@@ -92,7 +92,14 @@ export const routing = defineRouting({
       en: "/[businessName]/dashboard/live-orders",
     },
     "/en/[businessName]/menu": "/en/[businessName]/menu",
-    "/en/[businessName]/smart-menu": "/en/[businessName]/smart-menu"
-   
+    "/en/[businessName]/smart-menu": "/en/[businessName]/smart-menu",
+    "/terms-and-conditions": {
+      el: "/όροι-χρήσης",
+      en: "/terms-and-conditions",
+    },
+    "/privacy-policy": {
+      el: "/πολιτική-απορρήτου",
+      en: "/privacy-policy",
+    },
   },
 });

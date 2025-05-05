@@ -5,8 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import type { ReactNode } from "react";
 
-import React, { ReactNode } from "react";
 
 export function FormWrapper({ title, subtitle, children }: { title: string, subtitle:string, children:ReactNode }) {
   return (

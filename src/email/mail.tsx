@@ -10,7 +10,7 @@ import WelcomeEmail from "./components/welcome/WelcomeEmail";
 import TrialEndedEmail from "./components/trialEnded/TrialEndedEmail";
 import FeedbackEmail from "./components/FeedbackEmail";
 import { getTranslations } from "next-intl/server";
-
+import FeedbackEmailAdmin from "./components/contact/FeedbackEmailAdmin";
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export const sendVerificationEmail = async (
@@ -39,7 +39,7 @@ export const sendFeedbackEmail = async (
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: t("subject"),
-    react: <FeedbackEmail username={name} feedbackUrl={process.env.NEXT_PUBLIC_SERVER_URL + "/FAQ-contact#contact-form"} />,
+    react: <FeedbackEmail username={name} feedbackUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}/feedback`} />,
   });
 };
 
@@ -115,7 +115,7 @@ const ContactInfoSchema = z.object({
 export type ContactDataType = z.infer<typeof ContactInfoSchema>;
 
 export const sendContactEmail = async (
-  prev: any,
+  prev: unknown,
   formData: FormData
 ) => {
   const result = ContactInfoSchema.safeParse(Object.fromEntries(formData))
@@ -147,3 +147,37 @@ export const sendContactEmail = async (
   }
   return { success: true }
 };
+
+const FeedbackInfoSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }).trim().optional(),
+  feedback: z.string(),
+  message: z.string(),
+  rating: z.string(),
+})
+export type FeedbackDataType = z.infer<typeof FeedbackInfoSchema>;
+
+export const sendFeedbackEmailAdmin = async (
+  prev: unknown,
+  formData: FeedbackDataType
+) => {
+   
+  
+ 
+  const emailStatus = await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: process.env.ADMIN_EMAIL as string,
+    subject: "Feedback Form",
+    react: <FeedbackEmailAdmin data={formData} />
+  });
+
+  if (emailStatus.error) {
+    return {
+      error: "Something went wrong. Try again.",
+      formData
+    };
+  }
+
+  return { success: true }
+
+}
+

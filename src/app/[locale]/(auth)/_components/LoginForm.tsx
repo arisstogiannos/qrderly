@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/navigation";
-import React, { useActionState, useEffect, useState } from "react";
 import { signIn as signInAuth } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { ErrorMessage, SuccessMessage } from "@/components/Messages";
 import { Loader2 } from "lucide-react";
 import { login } from "../_actions/login";
 import { useTranslations } from "next-intl";
+import { useActionState, useEffect, useState } from "react";
 
 export default function LoginForm() {
   const [state, loginAction, isPending] = useActionState(login, null);
@@ -96,7 +96,7 @@ export default function LoginForm() {
       </div>
       <div className="mt-4 text-center text-sm">
         {t("dontHaveAccount")}{" "}
-        <Link href="/sign-up" className="underline underline-offset-4">
+        <Link href="/sign-up" className="underline underline-offset-4 lg:hover:text-primary">
           {t("signUp")}
         </Link>
       </div>
@@ -104,8 +104,11 @@ export default function LoginForm() {
         {loginError && <ErrorMessage msg={loginErrorMessage} />}
         {state?.error && <ErrorMessage msg={state?.error} />}
         {state?.success && <SuccessMessage msg={t("verificationSent")} />}
-        <div className="mt-auto self-end text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 lg:hover:[&_a]:text-primary">
-          {t("termsAndPrivacy")}
+        <div className="mt-auto self-end text-balance text-center text-xs text-muted-foreground ">
+          {t.rich('termsAndPrivacy', {
+            termsAndPrivacy: (chunks) => <Link href="/terms-and-conditions" className="underline underline-offset-4 lg:hover:text-primary">{chunks}</Link>,
+            privacyPolicy: (chunks) => <Link href="/privacy-policy" className="underline underline-offset-4 lg:hover:text-primary">{chunks}</Link>
+          })}
         </div>
       </div>
     </form>

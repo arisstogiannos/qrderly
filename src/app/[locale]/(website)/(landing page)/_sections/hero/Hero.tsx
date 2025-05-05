@@ -25,25 +25,25 @@ export default async function Hero() {
           {t("title")}
         </h1>
         <p className="text-xl md:text-4xl">{t("subtitle")}</p>
-        {/* <Button
-          variant={"outline"}
-          asChild
-          className="mt-8 text-xl  py-6 px-2 gap-10 justify-between "
-        >
-          <Link href={"/get-started"}>
-            Get Started For Free{" "}
-            <span className="size-10 bg-foreground rounded-md flex-center">
-              {" "}
-              <ArrowRight className="text-background size-8" />
-            </span>{" "}
-          </Link>
-        </Button> */}
         <MainButton className="mt-5 3xl:mt-14 md:text-xl">
           <Link
             href={"/get-started"}
             className="flex gap-4 items-center size-full"
           >
             {t("button")} <ArrowRight />
+          </Link>
+        </MainButton>
+        <MainButton className="md:mt-5 3xl:mt-14 md:text-xl md:ml-5 bg-primary border border-foreground/20 lg:hover:text-background font-medium">
+          <Link
+            // @ts-expect-error
+
+            href={"/Bruncherie/smart-menu"}
+            locale={"en"}
+            className="flex gap-4 items-center size-full "
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t("demoButton")}  <ArrowRight />
           </Link>
         </MainButton>
       </div>

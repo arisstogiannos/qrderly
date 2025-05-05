@@ -21,7 +21,7 @@ import {
   
   export const FeedbackEmail = async ({
     username = "user",
-    feedbackUrl = "https://www.scanby.cloud/FAQ-contact#contact-form"
+    feedbackUrl = "https://www.scanby.cloud/feedback"
   }: FeedbackEmailProps) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud"
     const t = await getTranslations("emails.feedback")

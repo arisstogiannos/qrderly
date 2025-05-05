@@ -149,7 +149,8 @@
   "Hero": {
     "title": "Transform Your Business with Smart QR Menus with Ordering System",
     "subtitle": "Instantly set up your interactive QR menu with or without ordering system — with our powerful AI, transform your printed menu into a digital menu in minutes!",
-    "button": "Get Started for Free"
+    "button": "Get Started for Free",
+    "demoButton": "See Demo Menu"
   },
   "WhyUs": {
     "title": "Why scanby?",
@@ -581,7 +582,7 @@
     "alreadyHaveAccount": "Already have an account?",
     "signIn": "Sign in",
     "verificationSent": "A verification code has been sent to your email!",
-    "termsAndPrivacy": "By clicking continue, you agree to our Terms of Service and Privacy Policy.",
+    "termsAndPrivacy": "By clicking continue, you agree to our <termsAndPrivacy>Terms of Service</termsAndPrivacy> and <privacyPolicy>Privacy Policy</privacyPolicy>.",
     "error": {
       "generic": "An error has occurred. Try again.",
       "oauth": "Try logging in the same way you signed up."
@@ -598,7 +599,7 @@
     "dontHaveAccount": "Don't have an account?",
     "signUp": "Sign up",
     "verificationSent": "A verification code has been sent to your email!",
-    "termsAndPrivacy": "By clicking continue, you agree to our Terms of Service and Privacy Policy.",
+    "termsAndPrivacy": "By clicking continue, you agree to our <termsAndPrivacy>Terms of Service</termsAndPrivacy> and <privacyPolicy>Privacy Policy</privacyPolicy>.",
     "error": {
       "generic": "An error has occurred. Try again.",
       "oauth": "Try logging in the same way you signed up."
@@ -831,6 +832,60 @@
       "button": "Upgrade Now",
       "benefits": "With a paid plan, you'll continue to enjoy unlimited scans",
       "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!"
+    }
+  },
+  "feedbackForm": {
+    "title": "App Feedback",
+    "description": "We value your input to improve our app. Please share your thoughts with us.",
+    "rating": {
+      "label": "How would you rate your experience?",
+      "stars": {
+        "1": "1 Star",
+        "2": "2 Stars",
+        "3": "3 Stars",
+        "4": "4 Stars",
+        "5": "5 Stars"
+      }
+    },
+    "type": {
+      "label": "Feedback Type",
+      "placeholder": "Select feedback type",
+      "options": {
+        "bug": "Bug Report",
+        "feature": "Feature Request",
+        "improvement": "Improvement Suggestion",
+        "praise": "Praise",
+        "other": "Other"
+      }
+    },
+    "comment": {
+      "label": "Your Feedback",
+      "placeholder": "Please share your thoughts, suggestions, or report issues...",
+      "charCount": "{count}/500 characters"
+    },
+    "email": {
+      "label": "Email (optional)",
+      "placeholder": "your@email.com",
+      "description": "Provide your email if you'd like us to follow up with you."
+    },
+    "submit": "Submit Feedback",
+    "submitting": "Processing...",
+    "success": {
+      "title": "Feedback Submitted",
+      "description": "Thank you for your feedback!"
+    },
+    "error": {
+      "title": "Error",
+      "description": "There was a problem submitting your feedback."
+    },
+    "validation": {
+      "rating": "Please select a rating",
+      "type": "Please select a feedback type",
+      "comment": {
+        "min": "Comment must be at least 10 characters",
+        "max": "Comment must not exceed 500 characters"
+      },
+      "email": "Please enter a valid email address"
     }
   }
 }

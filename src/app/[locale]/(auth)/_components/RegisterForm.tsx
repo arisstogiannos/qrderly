@@ -4,12 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import React, { useActionState, useState } from "react";
 import { register } from "../_actions/register";
 import { ErrorMessage, SuccessMessage } from "@/components/Messages";
 import { Loader2 } from "lucide-react";
 import { signIn as signInAuth } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { useActionState, useState } from "react";
 
 export default function RegisterForm() {
   const [state, registerAction, isPending] = useActionState(register, null);
@@ -34,7 +34,7 @@ export default function RegisterForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  let passwordsMatch = formData.confirmPassword === formData.password;
+  const passwordsMatch = formData.confirmPassword === formData.password;
 
   return (
     <form action={registerAction}>
@@ -133,15 +133,18 @@ export default function RegisterForm() {
       </div>
       <div className="mt-4 text-center text-sm">
         {t("alreadyHaveAccount")}{" "}
-        <Link href="/login" className="underline underline-offset-4">
+        <Link href="/login" className="underline underline-offset-4 lg:hover:text-primary">
           {t("signIn")}
         </Link>
       </div>
       <div className="space-y-5 pb-1 pt-5">
         {registerError && <ErrorMessage msg={registerErrorMessage} />}
         {state?.success && <SuccessMessage msg={t("verificationSent")} />}
-        <div className="mt-auto self-end text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 lg:hover:[&_a]:text-primary">
-          {t("termsAndPrivacy")}
+        <div className="mt-auto self-end text-balance text-center text-xs text-muted-foreground ">
+          {t.rich('termsAndPrivacy', {
+            termsAndPrivacy: (chunks) => <Link href="/terms-and-conditions" className="underline underline-offset-4 lg:hover:text-primary">{chunks}</Link>,
+            privacyPolicy: (chunks) => <Link href="/privacy-policy" className="underline underline-offset-4 lg:hover:text-primary">{chunks}</Link>
+          })}
         </div>
       </div>
     </form>
