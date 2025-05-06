@@ -18,16 +18,18 @@ interface QrMenuCreatedEmailProps {
   username: string;
   menuName: string;
   menuUrlPath: string;
+  userEmail: string;
 }
 
 export const QrMenuCreatedEmail = async ({
   username = "John",
   menuName = "Summer Specials",
-  menuUrlPath = "menu"
+  menuUrlPath = "menu",
+  userEmail = "user@example.com"
 }: QrMenuCreatedEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
-  const menuUrl = baseUrl + "/" + menuName.replaceAll(" ", "-") + "/menu";
-  const dashboardUrl = baseUrl + "/" + menuName.replaceAll(" ", "-") + "/dashboard";
+  const menuUrl = `${baseUrl}/${menuName.replaceAll(" ", "-")}/${menuUrlPath}`;
+  const dashboardUrl = `${baseUrl}/${menuName.replaceAll(" ", "-")}/dashboard`;
   const t = await getTranslations("emails.menuCreated");
 
   return (
@@ -71,6 +73,10 @@ export const QrMenuCreatedEmail = async ({
           <Text style={footer}>
             <Copyright /> Scanby 2025
           </Text>
+          <Section style={unsubscribeContainer}>
+              <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
+              <Button style={unsubscribeButton} href={`${baseUrl}/unsubscribe?email=${userEmail}`}>{t("unsubscribe")}</Button>
+            </Section>
         </Container>
       </Body>
     </Html>
@@ -84,6 +90,22 @@ const main = {
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
   padding: "40px 0",
+};
+
+const unsubscribeContainer = {
+  textAlign: "center" as const,
+  margin: "30px 0",
+};
+
+const unsubscribeText = {
+  color: "#4b5563",
+  fontSize: "16px",
+  lineHeight: "24px",
+  margin: "16px 0",
+};
+
+const unsubscribeButton = {
+  color: "#4b5563",
 };
 
 const container = {

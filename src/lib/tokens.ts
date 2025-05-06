@@ -2,9 +2,9 @@
 import { db } from "@/db";
 import { v4 as uuidv4 } from "uuid";
 
-export const generateVerificationToken = async (email: string) => {
+export const generateVerificationToken = async (email: string, time?: number) => {
   const token = uuidv4();
-  const expires = new Date(new Date().getTime() + 30 * 60 * 1000);
+  const expires = new Date(new Date().getTime() + (time || 30) * 60 * 1000); 
 
   const existingToken = await db.token.findFirst({
     where: {

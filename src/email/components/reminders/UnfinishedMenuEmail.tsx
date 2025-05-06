@@ -10,23 +10,23 @@ import {
     Preview,
     Section,
     Text,
-  } from "@react-email/components"
-  import { MessageCircle } from "lucide-react"
-  import { getTranslations } from "next-intl/server"
+  } from "@react-email/components";
+  import { Copyright } from "lucide-react";
+import { getTranslations } from "next-intl/server";
   
-  interface FeedbackEmailProps {
-    username: string
-    feedbackUrl: string
-    userEmail: string
+interface UnfinishedMenuEmailProps {
+    username: string;
+    userEmail: string;
+    link: string;
   }
   
-  export const FeedbackEmail = async ({
-    username = "user",
-    feedbackUrl = "https://www.scanby.cloud/feedback",
-    userEmail = "user@example.com"
-  }: FeedbackEmailProps) => {
-    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud"
-    const t = await getTranslations("emails.feedback")
+  export default async function UnfinishedMenuEmail ({
+    username = "John",
+    userEmail = "john@example.com",
+    link
+  }: UnfinishedMenuEmailProps) {
+    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
+    const t = await getTranslations("emails.unfinishedMenu");
   
     return (
       <Html>
@@ -39,15 +39,14 @@ import {
             <Text style={text}>{t("greeting", { username })}</Text>
             <Text style={text}>{t("message")}</Text>
             <Section style={buttonContainer}>
-              <Button style={button} href={feedbackUrl}>
+              <Button style={button} href={link}>
                 {t("button")}
               </Button>
             </Section>
-            <Text style={text}>{t("note")}</Text>
+            <Text style={text}>{t("support")}</Text>
             <Hr style={hr} />
-            <Text style={footer}>
-              <MessageCircle /> Scanby 2025
-            </Text>
+            <Text style={footer}><Copyright /> Scanby 2025</Text>
+            <Text style={footer}>This email was sent to {userEmail}</Text>
             <Section style={unsubscribeContainer}>
               <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
               <Button style={unsubscribeButton} href={`${baseUrl}/unsubscribe?email=${userEmail}`}>{t("unsubscribe")}</Button>
@@ -55,31 +54,14 @@ import {
           </Container>
         </Body>
       </Html>
-    )
-  }
-  
-  export default FeedbackEmail
-  
+    );
+  };
+
   const main = {
     backgroundColor: "#f6f9fc",
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     padding: "40px 0",
-  }
-
-  const unsubscribeContainer = {
-    textAlign: "center" as const,
-    margin: "30px 0",
-  };
-
-  const unsubscribeText = {
-    color: "#4b5563",
-    fontSize: "16px",
-    lineHeight: "24px",
-    margin: "16px 0",
-  };
-
-  const unsubscribeButton = {
-    color: "#4b5563",
   };
   
   const container = {
@@ -90,12 +72,12 @@ import {
     margin: "0 auto",
     maxWidth: "600px",
     padding: "20px",
-  }
+  };
   
   const logo = {
     margin: "0 auto 20px",
     display: "block",
-  }
+  };
   
   const h1 = {
     color: "#1f2937",
@@ -104,19 +86,24 @@ import {
     margin: "30px 0",
     padding: "0",
     textAlign: "center" as const,
-  }
+  };
   
   const text = {
     color: "#4b5563",
     fontSize: "16px",
     lineHeight: "24px",
     margin: "16px 0",
-  }
+  };
   
   const buttonContainer = {
     textAlign: "center" as const,
     margin: "30px 0",
-  }
+  };
+
+  const unsubscribeContainer = {
+    textAlign: "center" as const,
+    margin: "30px 0",
+  };
   
   const button = {
     backgroundColor: "#5046e4",
@@ -128,12 +115,24 @@ import {
     textDecoration: "none",
     textAlign: "center" as const,
     padding: "10px",
-  }
-  
+  };
+
+  // make underlined button
+  const unsubscribeButton = {
+    color: "#4b5563",
+      };
+
+  const unsubscribeText = {
+    color: "#4b5563",
+    fontSize: "16px",
+    lineHeight: "24px",
+    margin: "16px 0",
+  };
+
   const hr = {
     borderColor: "#e5e7eb",
     margin: "30px 0",
-  }
+  };
   
   const footer = {
     color: "#9ca3af",
@@ -143,8 +142,20 @@ import {
     textAlign: "center" as const,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyItems: "center",
     width: "100%",
-    gap: "8px",
-  }
+    gap: "10px",
+  };
   
+  const list = {
+    color: "#4b5563",
+    fontSize: "16px",
+    lineHeight: "24px",
+    margin: "16px 0",
+    padding: "0 0 0 20px",
+  };
+  
+  const listItem = {
+    margin: "8px 0",
+  };
+    

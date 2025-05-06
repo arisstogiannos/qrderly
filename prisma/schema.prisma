@@ -230,3 +230,18 @@ model Scan {
   // menu       Menu     @relation(fields: [menuId], references: [id])
   date      DateTime @default(now())
 }
+
+model Notification {
+  id         String    @id @default(uuid())
+  email      String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  type       NotificationType
+  userId     String
+}
+
+enum NotificationType {
+  UNFINISHED_MENU
+  NO_EMAIL_VERIFIED
+  NO_MENU
+}

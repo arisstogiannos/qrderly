@@ -59,6 +59,10 @@ export const WelcomeEmail = async ({
             <Copyright /> Scanby 2025
           </Text>
           <Text style={footer}>This email was sent to {userEmail}</Text>
+          <Section style={unsubscribeContainer}>
+              <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
+              <Button style={unsubscribeButton} href={`${baseUrl}/unsubscribe?email=${userEmail}`}>{t("unsubscribe")}</Button>
+            </Section>
         </Container>
       </Body>
     </Html>
@@ -73,6 +77,23 @@ const main = {
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
   padding: "40px 0",
 };
+
+const unsubscribeContainer = {
+  textAlign: "center" as const,
+  margin: "30px 0",
+};
+
+const unsubscribeText = {
+  color: "#4b5563",
+  fontSize: "16px",
+  lineHeight: "24px",
+  margin: "16px 0",
+};
+
+const unsubscribeButton = {
+  color: "#4b5563",
+};
+
 
 const container = {
   backgroundColor: "#ffffff",

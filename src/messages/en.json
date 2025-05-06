@@ -762,7 +762,9 @@
       "message": "Please verify your email address to complete your Scanby account setup. This helps us confirm you're a real person and secures your account.",
       "button": "Verify Email Address",
       "disclaimer": "If you didn't create an account with Scanby, you can safely ignore this email.",
-      "expiry": "This verification link will expire in 24 hours."
+      "expiry": "This verification link will expire in 30 minutes.",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
     "feedback": {
       "subject": "We'd love your feedback on your experience with Scanby",
@@ -770,7 +772,9 @@
       "greeting": "Hi {username}",
       "message": "Thanks for using Scanby! We'd love to hear your thoughts on your experience so far. Your feedback helps us improve and serve you better.",
       "button": "Give Feedback",
-      "note": "Your response should only take a minute or two. We really appreciate your time!"
+      "note": "Your response should only take a minute or two. We really appreciate your time!",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
     "menuCreated": {
       "subject": "Your QR Menu \"{menuName}\" is ready!",
@@ -780,7 +784,9 @@
       "customerInfo": "Your customers can now scan your QR code to view your digital menu. You can print or download your QR code from your dashboard.",
       "viewButton": "View Your Menu",
       "updateInfo": "Remember, you can update your menu anytime from your dashboard, and the changes will be reflected instantly for your customers.",
-      "dashboardButton": "Go to Dashboard"
+      "dashboardButton": "Go to Dashboard",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
     "passwordReset": {
       "subject": "Reset your Scanby password",
@@ -789,7 +795,9 @@
       "message": "We received a request to reset your password for your QR Menu Creator account. Click the button below to set a new password:",
       "button": "Reset Password",
       "disclaimer": "If you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.",
-      "expiry": "This password reset link will expire in 1 hour."
+      "expiry": "This password reset link will expire in 1 hour.",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
     "welcome": {
       "subject": "Welcome to Scanby - Let's get started!",
@@ -806,7 +814,9 @@
           "Track menu views and customer engagement"
         ]
       },
-      "support": "If you have any questions, simply reply to this email. We're here to help!"
+      "support": "If you have any questions, simply reply to this email. We're here to help!",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
     "subscriptionConfirmation": {
       "subject": "Your Scanby subscription is confirmed!",
@@ -821,7 +831,9 @@
       },
       "accessInfo": "You now have access to all the features included in the {planName} plan. You can start creating QR menus right away!",
       "button": "Go to Dashboard",
-      "support": "If you have any questions about your subscription or need assistance, please contact our support team at support@qrmenu.app."
+      "support": "If you have any questions about your subscription or need assistance, please contact our support team at support@qrmenu.app.",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
     "trialEnded": {
       "subject": "Your Scanby trial has ended - Upgrade to continue",
@@ -831,7 +843,40 @@
       "message": "Your free trial has now ended. To continue offering digital menus to your customers without interruption, please upgrade your plan.",
       "button": "Upgrade Now",
       "benefits": "With a paid plan, you'll continue to enjoy unlimited scans",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!"
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+    },
+    "noMenu": {
+      "subject": "Your digital menu is one click away!",
+      "heading": "Ready to impress your guests?",
+      "greeting": "Hi {username},",
+      "message": "Create your first QR menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
+      "button": "Create My Menu Now",
+      "support": "Need help? We're here for you anytime – just reach out!",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+    },
+    "unfinishedMenu": {
+      "subject": "Let's finish your menu and go live!",
+      "heading": "You're almost there!",
+      "greeting": "Hi {username},",
+      "message": "Your menu is nearly ready. Add the final touches and go live to start accepting orders right away!",
+      "button": "Finish My Menu",
+      "support": "Questions? Our support team is happy to help you anytime.",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+    },
+    "unverified": {
+      "subject": "Activate your Scanby account now",
+      "heading": "Just one more step!",
+      "greeting": "Hi {username},",
+      "message": "Click the button below to verify your email and unlock all features. Your menu journey starts now! The link will expire in 24 hours.",
+      "button": "Activate My Account",
+
+      "support": "Didn't get the email? Check your spam or request a new one here.",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     }
   },
   "feedbackForm": {
@@ -911,5 +956,43 @@
       "updateOrder": "Update Order",
       "addToCart": "Add to Cart"
     }
+  },
+  "unsubscribe": {
+    "title": "Email Notification Preferences",
+    "description": "Manage which emails you'd like to receive from us",
+    "unsubscribeAll": {
+      "title": "Unsubscribe from all emails",
+      "description": "You will no longer receive any emails from us"
+    },
+    "unsubscribeSpecific": {
+      "title": "Unsubscribe from specific emails",
+      "description": "Select which types of emails you'd like to stop receiving"
+    },
+    "options": {
+      "marketing": {
+        "title": "Marketing emails",
+        "description": "Promotions, discounts, and special offers"
+      },
+      "updates": {
+        "title": "Product updates",
+        "description": "New features and improvements"
+      },
+      "newsletter": {
+        "title": "Newsletter",
+        "description": "Weekly or monthly newsletters"
+      },
+      "announcements": {
+        "title": "Announcements",
+        "description": "Important company and service announcements"
+      }
+    },
+    "success": {
+      "title": "Successfully Unsubscribed",
+      "description": "Your email preferences have been updated.",
+      "allUnsubscribed": "You have been unsubscribed from all email communications.",
+      "specificUnsubscribed": "Your email notification preferences have been updated according to your selection.",
+      "updateButton": "Update Preferences"
+    },
+    "saveButton": "Save preferences"
   }
 }

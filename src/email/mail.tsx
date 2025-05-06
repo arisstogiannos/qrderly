@@ -11,6 +11,11 @@ import TrialEndedEmail from "./components/trialEnded/TrialEndedEmail";
 import FeedbackEmail from "./components/FeedbackEmail";
 import { getTranslations } from "next-intl/server";
 import FeedbackEmailAdmin from "./components/contact/FeedbackEmailAdmin";
+import { NoMenuEmail } from "./components/reminders/NoMenuEmail";
+import UnverifiedEmail from "./components/reminders/UnverifiedEmailEmail";
+import UnfinishedMenuEmail from "./components/reminders/UnfinishedMenuEmail";
+import type { Product } from "@prisma/client";
+import { productMapURL } from "@/data";
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export const sendVerificationEmail = async (
@@ -25,7 +30,8 @@ export const sendVerificationEmail = async (
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: t("subject"),
-    react: <EmailVerification verificationUrl={confirmLink} username={name} />,
+    react: <EmailVerification verificationUrl={confirmLink} username={name} userEmail={email} />,
+    text: `Please verify your email by clicking the link below: ${confirmLink}`
   });
 };
 
@@ -39,7 +45,7 @@ export const sendFeedbackEmail = async (
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: t("subject"),
-    react: <FeedbackEmail username={name} feedbackUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}/feedback`} />,
+    react: <FeedbackEmail userEmail={email} username={name} feedbackUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}/feedback`} />,
   });
 };
 
@@ -84,7 +90,7 @@ export const sendMenuCreatedEmail = async (
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: t("subject", { menuName: businessName }),
-    react: <QrMenuCreatedEmail username={name} menuName={businessName} menuUrlPath={menuUrlPath} />,
+    react: <QrMenuCreatedEmail username={name} menuName={businessName} menuUrlPath={menuUrlPath} userEmail={email} />,
   });
 };
 
@@ -100,7 +106,7 @@ export const sendResetPasswordEmail = async (
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,
     subject: t("subject"),
-    react: React.createElement(ResetPasswordEmail, { resetLink: resetLink, name }),
+    react: React.createElement(ResetPasswordEmail, { resetLink: resetLink, name, userEmail: email }),
   });
 };
 
@@ -181,3 +187,52 @@ export const sendFeedbackEmailAdmin = async (
 
 }
 
+
+//reminders
+
+export const sendNoMenuEmail = async (
+  email: string,
+  name: string
+) => {
+  const t = await getTranslations("emails.noMenu");
+
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: t("subject"),
+    react: <NoMenuEmail username={name} userEmail={email} />
+  });
+};
+
+export const sendNoEmailVerifiedEmail = async (
+  email: string,
+  name: string,
+  verificationToken: string
+) => {
+  const t = await getTranslations("emails.unverified");  
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
+  const confirmationLink = `${baseUrl}/account-verification?token=${verificationToken}`;
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: t("subject"),
+    react: <UnverifiedEmail username={name} userEmail={email} verificationToken={verificationToken} />,
+    text: `Please verify your email by clicking the link below: ${confirmationLink}`
+  });
+};
+
+export const sendUnfinishedMenuEmail = async (
+  email: string,
+  name: string,
+  unfinishedMenu: Product
+) => {
+  const t = await getTranslations("emails.unfinishedMenu");
+  const link = `${process.env.NEXT_PUBLIC_SERVER_URL}/get-started/${productMapURL[unfinishedMenu]}/business-setup`
+
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: t("subject"),
+    react: <UnfinishedMenuEmail username={name} userEmail={email} link={link} />
+  });
+};

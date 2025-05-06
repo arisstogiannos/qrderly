@@ -4,13 +4,10 @@ import { GoogleGenAI } from "@google/genai";
 import { extractAI } from "@/inngest/ai/extractionModel";
 import { safeParse } from "@/inngest/ai/helpers";
 import { partialExtractionAI } from "@/inngest/ai/partialExtractionModel";
-import { MenuItemAI } from "@/types";
-import { Category } from "@prisma/client";
+import type { MenuItemAI } from "@/types";
 import { getMenuByBusinessName } from "@/app/[locale]/(business)/[businessName]/_actions/menu";
 import { createCategories } from "@/app/[locale]/(business)/[businessName]/_actions/categories";
 import { createMenuItems } from "@/app/[locale]/(business)/[businessName]/_actions/menu-items";
-import { string } from "zod";
-import { InngestRun } from "../status";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 

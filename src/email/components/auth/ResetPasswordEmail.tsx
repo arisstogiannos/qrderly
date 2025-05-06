@@ -17,11 +17,13 @@ import { getTranslations } from "next-intl/server";
 interface PasswordResetEmailProps {
   name: string;
   resetLink: string;
+  userEmail: string;
 }
 
 export const PasswordResetEmail = async ({
   resetLink,
   name,
+  userEmail,
 }: PasswordResetEmailProps) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
   const t = await getTranslations("emails.passwordReset");
@@ -53,6 +55,10 @@ export const PasswordResetEmail = async ({
           <Text style={footer}>
             <Copyright /> Scanby 2025
           </Text>
+          <Section style={unsubscribeContainer}>
+              <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
+              <Button style={unsubscribeButton} href={`${baseUrl}/unsubscribe?email=${userEmail}`}>{t("unsubscribe")}</Button>
+            </Section>
         </Container>
       </Body>
     </Html>
@@ -77,6 +83,23 @@ const container = {
   maxWidth: "600px",
   padding: "20px",
 };
+
+const unsubscribeContainer = {
+  textAlign: "center" as const,
+  margin: "30px 0",
+};
+
+const unsubscribeText = {
+  color: "#4b5563",
+  fontSize: "16px",
+  lineHeight: "24px",
+  margin: "16px 0",
+};
+
+const unsubscribeButton = {
+  color: "#4b5563",
+};
+
 
 const logo = {
   margin: "0 auto 20px",
