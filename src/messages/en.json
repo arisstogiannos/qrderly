@@ -831,7 +831,7 @@
       },
       "accessInfo": "You now have access to all the features included in the {planName} plan. You can start creating QR menus right away!",
       "button": "Go to Dashboard",
-      "support": "If you have any questions about your subscription or need assistance, please contact our support team at support@qrmenu.app.",
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -853,7 +853,7 @@
       "greeting": "Hi {username},",
       "message": "Create your first QR menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
       "button": "Create My Menu Now",
-      "support": "Need help? We're here for you anytime – just reach out!",
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -863,7 +863,7 @@
       "greeting": "Hi {username},",
       "message": "Your menu is nearly ready. Add the final touches and go live to start accepting orders right away!",
       "button": "Finish My Menu",
-      "support": "Questions? Our support team is happy to help you anytime.",
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -874,7 +874,7 @@
       "message": "Click the button below to verify your email and unlock all features. Your menu journey starts now! The link will expire in 24 hours.",
       "button": "Activate My Account",
 
-      "support": "Didn't get the email? Check your spam or request a new one here.",
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     }
