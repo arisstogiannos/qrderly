@@ -1,15 +1,15 @@
 import { verifyToken } from "@/lib/tokens";
 import {Link} from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
 import React from "react";
 import { sendWelcomeEmail } from "@/email/mail";
+import { getTranslations } from "next-intl/server";
 
 export default async function AccountVerificationPage({
   searchParams,
 }: {
   searchParams: Promise<{ token: string }>;
 }) {
-  const t = useTranslations();
+  const t = await getTranslations("accountVerification");
   const token = (await searchParams).token;
   let result: { success?: boolean; error?: string; email?: string; userName?: string } | undefined;
   if (token) {
@@ -26,16 +26,16 @@ export default async function AccountVerificationPage({
         {result?.success && (
           <>
             <h2 className="text-3xl font-medium text-foreground text-center">
-              {t("accountVerification.success")}
+              {t("success")}
             </h2>
             <p className="text-lg text-muted-foreground text-center">
-              {t("accountVerification.continue")}
+              {t("continue")}
             </p>
             <Link
               href={"/login"}
               className="rounded-lg bg-primary px-7 py-3 text-xl text-primary-foreground"
             >
-              {t("accountVerification.signIn")}
+              {t("signIn")}
             </Link>
           </>
         )}
