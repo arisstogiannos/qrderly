@@ -11,6 +11,9 @@ export const generateVerificationToken = async (email: string, time?: number) =>
       email,
       type: "VALIDATION",
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   if (existingToken) {

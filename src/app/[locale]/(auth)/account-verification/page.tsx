@@ -1,7 +1,6 @@
-
 import { verifyToken } from "@/lib/tokens";
 import {Link} from "@/i18n/navigation";
-
+import { useTranslations } from "next-intl";
 import React from "react";
 import { sendWelcomeEmail } from "@/email/mail";
 
@@ -10,13 +9,16 @@ export default async function AccountVerificationPage({
 }: {
   searchParams: Promise<{ token: string }>;
 }) {
+  const t = useTranslations();
   const token = (await searchParams).token;
-  let result;
+  let result: { success?: boolean; error?: string; email?: string; userName?: string } | undefined;
   if (token) {
     result = await verifyToken(token);
   }
 
-  if(result?.success) await sendWelcomeEmail(result.email,result.userName)
+  if(result?.success && result.email && result.userName) {
+    await sendWelcomeEmail(result.email, result.userName);
+  }
  
   return (
     <div className="flex w-full items-center justify-center bg-background rounded-3xl p-6">
@@ -24,16 +26,16 @@ export default async function AccountVerificationPage({
         {result?.success && (
           <>
             <h2 className="text-3xl font-medium text-foreground text-center">
-              Your account has been verified succesfully!
+              {t("accountVerification.success")}
             </h2>
             <p className="text-lg text-muted-foreground text-center">
-              Continue by signing in to your account
+              {t("accountVerification.continue")}
             </p>
             <Link
               href={"/login"}
               className="rounded-lg bg-primary px-7 py-3 text-xl text-primary-foreground"
             >
-              Sign in
+              {t("accountVerification.signIn")}
             </Link>
           </>
         )}

@@ -19,7 +19,8 @@ import QrDownLoad from "./QrDownLoad";
 import QrShape from "./QrShape";
 import QeColors from "./QeColors";
 import { useTranslations } from "next-intl";
-
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { toast } from "sonner";
 export default function QrCreator({
   url,
   business,
@@ -40,6 +41,7 @@ export default function QrCreator({
   const [logo, setLogo] = useState("");
   const [qrCode, setQrCode] = useState<QRCodeStyling | null>(null);
   const [dotColor, setDotColor] = useState(initialOptions?.dotsOptions?.color??"#000000");
+  const [showColorWarning, setShowColorWarning] = useState(false);
   
 
   const qrOptions = {
@@ -70,6 +72,20 @@ export default function QrCreator({
     saveQR.bind(null, business.id,  qrOptions,text,product),
     null
   );
+
+  useEffect(() => {
+    if (bgColor !== "#ffffff") {
+      setShowColorWarning(true);
+    } 
+  }, [ bgColor]);
+
+  useEffect(() => {
+    console.log(state)
+    if (state?.success) {
+
+      toast.success(state.success);
+    }
+  }, [state]);
 
   useEffect(() => {
     const qr = new QRCodeStyling(qrOptions);
@@ -119,6 +135,20 @@ export default function QrCreator({
 
   return (
     <form action={action} className="mt-2  flex flex-col gap-y-5">
+      <Dialog open={showColorWarning} onOpenChange={setShowColorWarning}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("color warning.title")}</DialogTitle>
+            <DialogDescription>
+              {t("color warning.description")}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => {setBgColor("#ffffff");setShowColorWarning(false);		}}>{t("color warning.close")}</Button>
+            <Button variant="default" onClick={() => setShowColorWarning(false)}>{t("color warning.continue")}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <div className="flex gap-4 flex-wrap">
         <QrShape
           cornerDotShape={cornerDotsShape}

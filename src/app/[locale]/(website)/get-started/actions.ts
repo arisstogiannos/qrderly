@@ -257,9 +257,9 @@ export async function createMenu(
 
   revalidateTag("active-menu" + business.name);
   revalidateTag("active-menus");
-  revalidatePath("/en/" + business.name.replaceAll(" ", "-"));
-  revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/menu");
-  revalidatePath("/en/" + business.name.replaceAll(" ", "-") + "/smart-menu");
+  revalidatePath(`/en/${business.name.replaceAll(" ", "-")}`);
+  revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/menu`);
+  revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/smart-menu`);
 
   const businessNameUrl = business.name.replaceAll(" ", "-");
   const adminEncryptedTableId = await encryptTable("admin|" + business.name)
@@ -347,6 +347,8 @@ export async function saveQR(
         text,
       },
     });
+    // revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/dashboard`);
+    // revalidatePath(`/el/${business.name.replaceAll(" ", "-")}/dashboard`); 
   } catch (err) {
     console.error(err);
     return { error: "Something went wrong!" };
@@ -354,4 +356,5 @@ export async function saveQR(
   if (product) {
     redirect(`/get-started/${product}/publish`);
   }
+  return { success: "QR code saved!" };
 }

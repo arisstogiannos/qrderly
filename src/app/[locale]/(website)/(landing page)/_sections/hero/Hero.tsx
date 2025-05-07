@@ -36,7 +36,6 @@ export default async function Hero() {
         <MainButton className="md:mt-5 3xl:mt-14 md:text-xl md:ml-5 bg-primary border border-foreground/20 lg:hover:text-background font-medium">
           <Link
             // @ts-expect-error
-
             href={"/Bruncherie/smart-menu"}
             className="flex gap-4 items-center size-full "
             target="_blank"

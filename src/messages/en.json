@@ -495,6 +495,12 @@
       "classy rounded": "Classy Rounded",
       "extra rounded": "Extra Rounded"
     },
+    "color warning": {
+      "title": "Color Warning",
+      "description": "The background color should be white for some devices to be readable. Do you want to continue?",
+      "close": "Back to white",
+      "continue": "Continue"
+    },
     "colors": "Colors",
     "logo": "Logo",
     "text": "Text",
@@ -994,5 +1000,10 @@
       "updateButton": "Update Preferences"
     },
     "saveButton": "Save preferences"
+  },
+  "accountVerification": {
+    "success": "Your account has been verified successfully!",
+    "continue": "Continue by signing in to your account",
+    "signIn": "Sign in"
   }
 }
