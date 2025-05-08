@@ -163,22 +163,22 @@ const Menu = ({
         )}
       </ul>
       <div className="pb-10 pt-20 flex items-center justify-between">
-        <a href="mailto:scanby@gmail.com" className="text-base md:text-lg">
-          scanby@gmail.com
+        <a href="mailto:info@scanby.cloud" className="text-base md:text-lg">
+          info@scanby.cloud
         </a>
         <Button
           onClick={handleClick}
           size={"lg"}
-          className="text-xl md:text-3xl md:p-8 p-6 "
+          className="text-xl md:text-3xl md:p-8 p-4 px-3 "
           asChild
         >
           {!session ? (
             <Link href={"/sign-up"} className="">
-              Sign Up
+              {t("signBtn")}
             </Link>
           ) : (
             <Link href={"/get-started"} className="">
-              Create Menu
+              {t("createBtn")}
             </Link>
           )}
         </Button>
