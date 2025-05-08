@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
         });
       }
 
-    const users = await db.user.findMany({ select: { business: { select: { product: true, menu: { select: { published: true } } } }, email: true, name: true, id: true, emailVerified: true } })
+    const users = await db.user.findMany({ select: { business: { select: { product: true, menu: { select: { published: true , _count:{select:{menuItems:true}}} } } }, email: true, name: true, id: true, emailVerified: true } })
 
     const usersWithNoMenu = users.filter((user) => !user.business)
 
@@ -39,7 +39,8 @@ export async function GET(request: NextRequest) {
         await db.notification.create({ data: { email: user.email, type: NotificationType.NO_EMAIL_VERIFIED, userId: user.id } })
     }
 
-
+    
+    
     for (const user of users) {
         const unfinishedBusiness = user.business.find((business) => !business.menu?.published)
         if (unfinishedBusiness) {
@@ -52,6 +53,16 @@ export async function GET(request: NextRequest) {
             await db.notification.create({ data: { email: user.email, type: NotificationType.UNFINISHED_MENU, userId: user.id } })
         }
     }
+    // const usersWithEmptyMenu = users.filter((user) => user.business.some((business) => business.menu?.published && business.menu?._count.menuItems === 0))
+
+    // for (const user of usersWithEmptyMenu) {
+    //     const existingNotification = await db.notification.findFirst({ where: { email: user.email, type: NotificationType.EMPTY_MENU }, orderBy: { createdAt: 'desc' } })
+    //     if (existingNotification && existingNotification.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
+    //         continue
+    //     }
+    //     await sendEmptyMenuEmail(user.email, user.name)
+    //     await db.notification.create({ data: { email: user.email, type: NotificationType.EMPTY_MENU, userId: user.id } })
+    // }
 
 
     return Response.json({ success: true });

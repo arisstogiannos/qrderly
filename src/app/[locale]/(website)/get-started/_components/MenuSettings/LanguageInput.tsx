@@ -29,6 +29,8 @@ export default function LanguageInput({
 
     if (newLanguage && !selectedLanguages.some((l) => l.name === name)) {
       setSelectedLanguages((prev) => [...prev, newLanguage]);
+    }else{
+      setSelectedLanguages((prev) => prev.filter((l)=>l.name!==name))
     }
   }
 
@@ -37,6 +39,14 @@ export default function LanguageInput({
   }
   return (
     <>
+      <AddLanguageComboBox
+        onSelect={addLanguage}
+        list={languages as Language[]}
+        valueKey="code"
+        labelKey="name"
+        selectedLanguages={selectedLanguages.map((l) => l.code)}
+
+      />
       <div className=" flex flex-wrap gap-2">
         {selectedLanguages.map((l, i) => (
           <span
@@ -44,18 +54,12 @@ export default function LanguageInput({
             className="rounded-lg bg-accent p-2 w-fit gap-4 flex justify-between items-center text-sm"
           >
             {l.name}
-            <button onClick={() => removeLanguage(i)}>
+            <button onClick={() => removeLanguage(i)} type="button">
               <XCircle className="size-5  cursor-pointer" />
             </button>
           </span>
         ))}
       </div>
-      <AddLanguageComboBox
-        onSelect={addLanguage}
-        list={languages as Language[]}
-        valueKey="code"
-        labelKey="name"
-      />
       <input
         type="hidden"
         name="language"

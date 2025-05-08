@@ -10,7 +10,7 @@ import MenuItemModal, {
 import { useSearchParams } from "next/navigation";
 import type { Translation } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
-
+import { cn } from "@/lib/utils";
 export function MenuItemCard({
   id,
   name,
@@ -52,7 +52,7 @@ export function MenuItemCard({
         <Card
           id={name}
           className={
-            "flex p-2 flex-row border-0  min-[390px]:min-w-[350px] max-w-full relative  h-[140px]  overflow-hidden bg-secondary text-foreground shadow-lg transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
+            cn("flex p-2 flex-row border-0  min-[390px]:min-w-[350px] max-w-full relative  h-[140px]  overflow-hidden bg-secondary text-foreground shadow-lg transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full", !imagePath && "max-sm:h-fit")
           }
         >
           {imagePath&&<div
@@ -69,7 +69,7 @@ export function MenuItemCard({
             />
           </div>}
           <CardContent
-            className={"flex flex-col justify-between py-1 px-3  h-full"}
+            className={cn("flex flex-col justify-between py-1 px-3  h-full", !imagePath && "pl-2")}
           >
             <div className="space-y-1 lg:space-y-1">
               <h3 className={"text-base lg:text-lg capitalize"}>{name}</h3>
@@ -81,7 +81,7 @@ export function MenuItemCard({
                 {description}
               </p>
             </div>
-            <span className="lg:text-lg text-foreground">
+            <span className={cn("lg:text-lg text-foreground", !imagePath && "mt-3")}>
               <DisplayPrice price={priceInCents } />
             </span>
             {quantity !== 0 && (

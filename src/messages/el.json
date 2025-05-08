@@ -459,6 +459,14 @@
       }
     }
   },
+  "profileDropdown": {
+    "account": "Λογαριασμός",
+    "subscriptions": "Συνδρομές",
+    "dashboard": "Πίνακας",
+    "menu": "Μενού",
+    "signOut": "Αποσύνδεση",
+    "signIn": "Σύνδεση"
+  },
   "menu settings": {
     "title": "Ρυθμίσεις Μενού",
     "Template": "Διάταξη",
@@ -466,7 +474,8 @@
     "T2": "Χωρίς Εικόνες",
     "Default Language": "Βασική Γλώσσα",
     "Default Language Desc": "Η βασική γλώσσα στην οποία βρίσκετε το μενού σας.",
-    "Languages": "Γλώσσες",
+    "Languages": "Γλώσσες Μετάφρασης",
+    "Languages Desc": "Οι γλώσσες στις οποίες θέλετε να μεταφράσετε το μενού σας.",
     "Search Language": "Αναζήτηση Γλώσσας...",
     "Add Language": "Προσθήκη Γλώσσας",
     "Theme": "Θέμα",

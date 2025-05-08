@@ -467,6 +467,14 @@
       "manage": "Manage Subscription"
     }
   },
+  "profileDropdown": {
+    "account": "Account",
+    "subscriptions": "Subscriptions",
+    "dashboard": "Dashboard",
+    "menu": "Menu",
+    "signOut": "Sign Out",
+    "signIn": "Sign In"
+  },
   "menu settings": {
     "title": "Menu Settings",
     "Template": "Template",
@@ -474,7 +482,8 @@
     "T2": "No Images",
     "Default Language": "Default Language",
     "Default Language Desc": " The native language that you will write the menu items, categories...",
-    "Languages": "Languages",
+    "Languages": "Target Languages",
+    "Languages Desc": "The languages that you want to translate the menu to.",
     "Add Language": "Add Language",
     "Search Language": "Search Language...",
     "Theme": "Theme",

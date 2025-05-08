@@ -16,21 +16,20 @@ import {
   User2,
 } from "lucide-react";
 
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import { Button } from "./ui/button";
 import { signOut } from "@/app/[locale]/(auth)/_actions/login";
 import Link from "next/link";
-import {Link as IntlLink} from "@/i18n/navigation";
-
+import { Link as IntlLink } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 export function ProfileDropdown({ session }: { session: Session | null }) {
-  const businesses = session?.user.business.filter(
-    (b) => b.menu && b.menu.published
-  );
-  async function handle(){
-    await signOut()
-    location.reload()
-    
+  const businesses = session?.user.business.filter((b) => b.menu?.published);
+  async function handle() {
+    await signOut();
+    location.reload();
   }
+
+  const t = useTranslations("profileDropdown");
 
   return (
     <DropdownMenu>
@@ -40,75 +39,72 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel className="pb-0">Account</DropdownMenuLabel>
+        <DropdownMenuLabel className="pb-0">{t("account")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {session ? (
           <>
             <DropdownMenuItem asChild>
               <Link
                 target="_blank"
-                href={
-                  "https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=" +
-                  session.user.email
-                }
+                href={`https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=${session.user.email}`}
               >
                 <Stars />
-                Subscriptions
+                {t("subscriptions")}
               </Link>
             </DropdownMenuItem>
 
-            {businesses &&
-              businesses.map((b) => (
-                <DropdownMenuGroup key={b.name} className="mx-2">
-                  <DropdownMenuLabel className="flex items-center gap-2 text-nowrap ml-0 pl-0">
-                    {b.name} <hr className="w-full" />
-                  </DropdownMenuLabel>
+            {businesses?.map((b) => (
+              <DropdownMenuGroup key={b.name} className="mx-2">
+                <DropdownMenuLabel className="flex items-center gap-2 text-nowrap ml-0 pl-0">
+                  {b.name} <hr className="w-full" />
+                </DropdownMenuLabel>
 
-                  <div key={b.name} className=" flex gap-2">
-                    <DropdownMenuItem
-                      className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
-                      asChild
+                <div key={b.name} className=" flex gap-2">
+                  <DropdownMenuItem
+                    className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
+                    asChild
+                  >
+                    <IntlLink
+                      href={{
+                        pathname: "/[businessName]/dashboard",
+                        params: { businessName: b.name.replaceAll(" ", "-") },
+                      }}
                     >
-                      <IntlLink
-                        href={{pathname:"/[businessName]/dashboard",params:{businessName:b.name.replaceAll(" ", "-")}}}
-                      >
-                        <LayoutDashboard /> Dashboard
-                      </IntlLink>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
-                      asChild
+                      <LayoutDashboard /> {t("dashboard")}
+                    </IntlLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className=" text-sm bg-foreground text-background transition-colors lg:hover:bg-primary"
+                    asChild
+                  >
+                    <IntlLink
+                      target="_blank"
+                      href={{
+                        pathname: `/[businessName]/${b.menu?.type === "QR_MENU" ? "menu" : "smart-menu"}`,
+                        search: b.menu?.type !== "QR_MENU" ? "?table=admin" : "",
+                        params: { businessName: b.name.replaceAll(" ", "-") },
+                      }}
                     >
-                      <Link
-                        target="_blank"
-                        href={
-                          "/en/" +
-                          b.name.replaceAll(" ", "-") +
-                          (b.menu?.type === "QR_MENU"
-                            ? "/menu"
-                            : "/smart-menu?table=admin")
-                        }
-                      >
-                        <SquareMenu /> Menu
-                      </Link>
-                    </DropdownMenuItem>
-                  </div>
-                </DropdownMenuGroup>
-              ))}
+                      <SquareMenu /> {t("menu")}
+                    </IntlLink>
+                  </DropdownMenuItem>
+                </div>
+              </DropdownMenuGroup>
+            ))}
             <DropdownMenuSeparator />
 
             <DropdownMenuItem asChild className="">
-              <form  action={handle}>
+              <form action={handle}>
                 <Button className=" w-full" type="submit">
                   <LogOut className="rotate-180 text-background" />
-                  Sign Out
+                  {t("signOut")}
                 </Button>
               </form>
             </DropdownMenuItem>
           </>
         ) : (
           <DropdownMenuItem>
-            <Link href="/sign-up">Sign In</Link>
+            <Link href="/sign-up">{t("signIn")}</Link>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

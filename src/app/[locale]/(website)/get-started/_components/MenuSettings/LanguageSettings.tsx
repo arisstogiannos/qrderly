@@ -37,8 +37,12 @@ export default function LanguageSettings({
         valueKey="code"
         placeholder="Select Language"
       />
-
-      <Label>{t("Languages")}</Label>
+      <div>
+        <Label>{t("Languages")}</Label>
+        <p className="text-sm text-muted-foreground">
+          {t("Languages Desc")}
+        </p>
+      </div>
       <LanguageInput
         existingLanguages={menu?.languages}
         languages={targetLanguages}

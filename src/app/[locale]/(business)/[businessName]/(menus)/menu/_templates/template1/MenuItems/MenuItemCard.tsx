@@ -9,6 +9,7 @@ import MenuItemModalHeader from "./MenuItemModalHeader";
 import type { Translation } from "@/types";
 import { useSearchParams } from "next/navigation";
 import DisplayPrice from "@/components/DisplayPrice";
+import { cn } from "@/lib/utils";
 
 export function MenuItemCard({
   id,
@@ -43,10 +44,10 @@ export function MenuItemCard({
         <Card
           id={name}
           className={
-            "flex p-2 flex-row border-0  min-[390px]:min-w-[350px] max-w-full relative  h-[150px]  overflow-hidden bg-secondary text-background shadow-lg transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
+            cn("flex p-2 flex-row border-0  min-[390px]:min-w-[350px] max-w-full relative  h-[150px]  overflow-hidden bg-secondary text-background shadow-lg transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full", !imagePath && "max-sm:h-fit")
           }
         >
-          <div
+         {imagePath&&<div
             className={
               "relative aspect-video min-w-[140px] max-w-[140px] h-full overflow-hidden rounded-xl"
             }
@@ -58,9 +59,9 @@ export function MenuItemCard({
               alt={name}
               sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"}
             />
-          </div>
+          </div>}
           <CardContent
-            className={"flex flex-col justify-between py-1 pl-0 pr-2  h-full"}
+            className={cn("flex flex-col justify-between py-1 pl-0 pr-2  h-full", !imagePath && "pl-2")}
           >
             <div className="space-y-1 lg:space-y-1">
               <h3 className={"text-base lg:text-lg capitalize text-foreground line-clamp-2"}>
@@ -74,7 +75,7 @@ export function MenuItemCard({
                 {description}
               </p>
             </div>
-            <span className="lg:text-lg text-foreground">
+            <span className={cn("lg:text-lg text-foreground", !imagePath && "mt-3")}>
               <DisplayPrice price={priceInCents } />
             </span>
           </CardContent>

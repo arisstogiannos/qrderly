@@ -26,12 +26,14 @@ export function AddLanguageComboBox<T extends Record<string, string>>({
     list,
     valueKey,
     labelKey,
-    onSelect
+    onSelect,
+    selectedLanguages
   }: {
     list: T[];
     valueKey: keyof T;
     labelKey: keyof T;
     onSelect:(v:string)=>void
+    selectedLanguages:string[]
   }) {
     const formattedList = list.map((item) => ({
       value: item[valueKey],
@@ -67,6 +69,12 @@ export function AddLanguageComboBox<T extends Record<string, string>>({
                   onSelect={onSelect}
                 >
                   {item.label}
+                  <Check
+                      className={cn(
+                          "ml-auto",
+                          selectedLanguages.includes(item.value) ? "opacity-100" : "opacity-0"
+                        )}
+                        />
                  
                 </CommandItem>
               ))}

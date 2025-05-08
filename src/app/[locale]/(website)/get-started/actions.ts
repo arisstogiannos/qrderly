@@ -112,10 +112,10 @@ const menuSettingsSchema = z.object({
   defaultLanguage: z.string().nonempty({ message: "Required field" }),
   language: z.string().nonempty({ message: "Required field" }),
   template: z.string().nonempty({ message: "Required field" }),
-  background: z.string().optional(),
-  foreground: z.string().optional(),
-  primary: z.string().optional(),
-  text: z.string().optional(),
+  background: z.string(),
+  secondary: z.string(),
+  primary: z.string(),
+  text: z.string(),
 });
 export async function submitMenuSettings(
   businessId: string,
@@ -136,16 +136,14 @@ export async function submitMenuSettings(
     defaultLanguage,
     language,
     background,
-    foreground,
+    secondary,
     primary,
     text,
     template,
   } = result.data;
 
-  let selectedTheme;
+  const selectedTheme = `${background},${secondary},${primary},${text}`;
 
-
-  selectedTheme = background + "," + foreground + "," + primary + "," + text;
 
 
   try {
@@ -153,7 +151,7 @@ export async function submitMenuSettings(
       await db.menu.update({
         where: { id: menu.id },
         data: {
-          languages: defaultLanguage + "," + language,
+          languages: `${defaultLanguage},${language}`,
           theme: selectedTheme,
           businessId,
           type: product,
@@ -163,7 +161,7 @@ export async function submitMenuSettings(
     } else {
       await db.menu.create({
         data: {
-          languages: defaultLanguage + "," + language,
+          languages: `${defaultLanguage},${language}`,
           theme: selectedTheme,
           businessId,
           type: product,
@@ -181,7 +179,7 @@ export async function submitMenuSettings(
   const session = await getSession();
 
   const business = session?.user.business.find((b) => b.id === businessId);
-  revalidateTag("active-menu" + business?.name);
+  revalidateTag(`active-menu${business?.name}`);
   return { success: "Changes saved!" };
 }
 
@@ -255,14 +253,14 @@ export async function createMenu(
     data: { published: true },
   });
 
-  revalidateTag("active-menu" + business.name);
+  revalidateTag(`active-menu${business.name}`);
   revalidateTag("active-menus");
   revalidatePath(`/en/${business.name.replaceAll(" ", "-")}`);
   revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/menu`);
   revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/smart-menu`);
 
   const businessNameUrl = business.name.replaceAll(" ", "-");
-  const adminEncryptedTableId = await encryptTable("admin|" + business.name)
+  const adminEncryptedTableId = await encryptTable(`admin|${business.name}`)
   if (user.email) {
     await Promise.all([
 
@@ -272,7 +270,7 @@ export async function createMenu(
         business.name,
         menu.type === "QR_MENU"
           ? "menu"
-          : ("smart-menu?table=" + adminEncryptedTableId)
+          : `smart-menu?table=${adminEncryptedTableId}`
       ),
       sendFeedbackEmail(
         user.email,

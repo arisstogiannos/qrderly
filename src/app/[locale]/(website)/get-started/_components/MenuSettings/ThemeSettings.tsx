@@ -26,7 +26,7 @@ export default function ThemeSettings({
 
     const root = document.querySelector(":root") as HTMLElement;
     themeColors.forEach((c, i) => {
-      const variable = "--" + variables[i] + "-mockup";
+      const variable = `--${variables[i]}-mockup`;
       if (root) {
         root.style.setProperty(variable, c);
       }
