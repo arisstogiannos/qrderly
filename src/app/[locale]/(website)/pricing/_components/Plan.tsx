@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { usePlanContext } from "./PlanContext";
-import { ProductURL } from "@/types";
+import type { ProductURL } from "@/types";
 import { BillingType } from "@prisma/client";
 import { productMap } from "@/data";
 import {
@@ -14,9 +14,8 @@ import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-import { db } from "@/db";
-import { getMenus } from "@/app/[locale]/(business)/[businessName]/_actions/menu";
 import { getSale } from "@/app/[locale]/banner";
+import Loader from "@/components/Loader";
 
 type thisProps = {
   plan: {
@@ -37,21 +36,20 @@ export default function Plan({ plan, index }: thisProps) {
   const t = useTranslations("plandata");
   const [showSale, setShowSale] = useState(false);
 
-  const {data} = useQuery({
-    queryFn:async()=>{
-        return await getSale()
+  const { data } = useQuery({
+    queryFn: async () => {
+      return await getSale();
     },
-    queryKey:["banner"]
-
-  })
+    queryKey: ["banner"],
+  });
 
   // Show sale after component mounts for animation
   useEffect(() => {
-    if(data){
-      const t =setTimeout(() => {
+    if (data) {
+      const t = setTimeout(() => {
         setShowSale(true);
       }, 500);
-      return ()=>clearTimeout(t)
+      return () => clearTimeout(t);
     }
   }, [data]);
 
@@ -114,9 +112,7 @@ export default function Plan({ plan, index }: thisProps) {
           </div>
         </div>
       ) : (
-        <span
-          className={`text-3xl font-semibold  transition-all duration-500  origin-left mb-3`}
-        >
+        <span className="text-3xl font-semibold  transition-all duration-500  origin-left mb-3">
           {originalPrice}
         </span>
       )}
@@ -156,7 +152,8 @@ function Buttons({
   const { selectedPlanType } = usePlanContext();
   const { data: session } = useSession();
   const t = useTranslations("plandata");
-
+  const [loading, setLoading] = useState(false);
+  const [loadingfree, setLoadingfree] = useState(false);
   const productUrl: ProductURL = plan.title
     .toLowerCase()
     .replaceAll(" ", "-") as ProductURL;
@@ -177,26 +174,33 @@ function Buttons({
   return (
     <div className=" flex flex-col gap-4 mt-auto">
       <Button
-        onClick={createSession.bind(
-          null,
-          plan.billing[selectedPlanType].price_id,
-          billing,
-          product,
-          "",
-          "",
-          "/get-started/" + productUrl + "/business-setup",
-          "create your menu"
-        )}
+        disabled={loading}
+        onClick={() => {
+          setLoading(true);
+          createSession(
+            plan.billing[selectedPlanType].price_id,
+            billing,
+            product,
+            "",
+            "",
+            `/get-started/${productUrl}/business-setup`,
+            "create your menu"
+          );
+        }}
         className="rounded-full bg-foreground text-xl py-6"
       >
-        {t("button")}
+        {loading ? <Loader className="text-xs h-6" /> : t("button")}
       </Button>
 
       {!business ? (
         <Button
+          disabled={loadingfree}
           variant={"outline"}
           className="rounded-full  text-xl py-6 w-full"
-          onClick={createFreeSubscription.bind(null, productUrl, businessId)}
+          onClick={() => {
+            setLoadingfree(true);
+            createFreeSubscription(productUrl, businessId);
+          }}
           asChild
         >
           <Link
@@ -205,25 +209,32 @@ function Buttons({
               params: { product: productUrl },
             }}
           >
-            {t("free")}
+            {loadingfree ? <Loader className="text-xs h-6" /> : t("free")}
           </Link>
         </Button>
       ) : (
         <Button
-          onClick={createSession.bind(
-            null,
-            plan.billing[selectedPlanType].price_id,
-            billing,
-            product,
-            businessId,
-            business?.subscription?.id ?? "",
-            "/",
-            "go back to homepage"
-          )}
+          disabled={loadingfree}
+          onClick={() => {
+            setLoadingfree(true);
+            createSession(
+              plan.billing[selectedPlanType].price_id,
+              billing,
+              product,
+              businessId,
+              business?.subscription?.id ?? "",
+              "/",
+              "go back to homepage"
+            );
+          }}
           variant={"outline"}
           className="rounded-full  text-xl py-6 w-full whitespace-normal "
         >
-          {t("upgrade", { business: business.name })}
+          {loadingfree ? (
+            <Loader className="text-xs h-6" />
+          ) : (
+            t("upgrade", { business: business.name })
+          )}
         </Button>
       )}
     </div>
@@ -233,13 +244,12 @@ function Buttons({
 function ButtonFallback() {
   return (
     <div className=" flex flex-col gap-4 mt-auto animate-pulse">
-      <Button className="rounded-full bg-foreground text-xl py-6"></Button>
+      <Button className="rounded-full bg-foreground text-xl py-6" />
 
       <Button
         variant={"outline"}
         className="rounded-full  text-xl py-6 w-full"
-        asChild
-      ></Button>
+      />
     </div>
   );
 }
