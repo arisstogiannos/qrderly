@@ -80,7 +80,7 @@ export default function Options({
                   >
                     {value.name}{" "}
                     {value.price && value.price !== "0" && (
-                      <span className="text-muted">
+                      <span className="text-foreground/70">
                         <DisplayPrice price={Number(value.price)} />
                       </span>
                     )}
