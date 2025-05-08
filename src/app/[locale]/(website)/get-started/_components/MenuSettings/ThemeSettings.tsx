@@ -1,7 +1,6 @@
-import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { ErrorMessage } from "@/components/Messages";
-import { Menu, Template } from "@prisma/client";
+import type { Menu, Template } from "@prisma/client";
 import CustomThemeMaker from "./CustomThemeMaker";
 import { useTranslations } from "next-intl";
 import { themes } from "@/data";
@@ -62,7 +61,7 @@ export default function ThemeSettings({
                 onChange={() => handleThemeChange(theme)}
               />
               <div
-                className={`sm:size-24 size-20 overflow-hidden rounded-3xl grid grid-cols-3 border-4 transition-all peer-checked:border-black border-transparent`}
+                className="sm:size-24 size-20 overflow-hidden rounded-3xl grid grid-cols-3 border-4 transition-all peer-checked:border-black border-transparent"
               >
                 {colors.map((color) => (
                   <div key={color} style={{ backgroundColor: color }} />

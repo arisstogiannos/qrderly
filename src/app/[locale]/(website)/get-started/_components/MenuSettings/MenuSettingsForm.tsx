@@ -6,11 +6,11 @@ import { submitMenuSettings } from "../../actions";
 import { ProductURL } from "@/types";
 import Loader from "@/components/Loader";
 import { useSearchParams } from "next/navigation";
-import { Menu, Product, Template } from "@prisma/client";
+import type { Menu, Product, Template } from "@prisma/client";
 import TemplateSelect from "./TemplateSelect";
 import LanguageSettings from "./LanguageSettings";
 import ThemeSettings from "./ThemeSettings";
-import { Language } from "deepl-node";
+import type { Language } from "deepl-node";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
@@ -61,7 +61,7 @@ export default function MenuSettingsForm({
         });
       }
     }
-  }, [menu, state, setup]);
+  }, [state, setup]);
   const t = useTranslations("menu settings");
 
   return (
@@ -83,7 +83,7 @@ export default function MenuSettingsForm({
         errors={[
           ...(state?.errors?.primary ?? []),
           ...(state?.errors?.background ?? []),
-          ...(state?.errors?.foreground ?? []),
+          ...(state?.errors?.secondary ?? []),
           ...(state?.errors?.text ?? []),
         ]}
       />

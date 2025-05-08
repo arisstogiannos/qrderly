@@ -1,6 +1,5 @@
 import { AddLanguageComboBox } from "@/components/ComboBox";
-import { Label } from "@/components/ui/label";
-import { Language } from "@/types";
+import type { Language } from "@/types";
 import { XCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
@@ -9,13 +8,16 @@ export default function LanguageInput({
   existingLanguages,
 }: {
   languages: readonly Language[];
-  existingLanguages?:string
+  existingLanguages?: string;
 }) {
-
-    const existingLanguagesArray = existingLanguages?.split(",")
-    const defaultLanguage = existingLanguagesArray?.reverse().pop()
-    const formatedexistingLanguagesArray = languages.filter((l)=>existingLanguagesArray?.some((el)=>el===l.code))
-  const [selectedLanguages, setSelectedLanguages] = useState<Language[]>(formatedexistingLanguagesArray ?? []);
+  const existingLanguagesArray = existingLanguages?.split(",");
+  const defaultLanguage = existingLanguagesArray?.reverse().pop();
+  const formatedexistingLanguagesArray = languages.filter((l) =>
+    existingLanguagesArray?.some((el) => el === l.code)
+  );
+  const [selectedLanguages, setSelectedLanguages] = useState<Language[]>(
+    formatedexistingLanguagesArray ?? []
+  );
   const [selectedLanguageCodesSerialized, setSelectedLanguageCodesSerialized] =
     useState<string | undefined>(undefined);
 
@@ -29,8 +31,8 @@ export default function LanguageInput({
 
     if (newLanguage && !selectedLanguages.some((l) => l.name === name)) {
       setSelectedLanguages((prev) => [...prev, newLanguage]);
-    }else{
-      setSelectedLanguages((prev) => prev.filter((l)=>l.name!==name))
+    } else {
+      setSelectedLanguages((prev) => prev.filter((l) => l.name !== name));
     }
   }
 
@@ -45,7 +47,6 @@ export default function LanguageInput({
         valueKey="code"
         labelKey="name"
         selectedLanguages={selectedLanguages.map((l) => l.code)}
-
       />
       <div className=" flex flex-wrap gap-2">
         {selectedLanguages.map((l, i) => (

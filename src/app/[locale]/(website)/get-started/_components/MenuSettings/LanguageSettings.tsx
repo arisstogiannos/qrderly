@@ -5,8 +5,8 @@ import { ErrorMessage } from "@/components/Messages";
 
 import LanguageInput from "./LanguageInput";
 import { ComboBox } from "@/components/ComboBox";
-import { Language } from "@/types";
-import { Menu } from "@prisma/client";
+import type { Language } from "@/types";
+import type { Menu } from "@prisma/client";
 import { useTranslations } from "next-intl";
 
 export default function LanguageSettings({
