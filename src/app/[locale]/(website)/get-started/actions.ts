@@ -3,17 +3,15 @@
 import { auth } from "@/auth";
 import { productMap, productMapURL } from "@/data";
 import { db } from "@/db";
-import { ProductURL } from "@/types";
-import { BillingType, Menu, Product, Template } from "@prisma/client";
+import type { ProductURL } from "@/types";
+import type { BillingType, Menu, Product, Template } from "@prisma/client";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { Options } from "qr-code-styling";
+import type { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
 import { sendFeedbackEmail, sendMenuCreatedEmail } from "@/email/mail";
 import { encryptTable } from "@/lib/table-crypt";
-import { getRunOutput } from "@/inngest/status";
-import { cookies } from "next/headers";
 
 const businessSchema = z.object({
   name: z.string(),
@@ -70,7 +68,7 @@ export async function submitBusinessInfo(
       await db.business.create({
         data: {
           name: data.name,
-          location: data.country + " - " + data.city,
+          location: `${data.country} - ${data.city}`,
           type: data.type,
           userId: user.id,
           product: productMap[product],
@@ -90,7 +88,7 @@ export async function submitBusinessInfo(
         where: { id: existingBusinessId },
         data: {
           name: data.name,
-          location: data.country + " - " + data.city,
+          location: `${data.country} - ${data.city}`,
           type: data.type,
           currency: data.currency,
           tables: data.tables,

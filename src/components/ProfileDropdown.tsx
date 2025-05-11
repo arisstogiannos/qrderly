@@ -14,6 +14,7 @@ import {
   SquareMenu,
   Stars,
   User2,
+  Settings,
 } from "lucide-react";
 
 import type { Session } from "next-auth";
@@ -51,6 +52,14 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
                 <Stars />
                 {t("subscriptions")}
               </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <IntlLink
+                href={"/user-settings"}
+              >
+                <Settings />
+                {t("settings")}
+              </IntlLink>
             </DropdownMenuItem>
 
             {businesses?.map((b) => (

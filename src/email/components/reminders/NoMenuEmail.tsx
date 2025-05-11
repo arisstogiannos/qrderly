@@ -41,13 +41,18 @@ import {
                 {t("button")}
               </Button>
             </Section>
+            <Text style={text}>{t("message2")}</Text>
+            <Section style={buttonContainer}>
+                <Button style={button} href={`${baseUrl}/#order-menu-form`}>{t("button2")}</Button>
+            </Section>
+
             <Text style={text}>{t("support")}</Text>
             <Hr style={hr} />
             <Text style={footer}><Copyright /> Scanby 2025</Text>
             <Text style={footer}>This email was sent to {userEmail}</Text>
             <Section style={unsubscribeContainer}>
               <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
-              <Button style={unsubscribeButton} href={`${baseUrl}/unsubscribe?email=${userEmail}`}>{t("unsubscribe")}</Button>
+              <Button style={unsubscribeButton} href={`${baseUrl}/user-settings?email=${userEmail}`}>{t("unsubscribe")}</Button>
             </Section>
           </Container>
         </Body>

@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
-import { unsubscribe } from "./unsubscribe"
+import { unsubscribe } from "./user-settings"
 import Loader from "@/components/Loader"
 
 export default function UnsubscribeForm({ email }: { email: string }) {

@@ -1,6 +1,6 @@
 import React from "react";
 import Features from "./Features";
-import { ProductType } from "@/types";
+import type { ProductType } from "@/types";
 import { MainButton } from "../../(landing page)/_sections/hero/MainButton";
 import { Link } from "@/i18n/navigation";
 
@@ -17,10 +17,10 @@ export default async function ProductPage({
     <section className="space-y-20  mt-20">
       <header className="flex justify-between flex-col  sm:text-center gap-y-3 sm:gap-y-8 mx-auto">
         <h1 className="text-[28px] sm:text-3xl md:text-7xl font-semibold  text-balance lg:px-40">
-          {t(product.title + ".longTitle")}
+          {t(`${product.title}.longTitle`)}
         </h1>
         <p className="text-base sm:text-2xl max-w-3xl mx-auto">
-          {t(product.title + ".desc")}
+          {t(`${product.title}.desc`)}
         </p>
         <MainButton className="w-fit md:mx-auto my-5 md:mb-10">
           <Link
@@ -40,19 +40,19 @@ export default async function ProductPage({
                 key={i}
                 style={{ top: i * 500 }}
                 className="absolute top-5 odd:left-full even:left-0 -translate-x-1/2 size-[680px] bg-radial from-primary/20 to-60% to-transparent rounded-full "
-              ></div>
+              />
             ))}
             {product.features.map((_, i) => (
               <div
                 key={i}
                 style={{ top: i * 600 }}
                 className="absolute top-5 even:left-1/3 odd:left-2/3 -translate-x-1/2 size-[480px] bg-radial from-primary/10 to-60% to-transparent rounded-full "
-              ></div>
+              />
             ))}
           </div>
         </div>
         <div className="p-4 xl:px-20">
-          <Features features={product.features} />
+          <Features  features={product.features} theme="light" />
         </div>
       </div>
     </section>

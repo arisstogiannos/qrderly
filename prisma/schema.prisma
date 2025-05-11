@@ -59,7 +59,7 @@ model User {
   emailVerified DateTime?  @map("email_verified")
   business      Business[]
   password      String?
-  // settings   Settings?
+  settings      Settings?
 
   accounts      Account[]
   subscriptions Subscription[]
@@ -224,24 +224,42 @@ model Account {
 
 model Scan {
   id         String    @id @default(uuid())
-  businessId String?  
+  businessId String?
   business   Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
   // menuId     String
   // menu       Menu     @relation(fields: [menuId], references: [id])
-  date      DateTime @default(now())
+  date       DateTime  @default(now())
 }
 
 model Notification {
-  id         String    @id @default(uuid())
-  email      String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  type       NotificationType
-  userId     String
+  id        String           @id @default(uuid())
+  email     String
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  type      NotificationType
+  userId    String
+}
+
+model Settings {
+  id                             String   @id @default(uuid())
+  userId                         String   @unique
+  createdAt                      DateTime @default(now())
+  updatedAt                      DateTime @updatedAt
+  user                           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  receiveMenuNotifications       Boolean  @default(true)
+  receiveOrderNotifications      Boolean  @default(true)
+  receivePromotionNotifications  Boolean  @default(true)
+  receiveNewsletterNotifications Boolean  @default(true)
+  receiveSurveyNotifications     Boolean  @default(true)
+  receiveFeedbackNotifications   Boolean  @default(true)
 }
 
 enum NotificationType {
   UNFINISHED_MENU
   NO_EMAIL_VERIFIED
   NO_MENU
+  EMPTY_MENU
+  UNUSED_QR
+  FREE_TRIAL_EXPIRING
+  UPGRADE_TO_PRO
 }

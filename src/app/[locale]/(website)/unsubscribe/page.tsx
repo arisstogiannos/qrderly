@@ -15,8 +15,8 @@ export default async function UnsubscribePage({ params }: { params: Promise<{ em
     if (user?.email && email && user.email !== email) {
         redirect("/")
     }
+    
+    redirect("/user-settings")
 
-    return (
-        <UnsubscribeForm email={user?.email ?? email ?? ""} />
-    )
+    return null
 }

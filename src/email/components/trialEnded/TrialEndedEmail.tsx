@@ -62,7 +62,7 @@ export const TrialEndedEmail = async ({
           <Text style={footer}>This email was sent to {userEmail}</Text>
           <Section style={unsubscribeContainer}>
               <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
-              <Button style={unsubscribeButton} href={`${baseUrl}/unsubscribe?email=${userEmail}`}>{t("unsubscribe")}</Button>
+              <Button style={unsubscribeButton} href={`${baseUrl}/user-settings?email=${userEmail}`}>{t("unsubscribe")}</Button>
             </Section>
         </Container>
       </Body>

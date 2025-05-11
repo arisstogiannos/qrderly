@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  BadgeCheck,
   ChevronsUpDown,
   CreditCard,
   Eye,
@@ -27,10 +26,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import {
-  signOut,
   signOutDashboard,
 } from "@/app/[locale]/(auth)/_actions/login";
-import { BusinessExtended, ExtendedUser } from "@/types";
+import type { BusinessExtended, ExtendedUser } from "@/types";
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -59,7 +57,7 @@ export function NavFooter({
 
   useEffect(() => {
     async function encryptAdmin() {
-      const decryptedTable = await encryptTable("admin|"+activeBusiness.name);
+      const decryptedTable = await encryptTable(`admin|${activeBusiness.name}`);
       if (decryptedTable) {
         setAdminEncryptedTableId(decryptedTable);
       }
@@ -86,11 +84,7 @@ export function NavFooter({
         >
           <Link
             href={
-              "/en/" +
-              activeBusiness.name.replaceAll(" ", "-") +
-              (activeBusiness.menu?.type === "QR_MENU"
-                ? "/menu"
-                : "/smart-menu?table="+adminEncryptedTableId)
+              `/en/${activeBusiness.name.replaceAll(" ", "-")}${activeBusiness.menu?.type === "QR_MENU" ? "/menu" : `/smart-menu?table=${adminEncryptedTableId}`}`
             }
             target="_blank"
           >
@@ -149,10 +143,7 @@ export function NavFooter({
               <DropdownMenuItem asChild>
                 <Link
                   target="_blank"
-                  href={
-                    "https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=" +
-                    user.email
-                  }
+                  href={`https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=${user.email}`}
                 >
                   <CreditCard />
                   {t("Subscriptions") }
@@ -164,7 +155,7 @@ export function NavFooter({
               </DropdownMenuItem>
               <DropdownMenuItem variant="destructive" onClick={()=>setIsDeleting(true)}>
                 <Trash />
-               {t("deleteBusiness") + " " + activeBusiness.name}
+               {`${t("deleteBusiness")} ${activeBusiness.name}`}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

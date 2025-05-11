@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Mockup from "../../../get-started/_components/mockup/Mockup";
 
 import RadioGroup from "./RadioGroup";
 import ColorPicker from "./ColorPicker";
 import { useSearchParams } from "next/navigation";
-import { Template } from "@prisma/client";
+import type { Template } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import { themes } from "@/data";
 
@@ -23,19 +23,20 @@ export default  function Preview() {
 
     const root = document.querySelector(":root") as HTMLElement;
     themeColors.forEach((c, i) => {
-      const variable = "--" + variables[i] + "-mockup";
+      const variable = `--${variables[i]}-mockup`;
       if (root) {
         root.style.setProperty(variable, c);
       }
     });
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     handleThemeChange(themes[template][0]);
   }, [template]);
 
   return (
-    <section className="grid grid-rows-[auto_auto] lg:grid-cols-2 grid-cols-1  gap-20 relative w-full ">
+    <section className="grid grid-rows-[auto_auto] lg:grid-cols-2 grid-cols-1  gap-20 relative w-full my-40 ">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-[120%] bg-foreground -z-10" />
       <div className="space-y-4 max-sm:hidden">
         <p className="font-medium text-5xl text-background capitalize leading-[1.2]">
@@ -76,7 +77,7 @@ export default  function Preview() {
                   onChange={() => handleThemeChange(theme)}
                 />
                 <div
-                  className={`sm:h-14 sm:w-20 w-16 h-12 overflow-hidden rounded-xl grid grid-cols-3 border-4 transition-all peer-checked:scale-110 border-transparent`}
+                  className={'sm:h-14 sm:w-20 w-16 h-12 overflow-hidden rounded-xl grid grid-cols-3 border-4 transition-all peer-checked:scale-110 border-transparent'}
                 >
                   {colors.map((color) => (
                     <div key={color} style={{ backgroundColor: color }} />
@@ -88,7 +89,7 @@ export default  function Preview() {
         </Setting>
         <Setting title={t("settings.3")}>
           {selectedTheme?.split(",").map((t, i) => (
-            <ColorPicker template={template} key={i} i={i} value={t} />
+            <ColorPicker template={template} key={t} i={i} value={t} />
           ))}
         </Setting>
       </div>

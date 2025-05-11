@@ -244,6 +244,7 @@
 
   "productsData": {
     "button": "Get Started for Free",
+    "title": "Our Products",
 
     "features": {
       "title": "Some Features",
@@ -473,7 +474,8 @@
     "dashboard": "Dashboard",
     "menu": "Menu",
     "signOut": "Sign Out",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "settings": "Settings"
   },
   "menu settings": {
     "title": "Menu Settings",
@@ -483,7 +485,7 @@
     "Default Language": "Default Language",
     "Default Language Desc": " The native language that you will write the menu items, categories...",
     "Languages": "Target Languages",
-    "Languages Desc": "The languages that you want to translate the menu to.",
+    "Languages Desc": "The languages that you want to translate the menu to. You can add up to 5 languages.",
     "Add Language": "Add Language",
     "Search Language": "Search Language...",
     "Theme": "Theme",
@@ -781,6 +783,14 @@
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
+    "orderMenu": {
+      "subject": "Scanby - Menu Order",
+      "heading": "Menu Creation Order",
+      "greeting": "Hi {username}",
+      "message": "Your order has been received. We will contact you as soon as your menu is ready. If you don't have an account, you can sign up for free and receive your menu in your account.",
+      "button": "Sign Up"
+      
+    },
     "feedback": {
       "subject": "We'd love your feedback on your experience with Scanby",
       "heading": "Tell us what you think",
@@ -830,6 +840,28 @@
         ]
       },
       "support": "If you have any questions, simply reply to this email. We're here to help!",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+    },
+    "upgradeToPro": {
+      "subject": "Upgrade to Pro Plan",
+      "heading": "Upgrade to Pro Plan",
+      "greeting": "Hi {username}",
+      "message": "Thank you for using Scanby! We're excited to help you create beautiful, digital menus for your restaurant or business. The upgrade to the Pro Plan will allow you to have unlimited scans on your menus and access to more features.",
+      "button": "Upgrade to Pro Plan",
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "unsubscribe": "Unsubscribe",
+      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+    },
+    "emptyMenu": {
+      "subject": "Add items to your menu",
+      "heading": "Add items to your menu",
+      "greeting": "Hi {username}",
+      "message": "Add items to your menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
+      "button": "Populate Menu Now",
+      "message2": "If you dont want to populate your menu yourself, we can do it for you. Click the link and fill out the form and you don't have to do anything else.",
+      "button2": "Add items to my menu",
+      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -1014,5 +1046,144 @@
     "success": "Your account has been verified successfully!",
     "continue": "Continue by signing in to your account",
     "signIn": "Sign in"
+  },
+  "orderMenu": {
+    "title": "Let's create your digital menu",
+    "description": "If you dont want to create a menu yourself, we can do it for you. Choose your product and we'll set it up.",
+    "product": {
+      "label": "Select Product",
+      "placeholder": "Choose a product",
+      "qrMenu": "QR Menu",
+      "orderingQrMenu": "Smart Ordering QR Menu",
+      "selfServiceMenu": "Self Service QR Menu"
+    },
+    "businessName": {
+      "label": "Business Name",
+      "placeholder": "Business Name"
+    },
+    "comment": {
+      "label": "Additional Comments",
+      "placeholder": "Tell us about your business and any specific requirements...",
+      "charCount": "{count}/500 characters"
+    },
+    "email": {
+      "label": "Email Address",
+      "placeholder": "your@email.com",
+      "description": "We'll use this to send you updates about your order"
+    },
+    "menu": {
+      "label": "Upload your menu",
+      "desc": "You can upload either images or a PDF of your menu",
+      "images": {
+        "label": "Images",
+        "description": "Upload up to 15 images of your menu",
+        "min": "Please upload at least 1 image",
+        "max": "You can upload up to 15 images"
+      },
+      "pdf": {
+        "label": "PDF",
+        "description": "Upload a PDF of your menu",
+        "min": "Please upload at least 1 PDF",
+        "max": "You can upload up to 10 PDF"
+      }
+    },
+    "submit": "Submit Order",
+    "submitting": "Submitting...",
+    "success": {
+      "title": "Order Submitted",
+      "description": "We'll get back to you shortly"
+    },
+    "error": {
+      "title": "Error",
+      "description": "There was a problem submitting your order."
+    },
+    "validation": {
+      "product": "Please select a product",
+      "comment": {
+        "min": "Comment must be at least 10 characters",
+        "max": "Comment cannot exceed 500 characters"
+      },
+      "email": "Please enter a valid email address"
+    }
+  },
+  "userSettings": {
+    "title": "User Settings",
+    "emailNotifications": {
+      "title": "Email Notifications",
+      "description": "Manage which emails you receive",
+      "menuUpdates": {
+        "title": "Menu Updates",
+        "description": "Receive notifications about your menus"
+      },
+      "orderStatus": {
+        "title": "Order Status",
+        "description": "Get updates about menu orders"
+      },
+      "promotions": {
+        "title": "Promotions & Deals",
+        "description": "Special offers, discounts, and limited-time promotions"
+      },
+      "newsletter": {
+        "title": "Newsletter",
+        "description": "Monthly newsletter with news and updates"
+      },
+      "surveys": {
+        "title": "Surveys",
+        "description": "Occasional surveys to help us improve our service"
+      },
+      "feedback": {
+        "title": "Feedback Requests",
+        "description": "Requests for feedback on your recent experiences"
+      }
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "deleteAccount": {
+        "title": "Delete Account",
+        "description": "Permanently delete your account and all associated data. This action cannot be undone.",
+        "confirmTitle": "Are you absolutely sure?",
+        "confirmDescription": "This action cannot be undone. This will permanently delete your account and remove all your data from our servers.",
+        "cancel": "Cancel",
+        "confirm": "Delete Account"
+      }
+    },
+    "saveChanges": "Save Changes",
+    "saving": "Saving..."
+  },
+  "Success": {
+    "title": "Thank You for Your Order!",
+    "subtitle": "We've received your menu request and will start working on it right away.",
+    "details": {
+      "title": "Details",
+      "description": "Your menu request has been successfully submitted. We'll review your requirements and create a customized menu for your business."
+    },
+    "support": {
+      "text": "Have questions? Contact our support team at"
+    },
+    "nextSteps": {
+      "title": "Next Steps",
+      "step1": {
+        "title": "Create Your Free Account",
+        "description": "Manage your menu and watch statistics.",
+        "button": "Create Account"
+      },
+      "step2": {
+        "title": "Wait for Email Notification",
+        "description": "We'll send you an email once your menu is ready for review."
+      }
+    }
+  },
+  "MainButton": {
+    "title": "Create Menu Method",
+    "subtitle": "Choose how you'd like to create your menu",
+    "createYourself": {
+      "title": "Create it Yourself",
+      "description": "Create your menu in 4 easy steps and have it online in under 5 minutes. Easy setup, anyone can do it"
+    },
+    "letUsCreate": {
+      "title": "Let Us Create It",
+      "description": "Our experts will create a professional menu tailored to your business. We deliver in 24 hours or less"
+    },
+    "recommended": "Recommended"
   }
 }

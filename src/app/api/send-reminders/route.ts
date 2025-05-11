@@ -1,25 +1,24 @@
 import { db } from '@/db';
 import type { NextRequest } from 'next/server';
-import { sendNoEmailVerifiedEmail, sendNoMenuEmail, sendUnfinishedMenuEmail } from '@/email/mail';
+import { sendEmptyMenuEmail, sendNoEmailVerifiedEmail, sendNoMenuEmail, sendUnfinishedMenuEmail, sendUpgradeToProEmail } from '@/email/mail';
 import { generateVerificationToken } from '@/lib/tokens';
 import { NotificationType } from '@prisma/client';
 
 export async function GET(request: NextRequest) {
-      const authHeader = request.headers.get('authorization');
-      if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    const authHeader = request.headers.get('authorization');
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
         return new Response('Unauthorized', {
-          status: 401,
+            status: 401,
         });
-      }
+    }
 
-    const users = await db.user.findMany({ select: { business: { select: { product: true, menu: { select: { published: true , _count:{select:{menuItems:true}}} } } }, email: true, name: true, id: true, emailVerified: true } })
+    const users = await db.user.findMany({
+        select: { settings: true, business: { select: { name: true, subscription: true, product: true, menu: { select: { published: true, _count: { select: { menuItems: true } } } } } }, email: true, name: true, id: true, emailVerified: true }
+    })
 
-    const usersWithNoMenu = users.filter((user) => !user.business)
-
+    const usersWithNoMenu = users.filter((user) => user.business.length === 0 && user.settings?.receiveMenuNotifications && user.emailVerified)
     for (const user of usersWithNoMenu) {
-        const existingNotification = await db.notification.findFirst({ where: { email: user.email, type: NotificationType.NO_MENU }, orderBy: { createdAt: 'desc' } })
-        // Only send email if notification was created more than 7 days ago
-        if (existingNotification && existingNotification.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
+        if (!(await shouldSendNotification({ email: user.email, type: NotificationType.NO_MENU }))) {
             continue
         }
         await sendNoMenuEmail(user.email, user.name)
@@ -27,43 +26,71 @@ export async function GET(request: NextRequest) {
     }
 
     const usersWithNoEmailVerified = users.filter((user) => !user.emailVerified)
-
     for (const user of usersWithNoEmailVerified) {
-        const existingNotification = await db.notification.findFirst({ where: { email: user.email, type: NotificationType.NO_EMAIL_VERIFIED }, orderBy: { createdAt: 'desc' } })
-        // Only send email if notification was created more than 7 days ago
-        if (existingNotification && existingNotification.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
+        if (!(await shouldSendNotification({ email: user.email, type: NotificationType.NO_EMAIL_VERIFIED }))) {
             continue
         }
+
+        console.log(user.email)
         const verificationToken = await generateVerificationToken(user.email, 24 * 60)
         await sendNoEmailVerifiedEmail(user.email, user.name, verificationToken.token)
         await db.notification.create({ data: { email: user.email, type: NotificationType.NO_EMAIL_VERIFIED, userId: user.id } })
     }
 
-    
-    
+
+
     for (const user of users) {
-        const unfinishedBusiness = user.business.find((business) => !business.menu?.published)
+        const unfinishedBusiness = user.business.find((business) => !business.menu?.published && user.settings?.receiveMenuNotifications)
         if (unfinishedBusiness) {
-            const existingNotification = await db.notification.findFirst({ where: { email: user.email, type: NotificationType.UNFINISHED_MENU }, orderBy: { createdAt: 'desc' } })
-            // Only send email if notification was created more than 7 days ago
-            if (existingNotification && existingNotification.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
+            if (!(await shouldSendNotification({ email: user.email, type: NotificationType.UNFINISHED_MENU }))) {
                 continue
             }
             await sendUnfinishedMenuEmail(user.email, user.name, unfinishedBusiness.product)
             await db.notification.create({ data: { email: user.email, type: NotificationType.UNFINISHED_MENU, userId: user.id } })
         }
     }
-    // const usersWithEmptyMenu = users.filter((user) => user.business.some((business) => business.menu?.published && business.menu?._count.menuItems === 0))
+    const usersWithEmptyMenu = users.filter((user) => user.business.some((business) => business.menu?.published && business.menu?._count.menuItems < 2 && user.settings?.receiveMenuNotifications))
+    for (const user of usersWithEmptyMenu) {
+        if (!(await shouldSendNotification({ email: user.email, type: NotificationType.EMPTY_MENU }))) {
+            continue
+        }
+        await sendEmptyMenuEmail(user.email, user.name, user.business[0].name)
+        await db.notification.create({ data: { email: user.email, type: NotificationType.EMPTY_MENU, userId: user.id } })
+    }
 
-    // for (const user of usersWithEmptyMenu) {
-    //     const existingNotification = await db.notification.findFirst({ where: { email: user.email, type: NotificationType.EMPTY_MENU }, orderBy: { createdAt: 'desc' } })
-    //     if (existingNotification && existingNotification.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
-    //         continue
-    //     }
-    //     await sendEmptyMenuEmail(user.email, user.name)
-    //     await db.notification.create({ data: { email: user.email, type: NotificationType.EMPTY_MENU, userId: user.id } })
-    // }
+    for (const user of users) {
+        if (!(await shouldSendNotification({ email: user.email, type: NotificationType.UPGRADE_TO_PRO }))) {
+            continue
+        }
+        const business = user.business.find((business) => business.subscription?.billing === "FREETRIAL")
+        if (business) {
+            await sendUpgradeToProEmail(user.email, user.name, business.name)
+            await db.notification.create({ data: { email: user.email, type: NotificationType.UPGRADE_TO_PRO, userId: user.id } })
+        }
+    }
+
 
 
     return Response.json({ success: true });
+}
+
+
+
+async function shouldSendNotification({ email, type }: { email: string, type: NotificationType }) {
+    const existingNotification = await db.notification.findFirst({ where: { email, type }, orderBy: { createdAt: 'desc' } })
+    const count = await db.notification.count({ where: { email, type } })
+    // Only send email if notification was created more than 2 days ago
+    if (count > 3) {
+        if (existingNotification && existingNotification.createdAt > new Date(Date.now() - 4 * 24 * 60 * 60 * 1000)) {
+            return false
+        }
+        return true
+    }
+
+    if (existingNotification && existingNotification.createdAt > new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)) {
+        return false
+    }
+
+
+    return true
 }

@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { productsData } from "@/data";
-import { ProductType, ProductURL } from "@/types";
+import type { ProductType, ProductURL } from "@/types";
 import { ArrowRight } from "lucide-react";
 import {Link} from "@/i18n/navigation";
 
 import React from "react";
-import { MainButton } from "../(landing page)/_sections/hero/MainButton";
+import { Button, MainButton } from "../(landing page)/_sections/hero/MainButton";
 import { getTranslations } from "next-intl/server";
 import {setRequestLocale} from 'next-intl/server';
 
@@ -38,13 +37,13 @@ async function ProductCard({ product }: { product: ProductType }) {
 
   return (
     <div className="gap-y-2 bg-accent p-6 rounded-3xl flex flex-col hover:scale-105 transition-transform duration-300">
-      <h2 className="md:text-xl font-medium capitalize ">{t(product.title+".title")}</h2>
-      <p className="mb-5">{t(product.title+".shortDesc")}</p>
-      <MainButton className="mt-auto shadow-none bg-primary hover:text-background" >
+      <h2 className="md:text-xl font-medium capitalize ">{t(`${product.title}.title`)}</h2>
+      <p className="mb-5">{t(`${product.title}.shortDesc`)}</p>
+      <Button className="mt-auto shadow-none bg-primary hover:text-background" >
         <Link className="flex justify-between w-full" href={{pathname:"/get-started/[product]/business-setup",params:{product:product.link}} }>
           {t("button")} <ArrowRight />
         </Link>
-      </MainButton>
+      </Button>
     </div>
   );
 }

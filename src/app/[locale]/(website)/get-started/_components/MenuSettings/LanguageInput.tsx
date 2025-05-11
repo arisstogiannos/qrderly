@@ -2,6 +2,7 @@ import { AddLanguageComboBox } from "@/components/ComboBox";
 import type { Language } from "@/types";
 import { XCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function LanguageInput({
   languages,
@@ -30,7 +31,11 @@ export default function LanguageInput({
     const newLanguage = languages.find((l) => l.name === name);
 
     if (newLanguage && !selectedLanguages.some((l) => l.name === name)) {
-      setSelectedLanguages((prev) => [...prev, newLanguage]);
+      if (selectedLanguages.length < 5) {
+        setSelectedLanguages((prev) => [...prev, newLanguage]);
+      } else {
+        toast.error("You can only add up to 5 languages");
+      }
     } else {
       setSelectedLanguages((prev) => prev.filter((l) => l.name !== name));
     }
