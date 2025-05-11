@@ -29,6 +29,7 @@ export function Modal({
   initialOpen,
   trigger,
   classNames,
+  animate = true,
 }: {
   title: string;
   subtitle: string;
@@ -36,6 +37,7 @@ export function Modal({
   initialOpen?:boolean;
   trigger: React.ReactNode;
   classNames?: string;
+  animate?: boolean;
 }) {
   const [open, setOpen] = React.useState(false);
   const [isDesktop, setIsDesktop] = React.useState(false);
@@ -50,11 +52,12 @@ export function Modal({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  
   if (isDesktop) {
     return (
-      <Dialog open={initialOpen??open} onOpenChange={setOpen} >
+      <Dialog open={initialOpen??open} onOpenChange={setOpen}   >
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className={cn("max-w-xl ", classNames)}>
+        <DialogContent className={cn("max-w-xl ", classNames)} animate={animate} onCloseAutoFocus={(e) => e.preventDefault()} autoFocus={false} >
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{subtitle}</DialogDescription>
@@ -68,9 +71,14 @@ export function Modal({
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    //enable scrolling when modal is closing
+    <Drawer 
+      open={open} 
+      onOpenChange={setOpen} 
+
+    >
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent className={cn("px-4 pb-2 ", classNames)}>
+      <DrawerContent className={cn("px-4 pb-2 ", classNames)} animate={animate} onCloseAutoFocus={(e) => e.preventDefault()}  autoFocus={false}  >
         <DrawerHeader className="text-left ml-0 p-0 pb-4">
           <DrawerTitle className="text-xl">{title}</DrawerTitle>
           <DrawerDescription className="sr-only">{subtitle}</DrawerDescription>
