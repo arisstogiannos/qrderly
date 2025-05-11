@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
 import { useModalContext } from "@/context/ModalProvider";
 import { useTranslations } from "next-intl";
+import { RoutingConfig } from "next-intl/routing";
 
 export function MainButton({
   children,
@@ -19,6 +20,7 @@ export function MainButton({
       subtitle={t("subtitle")}
       trigger={<Button {...props}>{children}</Button>}
       classNames="py-5 xl:max-w-2xl 2xl:max-w-2xl"
+      animate={false}
     >
       <div className="grid  grid-cols-1 md:grid-cols-2 gap-6 p-4">
         <MethodCard
@@ -91,43 +93,116 @@ function MethodCard({
   const t = useTranslations("MainButton");
 
   return (
-    <Link
-      href={{ pathname: href.pathname, hash: href.hash }}
-      onClick={() => {
-        setOpen(false);
-      }}
-      className="group cursor-pointer relative flex flex-col items-center p-6 rounded-2xl border border-primary/20 overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1"
-      aria-label={title}
-    >
-      {/* Background gradients */}
-      {recommended && (
-        <span className="absolute z-10  top-0 left-0 bg-primary text-background px-2 py-1 rounded-br-lg text-sm">
-          {t("recommended")}
-        </span>
+    <>
+      {href.hash !== "" ? (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const element = document.getElementById(href.hash.replace("#", ""));
+            if (element) {
+              setOpen(false);  
+              setTimeout(() => {
+                element.scrollIntoView({ behavior: "smooth" })
+              }, 100)
+            
+           
+            }
+          }}
+          className="group cursor-pointer relative flex flex-col items-center p-6 rounded-2xl border border-primary/20 overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 w-full"
+          aria-label={title}
+        >
+          {/* Background gradients */}
+          {recommended && (
+            <span className="absolute z-10  top-0 left-0 bg-primary text-background px-2 py-1 rounded-br-lg text-sm">
+              {t("recommended")}
+            </span>
+          )}
+
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${gradient} transition-opacity duration-500`}
+          />
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${hoverGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+          />
+
+          {/* Subtle animated glow effect */}
+          <div className="absolute -inset-1 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 opacity-0 group-hover:opacity-70 transition-all duration-700 group-hover:duration-500 animate-pulse" />
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 shadow-sm">
+              {icon}
+            </div>
+            <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary/90 transition-colors duration-300 text-center text-pretty">
+              {title}
+            </h3>
+            <p className="text-muted-foreground text-center max-w-3xl leading-relaxed text-pretty">
+              {description}
+            </p>
+          </div>
+        </button>
+      ) : (
+        <Link
+          href={{ pathname: href.pathname, hash: href.hash }}
+          className="group cursor-pointer relative flex flex-col items-center p-6 rounded-2xl border border-primary/20 overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1"
+          aria-label={title}
+        >
+          {/* Background gradients */}
+          {recommended && (
+            <span className="absolute z-10  top-0 left-0 bg-primary text-background px-2 py-1 rounded-br-lg text-sm">
+              {t("recommended")}
+            </span>
+          )}
+
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${gradient} transition-opacity duration-500`}
+          />
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${hoverGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+          />
+
+          {/* Subtle animated glow effect */}
+          <div className="absolute -inset-1 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 opacity-0 group-hover:opacity-70 transition-all duration-700 group-hover:duration-500 animate-pulse" />
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 shadow-sm">
+              {icon}
+            </div>
+            <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary/90 transition-colors duration-300 text-center text-pretty">
+              {title}
+            </h3>
+            <p className="text-muted-foreground text-center max-w-3xl leading-relaxed text-pretty">
+              {description}
+            </p>
+          </div>
+        </Link>
       )}
-
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${gradient} transition-opacity duration-500`}
-      />
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${hoverGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-      />
-
-      {/* Subtle animated glow effect */}
-      <div className="absolute -inset-1 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 opacity-0 group-hover:opacity-70 transition-all duration-700 group-hover:duration-500 animate-pulse" />
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center">
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300 shadow-sm">
-          {icon}
-        </div>
-        <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary/90 transition-colors duration-300 text-center text-pretty">
-          {title}
-        </h3>
-        <p className="text-muted-foreground text-center max-w-3xl leading-relaxed text-pretty">
-          {description}
-        </p>
-      </div>
-    </Link>
+    </>
   );
 }
+
+export function MainButtonLink({href, children, className, ...props}: React.ComponentProps<"a">) {
+  return (
+    <Link
+    //@ts-expect-error
+    href={href}
+    {...props}
+    className={cn(
+      " inline-block p-px font-medium leading-6 text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
+      className
+    )}
+  >
+    <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+    <span className="relative z-10 block px-6 py-3 rounded-2xl bg-inherit">
+      <div className="relative z-10 flex items-center space-x-3">
+        <span className="transition-all duration-500 group-hover:translate-x-1.5  flex gap-4 w-full items-center">
+          {children}
+        </span>
+      </div>
+    </span>
+  </Link>
+  );
+} 

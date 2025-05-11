@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation";
 
 import React from "react";
 import PhoneMockup from "./PhoneMockup";
-import { MainButton } from "./MainButton";
+import { MainButton, MainButtonLink } from "./MainButton";
 import { getTranslations } from "next-intl/server";
 
 export default async function Hero() {
@@ -29,17 +29,10 @@ export default async function Hero() {
          
             {t("button")} <ArrowRight />
         </MainButton>
-        <MainButton className="md:mt-5 3xl:mt-14 md:text-xl md:ml-5 bg-primary border border-foreground/20 lg:hover:text-background font-medium">
-          <Link
-            // @ts-expect-error
-            href={"/Bruncherie/smart-menu"}
-            className="flex gap-4 items-center size-full "
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        <MainButtonLink href="/Bruncherie/smart-menu" target="_blank" rel="noopener noreferrer" className="md:mt-5 3xl:mt-14 md:text-xl md:ml-5 bg-primary border border-foreground/20 lg:hover:text-background font-medium">
+         
             {t("demoButton")}  <ArrowRight />
-          </Link>
-        </MainButton>
+        </MainButtonLink>
       </div>
       <div className=" relative max-md:left-1/2 max-md:-translate-x-1/2 h-full max-md:w-screen max-lg:overflow-x-hidden overflow-y-visible">
         <div className="absolute lg:top-36  xl:top-20 top-32 left-0 xl:left-20 bg-black/35 lg:bg-black/40 blur-3xl w-full lg:w-[150%] h-[50%] lg:h-[80%] xl:h-3/4 "/>

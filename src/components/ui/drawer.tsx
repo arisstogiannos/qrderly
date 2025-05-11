@@ -48,12 +48,13 @@ function DrawerOverlay({
 function DrawerContent({
   className,
   children,
+  animate = true,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Content>) {
+}: React.ComponentProps<typeof DrawerPrimitive.Content> & {animate?:boolean}) {
   return (
-    <DrawerPortal  data-slot="drawer-portal">
+    <DrawerPortal  data-slot="drawer-portal" >
       <DrawerOverlay />
-      <DrawerPrimitive.Content
+      <DrawerPrimitive.Content 
         data-slot="drawer-content"
         className={cn(
           "group/drawer-content bg-background fixed z-50 flex h-auto flex-col border-0",
