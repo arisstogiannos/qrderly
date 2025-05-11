@@ -13,7 +13,7 @@ import {
   TranslationIcon,
 } from "./app/[locale]/(website)/products/_components/Icons";
 import { Product } from "@prisma/client";
-import { ProductURL } from "./types";
+import type { ProductURL } from "./types";
 
 export const plandata = [
   {
@@ -206,7 +206,7 @@ export const productsData = [
         title: "Seamless QR Ordering",
         desc: "Guests can browse, select items, and place orders directly from the digital menu.",
         video: "/videos/order.webm",
-        icon: <OrderIcon color="#155e95" />,
+        icon: <OrderIcon color="var(--primary)" />,
       },
       {
         title: "Real-Time Dashboard",

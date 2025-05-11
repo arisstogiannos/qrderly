@@ -53,7 +53,7 @@ export default function BusinessStats() {
               {count.toLocaleString()}
               <span className="text-primary">+</span>
             </span>
-            <div className="absolute -bottom-2 left-0 w-full h-1 bg-primary"></div>
+            <div className="absolute -bottom-2 left-0 w-full h-1 bg-primary"/>
           </div>
           <p className="text-2xl md:text-3xl font-light mt-6 text-gray-300">
            {t("title")}
@@ -75,7 +75,7 @@ export default function BusinessStats() {
               "beach service"
             ].map((business, index) => (
               <div key={business} className="group relative ">
-                <div className="absolute inset-0 bg-primary/10 transform transition-transform duration-300 group-hover:scale-95 rounded-xl"></div>
+                <div className="absolute inset-0 bg-primary/10 transform transition-transform duration-300 group-hover:scale-95 rounded-xl"/>
                 <div className="border border-white/10 bg-black/50 backdrop-blur-sm rounded-xl p-6 transition-all duration-300 group-hover:translate-y-[-4px] group-hover:shadow-lg group-hover:shadow-primary/20 relative z-10">
                   <p className="font-medium text-center text-lg text-nowrap">
                     {t(business)}
@@ -86,10 +86,10 @@ export default function BusinessStats() {
           </div>
 
           <div className="mt-6 text-center">
-            <MainButton className="bg-primary mt-8 shadow-primary/30 hover:text-accent text-2xl">
-              <Link href={"/get-started"} className="flex gap-3 items-center">
+            <MainButton  className="bg-primary mt-8 shadow-primary/30 hover:text-accent text-2xl">
+              <span className="flex gap-3 items-center">
                 {t("button")} <ArrowRight />
-              </Link>
+              </span>
             </MainButton>
           </div>
         </div>

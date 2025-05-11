@@ -1,5 +1,6 @@
 export function TranslationIcon() {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       width="57"
       height="49"
@@ -16,7 +17,8 @@ export function TranslationIcon() {
 }
 export function OrderIcon({color}:{color?:string}) {
   return (
-    <svg
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
       width="60"
       height="61"
       viewBox="0 0 60 61"
@@ -51,6 +53,7 @@ export function OrderIcon({color}:{color?:string}) {
 }
 export function OrderReceiveIcon({color}:{color?:string}) {
   return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
       width="60"
       height="60"

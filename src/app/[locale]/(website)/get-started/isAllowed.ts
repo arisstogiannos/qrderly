@@ -3,7 +3,7 @@ import { getMenuItemsByMenuId } from "@/app/[locale]/(business)/[businessName]/_
 import { auth } from "@/auth";
 import { productMap } from "@/data";
 import { cache } from "@/lib/cache";
-import { BusinessExtended, ExtendedUser, ProductURL } from "@/types";
+import type { BusinessExtended, ExtendedUser, ProductURL } from "@/types";
 import { redirect } from "next/navigation";
 
 export async function checkUser(product: ProductURL): Promise<{
@@ -39,8 +39,8 @@ export async function checkUser(product: ProductURL): Promise<{
     if (!b.menu.published) {
       const getMenuItemsByMenuIdCached = cache(
         getMenuItemsByMenuId,
-        ["generate-items" + b.name],
-        { tags: ["generate-items" + b.name] }
+        [`generate-items${b.name}`],
+        { tags: [`generate-items${b.name}`] }
       );
       const menuItems = await getMenuItemsByMenuIdCached(b.menu.id);
 

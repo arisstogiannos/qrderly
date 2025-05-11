@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ProductType } from "@/types";
+import type { ProductType } from "@/types";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -13,11 +13,12 @@ export function ProductCard({
   product: ProductType;
   onClick: () => void;
 }) {
-  const t = useTranslations("productsData." + product.title);
+  const t = useTranslations(`productsData.${product.title}`);
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
-      className={`md:rounded-4xl rounded-3xl bg-accent flex flex-col justify-between gap-10 overflow-hidden transition-all duration-500 p-6 origin-top cursor-pointer ${
+      className={`md:rounded-4xl rounded-3xl bg-accent flex flex-col text-left justify-between gap-4 md:gap-10  overflow-hidden transition-all duration-500 p-6 origin-top cursor-pointer ${
         isSelected ? "h-full" : "h-20 md:h-24 lg:h-28"
       }`}
     >
@@ -42,6 +43,6 @@ export function ProductCard({
           </Link>
         </Button>
       </div>
-    </div>
+    </button>
   );
 }

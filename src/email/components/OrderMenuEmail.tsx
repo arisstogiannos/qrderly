@@ -13,75 +13,41 @@ import {
 } from "@react-email/components";
 import { Copyright } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import type { OrderMenuDataType } from "../mail";
 
-interface PasswordResetEmailProps {
-  name: string;
-  resetLink: string;
-  userEmail: string;
-}
 
-export const PasswordResetEmail = async ({
-  resetLink,
-  name,
-  userEmail,
-}: PasswordResetEmailProps) => {
+
+export const OrderMenuEmail = async ({
+    product,
+    email,
+    comment,
+    businessName,
+    username,
+}: OrderMenuDataType & {username: string | null}) => {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
-  const t = await getTranslations("emails.passwordReset");
+  const t = await getTranslations("emails.orderMenu");
 
   return (
     <Html>
       <Head />
       <Preview>{t("subject")}</Preview>
       <Body style={main}>
-        <Container style={container}>
-          <Img
-            src={`${baseUrl}/logo black.png`}
-            width="60"
-            height="40"
-            alt="QR Menu Creator"
-            style={logo}
-          />
-          <Heading style={h1}>{t("heading")}</Heading>
-          <Text style={text}>{t("greeting", { name })}</Text>
-          <Text style={text}>{t("message")}</Text>
-          <Section style={buttonContainer}>
-            <Button style={button} href={resetLink}>
-              {t("button")}
-            </Button>
-          </Section>
-          <Text style={text}>{t("disclaimer")}</Text>
-          <Text style={text}>{t("expiry")}</Text>
-          <Hr style={hr} />
-          <Text style={footer}>
-            <Copyright /> Scanby 2025
-          </Text>
-          <Section style={unsubscribeContainer}>
-              <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
-              <Button style={unsubscribeButton} href={`${baseUrl}/user-settings?email=${userEmail}`}>{t("unsubscribe")}</Button>
-            </Section>
+        <Container>
+          <Heading>{t("heading")}</Heading>
+          <Text>{t("greeting", { username })}</Text>
+          <Text>{t("message")}</Text>
+          <Button style={button} href={`${baseUrl}/sign-up`}>{t("button")}</Button>
         </Container>
       </Body>
     </Html>
   );
 };
 
-export default PasswordResetEmail;
-
 const main = {
   backgroundColor: "#f6f9fc",
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
   padding: "40px 0",
-};
-
-const container = {
-  backgroundColor: "#ffffff",
-  border: "1px solid #eee",
-  borderRadius: "5px",
-  boxShadow: "0 5px 10px rgba(20, 50, 70, 0.2)",
-  margin: "0 auto",
-  maxWidth: "600px",
-  padding: "20px",
 };
 
 const unsubscribeContainer = {
@@ -100,6 +66,16 @@ const unsubscribeButton = {
   color: "#4b5563",
 };
 
+
+const container = {
+  backgroundColor: "#ffffff",
+  border: "1px solid #eee",
+  borderRadius: "5px",
+  boxShadow: "0 5px 10px rgba(20, 50, 70, 0.2)",
+  margin: "0 auto",
+  maxWidth: "600px",
+  padding: "20px",
+};
 
 const logo = {
   margin: "0 auto 20px",
@@ -135,8 +111,8 @@ const button = {
   fontSize: "16px",
   fontWeight: "bold",
   textDecoration: "none",
-  padding: "10px",
   textAlign: "center" as const,
+  padding: "10px",
 };
 
 const hr = {
@@ -155,4 +131,16 @@ const footer = {
   justifyItems: "center",
   width: "100%",
   gap: "10px",
+};
+
+const list = {
+  color: "#4b5563",
+  fontSize: "16px",
+  lineHeight: "24px",
+  margin: "16px 0",
+  padding: "0 0 0 20px",
+};
+
+const listItem = {
+  margin: "8px 0",
 };

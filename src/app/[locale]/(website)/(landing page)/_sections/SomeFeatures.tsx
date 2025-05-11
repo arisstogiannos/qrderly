@@ -9,7 +9,7 @@ export default async function SomeFeatures() {
   return (
     <div className="space-y-8">
       <h2 className="font-semibold text-primary">{t("title")}</h2>
-      <Features features={someFeatures} />
+      <Features features={someFeatures} theme="dark" />
     </div>
   );
 }

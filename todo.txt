@@ -5,6 +5,10 @@ server 5 mb
 videos
 faq
 
+examples  more real
+finish order menu
+proccess to order menu
+
 ai ingest timout
 
 DONE multiple prefernce/ extras + price

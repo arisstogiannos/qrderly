@@ -3,10 +3,9 @@ import NextAuth, { type DefaultSession } from "next-auth";
 import authConfig from "./auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
-import { Business, Subscription, UserRole } from "@prisma/client";
+import type { UserRole } from "@prisma/client";
 import { db } from "./db";
-import { BusinessExtended, ExtendedSubscription } from "./types";
-import { signIn as signInReact } from "next-auth/react";
+import type { BusinessExtended, ExtendedSubscription } from "./types";
 
 declare module "next-auth" {
   interface Session {

@@ -9,7 +9,8 @@ import Testimonials from "./_sections/Testimonials";
 import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import BusinessStats from "./_sections/BusinessStats";
-
+import OrderMenuForm from "./_sections/order-menu/OrderMenuForm";
+import OrderMenu from "./_sections/order-menu/OrderMenu";
 
 export default async function IndexPage({
   params,
@@ -32,6 +33,7 @@ export default async function IndexPage({
       <SomeFeatures />
       <HowItWorks />
        <BusinessStats/>
+       <OrderMenu/>
       {/* <Testimonials /> */}
       {/* <WhoIsThisFor/> */}
     </>

@@ -11,7 +11,6 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
-import { unsubscribe } from "./unsubscribe"
 import Loader from "@/components/Loader"
 
 export default function UnsubscribeForm({ email }: { email: string }) {
@@ -31,7 +30,7 @@ export default function UnsubscribeForm({ email }: { email: string }) {
     setLoading(true)
     // Here you would typically call a server action to update the user's preferences
     // For demo purposes, we're just setting the submitted state
-    await unsubscribe(email)
+    // await unsubscribe(email)
     setLoading(false)
     setSubmitted(true)
   }

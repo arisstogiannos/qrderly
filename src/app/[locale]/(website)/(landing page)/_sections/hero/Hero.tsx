@@ -25,13 +25,9 @@ export default async function Hero() {
           {t("title")}
         </h1>
         <p className="text-xl md:text-4xl">{t("subtitle")}</p>
-        <MainButton className="mt-5 3xl:mt-14 md:text-xl">
-          <Link
-            href={"/get-started"}
-            className="flex gap-4 items-center size-full"
-          >
+        <MainButton className="mt-5 3xl:mt-14 md:text-xl ">
+         
             {t("button")} <ArrowRight />
-          </Link>
         </MainButton>
         <MainButton className="md:mt-5 3xl:mt-14 md:text-xl md:ml-5 bg-primary border border-foreground/20 lg:hover:text-background font-medium">
           <Link

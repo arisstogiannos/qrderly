@@ -12,22 +12,21 @@ import {
     Text,
   } from "@react-email/components";
   import { Copyright } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+  import { getTranslations } from "next-intl/server";
   
-interface UnverifiedEmailProps {
+  interface EmptyMenuEmailProps {
     username: string;
     userEmail: string;
-    verificationToken: string;
+    businessName: string;
   }
   
-  export default async function UnverifiedEmail ({
+  export const EmptyMenuEmail = async ({
     username = "John",
     userEmail = "john@example.com",
-    verificationToken = "https://www.scanby.cloud/verify-email",
-  }: UnverifiedEmailProps) {
+    businessName = "John's Business"
+  }: EmptyMenuEmailProps) => {
     const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://www.scanby.cloud";
-    const confirmationLink = `${baseUrl}/account-verification?token=${verificationToken}`;
-    const t = await getTranslations("emails.unverified");
+    const t = await getTranslations("emails.emptyMenu");
   
     return (
       <Html>
@@ -38,10 +37,16 @@ interface UnverifiedEmailProps {
             <Img src={`${baseUrl}/logo black.png`} width="60" height="40" alt="Scanby" style={logo} />
             <Heading style={h1}>{t("heading")}</Heading>
             <Text style={text}>{t("greeting", { username })}</Text>
-            <Text style={text}>{t("message")}</Text>
+            <Text style={text}>{t("message", { businessName })}</Text>
             <Section style={buttonContainer}>
-              <Button style={button} href={confirmationLink}>
+              <Button style={button} href={`${baseUrl}/${businessName.replaceAll(" ", "-")}/dashboard`}>
                 {t("button")}
+              </Button>
+            </Section>
+            <Text style={text}>{t("message2")}</Text>
+            <Section style={buttonContainer}>
+              <Button style={button} href={`${baseUrl}/#order-menu-form`}>
+                {t("button2")}
               </Button>
             </Section>
             <Text style={text}>{t("support")}</Text>
@@ -51,18 +56,33 @@ interface UnverifiedEmailProps {
             <Section style={unsubscribeContainer}>
               <Text style={unsubscribeText}>{t("unsubscribeDesc")}</Text>   
               <Button style={unsubscribeButton} href={`${baseUrl}/user-settings?email=${userEmail}`}>{t("unsubscribe")}</Button>
-            </Section>  
+            </Section>
           </Container>
         </Body>
       </Html>
     );
-    };
-
+  };
   const main = {
     backgroundColor: "#f6f9fc",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     padding: "40px 0",
+  };
+
+  const unsubscribeContainer = {
+    textAlign: "center" as const,
+    margin: "30px 0",
+  };
+
+  const unsubscribeText = {
+    color: "#4b5563",
+    fontSize: "16px",
+    lineHeight: "24px",
+    margin: "16px 0",
+  };
+
+  const unsubscribeButton = {
+    color: "#4b5563",
   };
   
   const container = {
@@ -94,22 +114,6 @@ interface UnverifiedEmailProps {
     fontSize: "16px",
     lineHeight: "24px",
     margin: "16px 0",
-  };
-
-  const unsubscribeContainer = {
-    textAlign: "center" as const,
-    margin: "30px 0",
-  };
-
-  const unsubscribeText = {
-    color: "#4b5563",
-    fontSize: "16px",
-    lineHeight: "24px",
-    margin: "16px 0",
-  };
-
-  const unsubscribeButton = {
-    color: "#4b5563",
   };
   
   const buttonContainer = {
@@ -158,4 +162,4 @@ interface UnverifiedEmailProps {
   const listItem = {
     margin: "8px 0",
   };
-    
+  

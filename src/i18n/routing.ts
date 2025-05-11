@@ -101,5 +101,9 @@ export const routing = defineRouting({
       el: "/πολιτική-απορρήτου",
       en: "/privacy-policy",
     },
+    "/user-settings": {
+      el: "/ρυθμίσεις-χρήστη",
+      en: "/user-settings",
+    },
   },
 });

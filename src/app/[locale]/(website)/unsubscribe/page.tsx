@@ -1,7 +1,5 @@
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
-import React from 'react'
-import UnsubscribeForm from './UnsubscribeForm'
 
 export default async function UnsubscribePage({ params }: { params: Promise<{ email?: string }> }) {
     const user = (await auth())?.user
@@ -15,8 +13,8 @@ export default async function UnsubscribePage({ params }: { params: Promise<{ em
     if (user?.email && email && user.email !== email) {
         redirect("/")
     }
+    
+    redirect("/user-settings")
 
-    return (
-        <UnsubscribeForm email={user?.email ?? email ?? ""} />
-    )
+    return null
 }

@@ -17,7 +17,7 @@ export default async function Layout({
       {banner && <Banner banner={banner} />}
 
       <Navbar />
-      <main className=" font-[family-name:var(--font-instrument-sans)]  space-y-40 my-container  ">
+      <main className=" font-[family-name:var(--font-instrument-sans)]  space-y-28 sm:space-y-40 my-container  ">
         {children}
       </main>
       <ScrollToTop />

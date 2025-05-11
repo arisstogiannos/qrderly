@@ -16,6 +16,10 @@ import UnverifiedEmail from "./components/reminders/UnverifiedEmailEmail";
 import UnfinishedMenuEmail from "./components/reminders/UnfinishedMenuEmail";
 import type { Product } from "@prisma/client";
 import { productMapURL } from "@/data";
+import { UpgradeToProEmail } from "./components/reminders/UpgradeToProEmail";
+import { EmptyMenuEmail } from "./components/reminders/EmptyMenuEmail";
+import OrderMenuEmailAdmin from "./components/OrderMenuEmailAdmin";
+import { OrderMenuEmail } from "./components/OrderMenuEmail";
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export const sendVerificationEmail = async (
@@ -153,6 +157,71 @@ export const sendContactEmail = async (
   }
   return { success: true }
 };
+const OrderMenuInfoSchema = z.object({
+  product: z.string(),
+  comment: z.string(),
+  email: z.string().email({ message: "Invalid email address" }).trim(),
+  phone: z.string().optional(),
+  username: z.string().optional(),
+  businessName: z.string(),
+})
+export type OrderMenuDataType = z.infer<typeof OrderMenuInfoSchema>;
+
+export const sendOrderMenuEmail = async (
+  businessName: string,
+  product: string,
+  comment: string,
+  phone: string,
+  username: string | null,
+  userEmail: string,
+) => {
+  const t = await getTranslations("emails.orderMenu");
+  if (phone === "") {
+    const emailStatus = await resend.emails.send({
+      from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+      to: userEmail,
+      subject: t("subject"),
+      react: <OrderMenuEmail product={product} comment={comment} email={userEmail} username={username || "scanbier"} businessName={businessName} />,
+    });
+
+    
+    
+  }
+  return { success: true }
+};
+export const sendOrderMenuEmailAdmin = async (
+  prev: unknown,
+  formData: FormData
+) => {
+  const result = OrderMenuInfoSchema.safeParse(Object.fromEntries(formData))
+
+  const rawData = Object.fromEntries(
+    formData
+  ) as unknown as Partial<OrderMenuDataType>;
+  if (!result.success) {
+    return {
+      errors: result.error.flatten().fieldErrors,
+      rawData
+    };
+  }
+
+  if (result.data.phone === "") {
+    const emailStatus = await resend.emails.send({
+      from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+      to: "info@scanby.cloud",
+      subject: "Order Menu Form",
+      react: <OrderMenuEmailAdmin data={result.data} />,
+    });
+
+    if (emailStatus.error) {
+      return {
+        error: "Something went wrong. Try again.",
+        rawData
+      };
+    }
+  }
+  return { success: true }
+};
 
 const FeedbackInfoSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).trim().optional(),
@@ -189,6 +258,36 @@ export const sendFeedbackEmailAdmin = async (
 
 
 //reminders
+
+export const sendEmptyMenuEmail = async (
+  email: string,
+  name: string,
+  businessName: string
+) => {
+  const t = await getTranslations("emails.emptyMenu");
+
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: t("subject"),
+    react: <EmptyMenuEmail username={name} userEmail={email} businessName={businessName} />
+  });
+};
+
+export const sendUpgradeToProEmail = async (
+  email: string,
+  name: string,
+  businessName: string
+) => {
+  const t = await getTranslations("emails.upgradeToPro");
+
+  await resend.emails.send({
+    from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
+    to: email,
+    subject: t("subject"),
+    react: <UpgradeToProEmail username={name} userEmail={email} businessName={businessName} />
+  });
+};
 
 export const sendNoMenuEmail = async (
   email: string,
