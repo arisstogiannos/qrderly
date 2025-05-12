@@ -6,7 +6,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import type { UserRole } from "@prisma/client";
 import { db } from "./db";
 import type { BusinessExtended, ExtendedSubscription } from "./types";
-
+import { sendWelcomeEmail } from "./email/mail";
 declare module "next-auth" {
   interface Session {
     user: {
@@ -24,6 +24,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   events: {
     async linkAccount({ user }) {
+      if (user.id) {
+        await db.settings.create({
+          data: {
+            userId: user.id,
+            createdAt: new Date(),
+          },
+        });
+        if(user.email) await sendWelcomeEmail(user.email, user.name ?? "scanbier");
+      }
       await db.user.update({
         where: { id: user.id },
         data: { emailVerified: new Date() },
@@ -60,10 +69,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               id: true,
               name: true,
               product: true,
-              tables:true,
-              location:true,
-              type:true,
-              qr:true,
+              tables: true,
+              location: true,
+              type: true,
+              qr: true,
               subscription: true
             },
           },

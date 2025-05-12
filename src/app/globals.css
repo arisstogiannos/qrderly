@@ -19,6 +19,18 @@
 @utility animate-float-slow {
   animation: float 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+.animate-slide {
+  animation-name: slide;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
 @keyframes slideDown {
   0% {
     scale: 0;

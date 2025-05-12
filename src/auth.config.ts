@@ -6,40 +6,40 @@ import Google from "next-auth/providers/google"
 import { db } from "./db";
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }).trim(),
-  password: z
-    .string()
-    .min(8, { message: "Password should be at least 8 characters" })
-    .trim(),
+    email: z.string().email({ message: "Invalid email address" }).trim(),
+    password: z
+        .string()
+        .min(8, { message: "Password should be at least 8 characters" })
+        .trim(),
 });
 
 export default {
-     providers: [
+    providers: [
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
         Credentials({
-            async authorize(credentials){
+            async authorize(credentials) {
                 const result = loginSchema.safeParse(credentials)
 
-                if(result.success){
-                    const {email,password} = result.data
-                    const user = await db.user.findUnique({where:{email}})
+                if (result.success) {
+                    const { email, password } = result.data
+                    const user = await db.user.findUnique({ where: { email } })
 
-                    if(!user || !user.password){
+                    if (!user || !user.password) {
                         return null
                     }
 
-                    const passwordMatch = await bcrypt.compare(password,user.password)
-                    
-                    if(passwordMatch){
+                    const passwordMatch = await bcrypt.compare(password, user.password)
+
+                    if (passwordMatch) {
                         return user
                     }
-                    
+
                 }
                 return null
             }
         })
-     ] 
-    } satisfies NextAuthConfig;
+    ]
+} satisfies NextAuthConfig;

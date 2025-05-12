@@ -16,6 +16,11 @@ export async function GET(request: NextRequest) {
         select: { settings: true, business: { select: { name: true, subscription: true, product: true, menu: { select: { published: true, _count: { select: { menuItems: true } } } } } }, email: true, name: true, id: true, emailVerified: true }
     })
 
+    for (const user of users) {
+        if (!user.settings) {
+            await db.settings.create({ data: { userId: user.id, createdAt: new Date() } })
+        }
+    }
     const usersWithNoMenu = users.filter((user) => user.business.length === 0 && user.settings?.receiveMenuNotifications && user.emailVerified)
     for (const user of usersWithNoMenu) {
         if (!(await shouldSendNotification({ email: user.email, type: NotificationType.NO_MENU }))) {

@@ -3,7 +3,7 @@ import type React from "react";
 import { PenLine, Sparkles } from "lucide-react";
 import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal";
 import { cn } from "@/lib/utils";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useModalContext } from "@/context/ModalProvider";
 import { useTranslations } from "next-intl";
 import { RoutingConfig } from "next-intl/routing";
@@ -13,6 +13,7 @@ export function MainButton({
   ...props
 }: React.ComponentProps<"button"> & { asChild?: boolean }) {
   const t = useTranslations("MainButton");
+
 
   return (
     <Modal
@@ -60,9 +61,9 @@ export function Button({
       )}
     >
       <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <span className="relative z-10 block px-6 py-3 rounded-2xl bg-inherit">
-        <div className="relative z-10 flex items-center space-x-3">
-          <span className="transition-all duration-500 group-hover:translate-x-1.5  flex gap-4 w-full items-center">
+      <span className="relative z-10 block px-6 py-3 rounded-2xl bg-inherit w-full">
+        <div className="relative z-10 flex items-center justify-center space-x-3 w-full">
+          <span className="transition-all duration-500 group-hover:translate-x-1.5 justify-center  flex gap-4 w-full items-center">
             {children}
           </span>
         </div>
@@ -91,6 +92,7 @@ function MethodCard({
 }: MethodCardProps) {
   const { setOpen } = useModalContext();
   const t = useTranslations("MainButton");
+  const router = useRouter();
 
   return (
     <>
@@ -100,15 +102,13 @@ function MethodCard({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            const element = document.getElementById(href.hash.replace("#", ""));
-            if (element) {
               setOpen(false);  
               setTimeout(() => {
-                element.scrollIntoView({ behavior: "smooth" })
+                //@ts-expect-error
+                router.push(`/${href.hash}`);
               }, 100)
             
            
-            }
           }}
           className="group cursor-pointer relative flex flex-col items-center p-6 rounded-2xl border border-primary/20 overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 w-full"
           aria-label={title}
@@ -197,8 +197,8 @@ export function MainButtonLink({href, children, className, ...props}: React.Comp
   >
     <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
     <span className="relative z-10 block px-6 py-3 rounded-2xl bg-inherit">
-      <div className="relative z-10 flex items-center space-x-3">
-        <span className="transition-all duration-500 group-hover:translate-x-1.5  flex gap-4 w-full items-center">
+      <div className="relative z-10 flex items-center justify-center space-x-3">
+        <span className="transition-all duration-500 group-hover:translate-x-1.5 justify-center  flex gap-4 w-full items-center">
           {children}
         </span>
       </div>
