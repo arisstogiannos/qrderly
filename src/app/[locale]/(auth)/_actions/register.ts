@@ -58,6 +58,11 @@ export async function register(prevState: any, formData: FormData) {
       email,
       password: hashedPassword,
       role: "ADMIN",
+      settings:{
+        create:{
+          createdAt:new Date()
+        }
+      }
     },
   });
 

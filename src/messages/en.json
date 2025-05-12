@@ -149,8 +149,8 @@
   "Hero": {
     "title": "Transform Your Business with Smart QR Menus with Ordering System",
     "subtitle": "Instantly set up your interactive QR menu with or without ordering system — with our powerful AI, transform your printed menu into a digital menu in minutes!",
-    "button": "Get Started for Free",
-    "demoButton": "See Demo Menu"
+    "button": "Get a Free Menu",
+    "demoButton": "Demo"
   },
   "WhyUs": {
     "title": "Why scanby?",
@@ -243,7 +243,7 @@
   },
 
   "productsData": {
-    "button": "Get Started for Free",
+    "button": "Get a Free Menu",
     "title": "Our Products",
 
     "features": {

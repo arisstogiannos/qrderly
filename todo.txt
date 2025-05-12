@@ -6,8 +6,8 @@ videos
 faq
 
 examples  more real
-finish order menu
-proccess to order menu
+auth flow
+welcome on google sign
 
 ai ingest timout
 
