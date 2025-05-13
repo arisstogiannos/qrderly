@@ -6,7 +6,7 @@ export default async function ChooseUs() {
   const t = await getTranslations("WhyUs");
 
   return (
-    <section className="grid grid-cols-1  lg:grid-cols-[auto_auto] 2xl:grid-cols-2 gap-y-10 sm:pr-20 lg:pr-0 mt-10 lg:mt-0">
+    <section className="grid grid-cols-1  lg:grid-cols-[auto_auto] 2xl:grid-cols-2 gap-y-10 sm:pr-20 lg:pr-0 mt-0 lg:mt-0">
       <div className=" space-y-3 lg:max-w-sm xl:max-w-xl">
         <h2 className="font-semibold text-primary md:text-lg 2xl:text-xl">
           {t("title")}

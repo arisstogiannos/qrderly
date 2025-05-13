@@ -56,12 +56,12 @@ export function Button({
     <button
       {...props}
       className={cn(
-        " inline-block p-px font-medium leading-6 text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
+        " inline-block p-px font-medium leading-6 px-6  text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
         className
       )}
     >
       <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <span className="relative z-10 block px-6 py-3 rounded-2xl bg-inherit w-full">
+      <span className="relative z-10 block py-3 rounded-2xl bg-inherit w-full">
         <div className="relative z-10 flex items-center justify-center space-x-3 w-full">
           <span className="transition-all duration-500 group-hover:translate-x-1.5 justify-center  flex gap-4 w-full items-center">
             {children}
@@ -191,12 +191,12 @@ export function MainButtonLink({href, children, className, ...props}: React.Comp
     href={href}
     {...props}
     className={cn(
-      " inline-block p-px font-medium leading-6 text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
+      " inline-block p-px font-medium leading-6 px-6 text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
       className
     )}
   >
     <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-    <span className="relative z-10 block px-6 py-3 rounded-2xl bg-inherit">
+    <span className="relative z-10 block  py-3 rounded-2xl bg-inherit">
       <div className="relative z-10 flex items-center justify-center space-x-3">
         <span className="transition-all duration-500 group-hover:translate-x-1.5 justify-center  flex gap-4 w-full items-center">
           {children}
