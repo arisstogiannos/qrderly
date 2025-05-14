@@ -24,14 +24,17 @@ export function ErrorMessage({
 export function SuccessMessage({
   msg,
   classNames,
+  layout = "row",
 }: {
   msg: string;
   classNames?: string;
+  layout?: "col" | "row";
 }) {
   return (
     <div
       className={cn(
-        "flex h-fit items-center gap-x-2 rounded-lg bg-green-500/15 p-3 text-green-700",
+        "flex h-fit items-center gap-x-2 gap-y-2 rounded-lg bg-green-500/15 p-3 text-green-700",
+        layout === "col" ? "flex-col" : "flex-row",
         classNames,
       )}
     >

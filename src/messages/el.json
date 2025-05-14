@@ -621,6 +621,7 @@
     "waiting": "Αναμονή"
   },
   "registerForm": {
+    "registerWithEmail": "Εγγραφή με Email",
     "name": "Όνομα",
     "namePlaceholder": "Εισάγετε το όνομα σας",
     "email": "Email",
@@ -633,7 +634,7 @@
     "signUpWithGoogle": "Εγγραφή με Google",
     "alreadyHaveAccount": "Έχετε ήδη λογαριασμό;",
     "signIn": "Σύνδεση",
-    "verificationSent": "Ένας κωδικός επαλήθευσης έχει σταλεί στο email σας!",
+    "verificationSent": "Ένα email επαλήθευσης έχει σταλεί στο {email}! Επαληθεύστε το email σας για να ενεργοποιήσετε τον λογαριασμό σας.",
     "termsAndPrivacy": "Κάνοντας κλικ στο συνέχεια, συμφωνείτε με τους <termsAndPrivacy>Όρους Χρήσης</termsAndPrivacy> και την <privacyPolicy>Πολιτική Απορρήτου</privacyPolicy> μας.",
     "error": {
       "generic": "Παρουσιάστηκε σφάλμα. Δοκιμάστε ξανά.",

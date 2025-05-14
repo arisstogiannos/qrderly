@@ -24,11 +24,11 @@ export default async function Hero() {
           {t("title")}
         </h1>
         <p className="text-xl md:text-4xl">{t("subtitle")}</p>
-        <MainButton className="mt-5 max-sm:px-4 3xl:mt-14 md:text-xl  text-center ">
+        <MainButton className="mt-5 3xl:mt-14 md:text-xl  text-center ">
          
             {t("button")} <ArrowRight />
         </MainButton>
-        <MainButtonLink href="/Bruncherie/smart-menu" target="_blank" rel="noopener noreferrer" className=" text-center md:mt-5 3xl:mt-14 md:text-xl ml-3 sm:ml-5 bg-primary border border-foreground/20 lg:hover:text-background max-sm:px-4 font-medium">
+        <MainButtonLink href="/Bruncherie/smart-menu" target="_blank" rel="noopener noreferrer" className=" text-center md:mt-5 3xl:mt-14 md:text-xl ml-3 sm:ml-5 bg-primary border border-foreground/20 lg:hover:text-background  font-medium">
          
             {t("demoButton")}
         </MainButtonLink>

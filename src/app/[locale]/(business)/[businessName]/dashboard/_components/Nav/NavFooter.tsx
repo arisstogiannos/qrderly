@@ -52,7 +52,8 @@ export function NavFooter({
 }) {
   const { isMobile } = useSidebar();
   const [adminEncryptedTableId, setAdminEncryptedTableId] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeletingBusiness, setIsDeletingBusiness] = useState(false)
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false)
   const t = useTranslations("admin.navbar");
 
   useEffect(() => {
@@ -149,11 +150,11 @@ export function NavFooter({
                   {t("Subscriptions") }
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeleting(true)}>
+              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeletingAccount(true)}>
                 <Trash />
                {t("deleteAccount")}
               </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeleting(true)}>
+              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeletingBusiness(true)}>
                 <Trash />
                {`${t("deleteBusiness")} ${activeBusiness.name}`}
               </DropdownMenuItem>
@@ -166,8 +167,8 @@ export function NavFooter({
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
-      <DeleteAccountModal isOpen={isDeleting} setIsOpen={setIsDeleting} />
-      <DeleteBusinessModal isOpen={isDeleting} setIsOpen={setIsDeleting} businessId={activeBusiness.id} />
+      <DeleteAccountModal isOpen={isDeletingAccount} setIsOpen={setIsDeletingAccount} />
+      <DeleteBusinessModal isOpen={isDeletingBusiness} setIsOpen={setIsDeletingBusiness} businessId={activeBusiness.id} />
     </SidebarMenu>
   );
 }

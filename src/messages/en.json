@@ -586,6 +586,7 @@
     "waiting": "Waiting"
   },
   "registerForm": {
+    "registerWithEmail": "Register with Email",
     "name": "Name",
     "namePlaceholder": "Enter your name",
     "email": "Email",
@@ -598,7 +599,7 @@
     "signUpWithGoogle": "Sign up with Google",
     "alreadyHaveAccount": "Already have an account?",
     "signIn": "Sign in",
-    "verificationSent": "A verification code has been sent to your email!",
+    "verificationSent": "A verification email has been sent to {email}! Please verify your email to activate your account.",
     "termsAndPrivacy": "By clicking continue, you agree to our <termsAndPrivacy>Terms of Service</termsAndPrivacy> and <privacyPolicy>Privacy Policy</privacyPolicy>.",
     "error": {
       "generic": "An error has occurred. Try again.",
