@@ -23,6 +23,7 @@ import { signOut } from "@/app/[locale]/(auth)/_actions/login";
 import Link from "next/link";
 import { Link as IntlLink } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 export function ProfileDropdown({ session }: { session: Session | null }) {
   const businesses = session?.user.business.filter((b) => b.menu?.published);
   async function handle() {
@@ -35,9 +36,19 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className="lg:bg-foreground lg:text-background text-foreground rounded-full p-2 cursor-pointer">
-          <User2 size={"1.5rem"} />
-        </div>
+        {session?.user.image ? (
+          <Image
+            src={session.user.image}
+            alt="profile"
+            width={40}
+            height={40}
+            className="rounded-full overflow-hidden cursor-pointer"
+          />
+        ) : (
+          <div className="lg:bg-foreground lg:text-background text-foreground rounded-full p-2 cursor-pointer">
+            <User2 size={"1.5rem"} />
+          </div>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel className="pb-0">{t("account")}</DropdownMenuLabel>
@@ -54,9 +65,7 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <IntlLink
-                href={"/user-settings"}
-              >
+              <IntlLink href={"/user-settings"}>
                 <Settings />
                 {t("settings")}
               </IntlLink>
@@ -90,7 +99,8 @@ export function ProfileDropdown({ session }: { session: Session | null }) {
                       target="_blank"
                       href={{
                         pathname: `/[businessName]/${b.menu?.type === "QR_MENU" ? "menu" : "smart-menu"}`,
-                        search: b.menu?.type !== "QR_MENU" ? "?table=admin" : "",
+                        search:
+                          b.menu?.type !== "QR_MENU" ? "?table=admin" : "",
                         params: { businessName: b.name.replaceAll(" ", "-") },
                       }}
                     >

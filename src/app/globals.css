@@ -218,12 +218,12 @@
         #420de0 0px,
         transparent 50%
       )
-      #2d36ae;
+      #484ea5;
   mix-blend-mode: var(--_gradient-blend-mode);
 
   opacity: 0.95;
   background-size: 200% 200%;
-  animation: gradientan 8s linear infinite;
+  animation: gradientan 6s linear infinite;
 }
 /* Large devices (desktops, 1024px and up) */
 @media (max-width: 1600px) {
@@ -265,7 +265,7 @@
         #4c52e6;
     opacity: 0.9;
     background-size: 200% 200%;
-    animation: gradientan 8s linear infinite;
+    animation: gradientan 5s linear infinite;
   }
 }
 .noise {

@@ -22,7 +22,7 @@ import Loader from "@/components/Loader";
 import { Modal } from "../SharedComponents/Modal";
 import DeleteModal from "../SharedComponents/DeleteModal";
 import { deletOrder } from "../../../_actions/orders";
-import { OrderWithItems } from "@/types";
+import type { OrderWithItems } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
 import { useFormatter, useTranslations } from "next-intl";
 
@@ -70,9 +70,9 @@ export default function OrdersTable() {
         <TableBody>
           {orders.map((order) => {
             let productNames = "";
-            order.orderItems.forEach(
-              (item) => (productNames += item.menuItem.name + ", ")
-            );
+            for (const item of order.orderItems) {
+              productNames += `${item.menuItem.name}, `;
+            }
             return (
               <TableRow
                 key={order.id}
@@ -83,7 +83,7 @@ export default function OrdersTable() {
                     : "cursor-pointer lg:hover:bg-secondary"
                 }
               >
-                <TableCell>{productNames}</TableCell>
+                <TableCell className="max-w-[200px] sm:max-w-[300px] truncate">{productNames.slice(0, -2)}</TableCell>
 
                 <TableCell>
                   <DisplayPrice price={order.price } />

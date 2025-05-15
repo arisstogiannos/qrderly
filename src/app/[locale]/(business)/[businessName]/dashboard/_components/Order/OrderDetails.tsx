@@ -55,10 +55,10 @@ export default function OrderDetails({
   return (
     <section
       className={`${
-        withAction ? "bg-accent p-4 rounded-2xl" : ""
-      } flex flex-col lg:flex-row justify-between gap-x-10   h-[300] `}
+        withAction ? "bg-accent/40 p-4 rounded-2xl" : ""
+      } flex flex-col lg:flex-row justify-between gap-x-10   lg:max-h-[400px] `}
     >
-      <div className="flex flex-col gap-20 justify-between">
+      <div className="flex flex-col md:flex-row-reverse gap-20 grow justify-between">
         <div className="flex gap-20">
           <p>
             {t("table")}: {order.table}
@@ -68,7 +68,10 @@ export default function OrderDetails({
             {formatter.relativeTime(new Date(order.createdAt), Date.now())}
           </p>
         </div>
+        <div className="overflow-x-auto overflow-y-auto max-h-[300px]">
+
         <ItemsTable order={order} />
+        </div>
       </div>
       {withAction && (
         <div className="flex items-end justify-end">

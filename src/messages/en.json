@@ -900,7 +900,9 @@
       "heading": "Ready to impress your guests?",
       "greeting": "Hi {username},",
       "message": "Create your first QR menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
-      "button": "Create My Menu Now",
+      "button": "Create a Free Menu Now",
+      "message2": "If you dont want to create your menu yourself, we can do it for you. Click the link and fill out the form and thats it. Our team will create your menu and send it to you.",
+      "button2": "Order a Free Menu Now",
       "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."

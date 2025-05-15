@@ -17,7 +17,7 @@ const duplicatedImages = [...images]
     <div className="relative w-screen xl:w-full xl:hidden  top-0 left-1/2 -translate-x-1/2  overflow-hidden mt-14" style={{ height }}>
         {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full  bg-gradient-to-r from-background/5 via-transparent to-background/5 z-10" /> */}
       <div
-        className="flex  gap-4 w-full items-center justify-center "
+        className="flex  gap-3 w-full items-center justify-center "
         // style={{
         //   animationDuration: `${speed}s`,
         //   animationTimingFunction: "linear",

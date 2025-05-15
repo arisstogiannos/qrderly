@@ -5,7 +5,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail, sendWelcomeEmail } from "@/email/mail";
+import { sendVerificationEmail } from "@/email/mail";
 
 // Register
 
