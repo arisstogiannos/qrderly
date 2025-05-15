@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { MetadataRoute } from "next";
+import type{ MetadataRoute } from "next";
 const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
