@@ -1,7 +1,7 @@
 "use client";
 
-import { MenuItem } from "@prisma/client";
-import { Translation } from "@/types";
+import type { MenuItem } from "@prisma/client";
+import type { Translation } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
 import Link from "next/link";
 
@@ -19,13 +19,13 @@ export function SearchModal({
       <div
         onClick={() => setOpen(false)}
         className="fixed top-0 left-0  w-full h-screen -z-10 "
-      ></div>
+      />
       {products.map((p) => {
         const translationsAsJson: Translation | null = p.translations
           ? JSON.parse(p.translations)
           : null;
         const existingTranslation =
-          translationsAsJson && translationsAsJson[lang];
+          translationsAsJson?.[lang];
 
         return (
           <Link key={p.id} href={`#${p.name}`}>

@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import { getCategories } from "../../_actions/categories";
 import { getActiveMenuItems } from "../../_actions/menu-items";
 import {
@@ -15,23 +15,27 @@ import ActiveOrder from "./_components/ActiveOrder";
 import ExpiredMenu from "../_components/ExpiredMenu";
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-// export const revalidate =60; 
+// export const revalidate =60;
 
-export async function generateMetadata({ params }:{params:Promise<{businessName:string}>}) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ businessName: string }>;
+}) {
   const businessName = (await params).businessName.replaceAll("-", " ");
 
   return {
-    metadataBase: new URL('https://www.scanby.cloud'),
+    metadataBase: new URL("https://www.scanby.cloud"),
     title: `${businessName} | Online Menu`,
-    description: 'Check out our menu',
+    description: "Check out our menu",
     openGraph: {
       title: `${businessName} | Online Menu`,
-      description: 'Check out our menu',
+      description: "Check out our menu",
       url: `https://www.scanby.cloud/en/${businessName}/smart-menu`,
-      siteName: 'Scanby',
+      siteName: "Scanby",
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
     },
   };
 }
@@ -89,7 +93,7 @@ export default async function page({
   );
 
   if (!menu) {
-    return <ExpiredMenu/>
+    return <ExpiredMenu />;
   }
 
   if (menu.type === "QR_MENU") {
@@ -114,7 +118,13 @@ export default async function page({
           --accent: ${colors[4]};
           }
           `}</style>
-      <ScanTracker businessName={businessName} menuId={menu.id} businessId={menu.businessId} />
+      <Suspense>
+        <ScanTracker
+          businessName={businessName}
+          menuId={menu.id}
+          businessId={menu.businessId}
+        />
+      </Suspense>
       <CartContextProvider>
         {menu.template === "T1" ? (
           <Template1
@@ -132,7 +142,7 @@ export default async function page({
           />
         )}
       </CartContextProvider>
-     <ActiveOrder menuType={menu.type} businessName={businessName}  />
+      <ActiveOrder menuType={menu.type} businessName={businessName} />
     </main>
   );
 }

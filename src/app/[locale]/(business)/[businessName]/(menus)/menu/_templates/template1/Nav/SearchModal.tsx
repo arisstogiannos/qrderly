@@ -31,14 +31,14 @@ export function SearchModal({
         return (
           <Link key={p.id} href={`#${p.name}`}>
             <div className="flex gap-3 border-t border-t-secondary/20 p-2 text-black first-of-type:border-t-0 hover:bg-foreground/10 transition-colors ">
-              <div className="relative size-16 flex-shrink-0 place-content-center overflow-hidden rounded-lg">
+              {p.imagePath && <div className="relative size-16 flex-shrink-0 place-content-center overflow-hidden rounded-lg">
                 <CloudImage
                   src={p.imagePath ?? ""}
                   fill
                   alt={p.name}
                   className="object-cover"
                 />
-              </div>
+              </div>}
               <div>
                 <p className="">
                   {existingTranslation ? translationsAsJson[lang].name : p.name}

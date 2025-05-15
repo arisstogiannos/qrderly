@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import { getCategories } from "../../_actions/categories";
 import { getActiveMenuItems } from "../../_actions/menu-items";
 import {
@@ -98,11 +98,13 @@ export default async function page({
           --accent: ${colors[4]};
         }
       `}</style>
-      <ScanTracker
-        businessName={businessName}
-        businessId={menu.businessId}
-        menuId={menu.id}
-      />
+      <Suspense>
+        <ScanTracker
+          businessName={businessName}
+          businessId={menu.businessId}
+          menuId={menu.id}
+        />
+      </Suspense>
 
       {menu.template === "T1" ? (
         <Template1

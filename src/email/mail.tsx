@@ -58,7 +58,6 @@ export const sendWelcomeEmail = async (
   name: string
 ) => {
   const t = await getTranslations("emails.welcome");
-
   await resend.emails.send({
     from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
     to: email,

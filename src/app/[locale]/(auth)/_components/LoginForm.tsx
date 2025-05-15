@@ -14,6 +14,7 @@ import { useActionState, useEffect, useState } from "react";
 export default function LoginForm() {
   const [state, loginAction, isPending] = useActionState(login, null);
   const t = useTranslations("loginForm");
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
 
   useEffect(() => {
     if (state?.loggedIn) {
@@ -87,10 +88,13 @@ export default function LoginForm() {
           </Button>
           <Button
             type="button"
-            onClick={() => signInAuth("google", { callbackUrl: "/get-started" })}
+            onClick={() => {
+              setLoadingGoogle(true);
+              signInAuth("google", { callbackUrl: "/get-started" });
+            }}
             variant={"outline"}
           >
-            {t("signInWithGoogle")}
+            {loadingGoogle ? <Loader2 className="animate-spin" /> : t("signInWithGoogle")}
           </Button>
         </div>
       </div>

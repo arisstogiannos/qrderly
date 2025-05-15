@@ -5,6 +5,7 @@ import PhoneMockup from "./PhoneMockup";
 import { MainButton, MainButtonLink } from "./MainButton";
 import { getTranslations } from "next-intl/server";
 import MenuCarousel from "./MenuCarousel";
+import LandingLottie from "./Lottie";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");
@@ -50,9 +51,9 @@ export default async function Hero() {
 
           <PhoneMockup />
         </div>
-      </div> 
-      
-      <MenuCarousel />
+      </div>  
+      {/* <LandingLottie /> */}
+      <MenuCarousel /> 
     </div>
   );
 }

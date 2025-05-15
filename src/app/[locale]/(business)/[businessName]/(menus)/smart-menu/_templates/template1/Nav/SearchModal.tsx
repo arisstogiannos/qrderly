@@ -1,7 +1,7 @@
 "use client";
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import CloudImage from "@/components/CloudImage";
-import { Translation } from "@/types";
+import type { Translation } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
 import Link from "next/link";
 
@@ -19,26 +19,25 @@ export function SearchModal({
       <div
         onClick={() => setOpen(false)}
         className="fixed top-0 left-0  w-full h-screen -z-10 "
-      ></div>
+      />
       {products.map((p) => {
         const translationsAsJson: Translation | null = p.translations
           ? JSON.parse(p.translations)
           : null;
 
-        const existingTranslation =
-          translationsAsJson && translationsAsJson[lang];
+        const existingTranslation = translationsAsJson?.[lang];
 
         return (
-          <Link key={p.id} href={`#${p.name}`} >
+          <Link key={p.id} href={`#${p.name}`}>
             <div className="flex gap-3 border-t border-t-secondary/20 p-2 text-foreground first-of-type:border-t-0 hover:bg-foreground/10 transition-colors ">
-              <div className="relative size-16 flex-shrink-0 place-content-center overflow-hidden rounded-lg">
+              {p.imagePath && <div className="relative size-16 flex-shrink-0 place-content-center overflow-hidden rounded-lg">
                 <CloudImage
                   src={p.imagePath ?? ""}
                   fill
                   alt={p.name}
                   className="object-cover"
                 />
-              </div>
+              </div>}
               <div>
                 <p className="">
                   {existingTranslation ? translationsAsJson[lang].name : p.name}
@@ -50,7 +49,7 @@ export function SearchModal({
                 </p>
               </div>
               <p className="ml-auto text-sm">
-                <DisplayPrice price={p.priceInCents } />
+                <DisplayPrice price={p.priceInCents} />
               </p>
             </div>
           </Link>

@@ -41,7 +41,6 @@ export default function RegisterForm() {
   const handleGoogleSignIn = async () => {
     setLoadingGoogle(true);
     await signInAuth("google", { redirectTo: "/get-started" });
-    setLoadingGoogle(false);
   };
   if(state?.success){
     return <SuccessMessage layout="col" msg={t("verificationSent", {email: formData.email})} />

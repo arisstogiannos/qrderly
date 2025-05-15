@@ -1,13 +1,13 @@
 "use server"
 
-import crypto from "crypto";
+import crypto from "node:crypto";
 
-const secret = process.env.TABLE_ENCRYPTION_KEY!;
+const secret = process.env.TABLE_ENCRYPTION_KEY ?? "";
 
 export async function encryptTable(tableId: string) {
   const payload = tableId;
   const hmac = crypto.createHmac("sha256", secret).update(payload).digest("hex");
-  const token = Buffer.from(`${payload}:${hmac}`).toString("base64url"); // base64 with URL safety
+  const token = Buffer.from(`${payload}:${hmac}`).toString("base64url"); 
   return token;
 }
 
