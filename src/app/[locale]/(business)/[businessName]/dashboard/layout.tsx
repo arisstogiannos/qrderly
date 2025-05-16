@@ -12,6 +12,8 @@ import {
 import SubscriptionExpired from "./_components/SharedComponents/SubscriptionExpired";
 import { CloudUpload, LayoutDashboard, QrCode, Settings } from "lucide-react";
 import { OrderIcon } from "@/app/[locale]/(website)/products/_components/Icons";
+import OnboardingDialog from "./_components/SharedComponents/OnboardingDialog";
+import { Suspense } from "react";
 
 const data = {
   user: {
@@ -132,6 +134,9 @@ export default async function AdminLayout({
           </BusinessProvider>
           {/* </HydrationBoundary> */}
           <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
+          <Suspense>
+            <OnboardingDialog />
+          </Suspense>
         </section>
         {/* </div> */}
       </SidebarInset>

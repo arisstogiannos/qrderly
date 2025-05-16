@@ -44,13 +44,13 @@ export default function CategoriesPage({
     }
   );
 
-  const t = useTranslations("categoriesPage")
+  const t = useTranslations("categoriesPage");
   return (
     <section className="space-y-20">
       <div className="flex justify-between lg:flex-row flex-col gap-y-4">
         <div className="flex items-center justify-between">
           <h1 className="font-medium text-2xl">{t("title")}</h1>
-          <SidebarTrigger className="lg:hidden" />
+          <SidebarTrigger className="lg:absolute top-3 left-2" />
         </div>
         <div className="md:flex lg:gap-10 gap-4 contents">
           <Filters showCategories={false} />

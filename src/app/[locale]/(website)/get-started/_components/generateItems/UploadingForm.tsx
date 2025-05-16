@@ -1,15 +1,13 @@
 // Updated UploadingForm to use Inngest
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Uploader from "./Uploader";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircleIcon, Upload } from "lucide-react";
 import { ErrorMessage } from "@/components/Messages";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import ProgressSteps from "./Progress";
 import { Category } from "@prisma/client";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
@@ -115,7 +113,7 @@ export default function UploadingForm({
           return;
         }
         if (inngestJobOutput.status === "Completed") {
-          router.push("customize-qr");
+          router.push("publish");
         }
       }
     } catch (err) {
@@ -177,7 +175,7 @@ export default function UploadingForm({
               type="button"
               variant={"outline"}
               className="w-full sm:w-fit text-lg py-5 sm:rounded-full p-1 min-w-24 mt-auto"
-              onClick={() => router.push("customize-qr")}
+              onClick={() => router.push("publish")}
             >
               {t("skip")} <ArrowRight className="size-5" />
             </Button>

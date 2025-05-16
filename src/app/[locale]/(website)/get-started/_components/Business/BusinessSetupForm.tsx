@@ -14,12 +14,12 @@ import { ArrowRight } from "lucide-react";
 import React, { useActionState } from "react";
 import { submitBusinessInfo } from "../../actions";
 import { ErrorMessage } from "@/components/Messages";
-import { ProductURL } from "@/types";
+import type { ProductURL } from "@/types";
 import Loader from "@/components/Loader";
 import TablesSetup from "./TablesSetup";
 import { supportedCurrencies } from "@/lib/formatter";
 import { useTranslations } from "next-intl";
-import { Business } from "@prisma/client";
+import type { Business } from "@prisma/client";
 
 export default function BusinessSetupForm({
   product,

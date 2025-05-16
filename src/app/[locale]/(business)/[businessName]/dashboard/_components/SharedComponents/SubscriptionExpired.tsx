@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { plandata, productMap } from "@/data";
-import { BusinessExtended, ProductURL } from "@/types";
+import type { BusinessExtended, ProductURL } from "@/types";
 import { useTranslations } from "next-intl";
 import React from "react";
 

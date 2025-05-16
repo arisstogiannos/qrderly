@@ -42,8 +42,8 @@ export default async function page({
           <h1 className="text-3xl font-medium">{t("title")}</h1>
           {existingItemsNames.length > 0 && <p className="mt-2">{t("description")}</p>}
         </div>
-        <SidebarTrigger className="lg:hidden" />
-      </div>
+        <SidebarTrigger className="lg:absolute top-3 left-2" />
+        </div>
       <div className="max-w-fit">
         <UploadingForm
           businessName={businessName}

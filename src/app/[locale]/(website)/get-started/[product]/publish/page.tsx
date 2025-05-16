@@ -1,6 +1,6 @@
 "use server"
 import React from "react";
-import { ProductURL } from "@/types";
+import type { ProductURL } from "@/types";
 import { checkUser } from "../../isAllowed";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   Lightbulb,
 } from "lucide-react";
-import { cookies } from "next/headers";
 import BackButton from "../../_components/BackButton";
 
 export default async function page({
@@ -31,39 +30,26 @@ export default async function page({
     redirect("/get-started/" + product + "/menu-settings");
   }
 
-  if (result.redirect === "noQR") {
-    redirect("/get-started/" + product + "/customize-qr");
-  }
+  // if (result.redirect === "noQR") {
+  //   redirect("/get-started/" + product + "/customize-qr");
+  // }
   // if (result.redirect === "noUnsetBusiness") {
   //   redirect("/get-started/" + product + "/business-setup");
   // }
 
-  // const runningInngestJobId = (await cookies()).get("inngestEventId")?.value;
 
-  // if (runningInngestJobId) {
-  //   let isRunning = true;
-  //   while (isRunning) {
-  //     const runningInngestJobId = (await cookies()).get(
-  //       "inngestEventId"
-  //     )?.value;
-  //     if (!runningInngestJobId) {
-  //       isRunning = false;
-  //     }
-  //     await new Promise((resolve) => setTimeout(resolve, 1000));
-  //   }
-  // }
   return (
     <div className="">
       <div className="max-w-4xl mx-auto">
         <BackButton
-          href={`/get-started/${product}/customize-qr`}
+          href={`/get-started/${product}/generate-items`}
           businessId={result.business.id}
         />
         {/* Confetti-style header */}
         <div className="relative mb-12 text-center">
           <div className="absolute inset-0 flex items-center justify-center opacity-10">
-            <div className="w-64 h-64 rounded-full bg-green-200 blur-3xl"></div>
-            <div className="w-64 h-64 rounded-full bg-amber-200 blur-3xl -ml-20"></div>
+            <div className="w-64 h-64 rounded-full bg-green-200 blur-3xl"/>
+            <div className="w-64 h-64 rounded-full bg-amber-200 blur-3xl -ml-20"/>
           </div>
 
           <div className="relative">

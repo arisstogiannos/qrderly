@@ -8,6 +8,7 @@ import Loader from "@/components/Loader";
 import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function TablesForm({
   business,
@@ -24,6 +25,7 @@ export default function TablesForm({
   useEffect(() => {
     if (state?.success) {
       router.refresh();
+      toast.success(t("successDesc"))
     }
   }, [state]);
 

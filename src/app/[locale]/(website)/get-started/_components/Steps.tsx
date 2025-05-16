@@ -7,7 +7,7 @@ import { ArrowRight, Check } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 export default function AnimatedStepper() {
-  const steps = ["business setup", "menu settings", "generate items", "customize qr", "publish"]
+  const steps = ["business setup", "menu settings", "generate items",  "publish"]
   const t = useTranslations("get started")
 
   const pathname = usePathname()

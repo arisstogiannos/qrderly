@@ -27,19 +27,23 @@ export function Modal({
   subtitle,
   children,
   initialOpen,
+  firstOpen,
   trigger,
   classNames,
   animate = true,
+  showDesc = false
 }: {
   title: string;
   subtitle: string;
   children: React.ReactNode;
   initialOpen?:boolean;
+  firstOpen?:boolean;
   trigger: React.ReactNode;
   classNames?: string;
   animate?: boolean;
+  showDesc?:boolean
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(firstOpen??false);
   const [isDesktop, setIsDesktop] = React.useState(false);
 
   React.useEffect(() => {
@@ -57,7 +61,7 @@ export function Modal({
     return (
       <Dialog open={initialOpen??open} onOpenChange={setOpen}   >
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className={cn("max-w-xl ", classNames)} animate={animate} onCloseAutoFocus={(e) => e.preventDefault()} autoFocus={false} >
+        <DialogContent className={cn("max-w-xl ", classNames)}  animate={animate} onCloseAutoFocus={(e) => e.preventDefault()} autoFocus={false} >
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{subtitle}</DialogDescription>
@@ -73,7 +77,7 @@ export function Modal({
   return (
     //enable scrolling when modal is closing
     <Drawer 
-      open={open} 
+      open={initialOpen??open} 
       onOpenChange={setOpen} 
 
     >
@@ -81,7 +85,7 @@ export function Modal({
       <DrawerContent className={cn("px-4 pb-2 ", classNames)} animate={animate} onCloseAutoFocus={(e) => e.preventDefault()}  autoFocus={false}  >
         <DrawerHeader className="text-left ml-0 p-0 pb-4">
           <DrawerTitle className="text-xl">{title}</DrawerTitle>
-          <DrawerDescription className="sr-only">{subtitle}</DrawerDescription>
+          <DrawerDescription className={!showDesc?"sr-only":""}>{subtitle}</DrawerDescription>
           <DrawerClose>
             <ChevronDown className="bg-foreground text-background rounded-full absolute right-5 top-5 size-8 p-1" />
           </DrawerClose>

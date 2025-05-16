@@ -11,9 +11,13 @@ import { ErrorMessage } from "@/components/Messages";
 import { ArrowRight, Rocket } from "lucide-react";
 import Link from "next/link";
 import { Link as IntlLink } from "@/i18n/navigation";
-import { MainButton } from "../../(landing page)/_sections/hero/MainButton";
+import {
+  MainButton,
+  MainButtonPlain,
+} from "../../(landing page)/_sections/hero/MainButton";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import Confetti from "../../payment-successful/Confetti";
 
 export default function Publish({
   product,
@@ -108,46 +112,51 @@ export default function Publish({
   //   </div>
   // ) : (
   return (
-    <Modal
-      title={
-        !isPending && !state?.success && !publishedMenuBusiness ? "Publish" : ""
-      }
-      subtitle={
-        !isPending && !state?.success && !publishedMenuBusiness
-          ? "Choose tier to procced"
-          : ""
-      }
-      classNames=" lg:w-fit min-w-fit pt-5"
-      trigger={
-        <form
-          className="ml-auto w-full sm:w-fit mt-auto "
-          action={existingPaidSub ? action : ""}
-        >
-          <MainButton
-            type={
-              existingPaidSub && !state?.success && !publishedMenuBusiness
-                ? "submit"
-                : "button"
-            }
-            className=" max-2xl:text-xl w-full sm:w-fit "
+    <>
+      {state?.success && <Confetti />}
+      <Modal
+        title={
+          !isPending && !state?.success && !publishedMenuBusiness
+            ? "Publish"
+            : ""
+        }
+        subtitle={
+          !isPending && !state?.success && !publishedMenuBusiness
+            ? "Choose tier to procced"
+            : ""
+        }
+        classNames=" lg:w-fit min-w-fit pt-5"
+        trigger={
+          <form
+            className="ml-auto w-full sm:w-fit mt-auto "
+            action={existingPaidSub ? action : ""}
           >
-            <span className="w-full flex-center gap-x-3">
-              {state?.success ? (
-                "View"
-              ) : (
-                <>
-                  {" "}
-                  <Rocket /> Publish
-                </>
-              )}
-            </span>
-          </MainButton>
-        </form>
-      }
-    >
-      {render}
-      {state?.error && <ErrorMessage msg={state.error} />}
-    </Modal>
+            <MainButtonPlain
+              type={
+                existingPaidSub && !state?.success && !publishedMenuBusiness
+                  ? "submit"
+                  : "button"
+              }
+              className=" max-2xl:text-xl w-full sm:w-fit "
+            >
+              <span className="w-full flex-center gap-x-3">
+                {state?.success ? (
+                  "View"
+                ) : (
+                  <>
+                    {" "}
+                    <Rocket /> Publish
+                  </>
+                )}
+              </span>
+            </MainButtonPlain>
+          </form>
+        }
+      >
+        {render}
+        {state?.error && <ErrorMessage msg={state.error} />}
+      </Modal>
+    </>
   );
   // );
 }
@@ -165,16 +174,20 @@ function Success({ url }: { url: string }) {
             href={{
               params: { businessName: url.split("/")[0] },
               pathname: "/[businessName]/dashboard",
+              query: { onboarding: "true" },
             }}
             replace={true}
           >
-           {t("visitDashboard")} <ArrowRight />
+            {t("visitDashboard")} <ArrowRight />
           </IntlLink>
         </Button>
         <Button size={"lg"} asChild>
-          <Link href={"/en/" + url}>
-          {t("visitMenu")} <ArrowRight />
-          </Link>
+          <IntlLink
+            //@ts-expect-error
+            href={"/"+url}
+          >
+            {t("visitMenu")} <ArrowRight />
+          </IntlLink>
         </Button>
       </div>
     </div>

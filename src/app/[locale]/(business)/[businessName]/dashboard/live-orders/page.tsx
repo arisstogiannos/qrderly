@@ -20,8 +20,8 @@ export default async function page({
     <section className="space-y-10">
       <div className="flex items-center justify-between">
         <h1 className="font-medium text-2xl">{t("liveOrders.title")}</h1>
-        <SidebarTrigger className="lg:hidden" />
-      </div>
+        <SidebarTrigger className="lg:absolute top-3 left-2" />
+        </div>
       <OrdersProvider businessName={businessName}>
         <OrderDetails withAction />
         <OrdersTable />

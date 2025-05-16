@@ -15,7 +15,7 @@ export function Navbar({
   return (
     <nav className="my-container z-50 sticky  space-y-10 bg-background/70 py-5 text-foreground backdrop-blur-xl ">
     <div className="flex items-center justify-between">
-      <h1 className=" w-fit  text-2xl font-semibold uppercase text-primary">
+      <h1 className=" w-fit max-w-60 text-wrap truncate  text-2xl font-semibold uppercase text-primary">
         {businessName}
       </h1>
         <Suspense>

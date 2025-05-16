@@ -12,6 +12,7 @@ import type { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
 import { sendFeedbackEmail, sendMenuCreatedEmail } from "@/email/mail";
 import { encryptTable } from "@/lib/table-crypt";
+import { after } from "next/server";
 
 const businessSchema = z.object({
   name: z.string(),
@@ -257,8 +258,12 @@ export async function createMenu(
   revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/menu`);
   revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/smart-menu`);
 
-  const businessNameUrl = business.name.replaceAll(" ", "-");
+
   const adminEncryptedTableId = await encryptTable(`admin|${business.name}`)
+  const businessNameUrl = business.name.replaceAll(" ", "-");
+
+ await saveQR(business.id, { data: `/${businessNameUrl}/${menu.type === "QR_MENU" ? "menu" : "smart-menu"}`, height: 300, width: 300,margin:10 }, "Scan For Menu")
+
   if (user.email) {
     await Promise.all([
 
@@ -276,6 +281,7 @@ export async function createMenu(
       )
     ])
   }
+
   return {
     success: "Proccess Complete",
     businessNameUrl,

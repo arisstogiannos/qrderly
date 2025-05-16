@@ -24,9 +24,9 @@ export default async function page({
       redirect(`/get-started/${product}/menu-settings`);
     }
 
-    if (result.redirect === "noQR") {
-      redirect(`/get-started/${product}/generate-items`);
-    }
+    // if (result.redirect === "noQR") {
+    //   redirect(`/get-started/${product}/generate-items`);
+    // }
   
     if (result.redirect === "unpublishedMenu") {
       redirect(`/get-started/${product}/publish`);
