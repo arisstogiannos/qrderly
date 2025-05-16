@@ -48,13 +48,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function page({params}:{params: Promise<{locale: string}>}) {
   const locale = (await params).locale;
-  <GoogleTagManager gtmId="GTM-W7D4ZMR5"  />
-
+  
   setRequestLocale(locale)
-    const smMenu = {...productsData[0]}
-    // smMenu.title = "QR Menu – Instant Access, Effortless Browsing"
+  const smMenu = {...productsData[0]}
+  // smMenu.title = "QR Menu – Instant Access, Effortless Browsing"
   return (
+    <>
+    <GoogleTagManager gtmId="GTM-W7D4ZMR5"  />
     <ProductPage product={smMenu}/>
+    </>
   );
 }
 
