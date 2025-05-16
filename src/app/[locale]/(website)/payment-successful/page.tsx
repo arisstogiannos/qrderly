@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 import { notFound, redirect } from "next/navigation";
 import React from "react";
