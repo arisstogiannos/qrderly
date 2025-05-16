@@ -10,7 +10,7 @@ import {
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export async function NavLinks({
   items,

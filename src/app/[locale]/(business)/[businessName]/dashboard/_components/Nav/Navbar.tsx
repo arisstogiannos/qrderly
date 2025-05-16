@@ -1,5 +1,4 @@
 
-import * as React from "react";
 import {
   
   Brain,
@@ -21,92 +20,35 @@ import { NavLinks } from "./NavLinks";
 import { NavFooter } from "./NavFooter";
 import { OrderIcon } from "@/app/[locale]/(website)/products/_components/Icons";
 import { TeamSwitcher } from "./BusinessSwitcher";
-import { BusinessExtended, ExtendedUser } from "@/types";
-import { CategoriesIcon, ProductsIcon, SalesIcon } from "../SharedComponents/Icons";
+import type { BusinessExtended, ExtendedUser } from "@/types";
+import type { ReactNode } from "react";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "",
-      icon: <LayoutDashboard />,
-      isActive: false,
-      
-    },
-    {
-      title: "Upload Menu",
-      url: "upload-menu",
-      icon: <CloudUpload />,
-      isActive: false,
-      
-    },
-    {
-      title: "Qr Settings",
-      url: "qr",
-      icon: <QrCode />,
-      isActive: false,
-      
-    },
-    {
-      title: "Menu",
-      url: "",
-      icon: <OrderIcon />,
-      isActive: false,
-      items: [
-        {
-          title: "Items",
-          url: "menu-items",
-          icon: <ProductsIcon href={"menu-items"} />,
-        },
-        {
-          title: "Categories",
-          url: "categories",
-          icon: <CategoriesIcon href="categories" />,
-        },
-        {
-          title: "Settings",
-          url: "settings",
-          icon: <Settings color="white" />,
-        },
-      ],
-    },
-    {
-      title: "Orders",
-      url: "",
-      icon: <OrderIcon />,
-      items: [
-        {
-          title: "All Orders",
-          url: "all-orders",
-          icon: <SalesIcon href="all-orders" />,
-        },
-        {
-          title: "Live Orders",
-          url: "live-orders",
-          icon: <OrderIcon />,
-        },
-      ],
-    },
-  ],
-};
+
 
 export function AppSidebar({
   user,
   business,
+  links,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {
   user: ExtendedUser;
   business: BusinessExtended;
+  links: {
+    title: string;
+    url: string;
+    icon: ReactNode;
+    isActive?: boolean;
+    items?: {
+      title: string;
+      url: string;
+      icon: ReactNode;
+    }[];
+  }[];
 }) {
   const navLinks =
     business.product === "QR_MENU"
-      ? data.navMain.filter((item) => item.title !== "Orders")
-      : data.navMain;
+      ? links.filter((item) => item.title !== "Orders")
+      : links;
 
   return (
     <Sidebar variant="inset" {...props} className="bg-primary rounded-3xl">
