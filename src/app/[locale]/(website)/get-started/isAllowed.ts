@@ -47,9 +47,9 @@ export async function checkUser(product: ProductURL): Promise<{
       if (menuItems.length === 0)
         return { business: b, redirect: "emptyMenu", user };
 
-      if (!b.qr) {
-        return { business: b, redirect: "noQR", user };
-      }
+      // if (!b.qr) {
+      //   return { business: b, redirect: "noQR", user };
+      // }
 
       return { business: b, redirect: "unpublishedMenu", user };
     }

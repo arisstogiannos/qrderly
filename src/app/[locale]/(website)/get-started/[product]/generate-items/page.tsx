@@ -28,9 +28,9 @@ export default async function page({
     if (result.redirect === "businessWithoutMenu") {
       redirect("/get-started/" + product + "/menu-settings");
     }
-    if (result.redirect !== "emptyMenu" && result.redirect === "noQR") {
-      redirect("/get-started/" + product + "/customize-qr");
-    }
+    // if (result.redirect !== "emptyMenu" && result.redirect === "noQR") {
+    //   redirect("/get-started/" + product + "/customize-qr");
+    // }
     if (
       result.redirect === "unpublishedMenu" ||
       result.redirect === "noUnsetBusiness"

@@ -80,7 +80,9 @@
   },
   "tablesForm": {
     "tables": "Tables",
-    "save": "Save"
+    "save": "Save",
+    "successTitle": "Success!",
+    "successDesc": "Tables were updated successfully"
   },
   "tablesSetup": {
     "numberOfTables": "Number of Tables",
@@ -426,6 +428,7 @@
     }
   },
   "dashboard": {
+    "visitLiveMenu": "Visit Live Menu",
     "analytics": "Analytics",
     "qr": "QR",
     "information": "Information",
@@ -444,7 +447,7 @@
     "loading": "Loading",
     "title": "Dashboard",
     "qrCode": "QR Code",
-    "qrCodeDescription": "Download or share your menu QR code",
+    "qrCodeDescription": "Download and print your QR code",
     "customize": "Customize",
     "qrCodeScans": "QR Code Scans",
     "totalOrders": "Total Orders",
@@ -790,7 +793,6 @@
       "greeting": "Hi {username}",
       "message": "Your order has been received. We will contact you as soon as your menu is ready. If you don't have an account, you can sign up for free and receive your menu in your account.",
       "button": "Sign Up"
-      
     },
     "feedback": {
       "subject": "We'd love your feedback on your experience with Scanby",
@@ -1188,5 +1190,47 @@
       "description": "Our experts will create a professional menu tailored to your business. We deliver in 24 hours or less"
     },
     "recommended": "Recommended"
+  },
+
+  "onboardingDialog": {
+    "steps": {
+      "0": {
+        "title": "Next Steps",
+        "description": "Here's what you can do next",
+        "items": [
+          "Visit your menu to see what you created",
+          "Fix any mistakes from the menu-items page where you can edit items",
+          "Print your QR and start accepting customers"
+        ]
+      },
+      "1": {
+        "title": "We Value Your Feedback",
+        "description": "Help us improve your experience",
+        "prompt": "How would you rate your experience so far?",
+        "textareaLabel": "Any additional thoughts?",
+        "textareaPlaceholder": "Share your experience or suggestions..."
+      }
+    },
+    "success": {
+      "title": "Feedback submitted",
+      "description": "Thank you! Your feedback helps us improve."
+    },
+    "error": {
+      "title": "Something went wrong",
+      "description": "Could not send feedback. Please try again later."
+    },
+    "Required":"Required",
+    "buttons":{
+      "next":"Next",
+      "back":"Back",
+      "submit":"Submit"
+    },
+    "validation": {
+      "rating": "Please select a rating.",
+      "comment-min": "Comment must be at least 10 characters.",
+      "comment-max": "Comment must be no more than 500 characters.",
+      "email": "Invalid email address."
+      
+    }
   }
 }

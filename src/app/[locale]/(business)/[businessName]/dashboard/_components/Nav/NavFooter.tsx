@@ -85,7 +85,7 @@ export function NavFooter({
         >
           <Link
             href={
-              `/en/${activeBusiness.name.replaceAll(" ", "-")}${activeBusiness.menu?.type === "QR_MENU" ? "/menu" : "/smart-menu"}?table=${adminEncryptedTableId}`
+              `/${activeBusiness.name.replaceAll(" ", "-")}${activeBusiness.menu?.type === "QR_MENU" ? "/menu" : "/smart-menu"}?table=${adminEncryptedTableId}`
             }
             target="_blank"
           >

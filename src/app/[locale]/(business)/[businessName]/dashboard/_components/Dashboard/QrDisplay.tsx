@@ -63,9 +63,9 @@ export default function QrDisplay({
   }, [qrCode, business]);
   return (
     <div className="w-full space-y-4">
-      <div ref={qrRef} className="relative max-w-52 max-h-52"></div>
+      <div ref={qrRef} className="relative max-w-52 max-h-52 "/>
       <div className="mt-auto">
-        <QrDownLoad business={business} qrCode={qrCode} text="" />
+        <QrDownLoad business={business} qrCode={qrCode} text={business.qr?.text ?? "Scan For Menu"} />
       </div>
     </div>
   );

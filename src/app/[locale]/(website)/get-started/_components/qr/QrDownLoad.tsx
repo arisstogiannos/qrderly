@@ -30,6 +30,9 @@ export default function QrDownLoad({
     const tempQRCode = new QRCodeStyling({
       ...qrCode._options,
       data: `${qrCode._options.data}?table=${encryptedTableId}`,
+      height:3000,
+      width:3000,
+      margin:200
     });
 
     const qrBlob = await tempQRCode.getRawData("png");
@@ -51,7 +54,7 @@ export default function QrDownLoad({
     qrImage.src = qrURL;
     await new Promise((resolve) => (qrImage.onload = resolve));
 
-    const qrSize = 300;
+    const qrSize = 3000;
 
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -64,10 +67,10 @@ export default function QrDownLoad({
     ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
     // Add table number text
-    ctx.font = "bold 14px Arial";
+    ctx.font = "bold 100px Arial";
     ctx.fillStyle = qrCode._options.dotsOptions.color;
     ctx.textAlign = "left";
-    ctx.fillText(text, 5, canvas.height - 5, (canvas.width * 3) / 4); // Position text
+    ctx.fillText(text, 50, canvas.height - 50, (canvas.width * 3) / 4); // Position text
 
     canvas.toBlob((blob) => {
       if (!blob) return;
@@ -95,6 +98,9 @@ export default function QrDownLoad({
       const tempQRCode = new QRCodeStyling({
         ...qrCode._options,
         data: `${qrCode._options.data}?table=${encryptedTableId}`,
+        height:3000,
+        width:3000,
+        margin:200
       });
 
       let qrData = await tempQRCode.getRawData("png");
@@ -114,7 +120,7 @@ export default function QrDownLoad({
       await new Promise((resolve) => (qrImage.onload = resolve));
 
       // Create new canvas (QR size + space for text)
-      const qrSize = 300;
+      const qrSize = 3000;
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       if (!ctx) continue;
@@ -126,12 +132,12 @@ export default function QrDownLoad({
       ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
       // Add table number text
-      ctx.font = "bold 14px Arial";
+      ctx.font = "bold 100px Arial";
       ctx.fillStyle = qrCode._options.dotsOptions.color;
       ctx.textAlign = "right";
-      ctx.fillText(t, qrSize - 10, qrSize - 5);
+      ctx.fillText(t, qrSize - 50, qrSize - 50);
       ctx.textAlign = "left";
-      ctx.fillText(text, 5, canvas.height - 5, (canvas.width * 3) / 4); // Position text
+      ctx.fillText(text, 50, canvas.height - 50, (canvas.width * 3) / 4); // Position text
 
       // Convert to PNG data URL
       const dataURL = canvas.toDataURL("image/png").split(",")[1];

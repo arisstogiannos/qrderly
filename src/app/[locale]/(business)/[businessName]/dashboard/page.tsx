@@ -17,6 +17,9 @@ import {
 import { SubscriptionStatusCard } from "./_components/Dashboard/subscription-status-card";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { plandata } from "@/data";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 export default async function page({
   params,
 }: {
@@ -26,7 +29,6 @@ export default async function page({
   const { business } = await checkUserAuthorized(businessName);
   const isOrderingMenu = business.product !== "QR_MENU";
 
-
   const t = await getTranslations("dashboard");
 
   const plan = plandata.find((plan) => plan.product === business.product);
@@ -35,10 +37,26 @@ export default async function page({
     <div className="flex flex-1 flex-col">
       <header className="flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:px-6">
         <h1 className="font-medium text-2xl">{t("title")}</h1>
-        <SidebarTrigger className="lg:hidden" />
+        <SidebarTrigger className="lg:absolute top-3 left-2" />
+        <Button className="mt-2 hidden lg:flex" asChild>
+          <Link
+            //@ts-expect-error
+            href={`/${business.name.replaceAll(" ", "-")}${business.menu?.type === "QR_MENU" ? "/menu" : "/smart-menu"}`}
+          >
+            {t("visitLiveMenu")} <ArrowUpRight />
+          </Link>
+        </Button>
       </header>
       <main className="flex-1 overflow-auto mt-2">
         <div className="grid gap-6">
+          <Button className="mt-2 flex lg:hidden" asChild>
+            <Link
+              //@ts-expect-error
+              href={`/${business.name.replaceAll(" ", "-")}${business.menu?.type === "QR_MENU" ? "/menu" : "/smart-menu"}`}
+            >
+              {t("visitLiveMenu")} <ArrowUpRight />
+            </Link>
+          </Button>
           {/* Toggle for demo purposes */}
 
           {/* Quick stats */}
@@ -78,7 +96,7 @@ export default async function page({
           {/* Subscription status */}
           <SubscriptionStatusCard
             {...{
-              billing: business.subscription?.billing??"FREETRIAL",
+              billing: business.subscription?.billing ?? "FREETRIAL",
               price:
                 plan?.billing[
                   business.subscription?.billing === "MONTHLY"
@@ -86,7 +104,7 @@ export default async function page({
                     : "yearly"
                 ].price ?? "",
               title: business.product,
-              scans: business.menu?.noScans ??0,
+              scans: business.menu?.noScans ?? 0,
             }}
           />
         </div>

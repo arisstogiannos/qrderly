@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useModalContext } from "@/context/ModalProvider";
 import { useTranslations } from "next-intl";
-import { RoutingConfig } from "next-intl/routing";
 
 export function MainButton({
   children,
@@ -206,5 +205,30 @@ export function MainButtonLink({
         </div>
       </span>
     </Link>
+  );
+}
+export function MainButtonPlain({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<"button">) {
+  return (
+    <button
+
+      {...props}
+      className={cn(
+        " inline-block p-px font-medium leading-6  text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
+        className
+      )}
+    >
+      <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <span className="relative z-10 block px-4 py-3 rounded-2xl bg-inherit">
+        <div className="relative z-10 flex items-center justify-center space-x-3">
+          <span className="transition-all duration-500 group-hover:translate-x-1.5 justify-center  flex gap-4 w-full items-center">
+            {children}
+          </span>
+        </div>
+      </span>
+    </button>
   );
 }
