@@ -1,10 +1,10 @@
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "../context/Providers";
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import {setRequestLocale} from 'next-intl/server';
-
+import { setRequestLocale } from "next-intl/server";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const instrumentsSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -14,7 +14,7 @@ const instrumentsSans = Instrument_Sans({
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata");
-  const meta = t.raw('main') as {
+  const meta = t.raw("main") as {
     title: string;
     description: string;
     keywords: Record<string, string>;
@@ -26,37 +26,37 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 
   return {
-    metadataBase: new URL('https://www.scanby.cloud/'),
+    metadataBase: new URL("https://www.scanby.cloud/"),
     title: meta.title,
     description: meta.description,
     keywords: Object.values(meta.keywords),
-    authors: [{ name: 'Aris Stogiannos', url: 'https://aris-stogiannos.gr' }],
+    authors: [{ name: "Aris Stogiannos", url: "https://aris-stogiannos.gr" }],
     icons: {
-      icon: '/favicon.ico',
+      icon: "/favicon.ico",
     },
     openGraph: {
       title: meta.ogTitle,
       description: meta.ogDescription,
-      url: 'https://www.scanby.cloud/',
-      siteName: 'Scanby',
+      url: "https://www.scanby.cloud/",
+      siteName: "Scanby",
       images: [
         {
-          url: '/opengraph-image.png',
-          secureUrl:'/opengraph-image.png',
+          url: "/opengraph-image.png",
+          secureUrl: "/opengraph-image.png",
           width: 1200,
           height: 630,
           alt: meta.ogAlt,
         },
       ],
-      locale: 'en_US',
-      type: 'website',
+      locale: "en_US",
+      type: "website",
     },
     twitter: {
-      card: 'summary_large_image',
-      site: '@yourTwitterHandle',
+      card: "summary_large_image",
+      site: "@yourTwitterHandle",
       title: meta.twitterTitle,
       description: meta.twitterDescription,
-      images: ['/opengraph-image.png'],
+      images: ["/opengraph-image.png"],
     },
   };
 }
@@ -72,7 +72,6 @@ export async function generateStaticParams() {
   ];
 }
 
-
 export default async function RootLayout({
   children,
   params,
@@ -85,7 +84,8 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      
+      <GoogleTagManager gtmId="GTM-W7D4ZMR5" />
+
       <body
         className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
       >

@@ -58,7 +58,7 @@ export default async function SuccessPage({
   return (
     <div className="flex mt-20 items-center justify-center bg-gradient-to-b from-green-50 to-white p-4">
       <Confetti />
-      <GoogleTagManager gtmId="GTM-W7D4ZMR5"  />
+      {/* <GoogleTagManager gtmId="GTM-W7D4ZMR5"  /> */}
 
       <Card className="max-w-md w-full shadow-lg">
         <CardHeader className="text-center pb-2">
