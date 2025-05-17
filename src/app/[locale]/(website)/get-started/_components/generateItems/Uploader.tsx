@@ -24,7 +24,7 @@ export default function Uploader({
 }) {
   const [previewImages, setPreviewImages] = useState<string[] | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null); // Reference to file input
-  const hasFile = uploadedFile && uploadedFile.type.startsWith(fileType);
+  const hasFile = uploadedFile?.type.startsWith(fileType);
   const t = useTranslations("uploader");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ export default function Uploader({
 
   return (
     <div
-      className={`flex flex-col gap-4 p-4 border-2 border-accent hover:border-primary/50  transition-all duration-300 rounded-lg shadow-md hover:shadow-xl`}
+      className={"flex flex-col gap-4 p-4 border-2 border-accent hover:border-primary/50  transition-all duration-300 rounded-lg shadow-md hover:shadow-xl"}
     >
       <div className="space-y-1 mb-2">
         <h3 className="text-xl font-medium capitalize">{title}</h3>
@@ -88,7 +88,7 @@ export default function Uploader({
           ) : (
             <div className="flex flex-col items-center">
               <span className="text-gray-500 truncate max-w-xs">
-                📄 {uploadedFile.name}
+                📄 {uploadedFile?.name}
               </span>
               <span className="text-xs text-gray-400">(PDF uploaded)</span>
             </div>

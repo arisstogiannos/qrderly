@@ -57,6 +57,7 @@
     "next-cloudinary": "^6.16.0",
     "next-intl": "^4.0.2",
     "next-themes": "^0.4.6",
+    "pdf-lib": "^1.17.1",
     "qr-code-styling": "^1.9.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

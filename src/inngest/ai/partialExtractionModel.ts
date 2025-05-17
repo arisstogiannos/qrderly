@@ -51,7 +51,10 @@ export async function partialExtractionAI(
             - if there are products that users have to assemble the their self by picking ingredients then put the ingredients into prefernces. Example: if the menu item is a crepe and the menu has all the ingredients that can be used then put them in the prefernces field and create a prefernce for each category of ingredients. Example: meat: chicken, beef, pork / cheese: mozzarela, parmezan, feta and so on create a prefernce for each category of ingredients.
             - If category specifies any prefernces or extras include them to the preference of each item that belong to this category. Example 1: If inside the category area there is text saying served with rice or fries you have to add a prefernce to each item of the category like: {name:"side",values:["rice","fries"]}. Example 2: If inside the category area there is text saying add bacon +1.50 , add egg or whatever looks like an option include it as well in prefences like: {name:"extras",values:["bacon +150","egg"]} . Example 3: If inside the category area there is text saying add syrop, chocolate chips or caramel +3.90 whatever looks like an option include it as well in prefences like: {name:"extras",values:["syrop + 390","chocolate chips +390", "caramel +390"]}.
             - Any extra price that comes along with selecting a prefernce put it in the prfernce value price field and dont include in the prefernce value name.
-            - In the prefernce price field should be only the extra price that is added and not the final price.`,
+            - In the prefernce price field should be only the extra price that is added and not the final price.
+            - Skip decoration pages that doesnt include any menu items
+`
+            ,
         ]),
       ],
       config: {

@@ -1,15 +1,17 @@
 "use server";
 
 import { inngest } from "@/inngest/client";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
 export async function startExtractAllItems({
   businessName,
   cloudinaryPublicIDs,
+  fileType
 }: {
   businessName: string;
   cloudinaryPublicIDs: string[];
+  fileType:"pdf" | "image"
 }) {
   const jobId = uuidv4();
 
@@ -21,6 +23,7 @@ export async function startExtractAllItems({
         cloudinaryIDs: cloudinaryPublicIDs,
         formData: {},
         jobId,
+        fileType
       },
     });
 
@@ -35,11 +38,14 @@ export async function startExtractSomeItems({
   cloudinaryPublicIDs,
   existingCategories,
   existingItems,
+  fileType
 }: {
   businessName: string;
   existingCategories: Category[];
   existingItems: string[];
-  cloudinaryPublicIDs: string[]; // now array
+  cloudinaryPublicIDs: string[]; 
+  fileType:"pdf" | "image"
+
 }) {
   const jobId = uuidv4();
 
@@ -52,6 +58,7 @@ export async function startExtractSomeItems({
         existingCategories,
         existingItems,
         jobId,
+        fileType
       },
     });
 
