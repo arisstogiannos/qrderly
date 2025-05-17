@@ -46,6 +46,7 @@ export async function extractAI(
                   - Ensure the output strictly follows the JSON structure. Make sure the json output is well formated so it can be parsed by JSON.parse() later.
                   - If You reach your response token limit you have to return a response that is a valid array of json objects. So just remove the last menu item and properly close the json array.
                   - Ignore non-menu text such as restaurant names or disclaimers.
+                  - Skip decoration pages that doesnt include any menu items
                   `,
           ]),
         ],

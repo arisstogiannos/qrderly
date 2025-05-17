@@ -8,10 +8,10 @@ import { ArrowRight, CheckCircleIcon, Upload } from "lucide-react";
 import { ErrorMessage } from "@/components/Messages";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
-import { getRunOutput, InngestRun } from "@/inngest/status";
+import { getRunOutput, type InngestRun } from "@/inngest/status";
 import { startExtractAllItems, startExtractSomeItems } from "@/inngest/actions";
 import { uploadImageClientSide } from "@/lib/uploadImageClient";
 import FailedImagesModal from "./FailedImagesModal";
@@ -60,9 +60,8 @@ export default function UploadingForm({
     setIsProcessing(true);
     const jobId = uuidv4();
     setJobId(jobId);
-
     try {
-      let eventId: any;
+      let eventId: string;
       if (existingItems && existingCategories && existingItems.length > 0) {
         console.log("extracr some")
         const { eventId: temp } = await startExtractSomeItems({
@@ -70,12 +69,15 @@ export default function UploadingForm({
           cloudinaryPublicIDs,
           existingCategories,
           existingItems,
+          fileType:file?.type.includes("image")?"image":"pdf"
         });
         eventId = temp;
       } else {
         const { eventId: temp } = await startExtractAllItems({
           businessName,
           cloudinaryPublicIDs,
+          fileType:file?.type.includes("image")?"image":"pdf"
+
         });
         eventId = temp;
       }

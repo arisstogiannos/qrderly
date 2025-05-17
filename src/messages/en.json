@@ -486,7 +486,7 @@
     "T1": "With Images",
     "T2": "No Images",
     "Default Language": "Default Language",
-    "Default Language Desc": " The native language that you will write the menu items, categories...",
+    "Default Language Desc": "The native language of your current menu.",
     "Languages": "Target Languages",
     "Languages Desc": "The languages that you want to translate the menu to. You can add up to 5 languages.",
     "Add Language": "Add Language",

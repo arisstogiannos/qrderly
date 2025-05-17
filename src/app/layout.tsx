@@ -84,11 +84,10 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <GoogleTagManager gtmId="GTM-W7D4ZMR5" />
-
       <body
         className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
       >
+        <GoogleTagManager gtmId="GTM-W7D4ZMR5" />
         <Providers>{children}</Providers>
       </body>
     </html>
