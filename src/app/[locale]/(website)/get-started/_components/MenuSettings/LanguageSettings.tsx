@@ -8,22 +8,25 @@ import { ComboBox } from "@/components/ComboBox";
 import type { Language } from "@/types";
 import type { Menu } from "@prisma/client";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 export default function LanguageSettings({
   menu,
   errors,
   srcLanguages,
   targetLanguages,
+  hidden = false
 }: {
   srcLanguages: readonly Language[];
   targetLanguages: readonly Language[];
   menu?: Menu;
   errors: string[] | undefined;
+  hidden?:boolean
 }) {
     const t = useTranslations("menu settings")
   
   return (
-    <div className="grid gap-3">
+    <div className={cn("grid gap-3",hidden?"hidden select-none ":"")}>
       <div>
         <Label>{t("Default Language")}</Label>
         <p className="text-sm text-muted-foreground">

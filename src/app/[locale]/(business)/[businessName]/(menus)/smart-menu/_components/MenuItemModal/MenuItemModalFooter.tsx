@@ -19,7 +19,7 @@ export default function MenuItemModalFooter({
 
   return (
     <div className="fixed bottom-0 left-0 w-full bg-gradient-to-t from-background from-60% to-transparent p-4 ">
-      <div className="flex w-full items-center justify-between gap-10">
+      <div className="flex w-full items-center justify-between gap-6">
         {item ? (
           <div className="flex items-center  gap-x-3 text-lg w-fit">
             <Button

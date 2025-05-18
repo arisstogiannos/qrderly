@@ -50,7 +50,7 @@ export function MenuItemCard({
               <h3 className={"text-base lg:text-lg capitalize"}>{name}</h3>
               <p
                 className={
-                  "line-clamp-2 text-sm text-muted-foreground lg:text-sm "
+                  "line-clamp-2 text-sm text-foreground/60 tracking-wide lg:text-sm "
                 }
               >
                 {description }

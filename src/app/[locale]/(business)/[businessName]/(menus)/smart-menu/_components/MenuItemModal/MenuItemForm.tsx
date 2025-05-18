@@ -13,6 +13,7 @@ import Options from "./Options";
 import MenuItemModalFooter from "./MenuItemModalFooter";
 import { CheckCircleIcon } from "lucide-react";
 import { useCardModalContext } from "@/context/CardModalProvider";
+import { useTranslations } from "next-intl";
 
 export default function MenuItemOptionsForm({
   menuItem,
@@ -22,6 +23,7 @@ export default function MenuItemOptionsForm({
   setOpen: (value: boolean) => void;
 }) {
   const { cartItems, addToCart, updateCartItem } = useCartContext();
+  const t = useTranslations("menus.order")
   const existingMenuItems = cartItems.filter(
     (item) => item.menuItem.id === menuItem.id
   );
@@ -51,16 +53,9 @@ export default function MenuItemOptionsForm({
     } else {
       updateCartItem(dataAsString, cartItemVersionId, price);
     }
-    toast(" Item added to cart", {
+    toast.success(t("toast"), {
       duration: 1500,
-      icon: <CheckCircleIcon />,
-      position: "top-left",
-      style: {
-        width: "60%",
-        backgroundColor: "lightgreen",
-        color: "darkgreen",
-        borderColor: "darkgreen",
-      },
+      
     });
     setOpen(false);
   }

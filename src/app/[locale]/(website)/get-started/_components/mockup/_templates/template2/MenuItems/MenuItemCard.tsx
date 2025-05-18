@@ -18,7 +18,7 @@ export function MenuItemCard({ index }: { index: number }) {
               <h3 className={"text-base  capitalize"}>Product {index}</h3>
               <p
                 className={
-                  "line-clamp-2 text-sm text-text-mockup/50  "
+                  "line-clamp-2 tracking-wide text-sm text-text-mockup/50  "
                 }
               >
                 description {index}

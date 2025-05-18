@@ -260,7 +260,7 @@ export async function createMenu(
   const adminEncryptedTableId = await encryptTable(`admin|${business.name}`)
   const businessNameUrl = business.name.replaceAll(" ", "-");
 
- await saveQR(business.id, { data: `/${businessNameUrl}/${menu.type === "QR_MENU" ? "menu" : "smart-menu"}`, height: 300, width: 300,margin:10 }, "Scan For Menu")
+ await saveQR(business.id, { data: `${process.env.NEXT_PUBLIC_SERVER_URL}/${businessNameUrl}/${menu.type === "QR_MENU" ? "menu" : "smart-menu"}`, height: 300, width: 300,margin:10 }, "Scan For Menu")
 
   if (user.email) {
     await Promise.all([

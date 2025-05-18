@@ -1,5 +1,4 @@
 "use client";
-
 import {
   ChevronsUpDown,
   CreditCard,
@@ -9,7 +8,6 @@ import {
   TriangleAlert,
   User2,
 } from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,19 +27,18 @@ import {
   signOutDashboard,
 } from "@/app/[locale]/(auth)/_actions/login";
 import type { BusinessExtended, ExtendedUser } from "@/types";
-
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import I18nLanguageSelect from "@/components/I18nLanguageSelect";
 import UpgradeSubModal from "../SharedComponents/UpgradeSubModal";
 import { useEffect, useState } from "react";
 import { encryptTable } from "@/lib/table-crypt";
-import { Modal } from "../SharedComponents/Modal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { deleteAccount } from "../../_actions/deleteAccount";
 import { Button } from "@/components/ui/button";
 import { deleteBusiness } from "../../_actions/deleteBusiness";
+import { Link  as IntlLink} from "@/i18n/navigation";
+import Link from "next/link";
+
 
 export function NavFooter({
   user,
@@ -150,13 +147,15 @@ export function NavFooter({
                   {t("Subscriptions") }
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeletingAccount(true)}>
-                <Trash />
-               {t("deleteAccount")}
+              <DropdownMenuItem asChild>
+                <IntlLink href={"/user-settings"}>
+                < User2/>
+               {t("Settings")}
+                </IntlLink>
               </DropdownMenuItem>
               <DropdownMenuItem variant="destructive" onClick={()=>setIsDeletingBusiness(true)}>
                 <Trash />
-               {`${t("deleteBusiness")} ${activeBusiness.name}`}
+               {`${t("delete")} ${activeBusiness.name}`}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -167,29 +166,13 @@ export function NavFooter({
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
-      <DeleteAccountModal isOpen={isDeletingAccount} setIsOpen={setIsDeletingAccount} />
+     
       <DeleteBusinessModal isOpen={isDeletingBusiness} setIsOpen={setIsDeletingBusiness} businessId={activeBusiness.id} />
     </SidebarMenu>
   );
 }
 
-function DeleteAccountModal({isOpen, setIsOpen}:{isOpen:boolean, setIsOpen: (isOpen:boolean)=>void}){
-  const t = useTranslations("admin.navbar")
-  return <Dialog open={isOpen} onOpenChange={setIsOpen}>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>{t("deleteAccount")}</DialogTitle>
-        <DialogDescription>
-          {t("deleteAccountDesc")}
-        </DialogDescription>
-      </DialogHeader>
-      <DialogFooter>
-        <Button variant="destructive" autoFocus={false} onClick={()=>deleteAccount()}>{t("deleteAccount")}</Button>
-      </DialogFooter>
-    </DialogContent>
- 
-  </Dialog>
-}
+
 
 function DeleteBusinessModal({isOpen, setIsOpen, businessId}:{isOpen:boolean, setIsOpen: (isOpen:boolean)=>void, businessId:string }){
   const [isDeleting, setIsDeleting] = useState(false)

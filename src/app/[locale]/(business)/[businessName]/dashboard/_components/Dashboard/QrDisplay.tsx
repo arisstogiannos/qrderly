@@ -32,38 +32,39 @@ export default function QrDisplay({
 
   useEffect(() => {
     if (qrCode && qrRef.current) {
-      qrRef.current.innerHTML = ""; // Clear old QR code
-      qrCode.append(qrRef.current);
+			qrRef.current.innerHTML = ""; // Clear old QR code
+			qrCode.append(qrRef.current);
 
-      // Wait for the QR code to be generated
-      setTimeout(() => {
-        const canvas = qrRef.current?.querySelector("canvas");
-        if (!canvas) return;
+			// Wait for the QR code to be generated
+			setTimeout(() => {
+				const canvas = qrRef.current?.querySelector("canvas");
+				if (!canvas) return;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+				const ctx = canvas.getContext("2d");
+				if (!ctx) return;
 
-        ctx.clearRect(0, 300 - 15, canvas.width, canvas.height + 40);
-        canvas.style.backgroundColor =
-          qrOptions.backgroundOptions?.color ?? "#fff";
-        // Add text to the canvas
+				ctx.clearRect(0, 300 - 15, canvas.width, canvas.height + 40);
+				canvas.style.backgroundColor = qrOptions.backgroundOptions?.color??"#fff";
+				// Add text to the canvas
 
-        // canvas.style.borderRadius="40px"
-
-        ctx.font = "bold 14px Arial";
-        ctx.fillStyle = qrOptions.dotsOptions?.color ?? "#000"; // Text color
-        if (business.product === "SMART_QR_MENU") {
-          ctx.textAlign = "right";
-          ctx.fillText("table", canvas.width - 5, canvas.height - 3); // Position text
-        }
-        ctx.textAlign = "left";
-        ctx.fillText(qr?.text??"", 5, canvas.height - 3, (canvas.width * 3) / 4); // Position text
-      }, 100);
-    }
+				canvas.style.borderRadius = "20px";
+			}, 100);
+		}
   }, [qrCode, business]);
   return (
     <div className="w-full space-y-4">
-      <div ref={qrRef} className="relative max-w-52 max-h-52 "/>
+      <div
+					style={{ backgroundColor: qrOptions.backgroundOptions?.color }}
+					className=" h-[250px] relative rounded-xl overflow-hidden w-fit shadow-2xl"
+				>
+					<div ref={qrRef} className=" inline-block " />
+					<span
+						style={{ color: qrOptions.dotsOptions?.color }}
+						className="absolute -translate-x-1/2 left-1/2 bottom-3 font-bold text-2xl max-w-5/6  text-nowrap "
+					>
+						{qr?.text}
+					</span>
+				</div>
       <div className="mt-auto">
         <QrDownLoad business={business} qrCode={qrCode} text={business.qr?.text ?? "Scan For Menu"} />
       </div>

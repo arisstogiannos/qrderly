@@ -61,16 +61,34 @@ export default function QrDownLoad({
     if (!ctx) return;
 
     canvas.width = qrSize;
-    canvas.height = qrSize;
+    canvas.height = qrSize+ 300;
+    
+    // Create rounded corners
+    const radius = 100;
+    ctx.beginPath();
+    ctx.moveTo(radius, 0);
+    ctx.lineTo(canvas.width - radius, 0);
+    ctx.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
+    ctx.lineTo(canvas.width, canvas.height - radius);
+    ctx.quadraticCurveTo(canvas.width, canvas.height, canvas.width - radius, canvas.height);
+    ctx.lineTo(radius, canvas.height);
+    ctx.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
+    ctx.lineTo(0, radius);
+    ctx.quadraticCurveTo(0, 0, radius, 0);
+    ctx.closePath();
+    ctx.clip();
+
+    ctx.fillStyle = qrCode._options.backgroundOptions.color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw QR code
     ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
     // Add table number text
-    ctx.font = "bold 100px Arial";
+    ctx.font = "bold 200px Arial";
     ctx.fillStyle = qrCode._options.dotsOptions.color;
-    ctx.textAlign = "left";
-    ctx.fillText(text, 50, canvas.height - 50, (canvas.width * 3) / 4); // Position text
+    ctx.textAlign = "center";
+    ctx.fillText(text, canvas.width / 2, canvas.height - 200); // Center text horizontally
 
     canvas.toBlob((blob) => {
       if (!blob) return;
@@ -126,18 +144,36 @@ export default function QrDownLoad({
       if (!ctx) continue;
 
       canvas.width = qrSize;
-      canvas.height = qrSize;
+      canvas.height = qrSize +300;
+      
+      // Create rounded corners
+      const radius = 100;
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(canvas.width - radius, 0);
+      ctx.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
+      ctx.lineTo(canvas.width, canvas.height - radius);
+      ctx.quadraticCurveTo(canvas.width, canvas.height, canvas.width - radius, canvas.height);
+      ctx.lineTo(radius, canvas.height);
+      ctx.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
+      ctx.lineTo(0, radius);
+      ctx.quadraticCurveTo(0, 0, radius, 0);
+      ctx.closePath();
+      ctx.clip();
+
+      ctx.fillStyle = qrCode._options.backgroundOptions.color;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw QR code
       ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
       // Add table number text
-      ctx.font = "bold 100px Arial";
+      ctx.font = "bold 200px Arial";
       ctx.fillStyle = qrCode._options.dotsOptions.color;
       ctx.textAlign = "right";
-      ctx.fillText(t, qrSize - 50, qrSize - 50);
-      ctx.textAlign = "left";
-      ctx.fillText(text, 50, canvas.height - 50, (canvas.width * 3) / 4); // Position text
+      ctx.fillText(t, canvas.width -100, canvas.height - 100); // Center text horizontally
+      ctx.textAlign = "center";
+      ctx.fillText(text, canvas.width / 2, canvas.height - 200); // Center text horizontally
 
       // Convert to PNG data URL
       const dataURL = canvas.toDataURL("image/png").split(",")[1];
@@ -180,7 +216,6 @@ export default function QrDownLoad({
   //   }
   // };
   return (
-    <div>
       <Button
         type="button"
         disabled={isDownloading}
@@ -199,6 +234,5 @@ export default function QrDownLoad({
           </>
         )}
       </Button>
-    </div>
   );
 }

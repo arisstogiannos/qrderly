@@ -43,8 +43,8 @@ export default function OrderTracking({
   if (!order) return null;
   return order.status === "PENDING" || isLoading ? (
     <>
-      <h2 className="text-3xl font-medium">{t("orderReceived")}</h2>
-      <p className="text-foreground/50 font-normal">
+      <h2 className="text-3xl font-medium text-center">{t("orderReceived")}</h2>
+      <p className="text-foreground/50 font-normal text-center">
         {t("orderReceivedDescription")}
       </p>
       <div className="my-4">
@@ -53,7 +53,7 @@ export default function OrderTracking({
     </>
   ) : (
     <>
-      <h2 className="text-3xl font-medium">{t("orderReady")}</h2>
+      <h2 className="text-3xl font-medium ">{t("orderReady")}</h2>
       <p className="text-foreground/50 font-normal mx-auto text-center mt-1">
         {t("orderReadyDescription")}
       </p>

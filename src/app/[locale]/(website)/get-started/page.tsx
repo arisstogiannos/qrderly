@@ -44,7 +44,7 @@ async function ProductCard({ product }: { product: ProductType }) {
       <h2 className="md:text-xl font-medium capitalize ">
         {t(`${product.title}.title`)}
       </h2>
-      <p className="mb-5">{t(`${product.title}.shortDesc`)}</p>
+      <h3 className="mb-5">{t(`${product.title}.shortDesc`)}</h3>
       <Suspense>
         <MainButtonLinkAuth
           className="mt-auto shadow-none bg-primary hover:text-background"

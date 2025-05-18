@@ -76,6 +76,7 @@ export default function MenuSettingsForm({
         targetLanguages={targetLanguages}
         menu={menu}
         errors={state?.errors?.language}
+        hidden={!setup}
       />
       <ThemeSettings
         menu={menu}

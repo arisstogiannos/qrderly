@@ -62,9 +62,9 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
                 menuItem: item.menuItem,
                 preferences: item.preferences,
               };
-            } else {
+            } 
               return null;
-            }
+            
           }
 
           return item;

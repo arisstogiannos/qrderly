@@ -68,10 +68,11 @@ export function MenuItemCard({
                 {name}
               </h3>
               <p
-                className={
-                  "line-clamp-2 text-sm text-muted-foreground max-w-full"
-                }
-              >
+								className={cn(
+									"line-clamp-2 text-sm text-foreground/60 tracking-wide lg:text-sm",
+									imagePath ? " max-w-[140px]" : "max-w-5/6",
+								)}
+							>
                 {description}
               </p>
             </div>

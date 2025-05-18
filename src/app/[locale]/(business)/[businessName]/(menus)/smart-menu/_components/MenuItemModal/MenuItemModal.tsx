@@ -103,7 +103,7 @@ function MenuItemModalHeader({ menuItem }: { menuItem: MenuItemRequired }) {
 export function ModalTrigger({ children }: { children: ReactNode }) {
   const { setOpen } = useCardModalContext();
   return (
-    <div onClick={() => setOpen(true)} className="cursor-pointer">
+    <div role="button" onClick={() => setOpen(true)} className="cursor-pointer text-left">
       {children}
     </div>
   );
