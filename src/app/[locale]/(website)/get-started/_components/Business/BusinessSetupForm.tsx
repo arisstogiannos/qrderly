@@ -70,6 +70,7 @@ export default function BusinessSetupForm({
             <SelectItem value={"restaurant"}>{t("restaurant")}</SelectItem>
             <SelectItem value={"bar"}>{t("bar")}</SelectItem>
             <SelectItem value={"cafeteria"}>{t("cafeteria")}</SelectItem>
+            <SelectItem value={"other"}>{t("other")}</SelectItem>
           </SelectContent>
         </Select>
         {state?.errors?.type?.map((er) => {
@@ -120,23 +121,10 @@ export default function BusinessSetupForm({
           );
         })}
       </div>
-      <div className="grid gap-3">
-        <Label htmlFor="city">{t("city")}</Label>
-        <Input id="city" name="city" type="text" required defaultValue={existingBusiness?.location.split("-")[1]} />
-        {state?.errors?.city?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
-        })}
-      </div>
       {product === "smart-ordering-qr-menu" && (
         <div className="grid gap-3">
           <TablesSetup />
-          {state?.errors?.city?.map((er) => {
+          {state?.errors?.tables?.map((er) => {
             return (
               <ErrorMessage
                 key={er}

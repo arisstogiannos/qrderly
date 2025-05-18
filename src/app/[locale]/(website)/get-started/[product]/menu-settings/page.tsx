@@ -1,6 +1,6 @@
 import React from "react";
 import MenuSettingsForm from "../../_components/MenuSettings/MenuSettingsForm";
-import { ProductURL } from "@/types";
+import type { ProductURL } from "@/types";
 import Mockup from "../../_components/mockup/Mockup";
 import { checkUser } from "../../isAllowed";
 import { notFound, redirect } from "next/navigation";
@@ -32,18 +32,18 @@ export default async function page({
   const result = await checkUser(product);
 
   if (!result) {
-    redirect("/get-started/" + product + "/business-setup");
+    redirect(`/get-started/${product}/business-setup`);
   }
 
   if (!b) {
     if (result.redirect === "unpublishedMenu") {
-      redirect("/get-started/" + product + "/publish");
+      redirect(`/get-started/${product}/publish`);
     }
     if (result.redirect === "emptyMenu") {
-      redirect("/get-started/" + product + "/generate-items");
+      redirect(`/get-started/${product}/generate-items`);
     }
     if (result.redirect === "noUnsetBusiness") {
-      redirect("/get-started/" + product + "/business-setup");
+      redirect(`/get-started/${product}/business-setup`);
     }
   } else {
     if (b !== result.business.id) {
@@ -51,7 +51,7 @@ export default async function page({
     }
   }
   return (
-    <form className="flex lg:justify-between lg:flex-row gap-x-40 flex-col-reverse min-h-[600px] gap-y-20">
+    <form className="flex lg:justify-between lg:flex-row gap-x-40 flex-col-reverse min-h-[600px] gap-y-6">
       <div className="space-y-8">
         <div className="flex items-center gap-x-5">
           <h1 className="text-2xl font-medium">{t("title")}</h1>

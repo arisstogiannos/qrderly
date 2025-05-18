@@ -1,6 +1,6 @@
 import { formatCurrency } from "@/lib/formatter";
 import { ProductURL } from "@/types";
-import { Subscription } from "@prisma/client";
+import type { Subscription } from "@prisma/client";
 import { Column, Img, Row, Section, Text } from "@react-email/components";
 
 

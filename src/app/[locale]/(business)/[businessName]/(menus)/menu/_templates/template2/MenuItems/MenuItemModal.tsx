@@ -1,9 +1,9 @@
 "use client";
 
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useCardModalContext } from "@/context/CardModalProvider";
-import { MenuItemRequired } from "@/types";
+import type { MenuItemRequired } from "@/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 

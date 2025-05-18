@@ -50,7 +50,7 @@ export default function SubscriptionExpired({
                 business.product,
                 business.id,
                 business?.subscription?.id ?? "",
-                "/" + business.name.replaceAll(" ", "-") + "/dashboard",
+                `/${business.name.replaceAll(" ", "-")}/dashboard`,
                 "Go Back to Dashboard"
               )}
               className="h-12 lg:h-12"
@@ -65,7 +65,7 @@ export default function SubscriptionExpired({
                 business.product,
                 business.id,
                 business.subscription?.id ?? "",
-                "/" + business.name.replaceAll(" ", "-") + "/dashboard",
+                `/${business.name.replaceAll(" ", "-")}/dashboard`,
                 "Go Back to Dashboard"
               )}
               className="h-12 lg:h-12"

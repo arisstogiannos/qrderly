@@ -1,11 +1,11 @@
 "use client";
 
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { SearchIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { Translation } from "@/types";
+import type { Translation } from "@/types";
 import { SearchModal } from "./SearchModal";
 import { getMenuItems } from "@/app/[locale]/(business)/[businessName]/_actions/menu-items";
 
@@ -18,12 +18,12 @@ export function SearchBar({ businessName }: { businessName: string }) {
   const lang = searchParams.get("l") ?? "";
 
   const { data: items } = useQuery({
-    queryKey: ["menu-items"+businessName],
+    queryKey: [`menu-items${businessName}`],
     queryFn: async () => {
       const menuItems = await getMenuItems(businessName);
       return menuItems;
     },
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
     
   });
 

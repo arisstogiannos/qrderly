@@ -19,8 +19,8 @@ export default async function page({
   const businessName = (await params).businessName.replaceAll("-", " ");
   await checkUserAuthorized(businessName);
   
-  const getAllOrdersCache = cache(getAllOrders, ["orders"+businessName], {
-    tags: ["orders"+businessName],
+  const getAllOrdersCache = cache(getAllOrders, [`orders${businessName}`], {
+    tags: [`orders${businessName}`],
     revalidate: 3600,
   });
   const t = await getTranslations("admin.orders")

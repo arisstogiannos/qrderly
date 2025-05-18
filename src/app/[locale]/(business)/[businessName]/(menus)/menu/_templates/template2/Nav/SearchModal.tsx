@@ -1,6 +1,6 @@
 "use client";
-import { MenuItem } from "@prisma/client";
-import { Translation } from "@/types";
+import type { MenuItem } from "@prisma/client";
+import type { Translation } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
 import Link from "next/link";
 

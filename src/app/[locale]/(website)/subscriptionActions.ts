@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { productMap } from "@/data";
 import { db } from "@/db";
 import type { ProductURL } from "@/types";
-import { BillingType, Product } from "@prisma/client";
+import { BillingType, type Product } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import Stripe from "stripe";

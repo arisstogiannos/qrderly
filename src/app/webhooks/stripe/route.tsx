@@ -1,9 +1,9 @@
 import { plandata } from "@/data";
 import { db } from "@/db";
 import SubscriptionConfirmationEmail from "@/email/components/orders/PurchaseReceipt";
-import { BillingType, Product } from "@prisma/client";
+import type { BillingType, Product } from "@prisma/client";
 import { revalidateTag } from "next/cache";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import Stripe from "stripe";
 
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       update: subscriptionData,
     });
 
-    revalidateTag("active-menu" + sub?.business?.name);
+    revalidateTag(`active-menu${sub?.business?.name}`);
 
     await resend.emails.send({
       from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
       select: { business: true },
     });
 
-    revalidateTag("active-menu" + sub?.business?.name);
+    revalidateTag(`active-menu${sub?.business?.name}`);
 
     
   } else if (event.type === "customer.subscription.updated") {
@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
         },
         select: { business: { select: { name: true } } },
       });
-      revalidateTag("active-menu" + sub?.business?.name);
+      revalidateTag(`active-menu${sub?.business?.name}`);
     }
   }
 

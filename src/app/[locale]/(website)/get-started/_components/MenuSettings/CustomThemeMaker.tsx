@@ -16,7 +16,7 @@ export default function CustomThemeMaker({
 
   function handleColorChange(color: string, index: number, varName: string) {
     const root = document.querySelector(":root") as HTMLElement;
-    const variable = "--" + varName + "-mockup";
+    const variable = `--${varName}-mockup`;
     if (root) {
       root.style.setProperty(variable, color);
     }

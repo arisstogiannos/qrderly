@@ -2,7 +2,7 @@ import {
   createPartFromUri,
   createUserContent,
   GoogleGenAI,
-  File,
+  type File,
   Type,
 } from "@google/genai";
 

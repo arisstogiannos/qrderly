@@ -17,8 +17,8 @@ export default async function page({
   const businessName = (await params).businessName.replaceAll("-", " ");
   const getCategoriesCached = cache(
     getCategoriesWithItemCount,
-    ["categories with item count" + businessName],
-    { tags: ["categories" + businessName] }
+    [`categories with item count${businessName}`],
+    { tags: [`categories${businessName}`] }
   );
 
   const categories = await getCategoriesCached(businessName);

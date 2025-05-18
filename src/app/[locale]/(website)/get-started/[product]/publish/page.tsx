@@ -24,10 +24,10 @@ export default async function page({
   const result = await checkUser(product);
 
   if (!result) {
-    redirect("/get-started/" + product + "/business-setup");
+    redirect(`/get-started/${product}/business-setup`);
   }
   if (result?.redirect === "businessWithoutMenu") {
-    redirect("/get-started/" + product + "/menu-settings");
+    redirect(`/get-started/${product}/menu-settings`);
   }
 
   // if (result.redirect === "noQR") {

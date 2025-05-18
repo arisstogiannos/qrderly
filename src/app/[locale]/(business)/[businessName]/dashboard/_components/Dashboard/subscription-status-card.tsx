@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BillingType } from "@prisma/client";
+import type { BillingType } from "@prisma/client";
 import { CreditCard, Stars } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";

@@ -282,7 +282,7 @@
     "QR Menu": {
       "title": "QR Menu",
       "longTitle": "QR Menu – Instant Access, Effortless Browsing",
-      "desc": "Say goodbye to printed menus and hello to a modern, hassle-free dining experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
+      "desc": "Say goodbye to printed menus and hello to a modern, hassle-free service experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
       "shortDesc": "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
       "videoPath": "/QR animation.webm",
       "steps": {
@@ -546,7 +546,7 @@
     "failedImagesDialogTitle": "The following image(s) failed to get proccessed",
     "failedImagesDialogDesc": "The image(s) below were not processed because they contain way too many products. You can try uploading smaller pieces of your menu later from the dashboard.",
     "failedImagesDialogBtn": "I Understand",
-    "description": "Our AI will automatically populate your menu for you. All you have to do is upload an image or PDF. If you want to manually insert all the items, click skip.",
+    "description": "Our AI will automatically create your menu. All you have to do is upload an image or PDF of your menu. If you want to manually insert all the items, click skip.",
     "skip": "Skip",
     "next": "Next",
     "imageTitle": "Image (1-5)",
@@ -574,6 +574,7 @@
     "restaurant": "Restaurant",
     "bar": "Bar",
     "cafeteria": "Cafeteria",
+    "other":"Other",
     "currency": "Currency",
     "currencyPlaceholder": "Choose currency",
     "country": "Country",
@@ -589,7 +590,7 @@
     "waiting": "Waiting"
   },
   "registerForm": {
-    "registerWithEmail": "Register with Email",
+    "registerWithEmail": "Sign up with Email",
     "name": "Name",
     "namePlaceholder": "Enter your name",
     "email": "Email",

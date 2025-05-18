@@ -2,23 +2,24 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, {
+import type React from "react";
+import {type 
   FormEvent,
   startTransition,
   useActionState,
   useState,
-} from "react";
+} from "react"
 import { upsertMenuItem } from "../../../_actions/menu-items";
 import { ErrorMessage } from "@/components/Messages";
 import Loader from "@/components/Loader";
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import { useBusinessContext } from "@/context/BusinessProvider";
 import Categories from "./CategoriesItemForm";
 import CloudImage from "@/components/CloudImage";
 import { useModalContext } from "@/context/ModalProvider";
 import Options from "./Options";
 import TranslateCheckBox from "../SharedComponents/TranslateCheckBox";
-import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
+import type { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 

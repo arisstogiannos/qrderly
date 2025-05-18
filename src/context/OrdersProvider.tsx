@@ -1,9 +1,9 @@
 "use client";
 
 import { getPendingOrders } from "@/app/[locale]/(business)/[businessName]/_actions/orders";
-import { OrderWithItems } from "@/types";
+import type { OrderWithItems } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 
 type thisType = {
   orders: OrderWithItems[] ;
@@ -28,7 +28,7 @@ export function OrdersProvider({
       const p = getPendingOrders(businessName);
       return p;
     },
-    queryKey: ["pending-orders" + businessName],
+    queryKey: [`pending-orders${businessName}`],
     refetchInterval: 5000,
     
   });

@@ -172,7 +172,7 @@ export default function UploadingForm({
             {t("upload")} <Upload className="size-5" />
           </Button>
         ) : (
-          <div className="sm:ml-auto w-full sm:w-fit space-y-2 space-x-5">
+          <div className="sm:ml-auto w-full sm:w-fit flex flex-col-reverse sm:flex-row gap-y-2 gap-x-5">
             <Button
               type="button"
               variant={"outline"}

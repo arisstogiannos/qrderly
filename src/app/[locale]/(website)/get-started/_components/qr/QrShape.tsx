@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { CornerDotType, CornerSquareType, DotType } from "qr-code-styling";
+import type { CornerDotType, CornerSquareType, DotType } from "qr-code-styling";
 export default function QrShape({
   setCornerDotsShape,
   setCornerSquareShape,

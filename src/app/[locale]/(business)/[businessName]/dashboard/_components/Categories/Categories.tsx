@@ -23,12 +23,12 @@ export default function Categories() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["categories"+businessName],
+    queryKey: [`categories${businessName}`],
     queryFn: async () => {
       const categories = await getCategories(businessName);
       return categories;
     },
-    staleTime:Infinity
+    staleTime:Number.POSITIVE_INFINITY
   });
 
   if(isLoading) return <div className="bg-accent rounded-xl animate-pulse w-40 h-10"></div>

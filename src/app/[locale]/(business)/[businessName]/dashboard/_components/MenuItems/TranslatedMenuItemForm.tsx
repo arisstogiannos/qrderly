@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, {
-  FormEvent,
+  type FormEvent,
   startTransition,
   useActionState,
   useEffect,
@@ -11,13 +11,13 @@ import React, {
 import { updateItemTranslation } from "../../../_actions/menu-items";
 import { ErrorMessage } from "@/components/Messages";
 import Loader from "@/components/Loader";
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import { useBusinessContext } from "@/context/BusinessProvider";
 
 import { useModalContext } from "@/context/ModalProvider";
 import { getQueryClient } from "../../../../../../../../react-query";
 
-import {  MenuItemWithCategory } from "@/types";
+import type {  MenuItemWithCategory } from "@/types";
 
 export default function TranslatedMenuItemForm({
   item,

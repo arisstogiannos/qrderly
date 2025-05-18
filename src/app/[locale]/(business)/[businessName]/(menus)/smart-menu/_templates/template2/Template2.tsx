@@ -1,4 +1,4 @@
-import { Category, Menu, MenuItem } from "@prisma/client";
+import type { Category, Menu, MenuItem } from "@prisma/client";
 import { MenuItems } from "./MenuItems/MenuItems";
 import Categories from "./Categories";
 import { Navbar } from "./Nav/Navbar";

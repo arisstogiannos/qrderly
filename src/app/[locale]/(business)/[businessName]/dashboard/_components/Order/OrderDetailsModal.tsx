@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { OrderWithItems } from "@/types";
+import type { OrderWithItems } from "@/types";
 import { useFormatter } from "next-intl";
 import { useTranslations } from "next-intl";
 import React from "react";

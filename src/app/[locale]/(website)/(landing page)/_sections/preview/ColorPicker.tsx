@@ -1,6 +1,6 @@
 "use client";
 
-import { Template } from "@prisma/client";
+import type { Template } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { set } from "zod";
 
@@ -21,7 +21,7 @@ export default function ColorPicker({
 
   function handleColorChange(color: string) {
     const root = document.querySelector(":root") as HTMLElement;
-    const variable = "--" + variables[i] + "-mockup";
+    const variable = `--${variables[i]}-mockup`;
     if (root) {
       root.style.setProperty(variable, color);
     }

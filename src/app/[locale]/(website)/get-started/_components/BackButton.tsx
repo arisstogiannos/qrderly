@@ -8,7 +8,7 @@ export default async function BackButton({ href,businessId }: { href: string,bus
     const t = await getTranslations("menu settings")
   return (
     <Button variant="outline" asChild>
-      <Link href={href + "?b=" + businessId} className="text-sm text-gray-500">
+      <Link href={`${href}?b=${businessId}`} className="text-sm text-gray-500">
        <ArrowLeftIcon className="w-4 h-4" /> {t("back")}
       </Link>
     </Button>

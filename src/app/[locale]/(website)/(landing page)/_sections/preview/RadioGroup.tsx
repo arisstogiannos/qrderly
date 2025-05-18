@@ -2,7 +2,7 @@
 import { Label } from "@/components/ui/label";
 import React from "react";
 import ColorPicker from "./ColorPicker";
-import { ReadonlyURLSearchParams } from "next/navigation";
+import type { ReadonlyURLSearchParams } from "next/navigation";
 import updateSearchParams from "@/lib/updateSearchParams";
 
 export default function RadioGroup({

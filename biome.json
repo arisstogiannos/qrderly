@@ -1,0 +1,12 @@
+{
+    "linter": {
+      "rules": {
+        "suspicious": {
+          "noArrayIndexKey": "off"
+        },
+        "correctness": {
+        "useExhaustiveDependencies": "warn"
+      }
+      }
+    }
+  }

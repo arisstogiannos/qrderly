@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { BusinessExtended } from "@/types"
+import type { BusinessExtended } from "@/types"
 import QrDisplay from "./QrDisplay"
 import { Link } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"

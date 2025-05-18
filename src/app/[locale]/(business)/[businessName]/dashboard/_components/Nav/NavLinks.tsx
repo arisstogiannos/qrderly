@@ -56,10 +56,7 @@ export async function NavLinks({
                           >
                             <Link
                               href={
-                                "/" +
-                                activeBusinessName.replaceAll(" ", "-") +
-                                "/dashboard/" +
-                                item.url
+                                `/${activeBusinessName.replaceAll(" ", "-")}/dashboard/${item.url}`
                               }
                             >
                               {item.icon}
@@ -81,10 +78,7 @@ export async function NavLinks({
                   >
                     <Link
                       href={
-                        "/" +
-                        activeBusinessName.replaceAll(" ", "-") +
-                        "/dashboard/" +
-                        item.url
+                        `/${activeBusinessName.replaceAll(" ", "-")}/dashboard/${item.url}`
                       }
                     >
                       {item.icon}
@@ -103,10 +97,7 @@ export async function NavLinks({
                 >
                   <Link
                     href={
-                      "/" +
-                      activeBusinessName.replaceAll(" ", "-") +
-                      "/dashboard/" +
-                      item.url
+                      `/${activeBusinessName.replaceAll(" ", "-")}/dashboard/${item.url}`
                     }
                   >
                     {item.icon}

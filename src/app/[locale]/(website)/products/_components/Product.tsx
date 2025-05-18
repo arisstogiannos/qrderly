@@ -63,7 +63,7 @@ export default function Product({ title, desc, steps, videoPath }: thisProps) {
             asChild
             className="text-lg md:text-2xl xl:text-xl py-5 md:py-6 pl-4 pr-2 gap-5 md:gap-20 justify-between rounded-full"
           >
-            <Link href={"/products/"+title.toLowerCase().replaceAll(" ","-")  as
+            <Link href={`/products/${title.toLowerCase().replaceAll(" ","-")}`  as
                 | "/products/qr-menu"
                 | "/products/smart-ordering-qr-menu"
                 | "/products/self-service-smart-menu"}>

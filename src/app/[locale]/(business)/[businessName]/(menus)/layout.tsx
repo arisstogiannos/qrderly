@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import MenuFooter from "@/components/MenuFooter";
 import { Toaster } from "@/components/ui/sonner";
 import { cache } from "@/lib/cache";
@@ -41,9 +41,9 @@ export default async function layout({
 
   const getActiveMenu = cache(
     getActiveMenuNotCached,
-    ["active-menu" + businessName],
+    [`active-menu${businessName}`],
     {
-      tags: ["active-menu" + businessName],
+      tags: [`active-menu${businessName}`],
     }
   );
 

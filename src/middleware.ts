@@ -22,7 +22,7 @@ export default  auth((req) => {
 
   const isSignRoute = req.nextUrl.pathname.includes("/sign");
   const isAdminRoute = req.nextUrl.pathname.includes("/admin");
-  const isProtectedRoute = req.nextUrl.pathname.includes("/get-started");
+  const isProtectedRoute = req.nextUrl.pathname.includes("/get-started") && !req.nextUrl.pathname.endsWith("/get-started") && !req.nextUrl.pathname.endsWith("/get-started/")
 
   if (isLoggedin) {
     if (isSignRoute) {

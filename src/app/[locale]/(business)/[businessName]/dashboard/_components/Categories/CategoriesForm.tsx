@@ -3,21 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, {
-  FormEvent,
+  type FormEvent,
   startTransition,
   useActionState,
   useEffect,
 } from "react";
 import { ErrorMessage } from "@/components/Messages";
 import Loader from "@/components/Loader";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
 import { useBusinessContext } from "@/context/BusinessProvider";
 
 import { useModalContext } from "@/context/ModalProvider";
 import { getQueryClient } from "../../../../../../../../react-query";
 import { upsertCategory } from "../../../_actions/categories";
 import TranslateCheckBox from "../SharedComponents/TranslateCheckBox";
-import { CategoryWithItemCount } from "@/types";
+import type { CategoryWithItemCount } from "@/types";
 import { useTranslations } from "next-intl";
 
 export default function CategoriesForm({

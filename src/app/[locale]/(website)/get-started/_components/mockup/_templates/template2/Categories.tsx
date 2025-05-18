@@ -1,5 +1,5 @@
 "use client";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
 import { useEffect, useRef, useState } from "react";
 
 export default function Categories({ categories }: { categories: Category[] }) {

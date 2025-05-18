@@ -24,7 +24,7 @@ export default async function Hero() {
         <h1 className=" font-bold  text-4xl md:text-6xl leading-tight ">
           {t("title")}
         </h1>
-        <p className="text-xl md:text-4xl">{t("subtitle")}</p>
+        <h2 className="text-xl md:text-4xl">{t("subtitle")}</h2>
         <MainButton className="mt-5 3xl:mt-14 md:text-xl  text-center ">
          
             {t("button")} <ArrowRight />

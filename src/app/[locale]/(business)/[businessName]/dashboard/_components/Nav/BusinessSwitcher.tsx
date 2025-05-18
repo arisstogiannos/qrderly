@@ -18,7 +18,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { Business } from "@prisma/client"
+import type { Business } from "@prisma/client"
 import {Link} from "@/i18n/navigation";
 
 export function TeamSwitcher({

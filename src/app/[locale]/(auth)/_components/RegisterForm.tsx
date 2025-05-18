@@ -10,8 +10,13 @@ import { Loader2 } from "lucide-react";
 import { signIn as signInAuth } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useActionState, useState } from "react";
+import { toast } from "sonner";
 
-export default function RegisterForm() {
+export default function RegisterForm({
+  redirectUrl,
+}: {
+  redirectUrl?: string;
+}) {
   const [state, registerAction, isPending] = useActionState(register, null);
   const t = useTranslations("registerForm");
   const [showForm, setShowForm] = useState(false);
@@ -21,7 +26,6 @@ export default function RegisterForm() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const searchParams = useSearchParams();
@@ -36,28 +40,42 @@ export default function RegisterForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const passwordsMatch = formData.confirmPassword === formData.password;
 
   const handleGoogleSignIn = async () => {
     setLoadingGoogle(true);
-    await signInAuth("google", { redirectTo: "/get-started" });
+    await signInAuth("google", { redirectTo: redirectUrl ?? "/get-started" });
+    toast.success("You successfully created an account",{position:"top-center"})
   };
-  if(state?.success){
-    return <SuccessMessage layout="col" msg={t("verificationSent", {email: formData.email})} />
+  if (state?.success) {
+    return (
+      <SuccessMessage
+        layout="col"
+        msg={t("verificationSent", { email: formData.email })}
+      />
+    );
   }
 
   return (
     <form action={registerAction}>
       <div className="flex flex-col gap-6">
         {!showForm ? (
-          <div className="flex flex-col justify-center gap-3">
+          <div className="flex flex-col justify-center gap-3 mt-2">
             <Button
               disabled={loadingGoogle}
               onClick={handleGoogleSignIn}
+              className="py-6 text-lg"
             >
-              {loadingGoogle ? <Loader2 className="animate-spin" /> : t("signUpWithGoogle")}
+              {loadingGoogle ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                t("signUpWithGoogle")
+              )}
             </Button>
-            <Button variant="outline" onClick={() => setShowForm(true)}>
+            <Button
+              className="py-6 text-lg"
+              variant="outline"
+              onClick={() => setShowForm(true)}
+            >
               {t("registerWithEmail")}
             </Button>
           </div>
@@ -114,13 +132,7 @@ export default function RegisterForm() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder={t("passwordPlaceholder")}
-                className={
-                  formData.confirmPassword.length > 0
-                    ? passwordsMatch
-                      ? "ring-2 ring-green-500 focus-visible:ring-green-500"
-                      : "ring-2 ring-red-500 focus-visible:ring-red-500 "
-                    : ""
-                }
+               
               />
               {state?.errors?.password?.map((er) => (
                 <ErrorMessage
@@ -130,33 +142,7 @@ export default function RegisterForm() {
                 />
               ))}
             </div>
-            <div className="grid gap-3">
-              <Label htmlFor="confirm-password">{t("confirmPassword")}</Label>
-              <Input
-                id="confirm-password"
-                type="password"
-                autoComplete="current-password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                placeholder={t("confirmPasswordPlaceholder")}
-                className={
-                  formData.confirmPassword.length > 0
-                    ? passwordsMatch
-                      ? "ring-2 ring-green-500 focus-visible:ring-green-500"
-                      : "ring-2 ring-red-500 focus-visible:ring-red-500 "
-                    : ""
-                }
-                required
-              />
-              {state?.errors?.confirmPassword?.map((er) => (
-                <ErrorMessage
-                  key={er}
-                  classNames="text-sm bg-transparent p-0 "
-                  msg={er}
-                />
-              ))}
-            </div>
+           
             <div className="flex flex-col gap-3">
               <Button disabled={isPending} type="submit" className="w-full">
                 {isPending ? <Loader2 className="animate-spin" /> : t("signUp")}
@@ -168,7 +154,11 @@ export default function RegisterForm() {
                 onClick={handleGoogleSignIn}
                 className="w-full"
               >
-                {loadingGoogle ? <Loader2 className="animate-spin" /> : t("signUpWithGoogle")}
+                {loadingGoogle ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  t("signUpWithGoogle")
+                )}
               </Button>
             </div>
           </>

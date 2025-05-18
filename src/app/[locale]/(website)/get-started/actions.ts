@@ -12,13 +12,11 @@ import type { Options } from "qr-code-styling";
 import getSession from "@/lib/getSession";
 import { sendFeedbackEmail, sendMenuCreatedEmail } from "@/email/mail";
 import { encryptTable } from "@/lib/table-crypt";
-import { after } from "next/server";
 
 const businessSchema = z.object({
   name: z.string(),
   type: z.string(),
   country: z.string(),
-  city: z.string(),
   currency: z.string(),
   tables: z.string().optional(),
 });
@@ -69,7 +67,7 @@ export async function submitBusinessInfo(
       await db.business.create({
         data: {
           name: data.name,
-          location: `${data.country} - ${data.city}`,
+          location: data.country,
           type: data.type,
           userId: user.id,
           product: productMap[product],
@@ -89,7 +87,7 @@ export async function submitBusinessInfo(
         where: { id: existingBusinessId },
         data: {
           name: data.name,
-          location: `${data.country} - ${data.city}`,
+          location: data.country,
           type: data.type,
           currency: data.currency,
           tables: data.tables,

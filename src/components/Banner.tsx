@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import CountdownTimer from "./Counter";
-import { Banner as bannertype } from "@prisma/client";
+import type { Banner as bannertype } from "@prisma/client";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 

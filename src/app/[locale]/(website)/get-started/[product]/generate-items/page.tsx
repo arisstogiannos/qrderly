@@ -1,4 +1,4 @@
-import { ProductURL } from "@/types";
+import type { ProductURL } from "@/types";
 import { notFound, redirect } from "next/navigation";
 import React from "react";
 import { checkUser } from "../../isAllowed";
@@ -19,14 +19,14 @@ export default async function page({
 
   const result = await checkUser(product);
   if (!result) {
-    redirect("/get-started/" + product + "/business-setup");
+    redirect(`/get-started/${product}/business-setup`);
   }
 
   const b = (await searchParams).b;
 
   if (!b) {
     if (result.redirect === "businessWithoutMenu") {
-      redirect("/get-started/" + product + "/menu-settings");
+      redirect(`/get-started/${product}/menu-settings`);
     }
     // if (result.redirect !== "emptyMenu" && result.redirect === "noQR") {
     //   redirect("/get-started/" + product + "/customize-qr");
@@ -35,7 +35,7 @@ export default async function page({
       result.redirect === "unpublishedMenu" ||
       result.redirect === "noUnsetBusiness"
     ) {
-      redirect("/get-started/" + product + "/publish");
+      redirect(`/get-started/${product}/publish`);
     }
   } else {
     if (b !== result.business.id) {

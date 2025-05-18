@@ -1,13 +1,14 @@
 "use client";
 
-import {  CartItem, MenuItemRequired } from "@/types";
-import React, {
-  createContext,
+import type {  CartItem, MenuItemRequired } from "@/types";
+import type React from "react";
+import {
+  createContext,type 
   ReactNode,
   useContext,
   useEffect,
   useState,
-} from "react";
+} from "react"
 
 type CartContextType = {
   cartItems: CartItem[];

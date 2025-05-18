@@ -19,7 +19,7 @@ import DeleteModal from "../SharedComponents/DeleteModal";
 import { deletOrder } from "../../../_actions/orders";
 import { Modal } from "../SharedComponents/Modal";
 import { Button } from "@/components/ui/button";
-import { OrderWithItems } from "@/types";
+import type { OrderWithItems } from "@/types";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { useBusinessContext } from "@/context/BusinessProvider";
 import DisplayPrice from "@/components/DisplayPrice";
@@ -58,7 +58,7 @@ export default function AllOrdersTable({
           {orders.map((order) => {
             let productNames = "";
             order.orderItems.forEach(
-              (item) => (productNames += item.menuItem.name + ", ")
+              (item) => (productNames += `${item.menuItem.name}, `)
             );
             return (
               <TableRow key={order.id}>

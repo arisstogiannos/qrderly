@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Menu, Template } from "@prisma/client";
+import type { Menu, Template } from "@prisma/client";
 import { useTranslations } from "next-intl";
 
 export default function TemplateSelect({template,menu,errors}:{template:Template,menu?:Menu,errors?:string[] | undefined}) {
@@ -22,7 +22,7 @@ export default function TemplateSelect({template,menu,errors}:{template:Template
       required
       name="template"
       defaultValue={ menu?.template ??template ?? "T1"}
-      onValueChange={(v) => history.pushState(null, "", "?t=" + v)}
+      onValueChange={(v) => history.pushState(null, "", `?t=${v}`)}
     >
       <SelectTrigger className="w-[200px]">
         <SelectValue placeholder="Select template" />

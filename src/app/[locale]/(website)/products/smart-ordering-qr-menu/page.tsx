@@ -2,7 +2,7 @@ import React from "react";
 import ProductPage from "../_components/ProductPage";
 import { productsData } from "@/data";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const dynamic = "error";
 export async function generateMetadata(): Promise<Metadata> {
