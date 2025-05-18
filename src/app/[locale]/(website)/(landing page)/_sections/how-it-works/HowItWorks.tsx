@@ -58,10 +58,10 @@ export default async function HowItWorks() {
 						</p>
 					</li>
 				))}
-				<li className="pl-16 text-center space-y-4">
+				<li className="xl:pl-16 text-center space-y-4">
 					<div className="text-center   text-xl uppercase">
 						<hr />
-						or <hr />
+						{t("or")} <hr />
 					</div>
 					<p className="text-lg font-normal md:text-3xl mt-1 xl:text-2xl text-center xl:text-left text-pretty">
 						{t.rich("orderMenu", {

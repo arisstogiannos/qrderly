@@ -64,7 +64,7 @@ export default function QrDownLoad({
     canvas.height = qrSize+ 300;
     
     // Create rounded corners
-    const radius = 100;
+    const radius = 200;
     ctx.beginPath();
     ctx.moveTo(radius, 0);
     ctx.lineTo(canvas.width - radius, 0);
@@ -85,10 +85,10 @@ export default function QrDownLoad({
     ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
     // Add table number text
-    ctx.font = "bold 200px Arial";
+    ctx.font = "bold 250px Arial";
     ctx.fillStyle = qrCode._options.dotsOptions.color;
     ctx.textAlign = "center";
-    ctx.fillText(text, canvas.width / 2, canvas.height - 200); // Center text horizontally
+    ctx.fillText(text, canvas.width / 2, canvas.height - 180); // Center text horizontally
 
     canvas.toBlob((blob) => {
       if (!blob) return;
@@ -147,7 +147,7 @@ export default function QrDownLoad({
       canvas.height = qrSize +300;
       
       // Create rounded corners
-      const radius = 100;
+      const radius = 200;
       ctx.beginPath();
       ctx.moveTo(radius, 0);
       ctx.lineTo(canvas.width - radius, 0);
@@ -168,12 +168,12 @@ export default function QrDownLoad({
       ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
       // Add table number text
-      ctx.font = "bold 200px Arial";
+      ctx.font = "bold 250px Arial";
       ctx.fillStyle = qrCode._options.dotsOptions.color;
       ctx.textAlign = "right";
       ctx.fillText(t, canvas.width -100, canvas.height - 100); // Center text horizontally
       ctx.textAlign = "center";
-      ctx.fillText(text, canvas.width / 2, canvas.height - 200); // Center text horizontally
+      ctx.fillText(text, canvas.width / 2, canvas.height - 180); // Center text horizontally
 
       // Convert to PNG data URL
       const dataURL = canvas.toDataURL("image/png").split(",")[1];
