@@ -1,7 +1,7 @@
 "use client"
 
-import { BusinessExtended } from "@/types"
-import { createContext, ReactNode, useContext, useState } from "react"
+import type { BusinessExtended } from "@/types"
+import { createContext, type ReactNode, useContext, useState } from "react"
 
 type thisType = {
     businessName:string

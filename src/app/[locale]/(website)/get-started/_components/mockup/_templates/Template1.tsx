@@ -5,7 +5,7 @@ import MenuItem from "../MenuItem";
 export default function Template1() {
   const categories = ["Category 1", "Category 2", "Category 3"];
   return (
-    <div className="flex flex-col space-y-4 min-[380px]:w-xs w-[300px] overflow-hidden h-[600px] rounded-3xl drop-shadow-xl text-xs px-4 bg-background-mockup mx-auto text-text-mockup">
+    <div className="flex flex-col space-y-4 min-[380px]:w-xs w-[300px] overflow-hidden h-[400px] sm:h-[600px] rounded-t-3xl sm:rounded-b-3xl drop-shadow-xl text-xs px-4 bg-background-mockup mx-auto text-text-mockup">
       <Nav />
 
       <div className="  ">

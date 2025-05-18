@@ -112,7 +112,7 @@ export default function AnalyticsCharts({
     <div className="h-[300px] ">
       {totalScans && (
         <p className="font-medium text-lg mb-5">
-          {t("totalScans") + ": " + totalScans}
+          {`${t("totalScans")}: ${totalScans}`}
         </p>
       )}
       <ResponsiveContainer

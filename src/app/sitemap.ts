@@ -1,8 +1,8 @@
 import { db } from "@/db";
 import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { Metadata, MetadataRoute } from "next";
-import { Locale } from "next-intl";
+import { Metadata, type MetadataRoute } from "next";
+import type { Locale } from "next-intl";
 
 const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 

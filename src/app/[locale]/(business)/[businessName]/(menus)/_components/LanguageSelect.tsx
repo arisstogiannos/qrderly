@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import updateSearchParams from "@/lib/updateSearchParams";
 import {  useSearchParams } from "next/navigation";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 
 export default function LanguageSelect({
   languages,

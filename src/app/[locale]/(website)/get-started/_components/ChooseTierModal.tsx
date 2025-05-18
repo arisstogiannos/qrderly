@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { createSession } from "../../subscriptionActions";
-import { BillingType } from "@prisma/client";
-import { ExtendedUser, ProductURL } from "@/types";
+import type { BillingType } from "@prisma/client";
+import type { ExtendedUser, ProductURL } from "@/types";
 import { productMap } from "@/data";
 import Loader from "@/components/Loader";
 
@@ -99,7 +99,7 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
             productMap[product],
             businessId,
             unpublishedTrial?.id ?? "",
-            "/get-started/" + product + "/publish",
+            `/get-started/${product}/publish`,
             "procceed to publishing"
           )}
           className="w-full mt-auto"

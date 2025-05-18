@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/select";
 import React from "react";
 import { useBusinessContext } from "@/context/BusinessProvider";
-import { CategoryWithItemCount } from "@/types";
+import type { CategoryWithItemCount } from "@/types";
 
 export default function Categories({
   currCategory,

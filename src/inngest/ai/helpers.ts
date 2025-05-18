@@ -1,4 +1,4 @@
-import { MenuItemAI } from "@/types";
+import type { MenuItemAI } from "@/types";
 
 export function safeParse(jsonStr: string): {
     menuItems: MenuItemAI[];

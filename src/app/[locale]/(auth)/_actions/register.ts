@@ -14,12 +14,9 @@ const registerSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).trim(),
   password: z
     .string()
-    .min(8, { message: "Password should be at least 8 characters" })
+    .min(6, { message: "Password should be at least 6 characters" })
     .trim(),
-  confirmPassword: z
-    .string()
-    .min(8, { message: "Password should be at least 8 characters" })
-    .trim(),
+
 });
 
 export async function register(prevState: any, formData: FormData) {
@@ -31,14 +28,7 @@ export async function register(prevState: any, formData: FormData) {
     };
   }
 
-  if (result.data.confirmPassword !== result.data.password) {
-    return {
-      errors: {
-        password: ["Passwords doesnt match"],
-        confirmPassword: ["Passwords doesnt match"],
-      },
-    };
-  }
+
   const { email, password, name } = result.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -67,6 +57,7 @@ export async function register(prevState: any, formData: FormData) {
   });
 
   const verificationToken = await generateVerificationToken(email);
+  
 
   await sendVerificationEmail(
     verificationToken.email,

@@ -17,7 +17,7 @@ export async function uploadImage(image: File, folder: string) {
           tags: [folder],
           folder: folder,
         },
-        function (error, result) {
+        (error, result) => {
           if (error) {
             reject(error);
             return;

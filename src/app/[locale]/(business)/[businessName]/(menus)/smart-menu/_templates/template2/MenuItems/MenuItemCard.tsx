@@ -1,11 +1,11 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
-import { MenuItem } from "@prisma/client";
+import type { MenuItem } from "@prisma/client";
 import { CardModalProvider } from "@/context/CardModalProvider";
 import MenuItemModal, {
   ModalTrigger,
 } from "../../../_components/MenuItemModal/MenuItemModal";
-import { Translation } from "@/types";
+import type { Translation } from "@/types";
 import { useSearchParams } from "next/navigation";
 import DisplayPrice from "@/components/DisplayPrice";
 import { useCartContext } from "@/context/CartContext";

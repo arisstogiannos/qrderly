@@ -1,4 +1,4 @@
-import { Category, MenuItem } from "@prisma/client";
+import type { Category, MenuItem } from "@prisma/client";
 import { MenuItemCard } from "./MenuItemCard";
 import { Suspense } from "react";
 import CategoryDisplay from "../../../../_components/CateroryDisplay";

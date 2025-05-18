@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
-import { Toaster as Sonner, ToasterProps } from "sonner"
+import { Toaster as Sonner, type ToasterProps } from "sonner"
 
 const variants = {
   success:"bg-green",

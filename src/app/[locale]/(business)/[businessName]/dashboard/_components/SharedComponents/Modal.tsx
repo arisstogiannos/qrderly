@@ -18,7 +18,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { ChevronDown, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { ModalProvider } from "@/context/ModalProvider";
 import { cn } from "@/lib/utils";
 
@@ -28,22 +28,26 @@ export function Modal({
   children,
   initialOpen,
   firstOpen,
+  openParent,
   trigger,
   classNames,
   animate = true,
-  showDesc = false
+  showDesc = false,
+  setOpenParent
 }: {
   title: string;
   subtitle: string;
   children: React.ReactNode;
-  initialOpen?:boolean;
-  firstOpen?:boolean;
+  initialOpen?: boolean;
+  firstOpen?: boolean;
+  openParent?: boolean;
+  setOpenParent?: React.Dispatch<React.SetStateAction<boolean>>;
   trigger: React.ReactNode;
   classNames?: string;
   animate?: boolean;
-  showDesc?:boolean
+  showDesc?: boolean;
 }) {
-  const [open, setOpen] = React.useState(firstOpen??false);
+  const [open, setOpen] = React.useState(firstOpen ?? false);
   const [isDesktop, setIsDesktop] = React.useState(false);
 
   React.useEffect(() => {
@@ -56,17 +60,32 @@ export function Modal({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  
+  const handleOpenChange = (newOpen: boolean) => {
+    if (setOpenParent) {
+      setOpenParent(newOpen);
+    } else {
+      setOpen(newOpen);
+    }
+  };
+
   if (isDesktop) {
     return (
-      <Dialog open={initialOpen??open} onOpenChange={setOpen}   >
+      <Dialog 
+        open={openParent ?? initialOpen ?? open} 
+        onOpenChange={handleOpenChange}
+      >
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className={cn("max-w-xl ", classNames)}  animate={animate} onCloseAutoFocus={(e) => e.preventDefault()} autoFocus={false} >
+        <DialogContent 
+          className={cn("max-w-xl", classNames)} 
+          animate={animate} 
+          onCloseAutoFocus={(e) => e.preventDefault()} 
+          autoFocus={false}
+        >
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{subtitle}</DialogDescription>
+            <DialogDescription className="text-pretty">{subtitle}</DialogDescription>
           </DialogHeader>
-          <ModalProvider open={open} setOpen={setOpen}>
+          <ModalProvider open={openParent ?? open} setOpen={handleOpenChange}>
             {children}
           </ModalProvider>
         </DialogContent>
@@ -75,29 +94,29 @@ export function Modal({
   }
 
   return (
-    //enable scrolling when modal is closing
     <Drawer 
-      open={initialOpen??open} 
-      onOpenChange={setOpen} 
-
+      open={openParent ?? initialOpen ?? open} 
+      onOpenChange={handleOpenChange}
     >
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent className={cn("px-4 pb-2 ", classNames)} animate={animate} onCloseAutoFocus={(e) => e.preventDefault()}  autoFocus={false}  >
+      <DrawerContent 
+        className={cn("px-4 pb-2", classNames)} 
+        animate={animate} 
+        onCloseAutoFocus={(e) => e.preventDefault()} 
+        autoFocus={false}
+      >
         <DrawerHeader className="text-left ml-0 p-0 pb-4">
           <DrawerTitle className="text-xl">{title}</DrawerTitle>
-          <DrawerDescription className={!showDesc?"sr-only":""}>{subtitle}</DrawerDescription>
+          <DrawerDescription className={!showDesc ? "sr-only" : "text-pretty pr-20"}>
+            {subtitle}
+          </DrawerDescription>
           <DrawerClose>
             <ChevronDown className="bg-foreground text-background rounded-full absolute right-5 top-5 size-8 p-1" />
           </DrawerClose>
         </DrawerHeader>
-        <ModalProvider open={open} setOpen={setOpen}>
+        <ModalProvider open={openParent ?? open} setOpen={handleOpenChange}>
           {children}
         </ModalProvider>
-        {/* <DrawerFooter className="bottom-0 fixed w-full left-0">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter> */}
       </DrawerContent>
     </Drawer>
   );

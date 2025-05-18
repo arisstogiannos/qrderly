@@ -5,7 +5,7 @@ import {
   useRef,
   useActionState,
 } from "react";
-import QRCodeStyling, { CornerDotType, CornerSquareType, DotType, Options } from "qr-code-styling";
+import QRCodeStyling, { type CornerDotType, type CornerSquareType, type DotType, type Options } from "qr-code-styling";
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";

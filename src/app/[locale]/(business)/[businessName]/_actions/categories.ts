@@ -6,8 +6,8 @@ import {
 } from "@/app/translation";
 import { db } from "@/db";
 import { cache } from "@/lib/cache";
-import { Translation } from "@/types";
-import { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
+import type { Translation } from "@/types";
+import type { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import { getMenuByBusinessName } from "./menu";
@@ -100,7 +100,7 @@ export async function upsertCategory(
       });
     }
   } catch (error) {
-    console.error("upsert category er: " + error);
+    console.error(`upsert category er: ${error}`);
 
     return {
       data: result.data,
@@ -108,7 +108,7 @@ export async function upsertCategory(
     };
   }
 
-  revalidateTag("categories" + businessName);
+  revalidateTag(`categories${businessName}`);
   return { success: true };
   // redirect("/test/dashboard/menu-items");
 }
@@ -148,7 +148,7 @@ export async function updateTranslationCategory(
       data: { translations: JSON.stringify(translationsJson) },
     });
   } catch (error) {
-    console.error("upsert category er: " + error);
+    console.error(`upsert category er: ${error}`);
 
     return {
       data: result.data,
@@ -156,7 +156,7 @@ export async function updateTranslationCategory(
     };
   }
 
-  revalidateTag("categories" + businessName);
+  revalidateTag(`categories${businessName}`);
   return { success: true };
   // redirect("/test/dashboard/menu-items");
 }
@@ -218,7 +218,7 @@ export async function createCategories(
       const result = await db.category.createManyAndReturn({
         data: data,
       });
-      revalidateTag("categories" + businessName);
+      revalidateTag(`categories${businessName}`);
       return { data: result };
     } else {
       return {
@@ -226,7 +226,7 @@ export async function createCategories(
       };
     }
   } catch (error) {
-    console.error("create item er: " + error);
+    console.error(`create item er: ${error}`);
 
     return {
       error: "Something went wrong!",
@@ -242,6 +242,6 @@ export async function deleteCategory(id: string, businessName: string) {
 
   if (!category) return { success: false, error: "Something went wrong" };
 
-  revalidateTag("categories" + businessName);
+  revalidateTag(`categories${businessName}`);
   return { success: true };
 }

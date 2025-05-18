@@ -1,4 +1,4 @@
-import {
+import type {
   Business,
   Category,
   Menu,
@@ -10,8 +10,8 @@ import {
   Subscription,
   UserRole,
 } from "@prisma/client";
-import { User } from "next-auth";
-import { ReactNode } from "react";
+import type { User } from "next-auth";
+import type { ReactNode } from "react";
 
 export type ProductType = {
   title: string;

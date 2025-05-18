@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import {getPathname, Link} from "@/i18n/navigation";
+import {type getPathname, Link} from "@/i18n/navigation";
 
 import { Button } from "./ui/button";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 
 const Menu = ({

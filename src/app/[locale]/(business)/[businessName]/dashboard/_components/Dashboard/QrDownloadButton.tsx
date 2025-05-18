@@ -12,7 +12,7 @@ export default function QrDownloadButton({ qrImageSrc }: { qrImageSrc: string })
         img.crossOrigin = "anonymous"; // Prevent CORS issues if loading external images
         img.src = qrImageSrc;
     
-        img.onload = function () {
+        img.onload = () => {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
     

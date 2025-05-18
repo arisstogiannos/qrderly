@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CheckCircle, Edit, MoreVertical, XCircle } from "lucide-react";
-import {
+import type {
   CategoryWithItemCount,
   MenuItemWithCategory,
   Translation,

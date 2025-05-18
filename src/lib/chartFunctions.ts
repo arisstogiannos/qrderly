@@ -84,11 +84,7 @@ export function formatAndGroupData(
   } else {
     formated = chartData.map((item) => ({
       date:
-        new Date(item.createdAt).getDate() +
-        "/" +
-        (new Date(item.createdAt).getMonth() + 1) +
-        "/" +
-        new Date(item.createdAt).getFullYear(),
+        `${new Date(item.createdAt).getDate()}/${new Date(item.createdAt).getMonth() + 1}/${new Date(item.createdAt).getFullYear()}`,
       income: item.pricePaidInCents ,
     }));
   }
@@ -206,11 +202,7 @@ export function createDateRange(
   if (!(distanceBetweenDates > 2)) {
     while (currentDate <= end) {
       dateArray.push(
-        currentDate.getDate() +
-          "/" +
-          (currentDate.getMonth() + 1) +
-          "/" +
-          currentDate.getFullYear(),
+        `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`,
       );
       currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
     }
@@ -243,7 +235,7 @@ export function cropYear(
 ) {
   data.map((item) => {
     const splited = item.date.split("/");
-    const joined = splited[0] + "/" + splited[1];
+    const joined = `${splited[0]}/${splited[1]}`;
 
     item.date = joined;
   });

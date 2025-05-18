@@ -9,7 +9,7 @@ export default function LastOrder({businessName}:{businessName:string}) {
   useEffect(() => {
     const orderCookie = document.cookie
       .split("; ")
-      .find((row) => row.startsWith(businessName+"order="))
+      .find((row) => row.startsWith(`${businessName}order=`))
       ?.split("=")[1];
 
     setLastOrder(orderCookie)

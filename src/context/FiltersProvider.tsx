@@ -1,7 +1,7 @@
 "use client"
 
 import { Language } from "@/types"
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, type ReactNode, useContext, useState } from "react"
 
 type thisType = {
     category: string,

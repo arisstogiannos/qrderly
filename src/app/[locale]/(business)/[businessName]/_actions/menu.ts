@@ -3,7 +3,7 @@
 import { db } from "@/db";
 import { sendTrialEndedEmail } from "@/email/mail";
 import { cache } from "@/lib/cache";
-import { Product } from "@prisma/client";
+import type { Product } from "@prisma/client";
 import { revalidateTag, unstable_cache } from "next/cache";
 
 export async function getMenu(businessName: string) {
@@ -195,11 +195,11 @@ export const getActiveMenuNotCached =
     })
     
     await db.scan.create({data:{businessId}})
-    revalidateTag("scans"+businessId)
+    revalidateTag(`scans${businessId}`)
     return menu.noScans
   }
   export async function deactivateMenu(businessName:string){
-    revalidateTag("active-menu"+businessName)
+    revalidateTag(`active-menu${businessName}`)
     revalidateTag("active-menus")
     const user = await db.user.findFirst({
       where: {

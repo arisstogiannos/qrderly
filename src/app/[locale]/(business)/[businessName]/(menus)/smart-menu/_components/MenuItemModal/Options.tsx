@@ -2,9 +2,10 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import React, { useEffect, useMemo, useState } from "react";
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCardModalContext } from "@/context/CardModalProvider";
-import { Option } from "@/types";
+import type { Option } from "@/types";
 import DisplayPrice from "@/components/DisplayPrice";
 
 // Define Option Type
@@ -219,7 +220,7 @@ export function MultipleChoiceGroup({
             <span>{value.name}</span>{" "}
             {value.price && value.price !== "0" ? (
               <span className="text-muted">
-                + <DisplayPrice price={parseInt(value.price)} />
+                + <DisplayPrice price={Number.parseInt(value.price)} />
               </span>
             ) : (
               ""

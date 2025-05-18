@@ -1,7 +1,8 @@
 "use client";
 import { Link } from "@/i18n/navigation";
 
-import React, { forwardRef, ReactNode, useState } from "react";
+import type React from "react";
+import { forwardRef, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import { MenuIcon, X } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -84,10 +85,10 @@ export function NavigationDesktop() {
               {components.map((component) => (
                 <ListItem
                   key={component.title}
-                  title={t(component.title + ".title")}
+                  title={t(`${component.title}.title`)}
                   href={component.href as hrefType}
                 >
-                  {t(component.title + ".description")}
+                  {t(`${component.title}.description`)}
                 </ListItem>
               ))}
             </ul>

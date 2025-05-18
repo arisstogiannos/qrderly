@@ -22,7 +22,7 @@ import {
 import { Modal } from "../SharedComponents/Modal";
 import CategoriesForm from "./CategoriesForm";
 import DeleteModal from "../SharedComponents/DeleteModal";
-import {
+import type {
   CategoryWithItemCount,
   Translation,
 } from "@/types";

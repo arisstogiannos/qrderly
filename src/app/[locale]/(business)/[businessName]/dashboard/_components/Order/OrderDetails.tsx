@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useOrdersContext } from "@/context/OrdersProvider";
-import { OrderWithItems } from "@/types";
+import type { OrderWithItems } from "@/types";
 import React, { useEffect, useState } from "react";
 import { completeOrder } from "../../../_actions/orders";
 import { useFormatter, useTranslations } from "next-intl";

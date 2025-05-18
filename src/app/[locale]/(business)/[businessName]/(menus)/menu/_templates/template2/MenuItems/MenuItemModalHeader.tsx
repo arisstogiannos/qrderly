@@ -4,7 +4,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { MenuItemRequired } from "@/types";
+import type { MenuItemRequired } from "@/types";
 import React from "react";
 
 export default function MenuItemModalHeader({

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { cache } from "@/lib/cache";
 import { getCurrency } from "./_actions/business";
 import { CurrencyProvider } from "@/context/CurrencyProvider";
@@ -12,8 +12,8 @@ export default async function layout({
 }) {
   const businessName = (await params).businessName.replaceAll("-", " ");
 
-  const getCurrencyCache = cache(getCurrency, ["currency" + businessName], {
-    tags: ["currency" + businessName],
+  const getCurrencyCache = cache(getCurrency, [`currency${businessName}`], {
+    tags: [`currency${businessName}`],
   });
 
   const result = await getCurrencyCache(businessName);

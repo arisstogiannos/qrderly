@@ -5,7 +5,7 @@ import {
 } from "../../_actions/stats";
 import DisplayPrice from "@/components/DisplayPrice";
 import { cache } from "@/lib/cache";
-import { BusinessExtended } from "@/types";
+import type { BusinessExtended } from "@/types";
 import { getTranslations } from "next-intl/server";
 
 interface StatsCardsProps {
@@ -18,18 +18,18 @@ export async function StatsCards({
 }: StatsCardsProps) {
   const getTotalOrdersCache = cache(
     getTotalOrders,
-    ["orders-stats" + business.name],
+    [`orders-stats${business.name}`],
     {
-      tags: ["orders" + business.name],
+      tags: [`orders${business.name}`],
       revalidate: 3600,
     }
   );
 
   const getTotalRevenueCache = cache(
     getTotalRevenue,
-    ["totalRevenue" + business.name],
+    [`totalRevenue${business.name}`],
     {
-      tags: ["orders" + business.name],
+      tags: [`orders${business.name}`],
       revalidate: 3600,
     }
   );

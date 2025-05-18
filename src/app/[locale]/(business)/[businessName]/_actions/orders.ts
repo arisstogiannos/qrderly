@@ -67,7 +67,7 @@ export async function deletOrder(id: string, businessName?: string) {
     console.error(err);
     return { success: false, error: "Something went wrong!" };
   }
-  revalidateTag("orders" + businessName);
+  revalidateTag(`orders${businessName}`);
   return { success: true };
 }
 
@@ -80,7 +80,7 @@ export async function completeOrder(id: string) {
       },
     });
     const business = (await getSession())?.user.business.find((b)=> b.id ===  order.businessId);
-    revalidateTag("order" + business?.name);
+    revalidateTag(`order${business?.name}`);
   } catch (err) {
     console.error(err);
     return { success: false, error: "Something went wrong!" };

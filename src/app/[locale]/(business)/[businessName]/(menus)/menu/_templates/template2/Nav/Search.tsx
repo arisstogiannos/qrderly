@@ -24,7 +24,7 @@ export function SearchBar({ businessName }: { businessName: string }) {
       const menuItems = await getMenuItems(businessName);
       return menuItems;
     },
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
   });
 
   useEffect(() => {

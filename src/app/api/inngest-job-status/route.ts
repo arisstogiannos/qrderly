@@ -1,5 +1,5 @@
 // app/api/inngest-job-status/route.ts
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

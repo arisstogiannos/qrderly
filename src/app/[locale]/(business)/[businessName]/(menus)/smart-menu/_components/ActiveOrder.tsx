@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Product } from "@prisma/client";
+import type { Product } from "@prisma/client";
 
 export default function ActiveOrder({businessName,menuType}:{businessName:string;  menuType: Product;
 }) {
@@ -10,7 +10,7 @@ export default function ActiveOrder({businessName,menuType}:{businessName:string
   useEffect(() => {
     const orderCookie = document.cookie
       .split("; ")
-      .find((row) => row.startsWith(businessName+"order="))
+      .find((row) => row.startsWith(`${businessName}order=`))
       ?.split("=")[1];
 
     setActiveOrder(orderCookie)
@@ -23,7 +23,7 @@ export default function ActiveOrder({businessName,menuType}:{businessName:string
       dragConstraints={{ left: 0, right: 300, top: 0, bottom: 500 }}
     >
       <Link
-        href={`smart-menu/${menuType==="SELF_SERVICE_QR_MENU"?"order":"order-placed"}?order=` + activeOrder}
+        href={`smart-menu/${menuType==="SELF_SERVICE_QR_MENU"?"order":"order-placed"}?order=${activeOrder}`}
         className="size-full flex-center text-center "
       >
         Active

@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { CldImage, CldImageProps } from 'next-cloudinary';
+import { CldImage, type CldImageProps } from 'next-cloudinary';
 import Image from 'next/image';
 
 

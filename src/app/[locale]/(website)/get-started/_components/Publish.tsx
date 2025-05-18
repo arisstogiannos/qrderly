@@ -2,8 +2,8 @@
 import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal";
 import { Button } from "@/components/ui/button";
 import { plandata, productMap } from "@/data";
-import { ExtendedUser, ProductURL } from "@/types";
-import React, { ReactNode, useActionState, useEffect } from "react";
+import type { ExtendedUser, ProductURL } from "@/types";
+import React, { type ReactNode, useActionState, useEffect } from "react";
 import { ChooseTier } from "./ChooseTierModal";
 import { createMenu } from "../actions";
 import Loader from "@/components/Loader";
@@ -79,7 +79,7 @@ export default function Publish({
             ? state?.businessNameUrl +
               (product === "qr-menu"
                 ? "/menu"
-                : "/smart-menu?table=" + state.adminEncryptedTableId)
+                : `/smart-menu?table=${state.adminEncryptedTableId}`)
             : publishedMenuBusiness?.name.replaceAll(" ", "-") +
               (product === "qr-menu" ? "/menu" : "/smart-menu?table=admin")
         }
@@ -184,7 +184,7 @@ function Success({ url }: { url: string }) {
         <Button size={"lg"} asChild>
           <IntlLink
             //@ts-expect-error
-            href={"/"+url}
+            href={`/${url}`}
           >
             {t("visitMenu")} <ArrowRight />
           </IntlLink>

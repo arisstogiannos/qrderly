@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { BillingType, Product } from "@prisma/client";
-import { BusinessExtended } from "@/types";
+import type { BusinessExtended } from "@/types";
 import { plandata } from "@/data";
 import { createSession } from "@/app/[locale]/(website)/subscriptionActions";
 import Loader from "@/components/Loader";
@@ -43,7 +43,7 @@ export default function UpgradeSubModal({
             product.product,
             business.id,
             business.subscription?.id ?? "",
-            "/"+business.name.replaceAll(" ","-")+"/dashboard",
+            `/${business.name.replaceAll(" ","-")}/dashboard`,
             "Go Back to Dashboard"
           )}
         />
@@ -58,7 +58,7 @@ export default function UpgradeSubModal({
             product.product,
             business.id,
             business.subscription?.id ?? "",
-            "/"+business.name.replaceAll(" ","-")+"/dashboard",
+            `/${business.name.replaceAll(" ","-")}/dashboard`,
             "Go Back to Dashboard"
           )}
         />

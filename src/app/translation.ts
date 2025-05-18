@@ -1,6 +1,6 @@
 "use server";
 import { cache } from "@/lib/cache";
-import { Language } from "@/types";
+import type { Language } from "@/types";
 import * as deepl from "deepl-node";
 const authKey = "90e7ff7d-bb64-4e87-933c-931770bb27c9:fx";
 const translator = new deepl.Translator(authKey);

@@ -2,7 +2,6 @@ import React from "react";
 import Features from "./Features";
 import type { ProductType } from "@/types";
 import { MainButton } from "../../(landing page)/_sections/hero/MainButton";
-import { Link } from "@/i18n/navigation";
 
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -19,9 +18,9 @@ export default async function ProductPage({
         <h1 className="text-[28px] sm:text-3xl md:text-7xl font-semibold  text-balance lg:px-40">
           {t(`${product.title}.longTitle`)}
         </h1>
-        <p className="text-base sm:text-2xl max-w-3xl mx-auto">
+        <h2 className="text-base sm:text-2xl max-w-3xl mx-auto">
           {t(`${product.title}.desc`)}
-        </p>
+        </h2>
         <MainButton className="w-fit md:mx-auto my-5 md:mb-10 flex gap-4  items-center text-xl">
           {t("button")} <ArrowRight />
         </MainButton>

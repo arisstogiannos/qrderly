@@ -1,5 +1,6 @@
 import { usePathname, useRouter } from "@/i18n/navigation";
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { useParams } from "next/navigation";
 import Loader from "./Loader";

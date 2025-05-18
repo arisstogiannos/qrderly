@@ -85,8 +85,7 @@ export default async function SuccessPage({
           <Button asChild variant="outline" className="w-full">
             <Link
               href={
-                "https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=" +
-                user.email
+                `https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=${user.email}`
               }
             >
               View Subscription Details

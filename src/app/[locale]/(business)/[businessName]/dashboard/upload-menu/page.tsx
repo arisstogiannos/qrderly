@@ -17,16 +17,16 @@ export default async function page({
 
   const getMenuItmesCached = cache(
     getMenuItems,
-    ["menu-items" + businessName],
+    [`menu-items${businessName}`],
     {
-      tags: ["menu-items" + businessName],
+      tags: [`menu-items${businessName}`],
     }
   );
   const getCachedCategories = cache(
     getCategories,
-    ["categories" + businessName],
+    [`categories${businessName}`],
     {
-      tags: ["categories" + businessName],
+      tags: [`categories${businessName}`],
     }
   );
 

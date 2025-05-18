@@ -15,13 +15,13 @@ export default async function page({
   const businessName = (await params).businessName.replaceAll("-", " ")
   const {business} = await checkUserAuthorized(businessName);
 
-  const getMenuItmesCached = cache(getMenuItems, ["menu-items"+businessName], {
-    tags: ["menu-items"+businessName],
+  const getMenuItmesCached = cache(getMenuItems, [`menu-items${businessName}`], {
+    tags: [`menu-items${businessName}`],
   });
 
   const menuitems = await getMenuItmesCached(businessName);
-  const getCategoriesCached = cache(getCategoriesWithItemCount, ["categories"+businessName], {
-    tags: ["categories"+businessName],
+  const getCategoriesCached = cache(getCategoriesWithItemCount, [`categories${businessName}`], {
+    tags: [`categories${businessName}`],
   });
 
   const categories = await getCategoriesCached(businessName);

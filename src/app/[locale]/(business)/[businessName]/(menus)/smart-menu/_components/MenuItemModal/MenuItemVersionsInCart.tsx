@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Edit, Plus } from "lucide-react";
-import { CartItem } from "@/types";
+import type { CartItem } from "@/types";
 
 export default function MenuItemVersionsInCart({
   setCartItemVersionId,

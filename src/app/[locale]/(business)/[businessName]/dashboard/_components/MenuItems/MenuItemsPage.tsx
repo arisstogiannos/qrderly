@@ -5,7 +5,7 @@ import Filters from "../SharedComponents/Filters";
 import { Modal } from "../SharedComponents/Modal";
 import MenuItemForm from "./MenuItemForm";
 import MenuItemsTable from "./MenuItemsTable";
-import { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
+import type { CategoryWithItemCount, MenuItemWithCategory } from "@/types";
 import { useOptimistic } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useTranslations } from "next-intl";

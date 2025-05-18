@@ -54,7 +54,7 @@ export default function TablesSetup({
               name={`table-${i + 1}`}
               type="text"
               pattern="[^,]*"
-              title={""+ t("validation")}
+              title={`${t("validation")}`}
               defaultValue={table}
               onChange={(e) =>
                 setTables((prev) =>

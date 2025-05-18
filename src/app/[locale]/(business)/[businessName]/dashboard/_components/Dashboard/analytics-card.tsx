@@ -7,7 +7,7 @@ import {
   getScansPerDay,
 } from "../../_actions/stats";
 import AnalyticsCharts from "./AnalyticsCharts";
-import { BusinessExtended } from "@/types";
+import type { BusinessExtended } from "@/types";
 
 interface AnalyticsCardProps {
   isOrderingMenu: boolean;
@@ -21,25 +21,25 @@ export async function AnalyticsCard({
   // Sample data for charts
   const getOrdersPerDayCache = cache(
     getOrdersPerDay,
-    ["ordersPerDay" + business.name],
+    [`ordersPerDay${business.name}`],
     {
-      tags: ["orders" + business.name],
+      tags: [`orders${business.name}`],
       revalidate: 3600,
     }
   );
   const getScansPerDayCache = cache(
     getScansPerDay,
-    ["scansPerDay" + business.id],
+    [`scansPerDay${business.id}`],
     {
-      tags: ["scans" + business.id],
+      tags: [`scans${business.id}`],
       revalidate: 3600,
     }
   );
   const getPopularItemsCache = cache(
     getPopularItems,
-    ["popular-items" + business.name],
+    [`popular-items${business.name}`],
     {
-      tags: ["orders" + business.name],
+      tags: [`orders${business.name}`],
       revalidate: 3600,
     }
   );

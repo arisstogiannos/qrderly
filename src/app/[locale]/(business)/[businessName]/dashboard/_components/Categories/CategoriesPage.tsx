@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import CategoriesForm from "./CategoriesForm";
 import CategoriesTable from "./CategoriesTale";
-import { CategoryWithItemCount } from "@/types";
+import type { CategoryWithItemCount } from "@/types";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Filters from "../SharedComponents/Filters";
 import { useTranslations } from "next-intl";

@@ -1,5 +1,5 @@
 import DisplayPrice from "@/components/DisplayPrice";
-import { MenuItemRequired, Option } from "@/types";
+import type { MenuItemRequired, Option } from "@/types";
 
 /**
  * Deserializes the options string into an array of Option objects.
@@ -34,7 +34,7 @@ export default function MenuItemOptions({
                 {value.name}{" "}
                 {value.price && value.price !== "0" ? (
                   <span className="text-muted">
-                    + <DisplayPrice price={parseInt(value.price)} />
+                    + <DisplayPrice price={Number.parseInt(value.price)} />
                   </span>
                 ) : (
                   ""

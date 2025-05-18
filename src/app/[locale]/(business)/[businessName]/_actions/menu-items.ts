@@ -8,10 +8,10 @@ import {
   translateTextToMultiple,
   translateTextToMultipleDeepL,
 } from "@/app/translation";
-import { MenuItemAI, Translation, TranslationAI } from "@/types";
-import { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
+import type { MenuItemAI, Translation, TranslationAI } from "@/types";
+import type { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 import { cache } from "@/lib/cache";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
 import { serializeOptions } from "@/lib/preferences";
 import { getMenuByBusinessName } from "./menu";
 
@@ -87,8 +87,8 @@ export async function upsertMenuItem(
   try {
     const getCachedMenu = cache(
       getMenuByBusinessName,
-      ["menu" + businessName],
-      { tags: ["menu" + businessName] }
+      [`menu${businessName}`],
+      { tags: [`menu${businessName}`] }
     );
 
     const menu = await getCachedMenu(businessName);
@@ -101,9 +101,7 @@ export async function upsertMenuItem(
 
       if (srcLang) {
         const textToTranslate =
-          (translateName  ? name : "") +
-          "_" +
-          (translateDescription ? description : "");
+          `${translateName  ? name : ""}_${translateDescription ? description : ""}`;
 
         if (textToTranslate !== "_") {
           // try {
@@ -180,7 +178,7 @@ export async function upsertMenuItem(
       };
     }
   } catch (error) {
-    console.error("create item er: " + error);
+    console.error(`create item er: ${error}`);
 
     return {
       data: result.data,
@@ -188,8 +186,8 @@ export async function upsertMenuItem(
     };
   }
 
-  revalidateTag("menu-items" + businessName);
-  revalidateTag("categories" + businessName);
+  revalidateTag(`menu-items${businessName}`);
+  revalidateTag(`categories${businessName}`);
 
   return { success: true };
 }
@@ -235,7 +233,7 @@ export async function updateItemTranslation(
       data: { translations: JSON.stringify(translationsJson) },
     });
   } catch (error) {
-    console.error("create item er: " + error);
+    console.error(`create item er: ${error}`);
 
     return {
       data: result.data,
@@ -243,7 +241,7 @@ export async function updateItemTranslation(
     };
   }
 
-  revalidateTag("menu-items" + businessName);
+  revalidateTag(`menu-items${businessName}`);
   return { success: true };
 }
 
@@ -252,8 +250,8 @@ export async function createMenuItems(
   menuItems: MenuItemAI[],
   categories: Category[]
 ) {
-  const getMenuCached = cache(getMenuByBusinessName, ["menu" + businessName], {
-    tags: ["menu" + businessName],
+  const getMenuCached = cache(getMenuByBusinessName, [`menu${businessName}`], {
+    tags: [`menu${businessName}`],
   });
   try {
     const menu = await getMenuByBusinessName(businessName);
@@ -286,16 +284,16 @@ export async function createMenuItems(
       };
     }
   } catch (error) {
-    console.error("create item er: " + error);
+    console.error(`create item er: ${error}`);
 
     return {
       error: "Something went wrong!",
     };
   }
 
-  revalidateTag("menu-items" + businessName);
-  revalidateTag("categories" + businessName);
-  revalidateTag("generate-items" + businessName);
+  revalidateTag(`menu-items${businessName}`);
+  revalidateTag(`categories${businessName}`);
+  revalidateTag(`generate-items${businessName}`);
   return { success: true };
 }
 
@@ -325,8 +323,8 @@ function convertTranslationFormat(
 export async function deleteMenuItem(id: string, businessName: string) {
   const menuItem = await db.menuItem.delete({ where: { id } });
 
-  revalidateTag("menu-items" + businessName);
-  revalidateTag("categories" + businessName);
+  revalidateTag(`menu-items${businessName}`);
+  revalidateTag(`categories${businessName}`);
 
   if (menuItem.imagePath) await deleteImage(menuItem.imagePath);
   
@@ -336,5 +334,5 @@ export async function deleteMenuItem(id: string, businessName: string) {
 
 export async function toggleActive(id:string,active:boolean,businessName:string){
   await db.menuItem.update({where:{id},data:{isAvailable:active}})
-  revalidateTag("menu-items"+businessName)
+  revalidateTag(`menu-items${businessName}`)
 }

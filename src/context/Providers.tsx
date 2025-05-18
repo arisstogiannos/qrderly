@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { getQueryClient } from "../../react-query";
 import { SessionProvider } from "next-auth/react";
