@@ -691,7 +691,7 @@
   },
   "metadata": {
     "main": {
-      "title": "Smart QR Menu & Ordering System",
+      "title": "Digital QR Menu Solutions",
       "description": "Set up a digital QR menu in under 5 minutes. Upload a PDF or image and instantly generate a menu where your customers can scan and even order from. Get started for free - No Credit Card Required",
       "keywords": {
         "0": "QR menu",
@@ -1014,7 +1014,8 @@
       "orderReadyDescription": "Please show the order number when collecting your order",
       "updateOrder": "Update Order",
       "addToCart": "Add to Cart",
-      "toast":"Item added to Cart"
+      "toast":"Item added to Cart",
+      "backToMenu":"Back to menu"
     }
   },
   "unsubscribe": {

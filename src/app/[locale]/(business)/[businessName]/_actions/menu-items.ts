@@ -4,11 +4,12 @@ import { db } from "@/db";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import {
+  translateTextArrayToMultipleDeepL,
   translateTextDeepL,
   translateTextToMultiple,
   translateTextToMultipleDeepL,
 } from "@/app/translation";
-import type { MenuItemAI, Translation, TranslationAI } from "@/types";
+import type { MenuItemAI, Option, Translation, TranslationAI } from "@/types";
 import type { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 import { cache } from "@/lib/cache";
 import type { Category } from "@prisma/client";
@@ -17,14 +18,14 @@ import { getMenuByBusinessName } from "./menu";
 
 export async function getMenuItems(businessName: string) {
   const menuItems = await db.menuItem.findMany({
-    where: {menu: { business: { name: businessName } } },
+    where: { menu: { business: { name: businessName } } },
     include: { category: { select: { name: true } } },
   });
   return menuItems;
 }
 export async function getActiveMenuItems(businessName: string) {
   const menuItems = await db.menuItem.findMany({
-    where: {isAvailable:true, menu: { business: { name: businessName } } },
+    where: { isAvailable: true, menu: { business: { name: businessName } } },
     include: { category: { select: { name: true } } },
   });
   return menuItems;
@@ -43,6 +44,44 @@ const imageSchema = fileSchema.refine(
   { message: "Not a valid image file" }
 );
 
+// Function to extract text from options for translation
+function extractOptionText(options: string): string {
+  const parsed = JSON.parse(options) as Option[]
+  return parsed.map(option => {
+    const optionName = option.name;
+    const valueNames = option.values.map(value => value.name);
+    return `${optionName}-${valueNames.join("-")}`;
+  }).join("-");
+}
+
+// Function to reconstruct options from translated text
+function reconstructOptions(translatedText: string, originalOptions: Option[]): Option[] {
+  const translatedParts = translatedText.split("-");
+  let currentIndex = 0;
+
+  return originalOptions.map(option => {
+    // Get the translated option name
+    const translatedName = translatedParts[currentIndex++];
+
+    // Get all translated values for this option
+    const translatedValues = option.values.map(() => {
+      const translatedValue = translatedParts[currentIndex++];
+      return translatedValue;
+    });
+
+    // Create new option with translated names but preserve original structure
+    return {
+      name: translatedName,
+      type: option.type, // Preserve original type
+      values: option.values.map((value, index) => ({
+        name: translatedValues[index],
+        price: value.price // Preserve original price
+      }))
+    };
+  });
+}
+
+
 const MenuItemSchema = z.object({
   name: z.string().min(1),
   translateName: z.string().max(2).optional(),
@@ -58,6 +97,7 @@ type MenuItem = z.infer<typeof MenuItemSchema>;
 
 export async function upsertMenuItem(
   businessName: string,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   prev: any,
   formData: FormData
 ) {
@@ -99,45 +139,49 @@ export async function upsertMenuItem(
       const languages = menu.languages.split(",");
       const srcLang = languages.reverse().pop();
 
-      if (srcLang) {
-        const textToTranslate =
-          `${translateName  ? name : ""}_${translateDescription ? description : ""}`;
 
-        if (textToTranslate !== "_") {
-          // try {
-          //   translationResult = await translateTextToMultiple(
-          //     textToTranslate,
-          //     srcLang,
-          //     languages
-          //   );
-          // } catch (err) {
-          const translationResult = await translateTextToMultipleDeepL(
-            textToTranslate,
+      if (srcLang) {
+        const textArayToTranslate: string[] = []
+
+        if (translateName) textArayToTranslate.push(name)
+        if (translateDescription && description) textArayToTranslate.push(description)
+        if (options) textArayToTranslate.push(extractOptionText(options))
+
+
+
+        if (textArayToTranslate.length > 0) {
+
+          const translationResult = await translateTextArrayToMultipleDeepL(
+            textArayToTranslate,
             srcLang as SourceLanguageCode,
             languages as TargetLanguageCode[]
           );
-          // }
+          console.log(translationResult)
+
           for (let i = 0; i < translationResult.length; i++) {
-            const translationArr = translationResult[i].split("_");
-            const nameTranslation = translationArr[0];
-            const descTranslation = translationArr[1];
+
+            const prefTranslation = options ? reconstructOptions(translationResult[i].findLast((el) => el.length > 0) ?? "", JSON.parse(options ?? "") as Option[]) as Option[] : null
 
             translations[languages[i]] = {
-              name: nameTranslation !== "" ? nameTranslation : name,
+              name: translateName ? translationResult[i][0] : name,
               description:
-                descTranslation !== "" ? descTranslation : description,
+                translateDescription ? (translateName ? translationResult[i][1] : translationResult[i][0]) : description,
+              preferences: prefTranslation?.map((pr) => ({ name: pr.name, values: pr.values.map((v) => v.name) })) ?? null
             };
+
           }
         } else {
           for (let i = 0; i < languages.length; i++) {
             translations[languages[i]] = {
               name: name,
               description: description,
+              preferences: null
             };
           }
         }
       }
 
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       let uploadedImage: any;
       let dataToUpsert;
 
@@ -196,6 +240,7 @@ const MenuItemTranslatedSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
   translations: z.string().min(1),
+  preferences: z.string().optional(),
   language: z.string().min(1),
   id: z.string().min(1),
 });
@@ -220,13 +265,14 @@ export async function updateItemTranslation(
       errors: result.error.flatten().fieldErrors,
     };
   }
-  const { description, id, name, language, translations } = result.data;
+  const { description, id, name, language, translations, preferences } = result.data;
 
   try {
     const translationsJson: Translation = JSON.parse(translations);
 
     translationsJson[language].name = name;
     translationsJson[language].description = description;
+    translationsJson[language].preferences = JSON.parse(preferences ?? "");
 
     await db.menuItem.update({
       where: { id },
@@ -300,6 +346,7 @@ export async function createMenuItems(
 function convertTranslationFormat(
   inputJson: TranslationAI[]
 ): Translation | { error: string } {
+  console.log(inputJson)
   try {
     if (!Array.isArray(inputJson)) {
       return { error: "Input JSON is not an array." };
@@ -307,10 +354,11 @@ function convertTranslationFormat(
 
     const outputJson: Translation = {};
 
+    // biome-ignore lint/complexity/noForEach: <explanation>
     inputJson.forEach((translation) => {
-      const { languageCode, name, description } = translation;
+      const { languageCode, name, description, preferences } = translation;
       if (languageCode) {
-        outputJson[languageCode] = { name, description };
+        outputJson[languageCode] = { name, description, preferences };
       }
     });
 
@@ -327,12 +375,12 @@ export async function deleteMenuItem(id: string, businessName: string) {
   revalidateTag(`categories${businessName}`);
 
   if (menuItem.imagePath) await deleteImage(menuItem.imagePath);
-  
+
   return { success: true };
 }
 
 
-export async function toggleActive(id:string,active:boolean,businessName:string){
-  await db.menuItem.update({where:{id},data:{isAvailable:active}})
+export async function toggleActive(id: string, active: boolean, businessName: string) {
+  await db.menuItem.update({ where: { id }, data: { isAvailable: active } })
   revalidateTag(`menu-items${businessName}`)
 }

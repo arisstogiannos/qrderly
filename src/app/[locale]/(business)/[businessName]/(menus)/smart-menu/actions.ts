@@ -1,16 +1,17 @@
 "use server";
 import { db } from "@/db";
-import { Cart, type CartItem } from "@/types";
+import { redirect } from "@/i18n/navigation";
+import type { CartItem } from "@/types";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
 export async function submitOrder(
   items: CartItem[],
   businessName: string,
   price: number,
   table: string,
-  prev:any,
+  prev: unknown,
 ) {
   type CartItemWithoutMenuItem = Omit<CartItem, "menuItem"> & {
     menuItemId: string;
@@ -50,16 +51,16 @@ export async function submitOrder(
   });
   revalidateTag(`orders${businessName}`);
   const cookieStore = await cookies()
-   cookieStore.set(`${businessName}order`, order.id,{expires:new Date().setHours(new Date().getHours() + 2)});
-   cookieStore.set(`${businessName}last-order`, order.id,{expires:new Date().setMonth(new Date().getMonth() + 12)});
-
+  cookieStore.set(`${businessName}order`, order.id, { expires: new Date().setHours(new Date().getHours() + 2) });
+  cookieStore.set(`${businessName}last-order`, order.id, { expires: new Date().setMonth(new Date().getMonth() + 12) });
+  const locale = await getLocale()
   if (menu?.type === "SELF_SERVICE_QR_MENU") {
     redirect(
-      `/en/${businessName.replaceAll(" ", "-")}/smart-menu/order?order=${order.id}`
+      { href: { params: { businessName: businessName.replaceAll(" ", "-") }, pathname: '/[businessName]/smart-menu/order', query: { order: order.id } }, locale }
     );
   } else {
     redirect(
-      `/en/${businessName.replaceAll(" ", "-")}/smart-menu/order-placed?order=${order.id}`
+      { href: { params: { businessName: businessName.replaceAll(" ", "-") }, pathname: '/[businessName]/smart-menu/order-placed', query: { order: order.id } }, locale }
     );
   }
 }

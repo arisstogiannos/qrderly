@@ -58,6 +58,9 @@ export const routing = defineRouting({
 
     "/[businessName]/menu": "/[businessName]/menu",
     "/[businessName]/smart-menu": "/[businessName]/smart-menu",
+    "/[businessName]/smart-menu/order": "/[businessName]/smart-menu/order",
+    "/[businessName]/smart-menu/order-placed": "/[businessName]/smart-menu/order-placed",
+
 
     "/[businessName]/dashboard": {
       el: "/[businessName]/πίνακας ελέγχου",

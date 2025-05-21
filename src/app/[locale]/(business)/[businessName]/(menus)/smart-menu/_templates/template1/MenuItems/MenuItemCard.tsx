@@ -123,7 +123,7 @@ export function MenuItemCard({
 												translations,
 											},
 											"",
-											1,
+											priceInCents,
 										);
 										toast.success(t("toast"), {
 											duration: 1500,

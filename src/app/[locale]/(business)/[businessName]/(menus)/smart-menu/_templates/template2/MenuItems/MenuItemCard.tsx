@@ -24,7 +24,7 @@ export function MenuItemCard({
 }: MenuItem) {
 	const lang = useSearchParams().get("l");
 	const { cartItems, addToCart } = useCartContext();
-  const t = useTranslations("menus.order")  
+	const t = useTranslations("menus.order");
 	const productInCart = cartItems.filter((item) => item.menuItem.id === id);
 	let quantity = 0;
 	if (productInCart.length > 0) {
@@ -82,12 +82,12 @@ export function MenuItemCard({
 							<div className="absolute right-0 bottom-0 flex size-8 items-center justify-center rounded-tl-xl bg-primary font-medium">
 								{quantity}
 							</div>
-						):(
+						) : (
 							<button
 								onClick={(e) => {
 									if (!preferences) {
-                    e.preventDefault()
-                    e.stopPropagation()
+										e.preventDefault();
+										e.stopPropagation();
 										addToCart(
 											{
 												id,
@@ -99,12 +99,11 @@ export function MenuItemCard({
 												translations,
 											},
 											"",
-											1,
+											priceInCents,
 										);
-                    toast.success(t("toast"), {
-                      duration: 1500,
-                      
-                    });
+										toast.success(t("toast"), {
+											duration: 1500,
+										});
 									}
 								}}
 								type="button"

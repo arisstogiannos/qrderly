@@ -39,12 +39,10 @@ export async function extractAI(
                   - if there are products that users have to assemble the their self by picking ingredients then put the ingredients into prefernces. Example: if the menu item is a crepe and the menu has all the ingredients that can be used then put them in the prefernces field and create a prefernce for each category of ingredients. Example: meat: chicken, beef, pork / cheese: mozzarela, parmezan, feta and so on create a prefernce for each category of ingredients.
                   - If any description or preferences are missing, return them as null.
                   - Ensure you dont skip any items.
-                  - Translate the name and description of all items to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
-                  - Ensure that you dont skip translating any name or description that needs translation.
+                  - Translate the name, the description and the prefernces of all items to the languages with the following codes ${languages?.join(", ")} and include them in the translations field.
+                  - Ensure that you dont skip translating any name or description or prefernces that needs translation.
                   - The translations should be accurate and contextually relevant as you are a native speaker of each language.
                   - Convert all prices to cents (remove symbols like "$").
-                  - Ensure the output strictly follows the JSON structure. Make sure the json output is well formated so it can be parsed by JSON.parse() later.
-                  - If You reach your response token limit you have to return a response that is a valid array of json objects. So just remove the last menu item and properly close the json array.
                   - Ignore non-menu text such as restaurant names or disclaimers.
                   - Skip decoration pages that doesnt include any menu items
                   `,
@@ -85,37 +83,7 @@ export async function extractAI(
                   description:
                     "Describe the category of the product with a few words to provide context to translation ai",
                 },
-                translations: {
-                  type: Type.ARRAY,
-                  nullable: false,
-                  description:
-                    "Translations of the product details in different languages.",
-
-                  items: {
-                    type: Type.OBJECT,
-                    properties: {
-                      languageCode: {
-                        type: Type.STRING,
-                        nullable: false,
-                        description:
-                          "The language code of the translation, e.g. en, fr, es",
-                      },
-                      name: {
-                        type: Type.STRING,
-                        nullable: true,
-                        description:
-                          "The name of the product in the target language",
-                      },
-                      description: {
-                        type: Type.STRING,
-                        nullable: true,
-                        description:
-                          "The description of the product in the target language",
-                      },
-                    },
-                    required: ["languageCode", "name", "description"],
-                  },
-                },
+              
                 // preferences: { type: Type.STRING, nullable: true, description:"The options the customers have when ordering the product" },
                 preferences: {
                   type: Type.ARRAY,
@@ -164,6 +132,66 @@ export async function extractAI(
                   description:
                     "The options or extras the customers can specify when ordering the product. This can be options or prefernces of the item itself or from the category that th item belongs to.",
                 },
+                translations: {
+                  type: Type.ARRAY,
+                  nullable: false,
+                  description:
+                    "Translations of the product details in different languages.",
+
+                  items: {
+                    type: Type.OBJECT,
+                    properties: {
+                      languageCode: {
+                        type: Type.STRING,
+                        nullable: false,
+                        description:
+                          "The language code of the translation, e.g. en, fr, es",
+                      },
+                      name: {
+                        type: Type.STRING,
+                        nullable: true,
+                        description:
+                          "The name of the product in the target language",
+                      },
+                      description: {
+                        type: Type.STRING,
+                        nullable: true,
+                        description:
+                          "The description of the product in the target language",
+                      },
+                      preferences: {
+                        type: Type.ARRAY,
+                        nullable: true,
+                        description:"The translations preference field of the item. Dont skip translating preference if it is not null",
+                        items: {
+                          type: Type.OBJECT,
+                          properties: {
+                            name: {
+                              type: Type.STRING,
+                              nullable: false,
+                              description:
+                                "The translated name of the prefernce, e.g sugar:sweet,medium,none the translated prefernce name in el is ζάχαρη",
+                            },
+                            values: {
+                              type: Type.ARRAY,
+                              nullable: false,
+                              items: {
+                                type: Type.STRING,
+                                nullable: false,
+                                description:
+                                  "The name of the prefernce value, e.g sugar:sweet the prefernce value name is sweet",
+
+                              },
+                              description:
+                                "The translated values of the prefernce, e.g sugar:sweet,medium,none the prefernce translated values in el are γλυκό,μέτριο,σκέτο",
+                            },
+                          },
+                        },
+                      },
+                    },
+                    required: [ "name", "description","preferences"],
+                  },
+                },
               },
               required: [
                 "name",
@@ -178,17 +206,18 @@ export async function extractAI(
       })
       .catch((err) => {
         console.error("Ai Overloaded: ", err);
-        return {error:"Our Ai is overloaded right now. Please try again in a few seconds. If the problem persists try again later."};
+        return { error: "Our Ai is overloaded right now. Please try again in a few seconds. If the problem persists try again later." };
       });
     if ('error' in response) return response;
     for await (const chunk of response) {
       finalResponse += chunk.text;
     }
+    console.log(finalResponse)
     return finalResponse;
   })();
 
-  return await Promise.race<string | {error:string}>([
-   work,
+  return await Promise.race<string | { error: string }>([
+    work,
     new Promise<string>((resolve) => setTimeout(() => resolve(finalResponse), 49000)),
   ]);
 

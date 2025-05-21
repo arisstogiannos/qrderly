@@ -56,7 +56,7 @@ export default function OrderDetails({
     <section
       className={`${
         withAction ? "bg-accent/40 p-4 rounded-2xl" : ""
-      } flex flex-col lg:flex-row justify-between gap-x-10   lg:max-h-[400px] `}
+      } flex flex-col lg:flex-row justify-between gap-x-10 min-h-[250px] lg:max-h-[400px] `}
     >
       <div className="flex flex-col md:flex-row-reverse gap-20 grow justify-between">
         <div className="flex gap-20">

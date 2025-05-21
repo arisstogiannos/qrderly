@@ -18,6 +18,38 @@ export async function translateTextDeepL(
   return result.text;
 }
 
+export async function translateTextArrayToMultipleDeepL(
+  text: string[],
+  srcLang: deepl.SourceLanguageCode,
+  targetLanguages: deepl.TargetLanguageCode[],
+  context?:string
+
+) {
+  const translationsPromises = targetLanguages.map((l) => {
+    const translateTextDeepLCached = cache(
+      translateTextArrayDeepL,
+      [`${srcLang}-${l}-${text}`],
+      { revalidate: 604800,tags:[`${srcLang}-${l}-${text}`] } // Cache for 7 days
+    );
+    return translateTextDeepLCached(text, srcLang, l,context);
+  });
+  const translations = await Promise.all(translationsPromises);
+
+  return translations
+}
+export async function translateTextArrayDeepL(
+  text: string[],
+  srcLang: deepl.SourceLanguageCode,
+  targetLang: deepl.TargetLanguageCode,
+  context?:string
+) {
+  const start = new Date().getTime();
+  const result = await translator.translateText(text, srcLang, targetLang,{context:context});
+  const elapsed = new Date().getTime() - start;
+  console.log(elapsed);
+  return result.map(r=>r.text);
+}
+
 export async function translateTextToMultipleDeepL(
   text: string,
   srcLang: deepl.SourceLanguageCode,
@@ -37,6 +69,21 @@ export async function translateTextToMultipleDeepL(
 
   return translations as string[];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export async function getSupportedSrcLanguagesDeepL() {
   let result

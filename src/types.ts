@@ -92,12 +92,15 @@ export type MenuItemWithCategory = MenuItem & {
 };
 export type Translation = Record<
   string,
-  { name: string | null; description: string | undefined | null }
+  {
+    name: string | null; description: string | undefined | null; preferences: { name: string; values: string[] }[] | null;
+  }
 >;
 export type TranslationAI = {
   languageCode: string;
   name: string | null;
   description: string | null | undefined;
+  preferences: { name: string; values: string[] }[] | null;
 };
 
 export type CategoryWithItemCount = Category & {
@@ -112,7 +115,7 @@ export type MenuItemAI = {
   category: string;
   categoryDescription: string;
   priceInCents: number;
-  preferences: { name: string; values: string[] }[] | null;
+  preferences: Option[] | null;
   translations: TranslationAI[];
 };
 

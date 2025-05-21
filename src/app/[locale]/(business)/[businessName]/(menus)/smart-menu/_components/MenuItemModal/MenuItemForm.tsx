@@ -70,6 +70,7 @@ export default function MenuItemOptionsForm({
         />
       )}
       <Options
+      translations={menuItem.translations}
         options={menuItem.preferences ?? ""}
         existingOptions={existingMenuItem?.preferences}
       />
