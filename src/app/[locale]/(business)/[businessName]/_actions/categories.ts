@@ -37,7 +37,7 @@ type Category = z.infer<typeof CategorySchema>;
 
 export async function upsertCategory(
   businessName: string,
-  prev: any,
+  prev: unknown,
   formData: FormData
 ) {
   const result = CategorySchema.safeParse(Object.fromEntries(formData));
@@ -80,6 +80,7 @@ export async function upsertCategory(
             translations[languages[i]] = {
               name: translation !== "" ? translation : name,
               description: "",
+              preferences: null,
             };
           }
         }
@@ -121,7 +122,7 @@ const TranslationCategorySchema = z.object({
 });
 export async function updateTranslationCategory(
   businessName: string,
-  prev: any,
+  prev: unknown,
   formData: FormData
 ) {
   const result = TranslationCategorySchema.safeParse(
@@ -199,6 +200,7 @@ export async function createCategories(
                     ? translationResult[i]
                     : category.name,
                 description: null,
+                preferences: null,
               };
             }
           } catch (error) {
@@ -220,11 +222,11 @@ export async function createCategories(
       });
       revalidateTag(`categories${businessName}`);
       return { data: result };
-    } else {
+    } 
       return {
         error: "Something went wrong!",
       };
-    }
+    
   } catch (error) {
     console.error(`create item er: ${error}`);
 
