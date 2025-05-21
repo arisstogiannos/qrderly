@@ -5,15 +5,12 @@ import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import {
   translateTextArrayToMultipleDeepL,
-  translateTextDeepL,
-  translateTextToMultiple,
-  translateTextToMultipleDeepL,
+
 } from "@/app/translation";
 import type { MenuItemAI, Option, Translation, TranslationAI } from "@/types";
 import type { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
 import { cache } from "@/lib/cache";
 import type { Category } from "@prisma/client";
-import { serializeOptions } from "@/lib/preferences";
 import { getMenuByBusinessName } from "./menu";
 
 export async function getMenuItems(businessName: string) {
@@ -183,6 +180,7 @@ export async function upsertMenuItem(
 
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       let uploadedImage: any;
+      // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
       let dataToUpsert;
 
       if (image && image.size > 0) {
@@ -249,7 +247,7 @@ type MenuItemTranslated = z.infer<typeof MenuItemSchema>;
 // Usage example:
 export async function updateItemTranslation(
   businessName: string,
-  prev: any,
+  prev: unknown,
   formData: FormData
 ) {
   const result = MenuItemTranslatedSchema.safeParse(
@@ -272,7 +270,7 @@ export async function updateItemTranslation(
 
     translationsJson[language].name = name;
     translationsJson[language].description = description;
-    translationsJson[language].preferences = JSON.parse(preferences ?? "");
+    translationsJson[language].preferences = preferences ? JSON.parse(preferences) : null;
 
     await db.menuItem.update({
       where: { id },
