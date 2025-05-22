@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function PhoneMockup() {
 	return (
-			<div className=" w-[400px] place-content-center mx-auto relative md:w-[650px] lg:w-[850px] xl:w-[690px] h-auto aspect-[4/5] md:aspect-square ">
+			<div className=" w-[370px] place-content-center mx-auto relative md:w-[650px] lg:w-[850px] xl:w-[690px] h-auto aspect-[4/5] md:aspect-square ">
 				<Image
 					src="/2phones.png"
 					alt="qr menu example"

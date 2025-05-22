@@ -19,22 +19,22 @@ export default async function Hero() {
           />
         </div> */}
 			</div>
-			<div className="space-y-5 mt-10 sm:mt-0 3xl:mt-24">
-				<h1 className=" font-bold  text-5xl text-center lg:text-left md:text-6xl leading-tight ">
+			<div className="space-y-5 mt-10 sm:mt-0 2xl:mt-24">
+				<h1 className=" font-bold  text-[40px] text-center lg:text-left md:text-6xl leading-tight  ">
 					{t("title")}
 				</h1>
-				<h2 className="text-xl md:text-4xl text-center lg:text-left">
+				<h2 className="text-xl md:text-4xl text-center lg:text-left text-pretty">
 					{t("subtitle")}
 				</h2>
-				<div className="w-full flex justify-center gap-4 md:justify-start items-center ">
-					<MainButton className=" 3xl:mt-14 md:text-xl  text-center ">
+				<div className="w-full flex justify-center 3xl:mt-14 gap-3  md:justify-start items-center ">
+					<MainButton className="md:text-xl text-nowrap  text-center ">
 						{t("button")} <ArrowRight />
 					</MainButton>
 					<MainButtonLink
 						href="/Bruncherie/smart-menu"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-center 3xl:mt-14 md:text-xl bg-primary border border-foreground/20 lg:hover:text-background  font-medium"
+						className="text-center md:text-xl bg-primary border border-foreground/20 lg:hover:text-background  font-medium"
 					>
 						{t("demoButton")}
 					</MainButtonLink>
