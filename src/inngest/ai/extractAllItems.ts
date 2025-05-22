@@ -69,7 +69,6 @@ export const extractAllItemsJob = inngest.createFunction(
         pageGroups.map((pageIndexes, groupIndex) =>
           step.run(`extract-pdf-part-${groupIndex + 1}`, async () => {
             const firstItemsArray: MenuItemAI[] = []
-            console.log(pageIndexes)
             const work = (async () => {
               const newPdf = await PDFDocument.create();
               const copiedPages = await newPdf.copyPages(originalPdf, pageIndexes);

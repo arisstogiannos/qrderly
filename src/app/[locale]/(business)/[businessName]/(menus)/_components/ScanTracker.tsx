@@ -29,7 +29,6 @@ export default function ScanTracker({
     async function incrementScan() {
       if (table) {
         const tableId = await decryptTable(table, businessName);
-        console.log(tableId);
         if (tableId === "admin") {
           return;
         }
@@ -39,7 +38,6 @@ export default function ScanTracker({
         inrementScans.mutate(); // Increment scan count
         sessionStorage.setItem(scanKey, "true"); // Mark scan as recorded
       }
-      console.log(inrementScans.data);
 
       if (inrementScans.data && inrementScans.data >= 200) {
         deactivateMenuMutation.mutate();

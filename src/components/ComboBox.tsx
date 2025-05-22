@@ -110,7 +110,6 @@ export function ComboBox<T extends Record<string, string>>({
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState<undefined | string>(defaultValue)
 
-    console.log(value)
    
     return (
         <>

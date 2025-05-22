@@ -16,12 +16,9 @@ export async function GET(request: NextRequest) {
         select: { settings: true, business: { select: { name: true, subscription: true, product: true, menu: { select: { published: true, _count: { select: { menuItems: true } } } } } }, email: true, name: true, id: true, emailVerified: true }
     })
 
-    for (const user of users) {
-        if (!user.settings) {
-            await db.settings.create({ data: { userId: user.id, createdAt: new Date() } })
-        }
-    }
-    const usersWithNoMenu = users.filter((user) => user.business.length === 0 && user.settings?.receiveMenuNotifications && user.emailVerified)
+    const verifiedUsers = users.filter((user)=>user.emailVerified)
+
+    const usersWithNoMenu = verifiedUsers.filter((user) => user.business.length === 0 && user.settings?.receiveMenuNotifications)
     for (const user of usersWithNoMenu) {
         if (!(await shouldSendNotification({ email: user.email, type: NotificationType.NO_MENU }))) {
             continue
@@ -30,13 +27,13 @@ export async function GET(request: NextRequest) {
         await db.notification.create({ data: { email: user.email, type: NotificationType.NO_MENU, userId: user.id } })
     }
 
+
     const usersWithNoEmailVerified = users.filter((user) => !user.emailVerified)
     for (const user of usersWithNoEmailVerified) {
         if (!(await shouldSendNotification({ email: user.email, type: NotificationType.NO_EMAIL_VERIFIED }))) {
             continue
         }
 
-        console.log(user.email)
         const verificationToken = await generateVerificationToken(user.email, 24 * 60)
         await sendNoEmailVerifiedEmail(user.email, user.name, verificationToken.token)
         await db.notification.create({ data: { email: user.email, type: NotificationType.NO_EMAIL_VERIFIED, userId: user.id } })
@@ -44,7 +41,7 @@ export async function GET(request: NextRequest) {
 
 
 
-    for (const user of users) {
+    for (const user of verifiedUsers) {
         const unfinishedBusiness = user.business.find((business) => !business.menu?.published && user.settings?.receiveMenuNotifications)
         if (unfinishedBusiness) {
             if (!(await shouldSendNotification({ email: user.email, type: NotificationType.UNFINISHED_MENU }))) {
@@ -54,7 +51,8 @@ export async function GET(request: NextRequest) {
             await db.notification.create({ data: { email: user.email, type: NotificationType.UNFINISHED_MENU, userId: user.id } })
         }
     }
-    const usersWithEmptyMenu = users.filter((user) => user.business.some((business) => business.menu?.published && business.menu?._count.menuItems < 2 && user.settings?.receiveMenuNotifications))
+    
+    const usersWithEmptyMenu = verifiedUsers.filter((user) => user.business.some((business) => business.menu?.published && business.menu?._count.menuItems < 2 && user.settings?.receiveMenuNotifications))
     for (const user of usersWithEmptyMenu) {
         if (!(await shouldSendNotification({ email: user.email, type: NotificationType.EMPTY_MENU }))) {
             continue
@@ -63,11 +61,11 @@ export async function GET(request: NextRequest) {
         await db.notification.create({ data: { email: user.email, type: NotificationType.EMPTY_MENU, userId: user.id } })
     }
 
-    for (const user of users) {
+    for (const user of verifiedUsers) {
         if (!(await shouldSendNotification({ email: user.email, type: NotificationType.UPGRADE_TO_PRO }))) {
             continue
         }
-        const business = user.business.find((business) => business.subscription?.billing === "FREETRIAL")
+        const business = user.business.find((business) => business.subscription?.billing === "FREETRIAL" && user.settings?.receivePromotionNotifications)
         if (business) {
             await sendUpgradeToProEmail(user.email, user.name, business.name)
             await db.notification.create({ data: { email: user.email, type: NotificationType.UPGRADE_TO_PRO, userId: user.id } })

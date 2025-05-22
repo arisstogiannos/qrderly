@@ -97,7 +97,6 @@ export default function QrCreator({
 	}, [bgColor]);
 
 	useEffect(() => {
-		console.log(state);
 		if (state?.success) {
 			toast.success(state.success);
 		}

@@ -31,7 +31,7 @@ const t = useTranslations("productsData")
           ))}
         </div>
         <div className=" relative 2xl:w-[800px] xl:w-2xl w-full max-sm:h-[250px] max-lg:h-[500px] max-xl:h-[700px] max-xl:row-start-1">
-            <VideoContainer selectedProduct={selectedProductIndex}/>
+            <VideoContainer selectedProduct={selectedProductIndex} setSelectedProductIndex={setSelectedProductIndex}/>
         </div>
       </div>
     </section>

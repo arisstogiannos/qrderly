@@ -63,7 +63,6 @@ export default function UploadingForm({
     try {
       let eventId: string;
       if (existingItems && existingCategories && existingItems.length > 0) {
-        console.log("extracr some")
         const { eventId: temp } = await startExtractSomeItems({
           businessName,
           cloudinaryPublicIDs,

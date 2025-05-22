@@ -22,13 +22,13 @@ export const extractSomeItemsJob = inngest.createFunction(
   },
   { event: "app/extractsome.items" },
   async ({ event, step }) => {
-    const { businessName, cloudinaryIDs, existingCategories, existingItems,fileType } =
+    const { businessName, cloudinaryIDs, existingCategories, existingItems, fileType } =
       event.data as {
         businessName: string;
         existingCategories: Category[];
         existingItems: string[];
         cloudinaryIDs: string[]; // now array
-        fileType:"pdf" | "image"
+        fileType: "pdf" | "image"
       };
 
     const menu = await getMenuByBusinessName(businessName);
@@ -49,10 +49,10 @@ export const extractSomeItemsJob = inngest.createFunction(
       const parts = 5;
       const basePagesPerPart = Math.floor(totalPages / parts);
       const extraPages = totalPages % parts;
-      
+
       const pageGroups: number[][] = [];
       let currentPage = 0;
-      
+
       for (let i = 0; i < parts; i++) {
         const count = basePagesPerPart + (i < extraPages ? 1 : 0); // Distribute remainder to the first few parts
         const group = Array.from({ length: count }, (_, j) => currentPage + j);
@@ -68,7 +68,7 @@ export const extractSomeItemsJob = inngest.createFunction(
             const work = (async () => {
               const newPdf = await PDFDocument.create();
               const copiedPages = await newPdf.copyPages(originalPdf, pageIndexes);
-              for(const page of copiedPages){
+              for (const page of copiedPages) {
                 newPdf.addPage(page)
               }
               // copiedPages.forEach((p) => newPdf.addPage(p));
@@ -79,7 +79,7 @@ export const extractSomeItemsJob = inngest.createFunction(
               const uploadedFile = await ai.files.upload({ file: blobPart });
               if (!uploadedFile) return [];
 
-              const response = await partialExtractionAI(uploadedFile, languages,existingItems);
+              const response = await partialExtractionAI(uploadedFile, languages, existingItems);
               if (typeof response !== "string") return [];
 
               if (response.includes("%%%Not a menu%%%")) return [];
@@ -117,79 +117,79 @@ export const extractSomeItemsJob = inngest.createFunction(
 
     } else {
 
-    // Step 1: Process each image in parallel
-    aiResults =  await Promise.all(
-      cloudinaryIDs.map((cloudinaryID, index) =>
-        step.run(`process-image-${index}`, async () => {
-          const firstItemsArray:MenuItemAI[] = []
-          const work = (async () => {
+      // Step 1: Process each image in parallel
+      aiResults = await Promise.all(
+        cloudinaryIDs.map((cloudinaryID, index) =>
+          step.run(`process-image-${index}`, async () => {
+            const firstItemsArray: MenuItemAI[] = []
+            const work = (async () => {
 
-            const blob = await getImageBlob(cloudinaryID);
-            if (!blob) {
-              throw new Error(
-                `Error fetching image from Cloudinary: ${cloudinaryID}`
-              );
-            }
-
-            const uploadedFile = await ai.files
-              .upload({ file: blob })
-              .catch((err) => {
-                console.error("Error uploading file to AI:", err);
-                return null;
-              });
-
-            if (!uploadedFile) {
-              throw new Error("Error uploading file to AI");
-            }
-
-            const response = await partialExtractionAI(uploadedFile, languages,existingItems);
-            if (typeof response !== "string") {
-              throw new Error(response.error);
-            }
-
-            if (response.includes("%%%Not a menu%%%")) {
-              throw new Error("One of the uploaded files is not a valid menu.");
-            }
-
-            const { menuItems: parsedItems, names } = safeParse(
-              response || ""
-            );
-            firstItemsArray.push(...parsedItems);
-
-
-            if (names?.length && uploadedFile) {
-              const revivedResponse = await partialExtractionAI(
-                uploadedFile,
-                languages,
-                names
-              );
-
-              if (typeof revivedResponse !== "string") {
-                throw new Error(revivedResponse.error);
+              const blob = await getImageBlob(cloudinaryID);
+              if (!blob) {
+                throw new Error(
+                  `Error fetching image from Cloudinary: ${cloudinaryID}`
+                );
               }
 
-              const { menuItems: remainingItems } = safeParse(
-                revivedResponse || ""
-              );
-              const deduped = remainingItems.filter(
-                (it) => !names.includes(it.name)
-              );
-              return [...parsedItems, ...deduped];
-            }
-            return parsedItems;
-          })();
+              const uploadedFile = await ai.files
+                .upload({ file: blob })
+                .catch((err) => {
+                  console.error("Error uploading file to AI:", err);
+                  return null;
+                });
 
-          return await Promise.race<MenuItemAI[]>([
-            work,
-            new Promise<MenuItemAI[]>((resolve) =>
-              setTimeout(() => resolve(firstItemsArray), 51000)
-            ),
-          ]);
-        })
-      )
-    );
-  }
-    const timedOutImages:string[] = []
+              if (!uploadedFile) {
+                throw new Error("Error uploading file to AI");
+              }
+
+              const response = await partialExtractionAI(uploadedFile, languages, existingItems);
+              if (typeof response !== "string") {
+                throw new Error(response.error);
+              }
+
+              if (response.includes("%%%Not a menu%%%")) {
+                throw new Error("One of the uploaded files is not a valid menu.");
+              }
+
+              const { menuItems: parsedItems, names } = safeParse(
+                response || ""
+              );
+              firstItemsArray.push(...parsedItems);
+
+
+              if (names?.length && uploadedFile) {
+                const revivedResponse = await partialExtractionAI(
+                  uploadedFile,
+                  languages,
+                  names
+                );
+
+                if (typeof revivedResponse !== "string") {
+                  throw new Error(revivedResponse.error);
+                }
+
+                const { menuItems: remainingItems } = safeParse(
+                  revivedResponse || ""
+                );
+                const deduped = remainingItems.filter(
+                  (it) => !names.includes(it.name)
+                );
+                return [...parsedItems, ...deduped];
+              }
+              return parsedItems;
+            })();
+
+            return await Promise.race<MenuItemAI[]>([
+              work,
+              new Promise<MenuItemAI[]>((resolve) =>
+                setTimeout(() => resolve(firstItemsArray), 51000)
+              ),
+            ]);
+          })
+        )
+      );
+    }
+    const timedOutImages: string[] = []
 
     if (timedOutImages.length === cloudinaryIDs.length) {
       return {
@@ -205,7 +205,7 @@ export const extractSomeItemsJob = inngest.createFunction(
     // Flatten the array of arrays
     const allMenuItems = temp
       .flat()
-      
+
 
     if (allMenuItems.length === 0) {
       return {
@@ -227,6 +227,9 @@ export const extractSomeItemsJob = inngest.createFunction(
     );
 
     // Add existing categories to the map
+
+
+    // biome-ignore lint/complexity/noForEach: <explanation>
     existingCategories.forEach((c) =>
       allCategories.set(c.name, {
         name: c.name,
@@ -268,8 +271,6 @@ export const extractSomeItemsJob = inngest.createFunction(
         );
       });
 
-      console.log("result irms", allMenuItems);
-      console.log("result irms", allMenuItems.length);
 
       if ("error" in result) {
         return {

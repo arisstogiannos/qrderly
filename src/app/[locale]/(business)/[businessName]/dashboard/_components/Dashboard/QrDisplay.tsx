@@ -26,7 +26,7 @@ export default function QrDisplay({
       }
     }
     encryptAdmin()
-    const qr = new QRCodeStyling({ ...qrOptions,data:`${qrOptions.data}?table=${encodedAdminTableId}`, width: 200, height: 200 });
+    const qr = new QRCodeStyling({ ...qrOptions,data:`${qrOptions.data}?table=${encodedAdminTableId}`, width: 230, height: 230 });
     setQrCode(qr);
   }, [encodedAdminTableId]);
 
@@ -55,12 +55,12 @@ export default function QrDisplay({
     <div className="w-full space-y-4">
       <div
 					style={{ backgroundColor: qrOptions.backgroundOptions?.color }}
-					className=" h-[250px] relative rounded-xl overflow-hidden w-fit shadow-2xl"
+					className=" h-[250px] relative rounded-xl overflow-hidden w-fit drop-shadow-lg"
 				>
 					<div ref={qrRef} className=" inline-block " />
 					<span
 						style={{ color: qrOptions.dotsOptions?.color }}
-						className="absolute -translate-x-1/2 left-1/2 bottom-3 font-bold text-2xl max-w-5/6  text-nowrap "
+						className="absolute -translate-x-1/2 left-1/2 bottom-2 font-bold text-xl max-w-5/6  text-nowrap "
 					>
 						{qr?.text}
 					</span>

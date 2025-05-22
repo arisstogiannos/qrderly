@@ -152,8 +152,8 @@
     }
   },
   "Hero": {
-    "title": "Transform Your Business with Smart QR Menus with Ordering System",
-    "subtitle": "Instantly set up your interactive QR menu with or without ordering system — with our powerful AI, transform your printed menu into a digital menu in minutes!",
+    "title": "Digital QR Menu Solutions",
+    "subtitle": "Upgrade your business customer experience with digital QR Menus and contactless ordering system - transform your printed menu into a digital menu in minutes!",
     "button": "Get a Free Menu",
     "demoButton": "Demo"
   },
@@ -176,6 +176,10 @@
       "4": {
         "title": "Start for Free – No Credit Card Required",
         "subtitle": "Get 200 free scans to test out your menu with no upfront commitment!"
+      },
+      "5": {
+        "title": "We Create for You",
+        "subtitle": "The creation proccess is easy for anyone, but you can still <a>reach out</a> to us and we will create your menu free with no extra charge!"
       }
     }
   },
@@ -288,6 +292,7 @@
       "desc": "Say goodbye to printed menus and hello to a modern, hassle-free service experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
       "shortDesc": "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
       "videoPath": "/QR animation.webm",
+      "button":"Learn More",
       "steps": {
         "step1": "Create & Customize Your Digital Menu - Once you create your account and choose your plan, you will be able to add and personalize your menu in no time.",
         "step2": "Generate A Unique QR Code - Print and display on booklets, counters, or marketing materials.",
@@ -298,7 +303,7 @@
     "Smart Ordering QR Menu": {
       "title": "Smart Ordering QR Menu",
       "longTitle": "Smart QR Menu – Seamless & Effortless Ordering",
-
+      "button":"Learn More",
       "desc": "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
       "shortDesc": "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
       "steps": {
@@ -311,7 +316,7 @@
     "Self Service Smart Menu": {
       "title": "Self Service Smart Menu",
       "longTitle": "Self Service Smart Menu",
-
+      "button":"Learn More",
       "desc": "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
       "shortDesc": "Customers can scan, order from their table, and receive notification when it's ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
       "videoPath": "/smart QR animation.webm",

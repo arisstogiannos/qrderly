@@ -1,49 +1,59 @@
 import { Check } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import React from "react";
+import type { ReactNode } from "react";
 
 export default async function ChooseUs() {
-  const t = await getTranslations("WhyUs");
+	const t = await getTranslations("WhyUs");
 
-  return (
-    <section className="grid grid-cols-1  lg:grid-cols-[auto_auto] 2xl:grid-cols-2 gap-y-10 sm:pr-20 lg:pr-0 mt-0 lg:mt-0">
-      <div className=" space-y-3 lg:max-w-sm xl:max-w-xl">
-        <h2 className="font-semibold text-primary md:text-lg 2xl:text-xl">
-          {t("title")}
-        </h2>
-        <p className="text-lg md:text-xl lg:text-2xl text-balance 2xl:text-3xl">
-          {t("subtitle")}
-        </p>
-      </div>
-      <ul className="space-y-3 ">
-        {[1,2,3,4].map((i)=>(
-          
-        <ListItem
-        key={i}
-          title={t(`bullets.${i}.title`)}
-          desc={t(`bullets.${i}.subtitle`)}
-        />
-        ))}
-       
-      </ul>
-    </section>
-  );
+	return (
+		<section className="grid grid-cols-1  lg:grid-cols-[auto_auto] 2xl:grid-cols-2 gap-y-10 sm:pr-20 lg:pr-0 mt-0 lg:mt-0">
+			<div className=" space-y-3 lg:max-w-sm xl:max-w-xl">
+				<h2 className="font-semibold text-primary md:text-lg 2xl:text-xl">
+					{t("title")}
+				</h2>
+				<p className="text-lg md:text-xl lg:text-2xl text-balance 2xl:text-3xl">
+					{t("subtitle")}
+				</p>
+			</div>
+			<ul className="space-y-3 ">
+				{[1, 2, 3, 4, 5].map((i) => (
+					<ListItem
+						key={i}
+						title={t(`bullets.${i}.title`)}
+						desc={t.rich(`bullets.${i}.subtitle`, {
+							a: (chunks) => (
+								<a
+									className="underline underline-offset-1 text-primary"
+									href="#order-menu-form"
+								>
+									{chunks}
+								</a>
+							),
+						})}
+					/>
+				))}
+			</ul>
+		</section>
+	);
 }
 
-function ListItem({ title, desc }: { title: string; desc: string }) {
-  return (
-    <li className="flex gap-3 ">
-      <span className="bg-accent  text-background size-9 lg:size-10 rounded-full p-1 min-w-9 lg:min-w-10  flex-center ">
-        <span className="bg-primary text-background size-6 lg:size-7 rounded-full p-1 min-w-6 lg:min-w-7  flex-center ">
-          <Check />
-        </span>
-      </span>
-      <div>
-        <p className="font-medium text-xl sm:text-2xl lg:text-3xl">{title} </p>
-        <p className="text-sm sm:text-base lg:text-xl">{desc}</p>
-      </div>
-    </li>
-  );
+function ListItem({
+	title,
+	desc,
+}: { title: string; desc: string | ReactNode }) {
+	return (
+		<li className="flex gap-3 ">
+			<span className="bg-accent  text-background size-9 lg:size-10 rounded-full p-1 min-w-9 lg:min-w-10  flex-center ">
+				<span className="bg-primary text-background size-6 lg:size-7 rounded-full p-1 min-w-6 lg:min-w-7  flex-center ">
+					<Check />
+				</span>
+			</span>
+			<div>
+				<p className="font-medium text-xl sm:text-2xl lg:text-3xl">{title} </p>
+				<p className="text-sm sm:text-base lg:text-xl">{desc}</p>
+			</div>
+		</li>
+	);
 }
 // export default function ChooseUs() {
 //   return (

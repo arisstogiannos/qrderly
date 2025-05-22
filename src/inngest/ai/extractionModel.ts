@@ -212,7 +212,6 @@ export async function extractAI(
     for await (const chunk of response) {
       finalResponse += chunk.text;
     }
-    console.log(finalResponse)
     return finalResponse;
   })();
 

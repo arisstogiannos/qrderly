@@ -10,229 +10,240 @@ import { encryptTable } from "@/lib/table-crypt";
 import { useState } from "react";
 import Loader from "@/components/Loader";
 export default function QrDownLoad({
-  qrCode,
-  business,
-  text,
+	qrCode,
+	business,
+	text,
 }: {
-  qrCode: QRCodeStyling | null;
-  text: string;
-  business: BusinessExtended;
+	qrCode: QRCodeStyling | null;
+	text: string;
+	business: BusinessExtended;
 }) {
-  const t = useTranslations("qr settings");
-  const [isDownloading, setIsDownloading] = useState(false);
-  if (!qrCode) return null;
+	const t = useTranslations("qr settings");
+	const [isDownloading, setIsDownloading] = useState(false);
+	if (!qrCode) return null;
 
-  const downloadQR = async () => {
-    setIsDownloading(true);
-    const encryptedTableId = await encryptTable(
-      `self-service|${business.name}`
-    ); // Encrypt table ID
-    const tempQRCode = new QRCodeStyling({
-      ...qrCode._options,
-      data: `${qrCode._options.data}?table=${encryptedTableId}`,
-      height:3000,
-      width:3000,
-      margin:200
-    });
+	const downloadQR = async () => {
+		setIsDownloading(true);
+		const encryptedTableId = await encryptTable(
+			`self-service|${business.name}`,
+		); // Encrypt table ID
+		const tempQRCode = new QRCodeStyling({
+			...qrCode._options,
+			data: `${qrCode._options.data}?table=${encryptedTableId}`,
+			height: 3000,
+			width: 3000,
+			margin: 200,
+		});
 
-    const qrBlob = await tempQRCode.getRawData("png");
+		const qrBlob = await tempQRCode.getRawData("png");
 
-    let qrImageBlob: Blob;
+		let qrImageBlob: Blob;
 
-    if (qrBlob instanceof Buffer) {
-      qrImageBlob = new Blob([qrBlob], { type: "image/png" });
-    } else if (qrBlob instanceof Blob) {
-      qrImageBlob = qrBlob;
-    } else {
-      console.error("Unexpected QR data format");
-      return;
-    }
+		if (qrBlob instanceof Buffer) {
+			qrImageBlob = new Blob([qrBlob], { type: "image/png" });
+		} else if (qrBlob instanceof Blob) {
+			qrImageBlob = qrBlob;
+		} else {
+			console.error("Unexpected QR data format");
+			return;
+		}
 
-    const qrImage = new Image();
-    const qrURL = URL.createObjectURL(qrImageBlob);
+		const qrImage = new Image();
+		const qrURL = URL.createObjectURL(qrImageBlob);
 
-    qrImage.src = qrURL;
-    await new Promise((resolve) => (qrImage.onload = resolve));
+		qrImage.src = qrURL;
+		await new Promise((resolve) => (qrImage.onload = resolve));
 
-    const qrSize = 3000;
+		const qrSize = 3000;
 
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+		const canvas = document.createElement("canvas");
+		const ctx = canvas.getContext("2d");
+		if (!ctx) return;
 
-    canvas.width = qrSize;
-    canvas.height = qrSize+ 300;
-    
-    // Create rounded corners
-    const radius = 200;
-    ctx.beginPath();
-    ctx.moveTo(radius, 0);
-    ctx.lineTo(canvas.width - radius, 0);
-    ctx.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
-    ctx.lineTo(canvas.width, canvas.height - radius);
-    ctx.quadraticCurveTo(canvas.width, canvas.height, canvas.width - radius, canvas.height);
-    ctx.lineTo(radius, canvas.height);
-    ctx.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
-    ctx.lineTo(0, radius);
-    ctx.quadraticCurveTo(0, 0, radius, 0);
-    ctx.closePath();
-    ctx.clip();
+		canvas.width = qrSize;
+		canvas.height = qrSize + 300;
 
-    ctx.fillStyle = qrCode._options.backgroundOptions.color;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+		// Create rounded corners
+		const radius = 200;
+		ctx.beginPath();
+		ctx.moveTo(radius, 0);
+		ctx.lineTo(canvas.width - radius, 0);
+		ctx.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
+		ctx.lineTo(canvas.width, canvas.height - radius);
+		ctx.quadraticCurveTo(
+			canvas.width,
+			canvas.height,
+			canvas.width - radius,
+			canvas.height,
+		);
+		ctx.lineTo(radius, canvas.height);
+		ctx.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
+		ctx.lineTo(0, radius);
+		ctx.quadraticCurveTo(0, 0, radius, 0);
+		ctx.closePath();
+		ctx.clip();
 
-    // Draw QR code
-    ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
+		ctx.fillStyle = qrCode._options.backgroundOptions.color;
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Add table number text
-    ctx.font = "bold 250px Arial";
-    ctx.fillStyle = qrCode._options.dotsOptions.color;
-    ctx.textAlign = "center";
-    ctx.fillText(text, canvas.width / 2, canvas.height - 180); // Center text horizontally
+		// Draw QR code
+		ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "scanby_qr.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
-    }, "image/png");
-    setIsDownloading(false);
-  };
+		// Add table number text
+		ctx.font = "bold 250px Arial";
+		ctx.fillStyle = qrCode._options.dotsOptions.color;
+		ctx.textAlign = "center";
+		ctx.fillText(text, canvas.width / 2, canvas.height - 180); // Center text horizontally
 
-  //c2VsZi1zZXJ2aWNlOmJkZjFiNmRhMTgyZDhmZDMzN2E1MGNkYmM1ODRjMWRhMDYyYzA5OGJhOWQ2NzQ0NWQ0NTViZGE2ZjM5MWI5OWY
+		canvas.toBlob((blob) => {
+			if (!blob) return;
+			const link = document.createElement("a");
+			link.href = URL.createObjectURL(blob);
+			link.download = "scanby_qr.png";
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(link.href);
+		}, "image/png");
+		setIsDownloading(false);
+	};
 
-  const downloadMultipleQRAsZip = async () => {
-    if (!business.tables || !qrCode) return;
-    setIsDownloading(true);
-    const tables = business.tables.split(",");
-    const zip = new JSZip();
+	//c2VsZi1zZXJ2aWNlOmJkZjFiNmRhMTgyZDhmZDMzN2E1MGNkYmM1ODRjMWRhMDYyYzA5OGJhOWQ2NzQ0NWQ0NTViZGE2ZjM5MWI5OWY
 
-    for (const t of tables) {
-      const encryptedTableId = await encryptTable(`${t}|${business.name}`); // Encrypt table ID
-      const tempQRCode = new QRCodeStyling({
-        ...qrCode._options,
-        data: `${qrCode._options.data}?table=${encryptedTableId}`,
-        height:3000,
-        width:3000,
-        margin:200
-      });
+	const downloadMultipleQRAsZip = async () => {
+		if (!business.tables || !qrCode) return;
+		setIsDownloading(true);
+		const tables = business.tables.split(",");
+		const zip = new JSZip();
 
-      let qrData = await tempQRCode.getRawData("png");
+		for (const t of tables) {
+			const encryptedTableId = await encryptTable(`${t}|${business.name}`); // Encrypt table ID
+			const tempQRCode = new QRCodeStyling({
+				...qrCode._options,
+				data: `${qrCode._options.data}?table=${encryptedTableId}`,
+				height: 3000,
+				width: 3000,
+				margin: 200,
+			});
 
-      // ✅ Fix: Convert Buffer to Blob if needed
-      if (qrData instanceof Buffer) {
-        qrData = new Blob([qrData], { type: "image/png" });
-      }
+			let qrData = await tempQRCode.getRawData("png");
 
-      if (!(qrData instanceof Blob)) continue; // Skip if not a valid image
+			// ✅ Fix: Convert Buffer to Blob if needed
+			if (qrData instanceof Buffer) {
+				qrData = new Blob([qrData], { type: "image/png" });
+			}
 
-      // Convert Blob to Image
-      const qrImage = new Image();
-      const qrURL = URL.createObjectURL(qrData);
+			if (!(qrData instanceof Blob)) continue; // Skip if not a valid image
 
-      qrImage.src = qrURL;
-      await new Promise((resolve) => (qrImage.onload = resolve));
+			// Convert Blob to Image
+			const qrImage = new Image();
+			const qrURL = URL.createObjectURL(qrData);
 
-      // Create new canvas (QR size + space for text)
-      const qrSize = 3000;
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) continue;
+			qrImage.src = qrURL;
+			await new Promise((resolve) => (qrImage.onload = resolve));
 
-      canvas.width = qrSize;
-      canvas.height = qrSize +300;
-      
-      // Create rounded corners
-      const radius = 200;
-      ctx.beginPath();
-      ctx.moveTo(radius, 0);
-      ctx.lineTo(canvas.width - radius, 0);
-      ctx.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
-      ctx.lineTo(canvas.width, canvas.height - radius);
-      ctx.quadraticCurveTo(canvas.width, canvas.height, canvas.width - radius, canvas.height);
-      ctx.lineTo(radius, canvas.height);
-      ctx.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
-      ctx.lineTo(0, radius);
-      ctx.quadraticCurveTo(0, 0, radius, 0);
-      ctx.closePath();
-      ctx.clip();
+			// Create new canvas (QR size + space for text)
+			const qrSize = 3000;
+			const canvas = document.createElement("canvas");
+			const ctx = canvas.getContext("2d");
+			if (!ctx) continue;
 
-      ctx.fillStyle = qrCode._options.backgroundOptions.color;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+			canvas.width = qrSize;
+			canvas.height = qrSize + 300;
 
-      // Draw QR code
-      ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
+			// Create rounded corners
+			const radius = 200;
+			ctx.beginPath();
+			ctx.moveTo(radius, 0);
+			ctx.lineTo(canvas.width - radius, 0);
+			ctx.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
+			ctx.lineTo(canvas.width, canvas.height - radius);
+			ctx.quadraticCurveTo(
+				canvas.width,
+				canvas.height,
+				canvas.width - radius,
+				canvas.height,
+			);
+			ctx.lineTo(radius, canvas.height);
+			ctx.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
+			ctx.lineTo(0, radius);
+			ctx.quadraticCurveTo(0, 0, radius, 0);
+			ctx.closePath();
+			ctx.clip();
 
-      // Add table number text
-      ctx.font = "bold 250px Arial";
-      ctx.fillStyle = qrCode._options.dotsOptions.color;
-      ctx.textAlign = "right";
-      ctx.fillText(t, canvas.width -100, canvas.height - 100); // Center text horizontally
-      ctx.textAlign = "center";
-      ctx.fillText(text, canvas.width / 2, canvas.height - 180); // Center text horizontally
+			ctx.fillStyle = qrCode._options.backgroundOptions.color;
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Convert to PNG data URL
-      const dataURL = canvas.toDataURL("image/png").split(",")[1];
-      zip.file(`qr-table-${t}.png`, dataURL, { base64: true });
+			// Draw QR code
+			ctx.drawImage(qrImage, 0, 0, qrSize, qrSize);
 
-      URL.revokeObjectURL(qrURL); // Clean up memory
-    }
+			// Add table number text
+			ctx.fillStyle = qrCode._options.dotsOptions.color;
+			ctx.textAlign = "right";
+			ctx.font = "bold 100px Arial";
+			ctx.fillText(t, canvas.width - 100, canvas.height - 100); // Center text horizontally
+			ctx.textAlign = "center";
+			ctx.font = "bold 250px Arial";
+			ctx.fillText(text, canvas.width / 2, canvas.height - 180); // Center text horizontally
 
-    // Generate and download ZIP
-    zip.generateAsync({ type: "blob" }).then((content) => {
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(content);
-      link.download = "qrcodes.zip";
-      link.click();
-    });
-    setIsDownloading(false);
-  };
-  // const downloadMultipleQRAsZip = async () => {
-  //   console.log(business.tables)
-  //   const qrDataPromises = business.tables?.split(",").map((t) =>
-  //     new QRCodeStyling({
-  //       ...qrCode._options,
-  //       data: qrCode._options.data + "?table=" + t,
-  //     }).getRawData("png")
-  //   );
-  //   if (qrDataPromises) {
-  //     const qrDataURLs = await Promise.all(qrDataPromises);
+			// Convert to PNG data URL
+			const dataURL = canvas.toDataURL("image/png").split(",")[1];
+			zip.file(`qr-table-${t}.png`, dataURL, { base64: true });
 
-  //     const zip = new JSZip();
-  //     qrDataURLs.forEach((dataURL, index) => {
-  //       if (dataURL) zip.file(`qr-${index + 1}.png`, dataURL, { base64: true });
-  //     });
+			URL.revokeObjectURL(qrURL); // Clean up memory
+		}
 
-  //     zip.generateAsync({ type: "blob" }).then((content) => {
-  //       const link = document.createElement("a");
-  //       link.href = URL.createObjectURL(content);
-  //       link.download = "qrcodes.zip";
-  //       link.click();
-  //     });
-  //   }
-  // };
-  return (
-      <Button
-        type="button"
-        disabled={isDownloading}
-        onClick={
-          business.product === "SMART_QR_MENU"
-            ? downloadMultipleQRAsZip
-            : downloadQR
-        }
-        className="w-full"
-      >
-        {isDownloading ? (
-          <Loader />
-        ) : (
-          <>
-            {t("download")} <Download />
-          </>
-        )}
-      </Button>
-  );
+		// Generate and download ZIP
+		zip.generateAsync({ type: "blob" }).then((content) => {
+			const link = document.createElement("a");
+			link.href = URL.createObjectURL(content);
+			link.download = "qrcodes.zip";
+			link.click();
+		});
+		setIsDownloading(false);
+	};
+	// const downloadMultipleQRAsZip = async () => {
+	//   console.log(business.tables)
+	//   const qrDataPromises = business.tables?.split(",").map((t) =>
+	//     new QRCodeStyling({
+	//       ...qrCode._options,
+	//       data: qrCode._options.data + "?table=" + t,
+	//     }).getRawData("png")
+	//   );
+	//   if (qrDataPromises) {
+	//     const qrDataURLs = await Promise.all(qrDataPromises);
+
+	//     const zip = new JSZip();
+	//     qrDataURLs.forEach((dataURL, index) => {
+	//       if (dataURL) zip.file(`qr-${index + 1}.png`, dataURL, { base64: true });
+	//     });
+
+	//     zip.generateAsync({ type: "blob" }).then((content) => {
+	//       const link = document.createElement("a");
+	//       link.href = URL.createObjectURL(content);
+	//       link.download = "qrcodes.zip";
+	//       link.click();
+	//     });
+	//   }
+	// };
+	return (
+		<Button
+			type="button"
+			disabled={isDownloading}
+			onClick={
+				business.product === "SMART_QR_MENU"
+					? downloadMultipleQRAsZip
+					: downloadQR
+			}
+			className="w-full"
+		>
+			{isDownloading ? (
+				<Loader />
+			) : (
+				<>
+					{t("download")} <Download />
+				</>
+			)}
+		</Button>
+	);
 }

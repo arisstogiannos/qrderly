@@ -15,7 +15,6 @@ export async function partialExtractionAI(
 ) {
   let finalResponse = "";
 
-  console.log("Existing menu item names: ", existingMenuItemNames);
 
   const forbiddenItemsStr = existingMenuItemNames
     .map((name) => `"${name}"`)

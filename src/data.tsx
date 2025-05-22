@@ -158,7 +158,7 @@ export const productsData = [
       {
         title: "Instant Digital Menu Access",
         desc: "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required—just fast, convenient, and touch-free browsing.",
-        video: "/videos/QR animation.webm",
+        video: "/videos/qr-anim-2.webm",
         icon: <Smartphone size={"2rem"} />,
       },
       {
@@ -182,7 +182,7 @@ export const productsData = [
     desc: "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
     shortDesc:
       "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
-    videoPath: "/smart QR animation.webm",
+    videoPath: "/videos/order-2.webm",
     steps: [
       "Setup The Menu - The interface simplifies the setup of the QR menu, with some extra configuration like stock & quantity or payment integration.",
       "Browse & Select Items - Guests add items to their carts, select preferences, and place the order directly from their phones.",
@@ -205,7 +205,7 @@ export const productsData = [
       {
         title: "Seamless QR Ordering",
         desc: "Guests can browse, select items, and place orders directly from the digital menu.",
-        video: "/videos/order.webm",
+        video: "/videos/order-2.webm",
         icon: <OrderIcon color="var(--primary)" />,
       },
       {

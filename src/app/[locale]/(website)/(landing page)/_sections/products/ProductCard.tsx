@@ -39,7 +39,7 @@ export function ProductCard({
                 | "/products/self-service-smart-menu"
             }
           >
-            Learn More <ArrowRight />
+            {t("button")} <ArrowRight />
           </Link>
         </Button>
       </div>

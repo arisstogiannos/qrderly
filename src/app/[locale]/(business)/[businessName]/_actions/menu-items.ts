@@ -153,7 +153,6 @@ export async function upsertMenuItem(
             srcLang as SourceLanguageCode,
             languages as TargetLanguageCode[]
           );
-          console.log(translationResult)
 
           for (let i = 0; i < translationResult.length; i++) {
 
@@ -344,7 +343,6 @@ export async function createMenuItems(
 function convertTranslationFormat(
   inputJson: TranslationAI[]
 ): Translation | { error: string } {
-  console.log(inputJson)
   try {
     if (!Array.isArray(inputJson)) {
       return { error: "Input JSON is not an array." };

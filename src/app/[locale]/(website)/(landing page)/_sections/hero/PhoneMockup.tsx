@@ -1,56 +1,19 @@
-"use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
 
 export default function PhoneMockup() {
-  const [curr, setCurr] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurr((prev) => (prev + 1) % 2);
-    }, 3000);
+	return (
+			<div className=" w-[400px] place-content-center mx-auto relative md:w-[650px] lg:w-[850px] xl:w-[690px] h-auto aspect-[4/5] md:aspect-square ">
+				<Image
+					src="/2phones.png"
+					alt="qr menu example"
+					fill
+					priority
+					quality={100}
+					sizes="(max-width: 768px) 520px, (max-width: 1024px) 650px, (max-width: 1280px) 850px, 1000px"
+					className="object-contain animate-float-slow  rounded-3xl overflow-hidden"
+				/>
+			</div>
 
-    return () => clearInterval(interval);
-  }, [curr, setCurr]);
-  return (
-    <div className="">
-     <AnimatePresence mode="popLayout">
-        {curr === 0 ? (
-          <motion.div
-            key="image1"
-            initial={{ opacity: 0.5, filter: "blur(20px)"}}
-            animate={{ opacity: 1, filter: "blur(0px)",transition:{duration: 0.5} }}
-            exit={{ opacity: 0,  filter: "blur(20px)",transition:{duration: 0.3} }}
-            className="absolute w-full h-full"
-          >
-            <Image
-              quality={100}
-              src="/image.png"
-              fill
-              priority
-              alt="iphone mockup"
-              className="object-contain lg:backdrop-blur-xs rounded-3xl overflow-hidden"
-            />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="image2"
-            initial={{ opacity: 0.5, filter: "blur(20px)"}}
-            animate={{ opacity: 1, filter: "blur(0px)",transition:{duration: 0.5} }}
-            exit={{ opacity: 0,  filter: "blur(20px)",transition:{duration: 0.3} }}
-            className="absolute w-full h-full"
-          >
-            <Image
-              quality={100}
-              src="/Template 2.png"
-              fill
-              priority
-              alt="iphone mockup"
-              className="object-contain lg:backdrop-blur-xs rounded-3xl overflow-hidden"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+	);
 }
