@@ -90,12 +90,14 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
-      >
+      <head>
         <Suspense fallback={null}>
           <GoogleTagManager />
         </Suspense>
+      </head>
+      <body
+        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
