@@ -1,4 +1,4 @@
-export function TranslationIcon() {
+export function TranslationIcon({color}:{color?:string}) {
   return (
     // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
     <svg
@@ -6,6 +6,7 @@ export function TranslationIcon() {
       height="49"
       viewBox="0 0 57 49"
       fill="none"
+      style={{fill:color}}
       xmlns="http://www.w3.org/2000/svg"
       className="size-8 fill-primary"
     >

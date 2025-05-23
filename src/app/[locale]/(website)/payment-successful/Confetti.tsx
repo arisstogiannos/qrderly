@@ -69,7 +69,7 @@ export default function Confetti({ count = 200, duration = 5000 }: ConfettiProps
       const progress = Math.min(elapsed / duration, 1)
       const opacity = 1 - progress
 
-      confettiPieces.forEach((piece) => {
+      for(const piece of confettiPieces) {
         ctx.save()
         ctx.translate(piece.x, piece.y)
         ctx.rotate(piece.rotation)
@@ -81,7 +81,7 @@ export default function Confetti({ count = 200, duration = 5000 }: ConfettiProps
         piece.y += piece.speed
         piece.x += Math.sin(piece.angle) * 2
         piece.rotation += piece.rotationSpeed
-      })
+      }
 
       if (elapsed < duration && showConfetti) {
         animationFrame = requestAnimationFrame(animate)
@@ -97,5 +97,5 @@ export default function Confetti({ count = 200, duration = 5000 }: ConfettiProps
 
   if (!showConfetti) return null
 
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-50" aria-hidden="true" />
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-50" tabIndex={-1} aria-hidden="true" />
 }

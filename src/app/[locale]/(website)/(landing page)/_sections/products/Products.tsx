@@ -10,7 +10,7 @@ export default function Products() {
   const [selectedProductIndex, setSelectedProductIndex] = useState(0);
 const t = useTranslations("productsData")
   return (
-    <section className="space-y-6 lg:space-y-16 ">
+    <section className="space-y-6 lg:space-y-12 ">
       {/* <h4 className="mx-auto md:text-2xl lg:text-4xl max-w-5xl text-center">
         Seamlessly manage menus, orders, and online sales with our powerful
         digital tools. Choose the perfect solution for your business and enhance

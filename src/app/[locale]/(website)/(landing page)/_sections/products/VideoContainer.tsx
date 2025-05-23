@@ -1,11 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 
-const VideoContainer = ({ selectedProduct ,setSelectedProductIndex}: { selectedProduct: number ;setSelectedProductIndex:(v:number)=>void}) => {
+const VideoContainer = ({
+	selectedProduct,
+	setSelectedProductIndex,
+}: {
+	selectedProduct: number;
+	setSelectedProductIndex: (v: number) => void;
+}) => {
 	const videos = [
-		{ src: "/videos/qr-anim-2.webm", idN: "qrMenu" },
-		{ src: "/videos/order-2.webm", idN: "smartMenu" },
-		{ src: "/videos/self-service-2.webm", idN: "selfServiceMenu" },
+		{ src: "/videos/qr-anim-2-1080.webm", idN: "qrMenu" },
+		{ src: "/videos/order-2-1080.webm", idN: "smartMenu" },
+		{ src: "/videos/self-service-2-1080.webm", idN: "selfServiceMenu" },
 	];
 	useEffect(() => {
 		if (
@@ -26,16 +32,18 @@ const VideoContainer = ({ selectedProduct ,setSelectedProductIndex}: { selectedP
 			}
 		}
 	}, [selectedProduct]);
-  const handleVideoEnd = () => {
-    setSelectedProductIndex((selectedProduct+1)%3)
-  };
+	const handleVideoEnd = () => {
+		setTimeout(() => {
+			setSelectedProductIndex((selectedProduct + 1) % 3);
+		}, selectedProduct===0?1000:200);
+	};
 	return (
 		<AnimatePresence mode="popLayout">
 			{videos.map(
 				(video, index) =>
 					selectedProduct === index && (
 						<motion.video
-            onEnded={handleVideoEnd}
+							onEnded={handleVideoEnd}
 							key={video.src}
 							animate={{ scale: 1, opacity: 1 }}
 							initial={{ scale: 0.9, opacity: 0 }}

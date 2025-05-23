@@ -159,7 +159,7 @@
   },
   "WhyUs": {
     "title": "Why scanby?",
-    "subtitle": "We let you create, launch, and manage everything on your own—no business or third-party intervention needed, in a matter of minutes.",
+    "subtitle": "We let you create, launch, and manage everything on your own, in a matter of minutes—no business or third-party intervention needed.",
     "bullets": {
       "1": {
         "title": "Create Instantly",
@@ -167,7 +167,7 @@
       },
       "2": {
         "title": "Customizable & Multilingual",
-        "subtitle": "Tailor your menu to fit your brand and serve customers in up to 30 languages with full multilingual support."
+        "subtitle": "Tailor your menu to fit your brand and serve customers in up to 30 languages with auto translations."
       },
       "3": {
         "title": "Seamless Managing",
@@ -178,7 +178,7 @@
         "subtitle": "Get 200 free scans to test out your menu with no upfront commitment!"
       },
       "5": {
-        "title": "We Create for You",
+        "title": "We Can Create it for You",
         "subtitle": "The creation proccess is easy for anyone, but you can still <a>reach out</a> to us and we will create your menu free with no extra charge!"
       }
     }
@@ -284,6 +284,10 @@
       "Real-Time Order Management": {
         "title": "Real-Time Order Management",
         "desc": "Orders appear instantly in your Admin Dashboard, ensuring smooth operations."
+      },
+      "Self Service Ordering":{
+        "title":"Order Ready Notification",
+        "desc":"Customers get notification when their order is ready to collect."
       }
     },
     "QR Menu": {
@@ -317,8 +321,8 @@
       "title": "Self Service Smart Menu",
       "longTitle": "Self Service Smart Menu",
       "button":"Learn More",
-      "desc": "Enhance your restaurant or café with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
-      "shortDesc": "Customers can scan, order from their table, and receive notification when it's ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
+      "desc": " Improve  your self service business customer and staff experience with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready — no waiting on long queues.",
+      "shortDesc": "Customers can scan, order from their table, and receive notification when it's ready to collect— no waiting on long queues. ",
       "videoPath": "/smart QR animation.webm",
       "steps": {
         "step1": "Set Up Your Online Store - Customize your menu, pricing, and branding by following the exact same steps as setting up a QR menu.",
@@ -364,10 +368,10 @@
     "button2": "Learn More",
     "bullets": {
       "1": "Create a free account",
-      "2": "Choose a product",
-      "3": "Create and personalize your menu",
-      "4": "Upload your existing menu to generate a digital version",
-      "5": "Your menu is online! Your customers can scan the qr code we generated for you or visit your link."
+      "2": "Choose a type of menu",
+      "3": "Choose style, colors and languages",
+      "4": "Upload photos or pdf your existing menu",
+      "5": "Your menu is online! Your customers can scan the qr code we generated for you."
     },
     "or":"OR",
 "orderMenu": "Take a minute to fill out <link>the form</link> below and let us create a menu for you. No extra charge. Try for FREE"

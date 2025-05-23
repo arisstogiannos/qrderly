@@ -1,4 +1,5 @@
 import {
+  Bell,
   Brain,
   Brush,
   LayoutDashboard,
@@ -135,7 +136,7 @@ export const productsData = [
     shortDesc:
       "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
 
-    videoPath: "/QR animation.webm",
+    videoPath: "/qr-anim-2-1080.webm",
     steps: [
       "Create & Customize Your Digital Menu - Once you create your account and choose your plan, you will be able to add and personalize your menu in no time.",
       "Generate A Unique QR Code - Print and display on booklets, counters, or marketing materials.",
@@ -165,7 +166,7 @@ export const productsData = [
         title: "Multi-Language Support",
         desc: "Cater to international customers with multilingual menus. Guests can switch between languages effortlessly, improving accessibility and customer satisfaction.",
         video: "/videos/multi-language.webm",
-        icon: <TranslationIcon />,
+        icon: <TranslationIcon  color="black" />,
       },
       {
         title: "Customizable Themes",
@@ -200,12 +201,12 @@ export const productsData = [
         title: "Multi-Language Support",
         desc: "Cater to international customers with multilingual menus. Guests can switch between languages improving accessibility and customer satisfaction.",
         video: "/videos/multi-language.webm",
-        icon: <TranslationIcon />,
+        icon: <TranslationIcon  color="var(--primary)" />,
       },
       {
         title: "Seamless QR Ordering",
         desc: "Guests can browse, select items, and place orders directly from the digital menu.",
-        video: "/videos/order-2.webm",
+        video: "/videos/order-2-1080.webm",
         icon: <OrderIcon color="var(--primary)" />,
       },
       {
@@ -217,7 +218,7 @@ export const productsData = [
       {
         title: "Instant Digital Menu Access",
         desc: "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required—just fast, convenient, and touch-free browsing.",
-        video: "/videos/QR animation.webm",
+        video: "/videos/qr-anim-2-1080.webm",
         icon: <Smartphone size={"2em"} />,
       },
       {
@@ -241,7 +242,7 @@ export const productsData = [
 
     shortDesc:
       "Customers can scan, order from their table, and only pick up their order when it’s ready—no waiting, no interruptions. Improve service efficiency while staying in full control.",
-    videoPath: "/smart QR animation.webm",
+    videoPath: "/smart qr-anim-2-1080.webm",
     steps: [
       "Set Up Your Online Store - Customize your menu, pricing, and branding by following the exact same steps as setting up a QR menu.",
       "Place Orders For Delivery Or Takeaway - Customers choose their preferred option and complete payment securely online.",
@@ -254,6 +255,12 @@ export const productsData = [
         desc: "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!",
         video: "/videos/AI-MENU.webm",
         icon: <Brain size={"2rem"} />,
+      },
+      {
+        title: "Self Service Ordering",
+        desc: "",
+        video: "/videos/self-service-2-1080.webm",
+        icon: <Bell size={"2rem"} />,
       },
       {
         title: "Customizable Themes",
@@ -270,14 +277,14 @@ export const productsData = [
       {
         title: "Instant Digital Menu Access",
         desc: " Guests scan a QR code to view your menu instantly on their smartphones.",
-        video: "/videos/QR animation.webm",
+        video: "/videos/qr-anim-2-1080.webm",
         icon: <Brush />,
       },
       {
         title: "Multi-Language Support",
         desc: "Offer your menu in multiple languages to accommodate international customers.",
         video: "/videos/multi-language.webm",
-        icon: <Brush />,
+        icon: <TranslationIcon  color="black" />,
       },
     ],
   },

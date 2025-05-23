@@ -26,7 +26,7 @@ export default async function Hero() {
 				<h2 className="text-xl md:text-4xl text-center lg:text-left text-pretty">
 					{t("subtitle")}
 				</h2>
-				<div className="w-full flex justify-center 3xl:mt-14 gap-3  md:justify-start items-center ">
+				<div className="w-full flex justify-center mt-8 2xl:mt-14 gap-3  md:justify-start items-center ">
 					<MainButton className="md:text-xl text-nowrap  text-center ">
 						{t("button")} <ArrowRight />
 					</MainButton>
