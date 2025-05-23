@@ -4,7 +4,6 @@ import Providers from "../context/Providers";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
-import Script from "next/script";
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 

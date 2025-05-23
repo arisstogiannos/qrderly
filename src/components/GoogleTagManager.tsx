@@ -1,6 +1,5 @@
 'use client';
 
-import { GoogleTagManager as Gtm } from '@next/third-parties/google';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 
