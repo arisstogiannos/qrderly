@@ -66,7 +66,7 @@ export default async function layout({
           --accent: ${colors[4]};
         }
       `}</style>
-      <>{children}</>
+      {children}
       <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
       <ScrollToTop />
       <MenuFooter />

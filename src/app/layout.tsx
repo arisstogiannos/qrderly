@@ -4,7 +4,13 @@ import Providers from "../context/Providers";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
-import { GoogleTagManager } from "@next/third-parties/google";
+import Script from "next/script";
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+
+const GoogleTagManager = dynamic(
+  () => import('@/components/GoogleTagManager'),
+);
 
 const instrumentsSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -87,7 +93,9 @@ export default async function RootLayout({
       <body
         className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
       >
-        <GoogleTagManager gtmId="GTM-W7D4ZMR5" />
+        <Suspense fallback={null}>
+          <GoogleTagManager />
+        </Suspense>
         <Providers>{children}</Providers>
       </body>
     </html>

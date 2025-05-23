@@ -1,1254 +1,1252 @@
 {
-  "categoriesForm": {
-    "name": "Name",
-    "description": "Description",
-    "optional": "optional but recommended",
-    "descriptionHint": "You can describe a category to get more accurate translations.",
-    "namePlaceholder": "Enter the category name",
-    "descriptionPlaceholder": "Enter the category description",
-    "save": "Save"
-  },
-  "menuItemForm": {
-    "name": "Name",
-    "description": "Description",
-    "category": "Category",
-    "price": "Price",
-    "priceDesc": "(in cents e.g 1.50$ -> 150)",
-    "options": "Options",
-    "image": "Images (1-5)",
-    "optional": "optional",
-    "nameValidation": "Underscore (_) is not allowed",
-    "descriptionValidation": "Underscore (_) is not allowed",
-    "namePlaceholder": "Enter the menu item's name",
-    "descriptionPlaceholder": "Enter the menu item's description",
-    "pricePlaceholder": "Enter the menu item's price",
-    "imagePlaceholder": "Click to upload images",
-    "save": "Save",
-    "addOption":"Add Option"
-  },
-  "categoriesPage": {
-    "noCategories": "No Categories Found",
-    "title": "Categories",
-    "add": "Add New",
-    "cancel":"Cancel"
-  },
-  "filters": {
-    "search": "Search",
-    "noCategories": "No Categories Found",
-    "all categories": "All Categories"
-  },
-  "categoriesTable": {
-    "name": "Name",
-    "description": "Description",
-    "noItems": "N. of Items",
-    "actions": "Actions",
-    "edit": "Edit",
-    "editItem": "Edit Item",
-    "deleteFailed": "Failed to delete item, rolling back..."
-  },
-  "allOrdersTable": {
-    "products": "Products",
-    "price": "Price",
-    "date": "Date",
-    "status": "Status",
-    "actions": "Actions",
-    "noOrders": "No orders found",
-    "viewDetails": "View Details",
-    "orderDetails": "Order Details"
-  },
-  "orderDetailsModal": {
-    "noOrderSelected": "No order selected",
-    "table": "Table",
-    "date": "Date",
-    "product": "Product",
-    "preferences": "Preferences"
-  },
-  "orderDetails": {
-    "noOrderSelected": "No order selected",
-    "table": "Table",
-    "time": "Time",
-    "product": "Product",
-    "preferences": "Preferences",
-    "complete": "Complete"
-  },
-  "ordersTable": {
-    "products": "Products",
-    "price": "Price",
-    "date": "Date",
-    "actions": "Actions",
-    "noOrders": "No orders found",
-    "viewDetails": "View Details",
-    "orderDetails": "Order Details"
-  },
-  "tablesForm": {
-    "tables": "Tables",
-    "save": "Save",
-    "successTitle": "Success!",
-    "successDesc": "Tables were updated successfully"
-  },
-  "tablesSetup": {
-    "numberOfTables": "Number of Tables",
-    "description": "We generate one QR for each table for order identification. This way you will know which table made the order.",
-    "tableRange": "The table numbers will be from 1 to {noTables}. You can go ahead and customize the tables if you like.",
-    "validation": "Comma (,) is not allowed",
-    "placeholder": "Enter name for Table {tableNumber}"
-  },
-  "admin": {
-    "navbar": {
-      "Dashboard": "Dashboard",
-      "Upload Menu": "Upload Menu",
-      "signBtn": "Sign Up",
-      "Menu": "Menu",
-      "All Orders": "All Orders",
-      "Live Orders": "Live Orders",
-      "Settings": "Settings",
-      "Qr Settings": "QR",
-      "Categories": "Categories",
-      "Items": "Items",
-      "Visit Live Menu": "Visit Live Menu",
-      "Logout": "Logout",
-      "Subscriptions": "Subscriptions",
-      "Upgrade to Pro": "Upgrade to Pro",
-      "Choose billing cycle": "Choose billing cycle",
-      "yearly": "Yearly (save 20%)",
-      "monthly": "Monthly",
-      "continue": "Continue",
-      "menus": "Menus",
-      "Orders": "Orders",
-      "deleteBusiness": "Delete Menu",
-      "delete":"Delete",
-      "deleteBusinessDesc": "This action will delete your menu and all associated data. This includes your business data, including menu, items, and settings.",
-      "deleteAccount": "Delete Account",
-      "deleteAccountDesc": "This action will delete your account and all associated data. This includes all your businesses data, including all your menus, items, and settings."
-    },
-    "menu items": {
-      "title": "Menu Items",
-      "add": "Add New",
-      "add new item": "Add New Item",
-      "edit": "Edit",
-      "delete": "Delete",
-      "name": "Name",
-      "description": "Description",
-      "price": "Price",
-      "image": "Image",
-      "category": "Category",
-      "options": "Options",
-      "save changes": "Save Changes",
-      "status": "Status"
-    },
-    "orders": {
-      "allOrders": {
-        "title": "All Orders"
-      },
-      "liveOrders": {
-        "title": "Live Orders"
-      }
-    },
-    "delete": {
-      "title": "Delete Item",
-      "desc": "Are you sure you want to delete this item?",
-      "cancel": "Cancel",
-      "delete": "Delete"
-    }
-  },
-  "Hero": {
-    "title": "Digital QR Menu Solutions",
-    "subtitle": "Upgrade your business customer experience with digital QR Menus and contactless ordering system - transform your printed menu into a digital menu in minutes!",
-    "button": "Get a Free Menu",
-    "demoButton": "Demo"
-  },
-  "WhyUs": {
-    "title": "Why scanby?",
-    "subtitle": "We let you create, launch, and manage everything on your own, in a matter of minutes—no business or third-party intervention needed.",
-    "bullets": {
-      "1": {
-        "title": "Create Instantly",
-        "subtitle": "Upload a photo or PDF of your printed menu, and we'll instantly turn it into a digital version using AI—no technical skills required."
-      },
-      "2": {
-        "title": "Customizable & Multilingual",
-        "subtitle": "Tailor your menu to fit your brand and serve customers in up to 30 languages with auto translations."
-      },
-      "3": {
-        "title": "Seamless Managing",
-        "subtitle": "Update your menu, prices, and items instantly—no middlemen, no delays. Manage everything seamlessly from your own dashboard, anytime you want."
-      },
-      "4": {
-        "title": "Start for Free – No Credit Card Required",
-        "subtitle": "Get 200 free scans to test out your menu with no upfront commitment!"
-      },
-      "5": {
-        "title": "We Can Create it for You",
-        "subtitle": "The creation proccess is easy for anyone, but you can still <a>reach out</a> to us and we will create your menu free with no extra charge!"
-      }
-    }
-  },
+	"categoriesForm": {
+		"name": "Name",
+		"description": "Description",
+		"optional": "optional but recommended",
+		"descriptionHint": "You can describe a category to get more accurate translations.",
+		"namePlaceholder": "Enter the category name",
+		"descriptionPlaceholder": "Enter the category description",
+		"save": "Save"
+	},
+	"menuItemForm": {
+		"name": "Name",
+		"description": "Description",
+		"category": "Category",
+		"price": "Price",
+		"priceDesc": "(in cents e.g 1.50$ -> 150)",
+		"options": "Options",
+		"image": "Images (1-5)",
+		"optional": "optional",
+		"nameValidation": "Underscore (_) is not allowed",
+		"descriptionValidation": "Underscore (_) is not allowed",
+		"namePlaceholder": "Enter the menu item's name",
+		"descriptionPlaceholder": "Enter the menu item's description",
+		"pricePlaceholder": "Enter the menu item's price",
+		"imagePlaceholder": "Click to upload images",
+		"save": "Save",
+		"addOption": "Add Option"
+	},
+	"categoriesPage": {
+		"noCategories": "No Categories Found",
+		"title": "Categories",
+		"add": "Add New",
+		"cancel": "Cancel"
+	},
+	"filters": {
+		"search": "Search",
+		"noCategories": "No Categories Found",
+		"all categories": "All Categories"
+	},
+	"categoriesTable": {
+		"name": "Name",
+		"description": "Description",
+		"noItems": "N. of Items",
+		"actions": "Actions",
+		"edit": "Edit",
+		"editItem": "Edit Item",
+		"deleteFailed": "Failed to delete item, rolling back..."
+	},
+	"allOrdersTable": {
+		"products": "Products",
+		"price": "Price",
+		"date": "Date",
+		"status": "Status",
+		"actions": "Actions",
+		"noOrders": "No orders found",
+		"viewDetails": "View Details",
+		"orderDetails": "Order Details"
+	},
+	"orderDetailsModal": {
+		"noOrderSelected": "No order selected",
+		"table": "Table",
+		"date": "Date",
+		"product": "Product",
+		"preferences": "Preferences"
+	},
+	"orderDetails": {
+		"noOrderSelected": "No order selected",
+		"table": "Table",
+		"time": "Time",
+		"product": "Product",
+		"preferences": "Preferences",
+		"complete": "Complete"
+	},
+	"ordersTable": {
+		"products": "Products",
+		"price": "Price",
+		"date": "Date",
+		"actions": "Actions",
+		"noOrders": "No orders found",
+		"viewDetails": "View Details",
+		"orderDetails": "Order Details"
+	},
+	"tablesForm": {
+		"tables": "Tables",
+		"save": "Save",
+		"successTitle": "Success!",
+		"successDesc": "Tables were updated successfully"
+	},
+	"tablesSetup": {
+		"numberOfTables": "Number of Tables",
+		"description": "We generate one QR for each table for order identification. This way you will know which table made the order.",
+		"tableRange": "The table numbers will be from 1 to {noTables}. You can go ahead and customize the tables if you like.",
+		"validation": "Comma (,) is not allowed",
+		"placeholder": "Enter name for Table {tableNumber}"
+	},
+	"admin": {
+		"navbar": {
+			"Dashboard": "Dashboard",
+			"Upload Menu": "Upload Menu",
+			"signBtn": "Sign Up",
+			"Menu": "Menu",
+			"All Orders": "All Orders",
+			"Live Orders": "Live Orders",
+			"Settings": "Settings",
+			"Qr Settings": "QR",
+			"Categories": "Categories",
+			"Items": "Items",
+			"Visit Live Menu": "Visit Live Menu",
+			"Logout": "Logout",
+			"Subscriptions": "Subscriptions",
+			"Upgrade to Pro": "Upgrade to Pro",
+			"Choose billing cycle": "Choose billing cycle",
+			"yearly": "Yearly (save 20%)",
+			"monthly": "Monthly",
+			"continue": "Continue",
+			"menus": "Menus",
+			"Orders": "Orders",
+			"deleteBusiness": "Delete Menu",
+			"delete": "Delete",
+			"deleteBusinessDesc": "This action will delete your menu and all associated data. This includes your business data, including menu, items, and settings.",
+			"deleteAccount": "Delete Account",
+			"deleteAccountDesc": "This action will delete your account and all associated data. This includes all your businesses data, including all your menus, items, and settings."
+		},
+		"menu items": {
+			"title": "Menu Items",
+			"add": "Add New",
+			"add new item": "Add New Item",
+			"edit": "Edit",
+			"delete": "Delete",
+			"name": "Name",
+			"description": "Description",
+			"price": "Price",
+			"image": "Image",
+			"category": "Category",
+			"options": "Options",
+			"save changes": "Save Changes",
+			"status": "Status"
+		},
+		"orders": {
+			"allOrders": {
+				"title": "All Orders"
+			},
+			"liveOrders": {
+				"title": "Live Orders"
+			}
+		},
+		"delete": {
+			"title": "Delete Item",
+			"desc": "Are you sure you want to delete this item?",
+			"cancel": "Cancel",
+			"delete": "Delete"
+		}
+	},
+	"Hero": {
+		"title": "Digital QR Menu Solutions",
+		"subtitle": "Upgrade your business customer experience with digital QR Menus and contactless ordering system - transform your printed menu into a digital menu in minutes!",
+		"button": "Get a Free Menu",
+		"demoButton": "Demo"
+	},
+	"WhyUs": {
+		"title": "Why scanby?",
+		"subtitle": "We let you create, launch, and manage everything on your own, in a matter of minutes—no business or third-party intervention needed.",
+		"bullets": {
+			"1": {
+				"title": "Create Instantly",
+				"subtitle": "Upload a photo or PDF of your printed menu, and we'll instantly turn it into a digital version using AI—no technical skills required."
+			},
+			"2": {
+				"title": "Customizable & Multilingual",
+				"subtitle": "Tailor your menu to fit your brand and serve customers in up to 30 languages with auto translations."
+			},
+			"3": {
+				"title": "Seamless Managing",
+				"subtitle": "Update your menu, prices, and items instantly—no middlemen, no delays. Manage everything seamlessly from your own dashboard, anytime you want."
+			},
+			"4": {
+				"title": "Start for Free – No Credit Card Required",
+				"subtitle": "Get 200 free scans to test out your menu with no upfront commitment!"
+			},
+			"5": {
+				"title": "We Can Create it for You",
+				"subtitle": "The creation proccess is easy for anyone, but you can still <a>reach out</a> to us and we will create your menu free with no extra charge!"
+			}
+		}
+	},
 
-  "faq": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Can't find the answer you are looking for? Reach out to us",
-    "button": "Get in Touch",
-    "contact": "Contact",
-    "description": "Feel free to reach out to us for any questions and we will get back to you as soon as possible!",
-    "contact-fields": {
-      "name": "Name",
-      "email": "Email",
-      "message": "Message",
-      "send": "Send",
-      "product": "Product",
-      "contact reason": "Contact Reason",
-      "contact reason options": {
-        "1": "question",
-        "2": "feedback",
-        "3": "bug report",
-        "4": "other"
-      }
-    },
+	"faq": {
+		"title": "Frequently Asked Questions",
+		"subtitle": "Can't find the answer you are looking for? Reach out to us",
+		"button": "Get in Touch",
+		"contact": "Contact",
+		"description": "Feel free to reach out to us for any questions and we will get back to you as soon as possible!",
+		"contact-fields": {
+			"name": "Name",
+			"email": "Email",
+			"message": "Message",
+			"send": "Send",
+			"product": "Product",
+			"contact reason": "Contact Reason",
+			"contact reason options": {
+				"1": "question",
+				"2": "feedback",
+				"3": "bug report",
+				"4": "other"
+			}
+		},
 
-    "faq1": {
-      "question": "How does the Scanby QR menu work exactly?",
-      "answer": "Once you upload your menu, Scanby generates a unique QR code for your business. Simply print it and place it on your tables, counters, or menus. Customers scan it with their smartphone camera and instantly view your digital menu—no app downloads required, just instant access."
-    },
-    "faq2": {
-      "question": "Can customers place orders directly through the QR menu?",
-      "answer": "Absolutely! With our QR Menu + Ordering feature, customers can browse your digital menu, select their items, and place their orders straight from their phones. Orders show up instantly on your Scanby dashboard for you to manage, accept, and prepare."
-    },
-    "faq3": {
-      "question": "Is it difficult to set up? I'm not very tech-savvy.",
-      "answer": "Not at all! Scanby is designed for everyone—even if you have zero technical experience. Setup takes minutes, and you can easily manage your menus, orders, and settings from our intuitive, user-friendly admin dashboard."
-    },
-    "faq4": {
-      "question": "Can I update my menu after it's live?",
-      "answer": "Yes! You have full control to update your digital menu anytime. Whether it's adding a new item, adjusting prices, or highlighting specials, all changes happen in real-time—your customers always see the freshest version."
-    },
-    "faq5": {
-      "question": "Can I use Scanby if I run multiple locations or franchises?",
-      "answer": "Definitely! Scanby lets you manage multiple venues from a single account. Each location gets its own menu, QR codes, and settings—all organized neatly in your dashboard."
-    },
-    "faq6": {
-      "question": "What happens if I need help setting everything up or troubleshooting?",
-      "answer": "We've got your back! Scanby offers easy-to-follow setup guides, tutorial videos, and a friendly support team ready to assist you whenever needed. Our goal is to make your onboarding smooth and stress-free."
-    },
-    "faq7": {
-      "question": "What devices do customers need to use Scanby QR menus?",
-      "answer": "Customers just need a smartphone with a camera—no apps or special software needed. Our QR codes work universally with iPhones and Androids."
-    },
-    "faq8": {
-      "question": "Is the menu customizable to match my restaurant's brand?",
-      "answer": "Yes! With Scanby, you can customize fonts, colors, menu layouts, and even add your logo. Create a digital menu that truly fits your venue's unique style."
-    },
-    "faq9": {
-      "question": "Is the QR sticker customizable to match my business's brand?",
-      "answer": "Of course! Scanby lets you asjust colors, shapes, and even add your logo to the QR code."
-    },
-    "faq10": {
-      "question": "Can i use Scanby for my self service business?",
-      "answer": "Yes! Scanby supports a full self-service experience. Clients can scan, order and receive notification when their order is ready. No waiting or long queues."
-    }
-  },
-  "banner": {
-    "title": "🚀 Limited-Time Launch Sale! 🎉",
-    "subtitle": "To celebrate our app launch, enjoy <strong>20% OFF</strong> for a limited time! Don't miss out—subscribe now and save! ⏳"
-  },
+		"faq1": {
+			"question": "How does the Scanby QR menu work exactly?",
+			"answer": "Once you upload your menu, Scanby generates a unique QR code for your business. Simply print it and place it on your tables, counters, or menus. Customers scan it with their smartphone camera and instantly view your digital menu—no app downloads required, just instant access."
+		},
+		"faq2": {
+			"question": "Can customers place orders directly through the QR menu?",
+			"answer": "Absolutely! With our QR Menu + Ordering feature, customers can browse your digital menu, select their items, and place their orders straight from their phones. Orders show up instantly on your Scanby dashboard for you to manage, accept, and prepare."
+		},
+		"faq3": {
+			"question": "Is it difficult to set up? I'm not very tech-savvy.",
+			"answer": "Not at all! Scanby is designed for everyone—even if you have zero technical experience. Setup takes minutes, and you can easily manage your menus, orders, and settings from our intuitive, user-friendly admin dashboard."
+		},
+		"faq4": {
+			"question": "Can I update my menu after it's live?",
+			"answer": "Yes! You have full control to update your digital menu anytime. Whether it's adding a new item, adjusting prices, or highlighting specials, all changes happen in real-time—your customers always see the freshest version."
+		},
+		"faq5": {
+			"question": "Can I use Scanby if I run multiple locations or franchises?",
+			"answer": "Definitely! Scanby lets you manage multiple venues from a single account. Each location gets its own menu, QR codes, and settings—all organized neatly in your dashboard."
+		},
+		"faq6": {
+			"question": "What happens if I need help setting everything up or troubleshooting?",
+			"answer": "We've got your back! Scanby offers easy-to-follow setup guides, tutorial videos, and a friendly support team ready to assist you whenever needed. Our goal is to make your onboarding smooth and stress-free."
+		},
+		"faq7": {
+			"question": "What devices do customers need to use Scanby QR menus?",
+			"answer": "Customers just need a smartphone with a camera—no apps or special software needed. Our QR codes work universally with iPhones and Androids."
+		},
+		"faq8": {
+			"question": "Is the menu customizable to match my restaurant's brand?",
+			"answer": "Yes! With Scanby, you can customize fonts, colors, menu layouts, and even add your logo. Create a digital menu that truly fits your venue's unique style."
+		},
+		"faq9": {
+			"question": "Is the QR sticker customizable to match my business's brand?",
+			"answer": "Of course! Scanby lets you asjust colors, shapes, and even add your logo to the QR code."
+		},
+		"faq10": {
+			"question": "Can i use Scanby for my self service business?",
+			"answer": "Yes! Scanby supports a full self-service experience. Clients can scan, order and receive notification when their order is ready. No waiting or long queues."
+		}
+	},
+	"banner": {
+		"title": "🚀 Limited-Time Launch Sale! 🎉",
+		"subtitle": "To celebrate our app launch, enjoy <strong>20% OFF</strong> for a limited time! Don't miss out—subscribe now and save! ⏳"
+	},
 
-  "productsData": {
-    "button": "Get a Free Menu",
-    "title": "Our Products",
+	"productsData": {
+		"button": "Get a Free Menu",
+		"title": "Our Products",
 
-    "features": {
-      "title": "Some Features",
-      "Effortless Digital Menu from Images & PDFs!": {
-        "title": "Effortless Digital Menu from Images & PDFs!",
-        "desc": "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!"
-      },
-      "Customizable Themes": {
-        "title": "Customizable Themes",
-        "desc": "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests."
-      },
-      "Real-Time Dashboard": {
-        "title": "Real-Time Dashboard",
-        "desc": "Effortlessly update menu items, descriptions, and prices with just a few clicks. No need to reprint menus—changes reflect instantly across all customer devices."
-      },
-      "Instant Digital Menu Access": {
-        "title": "Instant Digital Menu Access",
-        "desc": "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required—just fast, convenient, and touch-free browsing."
-      },
-      "Multi-Language Support": {
-        "title": "Multi-Language Support",
-        "desc": "Your menu is automatically translated in up to 30 languages. Guests can switch between languages improving accessibility and customer satisfaction."
-      },
-      "Seamless QR Ordering": {
-        "title": "Seamless QR Ordering",
-        "desc": "Guests can browse, select items, and place orders directly from the digital menu."
-      },
-      "Real-Time Order Management": {
-        "title": "Real-Time Order Management",
-        "desc": "Orders appear instantly in your Admin Dashboard, ensuring smooth operations."
-      },
-      "Self Service Ordering":{
-        "title":"Order Ready Notification",
-        "desc":"Customers get notification when their order is ready to collect."
-      }
-    },
-    "QR Menu": {
-      "title": "QR Menu",
-      "longTitle": "QR Menu – Instant Access, Effortless Browsing",
-      "desc": "Say goodbye to printed menus and hello to a modern, hassle-free service experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
-      "shortDesc": "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
-      "videoPath": "/QR animation.webm",
-      "button":"Learn More",
-      "steps": {
-        "step1": "Create & Customize Your Digital Menu - Once you create your account and choose your plan, you will be able to add and personalize your menu in no time.",
-        "step2": "Generate A Unique QR Code - Print and display on booklets, counters, or marketing materials.",
-        "step3": "Customers Scan & Browse - Customers can instantly access your menu on their phones by scanning the QR code.",
-        "step4": "Manage Your Menu With Ease - Control through a user-friendly admin panel, where you can update, edit, or remove items in real-time."
-      }
-    },
-    "Smart Ordering QR Menu": {
-      "title": "Smart Ordering QR Menu",
-      "longTitle": "Smart QR Menu – Seamless & Effortless Ordering",
-      "button":"Learn More",
-      "desc": "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
-      "shortDesc": "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
-      "steps": {
-        "step1": "Setup The Menu - The interface simplifies the setup of the QR menu, with some extra configuration like stock & quantity or payment integration.",
-        "step2": "Browse & Select Items - Guests add items to their carts, select preferences, and place the order directly from their phones.",
-        "step3": "Order Sent To The Admin Panel - The order instantly appears in your admin dashboard, where you can manage and track it in real-time.",
-        "step4": "Fulfill Order - Once the order is completed by the staff."
-      }
-    },
-    "Self Service Smart Menu": {
-      "title": "Self Service Smart Menu",
-      "longTitle": "Self Service Smart Menu",
-      "button":"Learn More",
-      "desc": " Improve  your self service business customer and staff experience with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready — no waiting on long queues.",
-      "shortDesc": "Customers can scan, order from their table, and receive notification when it's ready to collect— no waiting on long queues. ",
-      "videoPath": "/smart QR animation.webm",
-      "steps": {
-        "step1": "Set Up Your Online Store - Customize your menu, pricing, and branding by following the exact same steps as setting up a QR menu.",
-        "step2": "Place Orders For Delivery Or Takeaway - Customers choose their preferred option and complete payment securely online.",
-        "step3": "Order Sent To The Admin Panel - The order instantly appears in your admin dashboard, where you can manage and track it in real-time.",
-        "step4": "Prepare & Fulfill Orders - Notify customers when their order is ready for pickup or out for delivery."
-      }
-    }
-  },
-  "preview": {
-    "title": "fully customizable & interactive menu",
-    "subtitle": "No More Outdated PDFs – Create, Personalize & Manage Your Digital Menu in Minutes! Offer a Seamless Experience with Live Edits, Custom Themes, and Multilingual Support.",
-    "settings": { "1": "Template", "2": "Theme", "3": "Customize" },
-    "Template 1": "With Images",
-    "Template 2": "No Images"
-  },
-  "navbar": {
-    "Products": "Products",
-    "Home": "Home",
-    "Pricing": "Pricing",
-    "FAQ/Contact": "FAQ / Contact",
-    "QR Menu": {
-      "title": "QR Menu",
-      "description": "Let your customers scan a QR code and instantly access your digital menu"
-    },
-    "Smart QR Menu": {
-      "title": "Smart QR Menu",
-      "description": "Allow your customers to browse and order directly from their phones"
-    },
-    "Self Service QR Menu": {
-      "title": "Self Service QR Menu",
-      "description": "Your customers order through the menu and will be notified when its ready"
-    },
-    "signBtn": "Sign Up",
-    "createBtn": "Create Menu",
-    "Smart qr menu": "Smart qr menu",
-    "self service menu": "self service menu"
-  },
-  "howItWorks": {
-    "title": "How to Set up your QR Menu",
-    "subtitle": "Follow these 5 steps and your online menu will be set in minutes",
-    "button1": "Get Started for Free",
-    "button2": "Learn More",
-    "bullets": {
-      "1": "Create a free account",
-      "2": "Choose a type of menu",
-      "3": "Choose style, colors and languages",
-      "4": "Upload photos or pdf your existing menu",
-      "5": "Your menu is online! Your customers can scan the qr code we generated for you."
-    },
-    "or":"OR",
-"orderMenu": "Take a minute to fill out <link>the form</link> below and let us create a menu for you. No extra charge. Try for FREE"
+		"features": {
+			"title": "Some Features",
+			"Effortless Digital Menu from Images & PDFs!": {
+				"title": "Effortless Digital Menu from Images & PDFs!",
+				"desc": "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!"
+			},
+			"Customizable Themes": {
+				"title": "Customizable Themes",
+				"desc": "Tailor your digital menu with our easy-to-use color theme maker to reflect your business's identity. Ensure a visually appealing experience for your guests."
+			},
+			"Real-Time Dashboard": {
+				"title": "Real-Time Dashboard",
+				"desc": "Effortlessly update menu items, descriptions, and prices with just a few clicks. No need to reprint menus—changes reflect instantly across all customer devices."
+			},
+			"Instant Digital Menu Access": {
+				"title": "Instant Digital Menu Access",
+				"desc": "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required—just fast, convenient, and touch-free browsing."
+			},
+			"Multi-Language Support": {
+				"title": "Multi-Language Support",
+				"desc": "Your menu is automatically translated in up to 30 languages. Guests can switch between languages improving accessibility and customer satisfaction."
+			},
+			"Seamless QR Ordering": {
+				"title": "Seamless QR Ordering",
+				"desc": "Guests can browse, select items, and place orders directly from the digital menu."
+			},
+			"Real-Time Order Management": {
+				"title": "Real-Time Order Management",
+				"desc": "Orders appear instantly in your Admin Dashboard, ensuring smooth operations."
+			},
+			"Self Service Ordering": {
+				"title": "Order Ready Notification",
+				"desc": "Customers get notification when their order is ready to collect."
+			}
+		},
+		"QR Menu": {
+			"title": "QR Menu",
+			"longTitle": "QR Menu – Instant Access, Effortless Browsing",
+			"desc": "Say goodbye to printed menus and hello to a modern, hassle-free service experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
+			"shortDesc": "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
+			"videoPath": "/QR animation.webm",
+			"button": "Learn More",
+			"steps": {
+				"step1": "Create & Customize Your Digital Menu - Once you create your account and choose your plan, you will be able to add and personalize your menu in no time.",
+				"step2": "Generate A Unique QR Code - Print and display on booklets, counters, or marketing materials.",
+				"step3": "Customers Scan & Browse - Customers can instantly access your menu on their phones by scanning the QR code.",
+				"step4": "Manage Your Menu With Ease - Control through a user-friendly admin panel, where you can update, edit, or remove items in real-time."
+			}
+		},
+		"Smart Ordering QR Menu": {
+			"title": "Smart Ordering QR Menu",
+			"longTitle": "Smart QR Menu – Seamless & Effortless Ordering",
+			"button": "Learn More",
+			"desc": "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
+			"shortDesc": "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
+			"steps": {
+				"step1": "Setup The Menu - The interface simplifies the setup of the QR menu, with some extra configuration like stock & quantity or payment integration.",
+				"step2": "Browse & Select Items - Guests add items to their carts, select preferences, and place the order directly from their phones.",
+				"step3": "Order Sent To The Admin Panel - The order instantly appears in your admin dashboard, where you can manage and track it in real-time.",
+				"step4": "Fulfill Order - Once the order is completed by the staff."
+			}
+		},
+		"Self Service Smart Menu": {
+			"title": "Self Service Smart Menu",
+			"longTitle": "Self Service Smart Menu",
+			"button": "Learn More",
+			"desc": " Improve  your self service business customer and staff experience with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready — no waiting on long queues.",
+			"shortDesc": "Customers can scan, order from their table, and receive notification when it's ready to collect— no waiting on long queues. ",
+			"videoPath": "/smart QR animation.webm",
+			"steps": {
+				"step1": "Set Up Your Online Store - Customize your menu, pricing, and branding by following the exact same steps as setting up a QR menu.",
+				"step2": "Place Orders For Delivery Or Takeaway - Customers choose their preferred option and complete payment securely online.",
+				"step3": "Order Sent To The Admin Panel - The order instantly appears in your admin dashboard, where you can manage and track it in real-time.",
+				"step4": "Prepare & Fulfill Orders - Notify customers when their order is ready for pickup or out for delivery."
+			}
+		}
+	},
+	"preview": {
+		"title": "fully customizable & interactive menu",
+		"subtitle": "No More Outdated PDFs – Create, Personalize & Manage Your Digital Menu in Minutes! Offer a Seamless Experience with Live Edits, Custom Themes, and Multilingual Support.",
+		"settings": { "1": "Template", "2": "Theme", "3": "Customize" },
+		"Template 1": "With Images",
+		"Template 2": "No Images"
+	},
+	"navbar": {
+		"Products": "Products",
+		"Home": "Home",
+		"Pricing": "Pricing",
+		"FAQ/Contact": "FAQ / Contact",
+		"QR Menu": {
+			"title": "QR Menu",
+			"description": "Let your customers scan a QR code and instantly access your digital menu"
+		},
+		"Smart QR Menu": {
+			"title": "Smart QR Menu",
+			"description": "Allow your customers to browse and order directly from their phones"
+		},
+		"Self Service QR Menu": {
+			"title": "Self Service QR Menu",
+			"description": "Your customers order through the menu and will be notified when its ready"
+		},
+		"signBtn": "Sign Up",
+		"createBtn": "Create Menu",
+		"Smart qr menu": "Smart qr menu",
+		"self service menu": "self service menu"
+	},
+	"howItWorks": {
+		"title": "How to Set up your QR Menu",
+		"subtitle": "Follow these 5 steps and your online menu will be set in minutes",
+		"button1": "Get Started for Free",
+		"button2": "Learn More",
+		"bullets": {
+			"1": "Create a free account",
+			"2": "Choose a type of menu",
+			"3": "Choose style, colors and languages",
+			"4": "Upload photos or pdf your existing menu",
+			"5": "Your menu is online! Your customers can scan the qr code we generated for you."
+		},
+		"or": "OR",
+		"orderMenu": "Take a minute to fill out <link>the form</link> below and let us create a menu for you. No extra charge. Try for FREE"
+	},
+	"pricing": {
+		"yearly": "Yearly (save 20%)",
+		"monthly": "Monthly"
+	},
+	"plandata": {
+		"free": "Free Trial",
+		"button": "Get Started",
+		"upgrade": " Upgrade {business} To Pro",
+		"title": "Choose Your Product",
+		"QR Menu": {
+			"title": "QR Menu",
+			"billing": {
+				"yearly": {
+					"price": "€9/month"
+				},
+				"monthly": {
+					"price": "€12/month"
+				}
+			},
+			"bullets": {
+				"1": "Unlimited scans",
+				"2": "Free customizable QR code",
+				"3": "Customizable themes & templates",
+				"4": "Free Hosting",
+				"5": "Manage your menu in real time",
+				"6": "Add unlimited products & categories",
+				"7": "Multi-language support (up to 30)",
+				"8": "No app download required"
+			}
+		},
+		"Smart Ordering QR Menu": {
+			"title": "Smart Ordering QR Menu",
+			"billing": {
+				"yearly": {
+					"price": "€14/month"
+				},
+				"monthly": {
+					"price": "€18/month"
+				}
+			},
+			"bullets": {
+				"1": "All features of the QR Menu plan",
+				"2": "Generate 1 QR code per table for identification",
+				"3": "Customers can place orders directly from their phones",
+				"4": "Real-time order notifications for your staff",
+				"5": "Indexed in search engines"
+			}
+		},
+		"Smart Self Service Menu": {
+			"title": "Smart Self Service Menu",
+			"billing": {
+				"yearly": {
+					"price": "€16/month"
+				},
+				"monthly": {
+					"price": "€20/month"
+				}
+			},
+			"bullets": {
+				"1": "All features of the Smart QR Menu plan",
+				"2": "Customers receive notification when their order is ready",
+				"3": "Customers can place orders for takeaway"
+			}
+		}
+	},
+	"dashboard": {
+		"visitLiveMenu": "Visit Live Menu",
+		"analytics": "Analytics",
+		"qr": "QR",
+		"information": "Information",
+		"business": "Business",
+		"billing": "Billing",
+		"personal": "Personal",
+		"name": "Name",
+		"location": "Location",
+		"email": "Email",
+		"type": "Type",
+		"product": "Product",
+		"lastPayment": "Last Payment",
+		"expires": "Expires",
+		"edit": "Edit",
+		"manage": "Manage",
+		"loading": "Loading",
+		"title": "Dashboard",
+		"qrCode": "QR Code",
+		"qrCodeDescription": "Download and print your QR code",
+		"customize": "Customize",
+		"qrCodeScans": "QR Code Scans",
+		"totalOrders": "Total Orders",
+		"totalSales": "Total Sales",
+		"totalScans": "Total Scans",
+		"menuVisits": "Scans",
+		"tables": "Tables",
+		"orders": "Orders",
+		"popularItems": "Popular Items",
+		"businessInfo": "Business Information",
+		"manageDetails": "Manage Details",
+		"subscription": {
+			"title": "Subscription",
+			"description": "Your current subscription details",
+			"freeTrial": "Free Trial",
+			"proPlan": "Pro Plan",
+			"billed": "billed",
+			"trafficLimit": "Scan Limit",
+			"unlimited": "Unlimited",
+			"remaining": "Remaining scans",
+			"manage": "Manage Subscription"
+		}
+	},
+	"profileDropdown": {
+		"account": "Account",
+		"subscriptions": "Subscriptions",
+		"dashboard": "Dashboard",
+		"menu": "Menu",
+		"signOut": "Sign Out",
+		"signIn": "Sign In",
+		"settings": "Settings"
+	},
+	"menu settings": {
+		"title": "Menu Settings",
+		"Template": "Template",
+		"T1": "With Images",
+		"T2": "No Images",
+		"Default Language": "Default Language",
+		"Default Language Desc": "The native language of your current menu.",
+		"Languages": "Target Languages",
+		"Languages Desc": "The languages that you want to translate the menu to. You can add up to 5 languages.",
+		"Add Language": "Add Language",
+		"Search Language": "Search Language...",
+		"Theme": "Theme",
+		"Customize": "Customize",
+		"Save": "Save",
+		"back": "Back",
+		"next": "Next"
+	},
+	"qr settings": {
+		"qr shape": {
+			"shape": "Dot Shape",
+			"cornerDotsShape": "Corner Dots Shape",
+			"cornerSquareShape": "Corner Square Shape",
+			"square": "Square",
+			"dots": "Dots",
+			"rounded": "Rounded",
+			"classy": "Classy",
+			"classy rounded": "Classy Rounded",
+			"extra rounded": "Extra Rounded"
+		},
+		"color warning": {
+			"title": "Color Warning",
+			"description": "The background color should be white for some devices to be readable. Do you want to continue?",
+			"close": "Back to white",
+			"continue": "Continue"
+		},
+		"colors": "Colors",
+		"logo": "Logo",
+		"text": "Text",
+		"optional": "Optional",
+		"title": "Customize QR",
+		"download": "Download QR Code",
+		"Save": "Save",
+		"Next": "Next"
+	},
+	"get started": {
+		"title": "Choose the product you want to pocceed with. Get started for free and see what's right for you!",
+		"button": "Get Started for Free",
+		"business setup": "business setup",
+		"menu settings": "menu settings",
+		"generate items": "Upload Menu",
+		"customize qr": "customize qr",
+		"publish": "publish"
+	},
+	"uploadingForm": {
+		"overwrite": "Overwrite existing items",
+		"overwriteDesc": "Any existing items in your menu that match a new item will be overwriten.",
+		"yes": "Yes",
+		"no": "No",
+		"toast": "{newItems} new items added! Review them on the Menu Items page. You can always make manual changes.",
 
-  },
-  "pricing": {
-    "yearly": "Yearly (save 20%)",
-    "monthly": "Monthly"
-  },
-  "plandata": {
-    "free": "Free Trial",
-    "button": "Get Started",
-    "upgrade": " Upgrade {business} To Pro",
-    "title": "Choose Your Product",
-    "QR Menu": {
-      "title": "QR Menu",
-      "billing": {
-        "yearly": {
-          "price": "€9/month"
-        },
-        "monthly": {
-          "price": "€12/month"
-        }
-      },
-      "bullets": {
-        "1": "Unlimited scans",
-        "2": "Free customizable QR code",
-        "3": "Customizable themes & templates",
-        "4": "Free Hosting",
-        "5": "Manage your menu in real time",
-        "6": "Add unlimited products & categories",
-        "7": "Multi-language support (up to 30)",
-        "8": "No app download required"
-      }
-    },
-    "Smart Ordering QR Menu": {
-      "title": "Smart Ordering QR Menu",
-      "billing": {
-        "yearly": {
-          "price": "€14/month"
-        },
-        "monthly": {
-          "price": "€18/month"
-        }
-      },
-      "bullets": {
-        "1": "All features of the QR Menu plan",
-        "2": "Generate 1 QR code per table for identification",
-        "3": "Customers can place orders directly from their phones",
-        "4": "Real-time order notifications for your staff",
-        "5": "Indexed in search engines"
-      }
-    },
-    "Smart Self Service Menu": {
-      "title": "Smart Self Service Menu",
-      "billing": {
-        "yearly": {
-          "price": "€16/month"
-        },
-        "monthly": {
-          "price": "€20/month"
-        }
-      },
-      "bullets": {
-        "1": "All features of the Smart QR Menu plan",
-        "2": "Customers receive notification when their order is ready",
-        "3": "Customers can place orders for takeaway"
-      }
-    }
-  },
-  "dashboard": {
-    "visitLiveMenu": "Visit Live Menu",
-    "analytics": "Analytics",
-    "qr": "QR",
-    "information": "Information",
-    "business": "Business",
-    "billing": "Billing",
-    "personal": "Personal",
-    "name": "Name",
-    "location": "Location",
-    "email": "Email",
-    "type": "Type",
-    "product": "Product",
-    "lastPayment": "Last Payment",
-    "expires": "Expires",
-    "edit": "Edit",
-    "manage": "Manage",
-    "loading": "Loading",
-    "title": "Dashboard",
-    "qrCode": "QR Code",
-    "qrCodeDescription": "Download and print your QR code",
-    "customize": "Customize",
-    "qrCodeScans": "QR Code Scans",
-    "totalOrders": "Total Orders",
-    "totalSales": "Total Sales",
-    "totalScans": "Total Scans",
-    "menuVisits": "Scans",
-    "tables": "Tables",
-    "orders": "Orders",
-    "popularItems": "Popular Items",
-    "businessInfo": "Business Information",
-    "manageDetails": "Manage Details",
-    "subscription": {
-      "title": "Subscription",
-      "description": "Your current subscription details",
-      "freeTrial": "Free Trial",
-      "proPlan": "Pro Plan",
-      "billed": "billed",
-      "trafficLimit": "Scan Limit",
-      "unlimited": "Unlimited",
-      "remaining": "Remaining scans",
-      "manage": "Manage Subscription"
-    }
-  },
-  "profileDropdown": {
-    "account": "Account",
-    "subscriptions": "Subscriptions",
-    "dashboard": "Dashboard",
-    "menu": "Menu",
-    "signOut": "Sign Out",
-    "signIn": "Sign In",
-    "settings": "Settings"
-  },
-  "menu settings": {
-    "title": "Menu Settings",
-    "Template": "Template",
-    "T1": "With Images",
-    "T2": "No Images",
-    "Default Language": "Default Language",
-    "Default Language Desc": "The native language of your current menu.",
-    "Languages": "Target Languages",
-    "Languages Desc": "The languages that you want to translate the menu to. You can add up to 5 languages.",
-    "Add Language": "Add Language",
-    "Search Language": "Search Language...",
-    "Theme": "Theme",
-    "Customize": "Customize",
-    "Save": "Save",
-    "back": "Back",
-    "next": "Next"
-  },
-  "qr settings": {
-    "qr shape": {
-      "shape": "Dot Shape",
-      "cornerDotsShape": "Corner Dots Shape",
-      "cornerSquareShape": "Corner Square Shape",
-      "square": "Square",
-      "dots": "Dots",
-      "rounded": "Rounded",
-      "classy": "Classy",
-      "classy rounded": "Classy Rounded",
-      "extra rounded": "Extra Rounded"
-    },
-    "color warning": {
-      "title": "Color Warning",
-      "description": "The background color should be white for some devices to be readable. Do you want to continue?",
-      "close": "Back to white",
-      "continue": "Continue"
-    },
-    "colors": "Colors",
-    "logo": "Logo",
-    "text": "Text",
-    "optional": "Optional",
-    "title": "Customize QR",
-    "download": "Download QR Code",
-    "Save": "Save",
-    "Next": "Next"
-  },
-  "get started": {
-    "title": "Choose the product you want to pocceed with. Get started for free and see what's right for you!",
-    "button": "Get Started for Free",
-    "business setup": "business setup",
-    "menu settings": "menu settings",
-    "generate items": "Upload Menu",
-    "customize qr": "customize qr",
-    "publish": "publish"
-  },
-  "uploadingForm": {
-    "overwrite": "Overwrite existing items",
-    "overwriteDesc": "Any existing items in your menu that match a new item will be overwriten.",
-    "yes": "Yes",
-    "no": "No",
-    "toast": "{newItems} new items added! Review them on the Menu Items page. You can always make manual changes.",
+		"title": "Upload your menu",
+		"upload": "Upload",
+		"dialogTitle": "Our AI is proccessing your menu. This will take a few seconds.",
+		"failedImagesDialogTitle": "The following image(s) failed to get proccessed",
+		"failedImagesDialogDesc": "The image(s) below were not processed because they contain way too many products. You can try uploading smaller pieces of your menu later from the dashboard.",
+		"failedImagesDialogBtn": "I Understand",
+		"description": "Our AI will automatically create your menu. All you have to do is upload an image or PDF of your menu. If you want to manually insert all the items, click skip.",
+		"skip": "Skip",
+		"next": "Next",
+		"imageTitle": "Image (1-5)",
+		"imageDescription": "Ensure the image is clear and the menu is readable for the best results. If you have more than 5 images you can upload them later.",
+		"pdfTitle": "PDF",
+		"pdfDescription": "Upload a PDF file from your device for the best results. Ensure the document is clear and readable."
+	},
+	"uploader": {
+		"image": "Image",
+		"pdf": "PDF",
+		"description": "Upload a file for processing."
+	},
+	"translateCheckBox": {
+		"label": "Translate",
+		"yes": "Yes",
+		"no": "No"
+	},
+	"businessSetupForm": {
+		"title": "Businesses Setup",
+		"businessName": "Business Name",
+		"businessNameHint": "It will be used as a URL for your menu. Example: scanby.io/mybusiness/menu",
+		"businessNameValidation": "Only letters, numbers, dashes (-), underscores (_), dots (.) and tildes (~) are allowed.",
+		"businessType": "Business Type",
+		"businessTypePlaceholder": "Choose your business type",
+		"restaurant": "Restaurant",
+		"bar": "Bar",
+		"cafeteria": "Cafeteria",
+		"other": "Other",
+		"currency": "Currency",
+		"currencyPlaceholder": "Choose currency",
+		"country": "Country",
+		"city": "City",
+		"next": "Next"
+	},
+	"progress": {
+		"extractingItems": "Extracting Items",
+		"translatingLanguages": "Translating to Target Languages",
+		"creatingMenu": "Creating Menu",
+		"completed": "Completed",
+		"inProgress": "In progress...",
+		"waiting": "Waiting"
+	},
+	"registerForm": {
+		"registerWithEmail": "Sign up with Email",
+		"name": "Name",
+		"namePlaceholder": "Enter your name",
+		"email": "Email",
+		"emailPlaceholder": "Enter your email",
+		"password": "Password",
+		"passwordPlaceholder": "Enter your password",
+		"confirmPassword": "Confirm Password",
+		"confirmPasswordPlaceholder": "Confirm your password",
+		"signUp": "Sign up",
+		"signUpWithGoogle": "Sign up with Google",
+		"alreadyHaveAccount": "Already have an account?",
+		"signIn": "Sign in",
+		"verificationSent": "A verification email has been sent to {email}! Please verify your email to activate your account.",
+		"termsAndPrivacy": "By clicking continue, you agree to our <termsAndPrivacy>Terms of Service</termsAndPrivacy> and <privacyPolicy>Privacy Policy</privacyPolicy>.",
+		"error": {
+			"generic": "An error has occurred. Try again.",
+			"oauth": "Try logging in the same way you signed up."
+		}
+	},
+	"loginForm": {
+		"email": "Email",
+		"emailPlaceholder": "Enter your email",
+		"password": "Password",
+		"passwordPlaceholder": "Enter your password",
+		"forgotPassword": "Forgot your password?",
+		"signIn": "Sign in",
+		"signInWithGoogle": "Sign in with Google",
+		"dontHaveAccount": "Don't have an account?",
+		"signUp": "Sign up",
+		"verificationSent": "A verification code has been sent to your email!",
+		"termsAndPrivacy": "By clicking continue, you agree to our <termsAndPrivacy>Terms of Service</termsAndPrivacy> and <privacyPolicy>Privacy Policy</privacyPolicy>.",
+		"error": {
+			"generic": "An error has occurred. Try again.",
+			"oauth": "Try logging in the same way you signed up."
+		}
+	},
+	"auth": {
+		"backToHomepage": "Back to Homepage"
+	},
+	"registerPage": {
+		"title": "Register",
+		"subtitle": "Create an account and have your menu online in a few minutes.",
+		"back": "Back"
+	},
+	"loginPage": {
+		"title": "Welcome back",
+		"subtitle": "Login to your account"
+	},
+	"resetForm": {
+		"title": "Reset your password",
+		"subtitle": "We will send you an email with a link. Click on it to change your password.",
+		"emailPlaceholder": "Enter your email",
+		"sendResetCode": "Send reset code",
+		"resetLinkSent": "A reset link has been sent to your email!"
+	},
+	"createMenuBtn": {
+		"signUp": "Sign Up",
+		"createMenu": "Create Menu",
+		"modalTitle": "Create menu for {product}",
+		"modalSubtitle": "You have a subscription for {product}, but you haven't published it yet. Continue or create a new menu for another product.",
+		"createDifferentMenu": "Create different menu",
+		"continue": "Continue"
+	},
 
-    "title": "Upload your menu",
-    "upload": "Upload",
-    "dialogTitle": "Our AI is proccessing your menu. This will take a few seconds.",
-    "failedImagesDialogTitle": "The following image(s) failed to get proccessed",
-    "failedImagesDialogDesc": "The image(s) below were not processed because they contain way too many products. You can try uploading smaller pieces of your menu later from the dashboard.",
-    "failedImagesDialogBtn": "I Understand",
-    "description": "Our AI will automatically create your menu. All you have to do is upload an image or PDF of your menu. If you want to manually insert all the items, click skip.",
-    "skip": "Skip",
-    "next": "Next",
-    "imageTitle": "Image (1-5)",
-    "imageDescription": "Ensure the image is clear and the menu is readable for the best results. If you have more than 5 images you can upload them later.",
-    "pdfTitle": "PDF",
-    "pdfDescription": "Upload a PDF file from your device for the best results. Ensure the document is clear and readable."
-  },
-  "uploader": {
-    "image": "Image",
-    "pdf": "PDF",
-    "description": "Upload a file for processing."
-  },
-  "translateCheckBox": {
-    "label": "Translate",
-    "yes": "Yes",
-    "no": "No"
-  },
-  "businessSetupForm": {
-    "title": "Businesses Setup",
-    "businessName": "Business Name",
-    "businessNameHint": "It will be used as a URL for your menu. Example: scanby.io/mybusiness/menu",
-    "businessNameValidation": "Only letters, numbers, dashes (-), underscores (_), dots (.) and tildes (~) are allowed.",
-    "businessType": "Business Type",
-    "businessTypePlaceholder": "Choose your business type",
-    "restaurant": "Restaurant",
-    "bar": "Bar",
-    "cafeteria": "Cafeteria",
-    "other":"Other",
-    "currency": "Currency",
-    "currencyPlaceholder": "Choose currency",
-    "country": "Country",
-    "city": "City",
-    "next": "Next"
-  },
-  "progress": {
-    "extractingItems": "Extracting Items",
-    "translatingLanguages": "Translating to Target Languages",
-    "creatingMenu": "Creating Menu",
-    "completed": "Completed",
-    "inProgress": "In progress...",
-    "waiting": "Waiting"
-  },
-  "registerForm": {
-    "registerWithEmail": "Sign up with Email",
-    "name": "Name",
-    "namePlaceholder": "Enter your name",
-    "email": "Email",
-    "emailPlaceholder": "Enter your email",
-    "password": "Password",
-    "passwordPlaceholder": "Enter your password",
-    "confirmPassword": "Confirm Password",
-    "confirmPasswordPlaceholder": "Confirm your password",
-    "signUp": "Sign up",
-    "signUpWithGoogle": "Sign up with Google",
-    "alreadyHaveAccount": "Already have an account?",
-    "signIn": "Sign in",
-    "verificationSent": "A verification email has been sent to {email}! Please verify your email to activate your account.",
-    "termsAndPrivacy": "By clicking continue, you agree to our <termsAndPrivacy>Terms of Service</termsAndPrivacy> and <privacyPolicy>Privacy Policy</privacyPolicy>.",
-    "error": {
-      "generic": "An error has occurred. Try again.",
-      "oauth": "Try logging in the same way you signed up."
-    }
-  },
-  "loginForm": {
-    "email": "Email",
-    "emailPlaceholder": "Enter your email",
-    "password": "Password",
-    "passwordPlaceholder": "Enter your password",
-    "forgotPassword": "Forgot your password?",
-    "signIn": "Sign in",
-    "signInWithGoogle": "Sign in with Google",
-    "dontHaveAccount": "Don't have an account?",
-    "signUp": "Sign up",
-    "verificationSent": "A verification code has been sent to your email!",
-    "termsAndPrivacy": "By clicking continue, you agree to our <termsAndPrivacy>Terms of Service</termsAndPrivacy> and <privacyPolicy>Privacy Policy</privacyPolicy>.",
-    "error": {
-      "generic": "An error has occurred. Try again.",
-      "oauth": "Try logging in the same way you signed up."
-    }
-  },
-  "auth": {
-    "backToHomepage": "Back to Homepage"
-  },
-  "registerPage": {
-    "title": "Register",
-    "subtitle": "Create an account and have your menu online in a few minutes.",
-    "back": "Back"
-  },
-  "loginPage": {
-    "title": "Welcome back",
-    "subtitle": "Login to your account"
-  },
-  "resetForm": {
-    "title": "Reset your password",
-    "subtitle": "We will send you an email with a link. Click on it to change your password.",
-    "emailPlaceholder": "Enter your email",
-    "sendResetCode": "Send reset code",
-    "resetLinkSent": "A reset link has been sent to your email!"
-  },
-  "createMenuBtn": {
-    "signUp": "Sign Up",
-    "createMenu": "Create Menu",
-    "modalTitle": "Create menu for {product}",
-    "modalSubtitle": "You have a subscription for {product}, but you haven't published it yet. Continue or create a new menu for another product.",
-    "createDifferentMenu": "Create different menu",
-    "continue": "Continue"
-  },
+	"uploadMenuPage": {
+		"title": "Upload Menu",
+		"description": "You can upload the same menu to add any missing items. Only the new items will be added."
+	},
+	"publish": {
+		"heading": "Your Menu is Ready to Go Live!",
+		"description": "You're just one step away from having your digital menu accessible to your customers. Launch your menu and start delighting your guests!",
+		"proTipTitle": "Pro Tip",
+		"proTipDescription": "After publishing, visit your menu items page to ensure everything is generated correctly. Our AI is powerful, but it's always good to review the results. You can manually edit and fix whatever you need with our easy to use interface.",
+		"reviewLabel": "Review:",
+		"reviewItemCategory": "Items belong to right category",
+		"reviewPrices": "Prices",
+		"reviewNamesDescriptions": "Names / Descriptions",
+		"success": "Your menu is live!",
+		"visitMenu": "Visit your menu",
+		"visitDashboard": "Visit your dashboard"
+	},
+	"subscription": {
+		"title": "Subscription",
+		"description": "Your current plan and usage",
+		"freeTrial": "Free Trial",
+		"proPlan": "Pro Plan",
+		"billed": "billed",
+		"trafficLimit": "Traffic Limit",
+		"unlimited": "Unlimited",
+		"remaining": "Remaining",
+		"manage": "Manage"
+	},
+	"metadata": {
+		"main": {
+			"title": "Digital QR Menu Solutions",
+			"description": "Set up a digital QR menu in under 5 minutes. Upload a PDF or image and instantly generate a menu where your customers can scan and even order from. Get started for free - No Credit Card Required",
+			"keywords": {
+				"0": "QR menu",
+				"1": "digital menu",
+				"2": "smart ordering",
+				"3": "self-service menu",
+				"4": "self-service ordering system",
+				"5": "ordering system",
+				"6": "QR menu with ordering system",
+				"7": "AI menu generator",
+				"8": "5-minute menu setup",
+				"9": "QR code menu",
+				"10": "contactless ordering system",
+				"11": "online menu creatoor",
+				"12": "scan menu"
+			},
+			"ogTitle": "Smart QR Menu & Ordering System",
+			"ogDescription": "Transform your business customer experience with QR Menus with built-in Ordering System option.",
+			"ogAlt": "QR Ordering App Screenshot",
+			"twitterTitle": "Smart QR Menu & Ordering System",
+			"twitterDescription": "Transform your business customer experience with QR Menus with built-in Ordering System option."
+		},
+		"qrMenu": {
+			"title": "Create a QR Menu in Minutes | Smart & Contactless Menus",
+			"description": "Easily create a custom QR menu for your business in under 5 minutes. Perfect for restaurants, cafés, and bars looking to offer contactless digital menus.",
+			"keywords": {
+				"0": "QR menu",
+				"1": "digital menu",
+				"2": "restaurant menu creator",
+				"3": "qr code menu generator",
+				"4": "contactless menu",
+				"5": "smart menu",
+				"6": "menu builder for restaurants"
+			},
+			"ogTitle": "Create a QR Menu in Minutes | Smart & Contactless Menus",
+			"ogDescription": "Launch your digital menu with a QR code in just 5 minutes. Ideal for cafés, restaurants, and hospitality businesses.",
+			"ogAlt": "QR Ordering App Screenshot"
+		},
+		"ordering": {
+			"title": "Smart QR Menu with Ordering System | Easy Setup in 5 Min",
+			"description": "Combine your QR menu with a smart ordering system. Customers can scan, browse, and order — all from their phones. No apps, no fuss.",
+			"keywords": {
+				"0": "ordering system",
+				"1": "QR menu with ordering",
+				"2": "digital ordering",
+				"3": "ordering QR",
+				"4": "Qr menu generator",
+				"5": "smart menu",
+				"6": "qr menu ordering system"
+			},
+			"ogTitle": "Smart QR Menu with Ordering System | Easy Setup in 5 Minutes",
+			"ogDescription": "Create a digital menu with built-in ordering in minutes. Streamline your business service with our smart QR menu system.",
+			"ogAlt": "QR Ordering App Screenshot"
+		},
+		"selfService": {
+			"title": "Self-Service Ordering Menu | Smart & Contactless Menus",
+			"description": "Empower your customers with self-service ordering. Let them scan, order, and enjoy—no waiters, no apps. Easy QR setup in minutes.",
+			"keywords": {
+				"0": "self-service ordering",
+				"1": "qr ordering system",
+				"2": "restaurant automation",
+				"3": "self-ordering menu",
+				"4": "digital self-service menu",
+				"5": "smart menu QR",
+				"6": "contactless restaurant tech"
+			},
+			"ogTitle": "Self-Service Ordering Menu | Smart & Contactless Menus",
+			"ogDescription": "Offer full self-service with our QR menu and ordering platform. Fast setup and seamless customer experience.",
+			"ogAlt": "QR Ordering App Screenshot"
+		}
+	},
+	"stats": {
+		"title": "Businesses Explore Our App",
+		"subtitile": "Our platform is designed to help businesses like:",
+		"button": "Get Started for Free",
+		"Bars": "Bars",
+		"Cafes": "Cafes",
+		"Restaurants": "Restaurants",
+		"Hotels": "Hotels",
+		"Self-Service": "Self Service",
+		"Food Trucks": "Food Trucks",
+		"Takeaway": "Takeaway",
+		"beach service": "Beach Service"
+	},
+	"subExpired": {
+		"title": "Your subscription has expired",
+		"description": "Please renew your subscription to make your menu live again.",
+		"monthly": "Subscribe Monthly {price}",
+		"yearly": "Subscribe Yearly {price}"
+	},
+	"emails": {
+		"verification": {
+			"subject": "Verify your email address for Scanby",
+			"heading": "Verify your email address",
+			"greeting": "Hi {username}",
+			"message": "Please verify your email address to complete your Scanby account setup. This helps us confirm you're a real person and secures your account.",
+			"button": "Verify Email Address",
+			"disclaimer": "If you didn't create an account with Scanby, you can safely ignore this email.",
+			"expiry": "This verification link will expire in 30 minutes.",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"orderMenu": {
+			"subject": "Scanby - Menu Order",
+			"heading": "Menu Creation Order",
+			"greeting": "Hi {username}",
+			"message": "Your order has been received. We will contact you as soon as your menu is ready. If you don't have an account, you can sign up for free and receive your menu in your account.",
+			"button": "Sign Up"
+		},
+		"feedback": {
+			"subject": "We'd love your feedback on your experience with Scanby",
+			"heading": "Tell us what you think",
+			"greeting": "Hi {username}",
+			"message": "Thanks for using Scanby! We'd love to hear your thoughts on your experience so far. Your feedback helps us improve and serve you better.",
+			"button": "Give Feedback",
+			"note": "Your response should only take a minute or two. We really appreciate your time!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"menuCreated": {
+			"subject": "Your QR Menu \"{menuName}\" is ready!",
+			"heading": "Your QR Menu is Ready!",
+			"greeting": "Hi {username}",
+			"message": "Great news! Your QR menu \"{menuName}\" has been successfully created and is now live.",
+			"customerInfo": "Your customers can now scan your QR code to view your digital menu. You can print or download your QR code from your dashboard.",
+			"viewButton": "View Your Menu",
+			"updateInfo": "Remember, you can update your menu anytime from your dashboard, and the changes will be reflected instantly for your customers.",
+			"dashboardButton": "Go to Dashboard",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"passwordReset": {
+			"subject": "Reset your Scanby password",
+			"heading": "Reset your password",
+			"greeting": "Hi {name}",
+			"message": "We received a request to reset your password for your QR Menu Creator account. Click the button below to set a new password:",
+			"button": "Reset Password",
+			"disclaimer": "If you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.",
+			"expiry": "This password reset link will expire in 1 hour.",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"welcome": {
+			"subject": "Welcome to Scanby - Let's get started!",
+			"heading": "Welcome to Scanby!",
+			"greeting": "Hi {username}",
+			"message": "Thank you for signing up for Scanby. We're excited to help you create beautiful, digital menus for your restaurant or business.",
+			"button": "Get Started",
+			"features": {
+				"heading": "With Scanby, you can:",
+				"items": [
+					"Create unlimited digital menus",
+					"Generate QR codes for easy customer access",
+					"Update your menu in real-time",
+					"Track menu views and customer engagement"
+				]
+			},
+			"support": "If you have any questions, simply reply to this email. We're here to help!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"upgradeToPro": {
+			"subject": "Upgrade to Pro Plan",
+			"heading": "Upgrade to Pro Plan",
+			"greeting": "Hi {username}",
+			"message": "Thank you for using Scanby! We're excited to help you create beautiful, digital menus for your restaurant or business. The upgrade to the Pro Plan will allow you to have unlimited scans on your menus and access to more features.",
+			"button": "Upgrade to Pro Plan",
+			"support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"emptyMenu": {
+			"subject": "Add items to your menu",
+			"heading": "Add items to your menu",
+			"greeting": "Hi {username}",
+			"message": "Add items to your menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
+			"button": "Populate Menu Now",
+			"message2": "If you dont want to populate your menu yourself, we can do it for you. Click the link and fill out the form and you don't have to do anything else.",
+			"button2": "Add items to my menu",
+			"support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"subscriptionConfirmation": {
+			"subject": "Your Scanby subscription is confirmed!",
+			"heading": "Subscription Confirmed",
+			"greeting": "Hi {username}",
+			"message": "Thank you for subscribing to Scanby! Your {planName} plan is now active.",
+			"details": {
+				"heading": "Subscription Details",
+				"plan": "Plan: {planName}",
+				"price": "Price: {planPrice} {billingCycle}",
+				"startDate": "Start Date: {startDate}"
+			},
+			"accessInfo": "You now have access to all the features included in the {planName} plan. You can start creating QR menus right away!",
+			"button": "Go to Dashboard",
+			"support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"trialEnded": {
+			"subject": "Your Scanby trial has ended - Upgrade to continue",
+			"heading": "Your Free Trial Has Ended",
+			"greeting": "Hi {username}",
+			"congratsMessage": "Congratulations on reaching 200 menu scans on {businessName} with Scanby! 🎉",
+			"message": "Your free trial has now ended. To continue offering digital menus to your customers without interruption, please upgrade your plan.",
+			"button": "Upgrade Now",
+			"benefits": "With a paid plan, you'll continue to enjoy unlimited scans",
+			"support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"noMenu": {
+			"subject": "Your digital menu is one click away!",
+			"heading": "Ready to impress your guests?",
+			"greeting": "Hi {username},",
+			"message": "Create your first QR menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
+			"button": "Create a Free Menu Now",
+			"message2": "If you dont want to create your menu yourself, we can do it for you. Click the link and fill out the form and thats it. Our team will create your menu and send it to you.",
+			"button2": "Order a Free Menu Now",
+			"support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"unfinishedMenu": {
+			"subject": "Let's finish your menu and go live!",
+			"heading": "You're almost there!",
+			"greeting": "Hi {username},",
+			"message": "Your menu is nearly ready. Add the final touches and go live to start accepting orders right away!",
+			"button": "Finish My Menu",
+			"support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		},
+		"unverified": {
+			"subject": "Activate your Scanby account now",
+			"heading": "Just one more step!",
+			"greeting": "Hi {username},",
+			"message": "Click the button below to verify your email and unlock all features. Your menu journey starts now! The link will expire in 24 hours.",
+			"button": "Activate My Account",
 
-  "uploadMenuPage": {
-    "title": "Upload Menu",
-    "description": "You can upload the same menu to add any missing items. Only the new items will be added."
-  },
-  "publish": {
-    "heading": "Your Menu is Ready to Go Live!",
-    "description": "You're just one step away from having your digital menu accessible to your customers. Launch your menu and start delighting your guests!",
-    "proTipTitle": "Pro Tip",
-    "proTipDescription": "After publishing, visit your menu items page to ensure everything is generated correctly. Our AI is powerful, but it's always good to review the results. You can manually edit and fix whatever you need with our easy to use interface.",
-    "reviewLabel": "Review:",
-    "reviewItemCategory": "Items belong to right category",
-    "reviewPrices": "Prices",
-    "reviewNamesDescriptions": "Names / Descriptions",
-    "success": "Your menu is live!",
-    "visitMenu": "Visit your menu",
-    "visitDashboard": "Visit your dashboard"
-  },
-  "subscription": {
-    "title": "Subscription",
-    "description": "Your current plan and usage",
-    "freeTrial": "Free Trial",
-    "proPlan": "Pro Plan",
-    "billed": "billed",
-    "trafficLimit": "Traffic Limit",
-    "unlimited": "Unlimited",
-    "remaining": "Remaining",
-    "manage": "Manage"
-  },
-  "metadata": {
-    "main": {
-      "title": "Digital QR Menu Solutions",
-      "description": "Set up a digital QR menu in under 5 minutes. Upload a PDF or image and instantly generate a menu where your customers can scan and even order from. Get started for free - No Credit Card Required",
-      "keywords": {
-        "0": "QR menu",
-        "1": "digital menu",
-        "2": "smart ordering",
-        "3": "self-service menu",
-        "4": "self-service ordering system",
-        "5": "ordering system",
-        "6": "QR menu with ordering system",
-        "7": "AI menu generator",
-        "8": "5-minute menu setup",
-        "9": "QR code menu",
-        "10": "contactless ordering system",
-        "11": "online menu creatoor",
-        "12": "scan menu"
-      },
-      "ogTitle": "Smart QR Menu & Ordering System",
-      "ogDescription": "Transform your business customer experience with QR Menus with built-in Ordering System option.",
-      "ogAlt": "QR Ordering App Screenshot",
-      "twitterTitle": "Smart QR Menu & Ordering System",
-      "twitterDescription": "Transform your business customer experience with QR Menus with built-in Ordering System option."
-    },
-    "qrMenu": {
-      "title": "Create a QR Menu in Minutes | Smart & Contactless Menus",
-      "description": "Easily create a custom QR menu for your business in under 5 minutes. Perfect for restaurants, cafés, and bars looking to offer contactless digital menus.",
-      "keywords": {
-        "0": "QR menu",
-        "1": "digital menu",
-        "2": "restaurant menu creator",
-        "3": "qr code menu generator",
-        "4": "contactless menu",
-        "5": "smart menu",
-        "6": "menu builder for restaurants"
-      },
-      "ogTitle": "Create a QR Menu in Minutes | Smart & Contactless Menus",
-      "ogDescription": "Launch your digital menu with a QR code in just 5 minutes. Ideal for cafés, restaurants, and hospitality businesses.",
-      "ogAlt": "QR Ordering App Screenshot"
-    },
-    "ordering": {
-      "title": "Smart QR Menu with Ordering System | Easy Setup in 5 Min",
-      "description": "Combine your QR menu with a smart ordering system. Customers can scan, browse, and order — all from their phones. No apps, no fuss.",
-      "keywords": {
-        "0": "ordering system",
-        "1": "QR menu with ordering",
-        "2": "digital ordering",
-        "3": "ordering QR",
-        "4": "Qr menu generator",
-        "5": "smart menu",
-        "6": "qr menu ordering system"
-      },
-      "ogTitle": "Smart QR Menu with Ordering System | Easy Setup in 5 Minutes",
-      "ogDescription": "Create a digital menu with built-in ordering in minutes. Streamline your business service with our smart QR menu system.",
-      "ogAlt": "QR Ordering App Screenshot"
-    },
-    "selfService": {
-      "title": "Self-Service Ordering Menu | Smart & Contactless Menus",
-      "description": "Empower your customers with self-service ordering. Let them scan, order, and enjoy—no waiters, no apps. Easy QR setup in minutes.",
-      "keywords": {
-        "0": "self-service ordering",
-        "1": "qr ordering system",
-        "2": "restaurant automation",
-        "3": "self-ordering menu",
-        "4": "digital self-service menu",
-        "5": "smart menu QR",
-        "6": "contactless restaurant tech"
-      },
-      "ogTitle": "Self-Service Ordering Menu | Smart & Contactless Menus",
-      "ogDescription": "Offer full self-service with our QR menu and ordering platform. Fast setup and seamless customer experience.",
-      "ogAlt": "QR Ordering App Screenshot"
-    }
-  },
-  "stats": {
-    "title": "Businesses Explore Our App",
-    "subtitile": "Our platform is designed to help businesses like:",
-    "button": "Get Started for Free",
-    "Bars": "Bars",
-    "Cafes": "Cafes",
-    "Restaurants": "Restaurants",
-    "Hotels": "Hotels",
-    "Self-Service": "Self Service",
-    "Food Trucks": "Food Trucks",
-    "Takeaway": "Takeaway",
-    "beach service": "Beach Service"
-  },
-  "subExpired": {
-    "title": "Your subscription has expired",
-    "description": "Please renew your subscription to make your menu live again.",
-    "monthly": "Subscribe Monthly {price}",
-    "yearly": "Subscribe Yearly {price}"
-  },
-  "emails": {
-    "verification": {
-      "subject": "Verify your email address for Scanby",
-      "heading": "Verify your email address",
-      "greeting": "Hi {username}",
-      "message": "Please verify your email address to complete your Scanby account setup. This helps us confirm you're a real person and secures your account.",
-      "button": "Verify Email Address",
-      "disclaimer": "If you didn't create an account with Scanby, you can safely ignore this email.",
-      "expiry": "This verification link will expire in 30 minutes.",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "orderMenu": {
-      "subject": "Scanby - Menu Order",
-      "heading": "Menu Creation Order",
-      "greeting": "Hi {username}",
-      "message": "Your order has been received. We will contact you as soon as your menu is ready. If you don't have an account, you can sign up for free and receive your menu in your account.",
-      "button": "Sign Up"
-    },
-    "feedback": {
-      "subject": "We'd love your feedback on your experience with Scanby",
-      "heading": "Tell us what you think",
-      "greeting": "Hi {username}",
-      "message": "Thanks for using Scanby! We'd love to hear your thoughts on your experience so far. Your feedback helps us improve and serve you better.",
-      "button": "Give Feedback",
-      "note": "Your response should only take a minute or two. We really appreciate your time!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "menuCreated": {
-      "subject": "Your QR Menu \"{menuName}\" is ready!",
-      "heading": "Your QR Menu is Ready!",
-      "greeting": "Hi {username}",
-      "message": "Great news! Your QR menu \"{menuName}\" has been successfully created and is now live.",
-      "customerInfo": "Your customers can now scan your QR code to view your digital menu. You can print or download your QR code from your dashboard.",
-      "viewButton": "View Your Menu",
-      "updateInfo": "Remember, you can update your menu anytime from your dashboard, and the changes will be reflected instantly for your customers.",
-      "dashboardButton": "Go to Dashboard",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "passwordReset": {
-      "subject": "Reset your Scanby password",
-      "heading": "Reset your password",
-      "greeting": "Hi {name}",
-      "message": "We received a request to reset your password for your QR Menu Creator account. Click the button below to set a new password:",
-      "button": "Reset Password",
-      "disclaimer": "If you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.",
-      "expiry": "This password reset link will expire in 1 hour.",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "welcome": {
-      "subject": "Welcome to Scanby - Let's get started!",
-      "heading": "Welcome to Scanby!",
-      "greeting": "Hi {username}",
-      "message": "Thank you for signing up for Scanby. We're excited to help you create beautiful, digital menus for your restaurant or business.",
-      "button": "Get Started",
-      "features": {
-        "heading": "With Scanby, you can:",
-        "items": [
-          "Create unlimited digital menus",
-          "Generate QR codes for easy customer access",
-          "Update your menu in real-time",
-          "Track menu views and customer engagement"
-        ]
-      },
-      "support": "If you have any questions, simply reply to this email. We're here to help!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "upgradeToPro": {
-      "subject": "Upgrade to Pro Plan",
-      "heading": "Upgrade to Pro Plan",
-      "greeting": "Hi {username}",
-      "message": "Thank you for using Scanby! We're excited to help you create beautiful, digital menus for your restaurant or business. The upgrade to the Pro Plan will allow you to have unlimited scans on your menus and access to more features.",
-      "button": "Upgrade to Pro Plan",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "emptyMenu": {
-      "subject": "Add items to your menu",
-      "heading": "Add items to your menu",
-      "greeting": "Hi {username}",
-      "message": "Add items to your menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
-      "button": "Populate Menu Now",
-      "message2": "If you dont want to populate your menu yourself, we can do it for you. Click the link and fill out the form and you don't have to do anything else.",
-      "button2": "Add items to my menu",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "subscriptionConfirmation": {
-      "subject": "Your Scanby subscription is confirmed!",
-      "heading": "Subscription Confirmed",
-      "greeting": "Hi {username}",
-      "message": "Thank you for subscribing to Scanby! Your {planName} plan is now active.",
-      "details": {
-        "heading": "Subscription Details",
-        "plan": "Plan: {planName}",
-        "price": "Price: {planPrice} {billingCycle}",
-        "startDate": "Start Date: {startDate}"
-      },
-      "accessInfo": "You now have access to all the features included in the {planName} plan. You can start creating QR menus right away!",
-      "button": "Go to Dashboard",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "trialEnded": {
-      "subject": "Your Scanby trial has ended - Upgrade to continue",
-      "heading": "Your Free Trial Has Ended",
-      "greeting": "Hi {username}",
-      "congratsMessage": "Congratulations on reaching 200 menu scans on {businessName} with Scanby! 🎉",
-      "message": "Your free trial has now ended. To continue offering digital menus to your customers without interruption, please upgrade your plan.",
-      "button": "Upgrade Now",
-      "benefits": "With a paid plan, you'll continue to enjoy unlimited scans",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "noMenu": {
-      "subject": "Your digital menu is one click away!",
-      "heading": "Ready to impress your guests?",
-      "greeting": "Hi {username},",
-      "message": "Create your first QR menu and offer a smooth, contactless experience your customers will love. It only takes a minute!",
-      "button": "Create a Free Menu Now",
-      "message2": "If you dont want to create your menu yourself, we can do it for you. Click the link and fill out the form and thats it. Our team will create your menu and send it to you.",
-      "button2": "Order a Free Menu Now",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "unfinishedMenu": {
-      "subject": "Let's finish your menu and go live!",
-      "heading": "You're almost there!",
-      "greeting": "Hi {username},",
-      "message": "Your menu is nearly ready. Add the final touches and go live to start accepting orders right away!",
-      "button": "Finish My Menu",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    },
-    "unverified": {
-      "subject": "Activate your Scanby account now",
-      "heading": "Just one more step!",
-      "greeting": "Hi {username},",
-      "message": "Click the button below to verify your email and unlock all features. Your menu journey starts now! The link will expire in 24 hours.",
-      "button": "Activate My Account",
+			"support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+			"unsubscribe": "Unsubscribe",
+			"unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
+		}
+	},
+	"feedbackForm": {
+		"title": "App Feedback",
+		"description": "We value your input to improve our app. Please share your thoughts with us.",
+		"rating": {
+			"label": "How would you rate your experience?",
+			"stars": {
+				"1": "1 Star",
+				"2": "2 Stars",
+				"3": "3 Stars",
+				"4": "4 Stars",
+				"5": "5 Stars"
+			}
+		},
+		"type": {
+			"label": "Feedback Type",
+			"placeholder": "Select feedback type",
+			"options": {
+				"bug": "Bug Report",
+				"feature": "Feature Request",
+				"improvement": "Improvement Suggestion",
+				"praise": "Praise",
+				"other": "Other"
+			}
+		},
+		"comment": {
+			"label": "Your Feedback",
+			"placeholder": "Please share your thoughts, suggestions, or report issues...",
+			"charCount": "{count}/500 characters"
+		},
+		"email": {
+			"label": "Email (optional)",
+			"placeholder": "your@email.com",
+			"description": "Provide your email if you'd like us to follow up with you."
+		},
+		"submit": "Submit Feedback",
+		"submitting": "Processing...",
+		"success": {
+			"title": "Feedback Submitted",
+			"description": "Thank you for your feedback!"
+		},
+		"error": {
+			"title": "Error",
+			"description": "There was a problem submitting your feedback."
+		},
+		"validation": {
+			"rating": "Please select a rating",
+			"type": "Please select a feedback type",
+			"comment": {
+				"min": "Comment must be at least 10 characters",
+				"max": "Comment must not exceed 500 characters"
+			},
+			"email": "Please enter a valid email address"
+		}
+	},
+	"menus": {
+		"search": {
+			"placeholder": "Search"
+		},
+		"cart": {
+			"title": "Order Items",
+			"listOfItems": "List of the items you want to order",
+			"empty": "Empty",
+			"scanQR": "Scan a QR to order",
+			"completeOrder": "Complete Order",
+			"preventReload": "Cart items will be lost if you reload. Do you want to continue?"
+		},
+		"order": {
+			"orderReceived": "We Received your Order!",
+			"orderSummary": "Order Summary",
+			"totalPrice": "Total Price",
+			"orderNumber": "Order #{orderId}",
+			"orderReceivedDescription": "We'll notify you when your order is ready!",
+			"orderReady": "Your Order is Ready!",
+			"orderReadyDescription": "Please show the order number when collecting your order",
+			"updateOrder": "Update Order",
+			"addToCart": "Add to Cart",
+			"toast": "Item added to Cart",
+			"backToMenu": "Back to menu"
+		}
+	},
+	"unsubscribe": {
+		"title": "Email Notification Preferences",
+		"description": "Manage which emails you'd like to receive from us",
+		"unsubscribeAll": {
+			"title": "Unsubscribe from all emails",
+			"description": "You will no longer receive any emails from us"
+		},
+		"unsubscribeSpecific": {
+			"title": "Unsubscribe from specific emails",
+			"description": "Select which types of emails you'd like to stop receiving"
+		},
+		"options": {
+			"marketing": {
+				"title": "Marketing emails",
+				"description": "Promotions, discounts, and special offers"
+			},
+			"updates": {
+				"title": "Product updates",
+				"description": "New features and improvements"
+			},
+			"newsletter": {
+				"title": "Newsletter",
+				"description": "Weekly or monthly newsletters"
+			},
+			"announcements": {
+				"title": "Announcements",
+				"description": "Important company and service announcements"
+			}
+		},
+		"success": {
+			"title": "Successfully Unsubscribed",
+			"description": "Your email preferences have been updated.",
+			"allUnsubscribed": "You have been unsubscribed from all email communications.",
+			"specificUnsubscribed": "Your email notification preferences have been updated according to your selection.",
+			"updateButton": "Update Preferences"
+		},
+		"saveButton": "Save preferences"
+	},
+	"accountVerification": {
+		"success": "Your account has been verified successfully!",
+		"continue": "Continue by signing in to your account",
+		"signIn": "Sign in"
+	},
+	"orderMenu": {
+		"title": "Let's create your digital menu",
+		"description": "If you dont want to create a menu yourself, we can do it for you. Choose your product and we'll set it up.",
+		"product": {
+			"label": "Select Product",
+			"placeholder": "Choose a product",
+			"qrMenu": "QR Menu",
+			"orderingQrMenu": "Smart Ordering QR Menu",
+			"selfServiceMenu": "Self Service QR Menu"
+		},
+		"businessName": {
+			"label": "Business Name",
+			"placeholder": "Business Name"
+		},
+		"comment": {
+			"label": "Additional Comments",
+			"placeholder": "Tell us about your business and any specific requirements...",
+			"charCount": "{count}/500 characters"
+		},
+		"email": {
+			"label": "Email Address",
+			"placeholder": "your@email.com",
+			"description": "We'll use this to send you updates about your order"
+		},
+		"menu": {
+			"label": "Upload your menu",
+			"desc": "You can upload either images or a PDF of your menu",
+			"images": {
+				"label": "Images",
+				"description": "Upload up to 15 images of your menu",
+				"min": "Please upload at least 1 image",
+				"max": "You can upload up to 15 images"
+			},
+			"pdf": {
+				"label": "PDF",
+				"description": "Upload a PDF of your menu",
+				"min": "Please upload at least 1 PDF",
+				"max": "You can upload up to 10 PDF"
+			}
+		},
+		"submit": "Submit Order",
+		"submitting": "Submitting...",
+		"success": {
+			"title": "Order Submitted",
+			"description": "We'll get back to you shortly"
+		},
+		"error": {
+			"title": "Error",
+			"description": "There was a problem submitting your order."
+		},
+		"validation": {
+			"product": "Please select a product",
+			"comment": {
+				"min": "Comment must be at least 10 characters",
+				"max": "Comment cannot exceed 500 characters"
+			},
+			"email": "Please enter a valid email address"
+		}
+	},
+	"userSettings": {
+		"title": "User Settings",
+		"emailNotifications": {
+			"title": "Email Notifications",
+			"description": "Manage which emails you receive",
+			"menuUpdates": {
+				"title": "Menu Updates",
+				"description": "Receive notifications about your menus"
+			},
+			"orderStatus": {
+				"title": "Order Status",
+				"description": "Get updates about menu orders"
+			},
+			"promotions": {
+				"title": "Promotions & Deals",
+				"description": "Special offers, discounts, and limited-time promotions"
+			},
+			"newsletter": {
+				"title": "Newsletter",
+				"description": "Monthly newsletter with news and updates"
+			},
+			"surveys": {
+				"title": "Surveys",
+				"description": "Occasional surveys to help us improve our service"
+			},
+			"feedback": {
+				"title": "Feedback Requests",
+				"description": "Requests for feedback on your recent experiences"
+			}
+		},
+		"dangerZone": {
+			"title": "Danger Zone",
+			"deleteAccount": {
+				"title": "Delete Account",
+				"description": "Permanently delete your account and all associated data. This action cannot be undone.",
+				"confirmTitle": "Are you absolutely sure?",
+				"confirmDescription": "This action cannot be undone. This will permanently delete your account and remove all your data from our servers.",
+				"cancel": "Cancel",
+				"confirm": "Delete Account"
+			}
+		},
+		"saveChanges": "Save Changes",
+		"saving": "Saving..."
+	},
+	"Success": {
+		"title": "Thank You for Your Order!",
+		"subtitle": "We've received your menu request and will start working on it right away.",
+		"details": {
+			"title": "Details",
+			"description": "Your menu request has been successfully submitted. We'll review your requirements and create a customized menu for your business."
+		},
+		"support": {
+			"text": "Have questions? Contact our support team at"
+		},
+		"nextSteps": {
+			"title": "Next Steps",
+			"step1": {
+				"title": "Create Your Free Account",
+				"description": "Manage your menu and watch statistics.",
+				"button": "Create Account"
+			},
+			"step2": {
+				"title": "Wait for Email Notification",
+				"description": "We'll send you an email once your menu is ready for review."
+			}
+		}
+	},
+	"MainButton": {
+		"title": "Create Menu Method",
+		"subtitle": "Choose how you'd like to create your menu",
+		"createYourself": {
+			"title": "Create it Yourself",
+			"description": "Create your menu in 4 easy steps and have it online in under 5 minutes. Easy setup, anyone can do it"
+		},
+		"letUsCreate": {
+			"title": "Let Us Create It",
+			"description": "Our experts will create a professional menu tailored to your business. We deliver in 24 hours or less"
+		},
+		"recommended": "Recommended"
+	},
 
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
-      "unsubscribe": "Unsubscribe",
-      "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
-    }
-  },
-  "feedbackForm": {
-    "title": "App Feedback",
-    "description": "We value your input to improve our app. Please share your thoughts with us.",
-    "rating": {
-      "label": "How would you rate your experience?",
-      "stars": {
-        "1": "1 Star",
-        "2": "2 Stars",
-        "3": "3 Stars",
-        "4": "4 Stars",
-        "5": "5 Stars"
-      }
-    },
-    "type": {
-      "label": "Feedback Type",
-      "placeholder": "Select feedback type",
-      "options": {
-        "bug": "Bug Report",
-        "feature": "Feature Request",
-        "improvement": "Improvement Suggestion",
-        "praise": "Praise",
-        "other": "Other"
-      }
-    },
-    "comment": {
-      "label": "Your Feedback",
-      "placeholder": "Please share your thoughts, suggestions, or report issues...",
-      "charCount": "{count}/500 characters"
-    },
-    "email": {
-      "label": "Email (optional)",
-      "placeholder": "your@email.com",
-      "description": "Provide your email if you'd like us to follow up with you."
-    },
-    "submit": "Submit Feedback",
-    "submitting": "Processing...",
-    "success": {
-      "title": "Feedback Submitted",
-      "description": "Thank you for your feedback!"
-    },
-    "error": {
-      "title": "Error",
-      "description": "There was a problem submitting your feedback."
-    },
-    "validation": {
-      "rating": "Please select a rating",
-      "type": "Please select a feedback type",
-      "comment": {
-        "min": "Comment must be at least 10 characters",
-        "max": "Comment must not exceed 500 characters"
-      },
-      "email": "Please enter a valid email address"
-    }
-  },
-  "menus": {
-    "search": {
-      "placeholder": "Search"
-    },
-    "cart": {
-      "title": "Order Items",
-      "listOfItems": "List of the items you want to order",
-      "empty": "Empty",
-      "scanQR": "Scan a QR to order",
-      "completeOrder": "Complete Order",
-      "preventReload": "Cart items will be lost if you reload. Do you want to continue?"
-    },
-    "order": {
-      "orderReceived": "We Received your Order!",
-      "orderSummary": "Order Summary",
-      "totalPrice": "Total Price",
-      "orderNumber": "Order #{orderId}",
-      "orderReceivedDescription": "We'll notify you when your order is ready!",
-      "orderReady": "Your Order is Ready!",
-      "orderReadyDescription": "Please show the order number when collecting your order",
-      "updateOrder": "Update Order",
-      "addToCart": "Add to Cart",
-      "toast":"Item added to Cart",
-      "backToMenu":"Back to menu"
-    }
-  },
-  "unsubscribe": {
-    "title": "Email Notification Preferences",
-    "description": "Manage which emails you'd like to receive from us",
-    "unsubscribeAll": {
-      "title": "Unsubscribe from all emails",
-      "description": "You will no longer receive any emails from us"
-    },
-    "unsubscribeSpecific": {
-      "title": "Unsubscribe from specific emails",
-      "description": "Select which types of emails you'd like to stop receiving"
-    },
-    "options": {
-      "marketing": {
-        "title": "Marketing emails",
-        "description": "Promotions, discounts, and special offers"
-      },
-      "updates": {
-        "title": "Product updates",
-        "description": "New features and improvements"
-      },
-      "newsletter": {
-        "title": "Newsletter",
-        "description": "Weekly or monthly newsletters"
-      },
-      "announcements": {
-        "title": "Announcements",
-        "description": "Important company and service announcements"
-      }
-    },
-    "success": {
-      "title": "Successfully Unsubscribed",
-      "description": "Your email preferences have been updated.",
-      "allUnsubscribed": "You have been unsubscribed from all email communications.",
-      "specificUnsubscribed": "Your email notification preferences have been updated according to your selection.",
-      "updateButton": "Update Preferences"
-    },
-    "saveButton": "Save preferences"
-  },
-  "accountVerification": {
-    "success": "Your account has been verified successfully!",
-    "continue": "Continue by signing in to your account",
-    "signIn": "Sign in"
-  },
-  "orderMenu": {
-    "title": "Let's create your digital menu",
-    "description": "If you dont want to create a menu yourself, we can do it for you. Choose your product and we'll set it up.",
-    "product": {
-      "label": "Select Product",
-      "placeholder": "Choose a product",
-      "qrMenu": "QR Menu",
-      "orderingQrMenu": "Smart Ordering QR Menu",
-      "selfServiceMenu": "Self Service QR Menu"
-    },
-    "businessName": {
-      "label": "Business Name",
-      "placeholder": "Business Name"
-    },
-    "comment": {
-      "label": "Additional Comments",
-      "placeholder": "Tell us about your business and any specific requirements...",
-      "charCount": "{count}/500 characters"
-    },
-    "email": {
-      "label": "Email Address",
-      "placeholder": "your@email.com",
-      "description": "We'll use this to send you updates about your order"
-    },
-    "menu": {
-      "label": "Upload your menu",
-      "desc": "You can upload either images or a PDF of your menu",
-      "images": {
-        "label": "Images",
-        "description": "Upload up to 15 images of your menu",
-        "min": "Please upload at least 1 image",
-        "max": "You can upload up to 15 images"
-      },
-      "pdf": {
-        "label": "PDF",
-        "description": "Upload a PDF of your menu",
-        "min": "Please upload at least 1 PDF",
-        "max": "You can upload up to 10 PDF"
-      }
-    },
-    "submit": "Submit Order",
-    "submitting": "Submitting...",
-    "success": {
-      "title": "Order Submitted",
-      "description": "We'll get back to you shortly"
-    },
-    "error": {
-      "title": "Error",
-      "description": "There was a problem submitting your order."
-    },
-    "validation": {
-      "product": "Please select a product",
-      "comment": {
-        "min": "Comment must be at least 10 characters",
-        "max": "Comment cannot exceed 500 characters"
-      },
-      "email": "Please enter a valid email address"
-    }
-  },
-  "userSettings": {
-    "title": "User Settings",
-    "emailNotifications": {
-      "title": "Email Notifications",
-      "description": "Manage which emails you receive",
-      "menuUpdates": {
-        "title": "Menu Updates",
-        "description": "Receive notifications about your menus"
-      },
-      "orderStatus": {
-        "title": "Order Status",
-        "description": "Get updates about menu orders"
-      },
-      "promotions": {
-        "title": "Promotions & Deals",
-        "description": "Special offers, discounts, and limited-time promotions"
-      },
-      "newsletter": {
-        "title": "Newsletter",
-        "description": "Monthly newsletter with news and updates"
-      },
-      "surveys": {
-        "title": "Surveys",
-        "description": "Occasional surveys to help us improve our service"
-      },
-      "feedback": {
-        "title": "Feedback Requests",
-        "description": "Requests for feedback on your recent experiences"
-      }
-    },
-    "dangerZone": {
-      "title": "Danger Zone",
-      "deleteAccount": {
-        "title": "Delete Account",
-        "description": "Permanently delete your account and all associated data. This action cannot be undone.",
-        "confirmTitle": "Are you absolutely sure?",
-        "confirmDescription": "This action cannot be undone. This will permanently delete your account and remove all your data from our servers.",
-        "cancel": "Cancel",
-        "confirm": "Delete Account"
-      }
-    },
-    "saveChanges": "Save Changes",
-    "saving": "Saving..."
-  },
-  "Success": {
-    "title": "Thank You for Your Order!",
-    "subtitle": "We've received your menu request and will start working on it right away.",
-    "details": {
-      "title": "Details",
-      "description": "Your menu request has been successfully submitted. We'll review your requirements and create a customized menu for your business."
-    },
-    "support": {
-      "text": "Have questions? Contact our support team at"
-    },
-    "nextSteps": {
-      "title": "Next Steps",
-      "step1": {
-        "title": "Create Your Free Account",
-        "description": "Manage your menu and watch statistics.",
-        "button": "Create Account"
-      },
-      "step2": {
-        "title": "Wait for Email Notification",
-        "description": "We'll send you an email once your menu is ready for review."
-      }
-    }
-  },
-  "MainButton": {
-    "title": "Create Menu Method",
-    "subtitle": "Choose how you'd like to create your menu",
-    "createYourself": {
-      "title": "Create it Yourself",
-      "description": "Create your menu in 4 easy steps and have it online in under 5 minutes. Easy setup, anyone can do it"
-    },
-    "letUsCreate": {
-      "title": "Let Us Create It",
-      "description": "Our experts will create a professional menu tailored to your business. We deliver in 24 hours or less"
-    },
-    "recommended": "Recommended"
-  },
-
-  "onboardingDialog": {
-    "steps": {
-      "0": {
-        "title": "Next Steps",
-        "description": "Here's what you can do next",
-        "items": [
-          "Visit your menu to see what you created",
-          "Fix any mistakes from the menu-items page where you can edit items",
-          "Print your QR and start accepting customers"
-        ]
-      },
-      "1": {
-        "title": "We Value Your Feedback",
-        "description": "Help us improve your experience",
-        "prompt": "How would you rate your experience so far?",
-        "textareaLabel": "Any additional thoughts?",
-        "textareaPlaceholder": "Share your experience or suggestions..."
-      }
-    },
-    "success": {
-      "title": "Feedback submitted",
-      "description": "Thank you! Your feedback helps us improve."
-    },
-    "error": {
-      "title": "Something went wrong",
-      "description": "Could not send feedback. Please try again later."
-    },
-    "Required":"Required",
-    "buttons":{
-      "next":"Next",
-      "back":"Back",
-      "submit":"Submit"
-    },
-    "validation": {
-      "rating": "Please select a rating.",
-      "comment-min": "Comment must be at least 10 characters.",
-      "comment-max": "Comment must be no more than 500 characters.",
-      "email": "Invalid email address."
-      
-    }
-  }
+	"onboardingDialog": {
+		"steps": {
+			"0": {
+				"title": "Next Steps",
+				"description": "Here's what you can do next",
+				"items": [
+					"Visit your menu to see what you created",
+					"Fix any mistakes from the menu-items page where you can edit items",
+					"Print your QR and start accepting customers"
+				]
+			},
+			"1": {
+				"title": "We Value Your Feedback",
+				"description": "Help us improve your experience",
+				"prompt": "How would you rate your experience so far?",
+				"textareaLabel": "Any additional thoughts?",
+				"textareaPlaceholder": "Share your experience or suggestions..."
+			}
+		},
+		"success": {
+			"title": "Feedback submitted",
+			"description": "Thank you! Your feedback helps us improve."
+		},
+		"error": {
+			"title": "Something went wrong",
+			"description": "Could not send feedback. Please try again later."
+		},
+		"Required": "Required",
+		"buttons": {
+			"next": "Next",
+			"back": "Back",
+			"submit": "Submit"
+		},
+		"validation": {
+			"rating": "Please select a rating.",
+			"comment-min": "Comment must be at least 10 characters.",
+			"comment-max": "Comment must be no more than 500 characters.",
+			"email": "Invalid email address."
+		}
+	}
 }

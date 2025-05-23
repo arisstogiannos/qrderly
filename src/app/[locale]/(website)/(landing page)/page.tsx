@@ -1,16 +1,31 @@
 import Hero from "./_sections/hero/Hero";
-import HowItWorks from "./_sections/how-it-works/HowItWorks";
-import Products from "./_sections/products/Products";
-import WhoIsThisFor from "./_sections/WhoIsThisFor";
-import ChooseUs from "./_sections/ChooseUs";
-import Preview from "./_sections/preview/Preview";
-import SomeFeatures from "./_sections/SomeFeatures";
-import Testimonials from "./_sections/Testimonials";
 import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
-import BusinessStats from "./_sections/BusinessStats";
-import OrderMenuForm from "./_sections/order-menu/OrderMenuForm";
-import OrderMenu from "./_sections/order-menu/OrderMenu";
+import dynamic from 'next/dynamic';
+
+// Dynamically import components
+const ChooseUs = dynamic(() => import("./_sections/ChooseUs"), {
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"/>
+});
+const Products = dynamic(() => import("./_sections/products/Products"), {
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"/>
+});
+const Preview = dynamic(() => import("./_sections/preview/Preview"), {
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"/>
+});
+const SomeFeatures = dynamic(() => import("./_sections/SomeFeatures"), {
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"/>
+});
+const HowItWorks = dynamic(() => import("./_sections/how-it-works/HowItWorks"), {
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"/>
+});
+const BusinessStats = dynamic(() => import("./_sections/BusinessStats"), {
+  
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"/>,
+});
+const OrderMenu = dynamic(() => import("./_sections/order-menu/OrderMenu"), {
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"/>
+});
 
 export default async function IndexPage({
   params,
@@ -25,15 +40,27 @@ export default async function IndexPage({
   return (
     <>
       <Hero />
-      <ChooseUs />
-      <Products />
-      <Suspense>
-      <Preview />
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+        <ChooseUs />
       </Suspense>
-      <SomeFeatures />
-      <HowItWorks />
-       <BusinessStats/>
-       <OrderMenu/>
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+        <Products />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+        <Preview />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+        <SomeFeatures />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+        <HowItWorks />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+        <BusinessStats />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading...</div>}>
+        <OrderMenu />
+      </Suspense>
       {/* <Testimonials /> */}
       {/* <WhoIsThisFor/> */}
     </>

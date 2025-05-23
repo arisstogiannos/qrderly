@@ -16,7 +16,7 @@ export default function MenuItem({ index }: { index: number }) {
           "relative  w-[90px] h-full overflow-hidden rounded-xl"
         }
       >
-        <Image src={"/image-placeholder.png"} alt="placeholder" fill />
+        <Image loading="lazy"  src={"/image-placeholder.png"} sizes="90px" alt="placeholder" fill />
       </div>
       <CardContent
         className={"flex flex-col justify-between py-1 px-3  h-full"}
