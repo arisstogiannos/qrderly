@@ -26,8 +26,8 @@ export async function getRunOutput(eventId: string): Promise<InngestRun> {
 
 async function getRuns(eventId: string) {
   const response = await fetch(
-    `http://localhost:8288/v1/events/${eventId}/runs`,
-    {
+    `https://api.inngest.com/v1/events/${eventId}/runs`,
+  {
       headers: {
         Authorization: `Bearer ${process.env.INNGEST_SIGNING_KEY}`,
       },cache:"no-store"
