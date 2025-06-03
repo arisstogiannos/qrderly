@@ -89,7 +89,7 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
         </ul>
         <Button
           disabled={isPending}
-          onSubmit={()=>setIsPending(true)}
+          onSubmit={() => setIsPending(true)}
           type="submit"
           formAction={createSession.bind(
             null,
@@ -125,7 +125,7 @@ function Switch({
           className={`absolute w-1/2 h-full bg-primary rounded-full top-1/2 transform -translate-y-1/2 transition-all duration-500 ${
             billing === "YEARLY" ? "left-0" : "left-1/2"
           }`}
-        ></div>
+        />
         <div className=" grid grid-cols-2 gap-10 items-center  bg-background w-fit rounded-full px-3 py-2">
           <button
             type="button"

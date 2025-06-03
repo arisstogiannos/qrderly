@@ -71,11 +71,13 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "biome": "^0.3.3",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
     "prisma": "^6.4.1",

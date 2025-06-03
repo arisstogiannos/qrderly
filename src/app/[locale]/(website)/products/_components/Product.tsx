@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import {Link} from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 
 import React from "react";
 
@@ -54,7 +54,12 @@ export default function Product({ title, desc, steps, videoPath }: thisProps) {
             className="text-lg md:text-2xl xl:text-xl rounded-full p-6 px-10 gap-x-4"
             asChild
           >
-            <Link  href={{pathname:"/get-started/[product]/business-setup",params:{product:title.replaceAll(" ","-").toLowerCase()}}}>
+            <Link
+              href={{
+                pathname: "/get-started/[product]/business-setup",
+                params: { product: title.replaceAll(" ", "-").toLowerCase() },
+              }}
+            >
               Get Started for Free <ArrowRight className="size-6" />
             </Link>
           </Button>
@@ -63,10 +68,14 @@ export default function Product({ title, desc, steps, videoPath }: thisProps) {
             asChild
             className="text-lg md:text-2xl xl:text-xl py-5 md:py-6 pl-4 pr-2 gap-5 md:gap-20 justify-between rounded-full"
           >
-            <Link href={`/products/${title.toLowerCase().replaceAll(" ","-")}`  as
-                | "/products/qr-menu"
-                | "/products/smart-ordering-qr-menu"
-                | "/products/self-service-smart-menu"}>
+            <Link
+              href={
+                `/products/${title.toLowerCase().replaceAll(" ", "-")}` as
+                  | "/products/qr-menu"
+                  | "/products/smart-ordering-qr-menu"
+                  | "/products/self-service-smart-menu"
+              }
+            >
               Learn More
               <span className="h-8 md:h-10 w-12 md:w-16 bg-foreground rounded-full flex-center">
                 <ArrowRight className="text-background size-6 md:size-8" />
@@ -84,7 +93,7 @@ export default function Product({ title, desc, steps, videoPath }: thisProps) {
           muted
           className="object-cover h-full rounded-3xl"
           src={videoPath}
-        ></video>
+        />
       </div>
     </div>
   );
