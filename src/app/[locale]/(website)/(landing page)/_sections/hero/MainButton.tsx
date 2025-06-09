@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import AuthModal from "@/app/[locale]/(auth)/_components/AuthModal";
 import { useState } from "react";
+import { Button as Btn } from "@/components/ui/button";
 
 export function MainButton({
   children,
@@ -51,25 +52,23 @@ export function Button({
   className,
   children,
   asChild = false,
+  variant = "primary",
   ...props
-}: React.ComponentProps<"button"> & { asChild?: boolean }) {
+}: React.ComponentProps<"button"> & { asChild?: boolean } & { variant?: "primary" | "secondary" | "outline" }) {
   return (
-    <button
+    <Btn
       {...props}
+      // @ts-expect-error
+      variant={variant}
       className={cn(
-        " inline-block p-px font-medium leading-6 text-lg 3xl:text-2xl   text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
+        " font-medium leading-6 text-lg !px-5 py-6 3xl:text-2xl   text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-full  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
         className
       )}
     >
-      <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <span className="relative z-10 block py-3 px-4 3xl:px-8 3xl:py-4 rounded-2xl bg-inherit w-full">
-        <div className="relative z-10 flex  items-center justify-center space-x-3 w-full">
-          <span className="transition-all duration-500 group-hover:translate-x-1.5 justify-center  flex gap-4 w-full items-center">
-            {children}
-          </span>
-        </div>
-      </span>
-    </button>
+
+      {children}
+
+    </Btn>
   );
 }
 interface MethodCardProps {
@@ -187,27 +186,24 @@ export function MainButtonLink({
   href,
   children,
   className,
+  variant = "primary",
   ...props
-}: React.ComponentProps<"a">) {
+}: React.ComponentProps<"a"> & { variant?: "primary" | "secondary" | "outline" }) {
   return (
-    <Link
-      //@ts-expect-error
-      href={href}
-      {...props}
-      className={cn(
-        " inline-block p-px font-medium leading-6 text-lg 3xl:text-2xl text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
-        className
-      )}
-    >
-      <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <span className="relative z-10 block px-4 py-3 3xl:px-8 3xl:py-4 rounded-2xl bg-inherit">
-        <div className="relative z-10 flex items-center justify-center space-x-3">
-          <span className="transition-all duration-500 group-hover:translate-x-1.5 justify-center  flex gap-4 w-full items-center">
-            {children}
-          </span>
-        </div>
-      </span>
-    </Link>
+    <Button asChild variant={variant} className={cn(
+      " font-medium bg-background border-2 border-foreground text-foreground leading-6 text-lg !px-5 py-6 3xl:text-2xl hover:text-primary  shadow-lg  rounded-full  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
+      className
+    )}>
+
+      <Link
+        //@ts-expect-error
+        href={href}
+        {...props}
+
+      >
+        {children}
+      </Link>
+    </Button>
   );
 }
 
@@ -217,9 +213,9 @@ export function MainButtonLinkAuth({
   className,
   redirectUrl,
   ...props
-}: React.ComponentProps<"a">&{redirectUrl:string}) {
+}: React.ComponentProps<"a"> & { redirectUrl: string }) {
   const isLoggedin = useSession().status === "authenticated";
-  const [isOpen,setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <>
       <Link
@@ -246,8 +242,8 @@ export function MainButtonLinkAuth({
           </div>
         </span>
       </Link>
-        
-      <AuthModal open={isOpen}  setOpen={setIsOpen} redirectUrl={redirectUrl}/>
+
+      <AuthModal open={isOpen} setOpen={setIsOpen} redirectUrl={redirectUrl} />
     </>
   );
 }
