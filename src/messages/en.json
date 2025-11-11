@@ -1255,5 +1255,12 @@
     "activated": "Your subscription has been activated successfully.",
     "emailSent": "A confirmation email has been sent to your registered email address.",
     "viewSubscriptionDetails": "View Subscription Details"
+  },
+  "pwaInstallPrompt": {
+    "title": "Install our app",
+    "description": "Get a better experience with our app",
+    "installing": "Installing...",
+    "install": "Install",
+    "dismiss": "Dismiss"
   }
 }

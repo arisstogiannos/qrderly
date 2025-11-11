@@ -19,7 +19,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <ScrollToTop />
       <Footer />
       <Toaster />
-      <Analytics />
+      {process.env.NODE_ENV === 'production' && <Analytics />}
     </>
   );
 }

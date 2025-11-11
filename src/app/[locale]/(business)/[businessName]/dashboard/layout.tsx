@@ -11,6 +11,7 @@ import { DashboardPWARegister } from './_components/DashboardPWARegister';
 import { CategoriesIcon, ProductsIcon, SalesIcon } from './_components/SharedComponents/Icons';
 import OnboardingDialog from './_components/SharedComponents/OnboardingDialog';
 import SubscriptionExpired from './_components/SharedComponents/SubscriptionExpired';
+import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
 
 const data = {
   user: {
@@ -145,6 +146,7 @@ export default async function AdminLayout({
             <OnboardingDialog />
           </Suspense>
           <DashboardPWARegister />
+          <PWAInstallPrompt />
         </section>
         {/* </div> */}
       </SidebarInset>
