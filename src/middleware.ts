@@ -9,6 +9,7 @@ const { auth } = NextAuth(authConfig);
 const handleI18nRouting = createMiddleware(routing);
 export default auth((req) => {
   const isLoggedin = !!req.auth;
+  const pathname = req.nextUrl.pathname;
 
   // const defaultLocale = req.headers.get('x-accept-language') || 'en';
 
@@ -19,12 +20,12 @@ export default auth((req) => {
   // });
   // // const response = handleI18nRouting(req);
 
-  const isSignRoute = req.nextUrl.pathname.includes('/sign');
-  const isAdminRoute = req.nextUrl.pathname.includes('/admin');
+  const isSignRoute = pathname.includes('/sign');
+  const isAdminRoute = pathname.includes('/admin');
   const isProtectedRoute =
-    req.nextUrl.pathname.includes('/get-started') &&
-    !req.nextUrl.pathname.endsWith('/get-started') &&
-    !req.nextUrl.pathname.endsWith('/get-started/');
+    pathname.includes('/get-started') &&
+    !pathname.endsWith('/get-started') &&
+    !pathname.endsWith('/get-started/');
 
   if (isLoggedin) {
     if (isSignRoute) {
@@ -36,10 +37,13 @@ export default auth((req) => {
     }
   }
   if (
-    !req.nextUrl.pathname.includes('/api') &&
-    !req.nextUrl.pathname.includes('stripe') &&
-    !req.nextUrl.pathname.includes('sitemap') &&
-    !req.nextUrl.pathname.endsWith('robots.txt')
+    !pathname.includes('/api') &&
+    !pathname.includes('stripe') &&
+    !pathname.includes('sitemap') &&
+    !pathname.endsWith('robots.txt') &&
+    !pathname.includes('dashboard-sw.js') &&
+    !pathname.endsWith('manifest.webmanifest') &&
+    !pathname.endsWith('/dashboard/manifest')
   ) {
     return handleI18nRouting(req);
   }

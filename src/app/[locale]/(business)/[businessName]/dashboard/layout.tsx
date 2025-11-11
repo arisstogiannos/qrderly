@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { CloudUpload, LayoutDashboard, QrCode, Settings } from 'lucide-react';
 import { Suspense } from 'react';
 import { OrderIcon } from '@/app/[locale]/(website)/products/_components/Icons';
@@ -6,6 +7,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { BusinessProvider } from '@/context/BusinessProvider';
 import { checkUserAuthorized } from '../_actions/authorization';
 import { AppSidebar } from './_components/Nav/Navbar';
+import { DashboardPWARegister } from './_components/DashboardPWARegister';
 import { CategoriesIcon, ProductsIcon, SalesIcon } from './_components/SharedComponents/Icons';
 import OnboardingDialog from './_components/SharedComponents/OnboardingDialog';
 import SubscriptionExpired from './_components/SharedComponents/SubscriptionExpired';
@@ -78,6 +80,21 @@ const data = {
   ],
 };
 
+export async function generateMetadata({
+  params,
+}: Readonly<{
+  params: Promise<{ businessName: string; locale: string }>;
+}>): Promise<Metadata> {
+  const { businessName, locale } = await params;
+  const normalizedBusinessName = businessName ?? '';
+  const normalizedLocale = locale ?? 'en';
+
+  return {
+    manifest: `/${normalizedLocale}/${normalizedBusinessName}/dashboard/manifest.webmanifest`,
+    themeColor: '#0f172a',
+  };
+}
+
 export default async function AdminLayout({
   children,
   params,
@@ -127,6 +144,7 @@ export default async function AdminLayout({
           <Suspense>
             <OnboardingDialog />
           </Suspense>
+          <DashboardPWARegister />
         </section>
         {/* </div> */}
       </SidebarInset>
