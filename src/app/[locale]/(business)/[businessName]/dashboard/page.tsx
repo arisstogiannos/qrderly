@@ -5,15 +5,13 @@ import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { plandata } from '@/data';
 import { Link } from '@/i18n/navigation';
-import { cache } from '@/lib/cache';
 import { checkUserAuthorized } from '../_actions/authorization';
-import { getAllOrders } from '../_actions/orders';
 import { AnalyticsCard, AnalyticsCardSkeleton } from './_components/Dashboard/analytics-card';
 import { BusinessInfoCard } from './_components/Dashboard/business-info-card';
-import Chart from './_components/Dashboard/Chart';
 import { QrCodeCard } from './_components/Dashboard/qr-code-card';
 import { StatsCards, StatsCardsLoadingSkeleton } from './_components/Dashboard/stats-cards';
 import { SubscriptionStatusCard } from './_components/Dashboard/subscription-status-card';
+
 export default async function page({ params }: { params: Promise<{ businessName: string }> }) {
   const businessName = (await params).businessName.replaceAll('-', ' ');
   const { business } = await checkUserAuthorized(businessName);
@@ -93,19 +91,19 @@ export default async function page({ params }: { params: Promise<{ businessName:
   );
 }
 
-async function RevenueChart({ businessName }: { businessName: string }) {
-  const getAllOrdersCache = cache(getAllOrders, ['orders'], {
-    tags: ['orders'],
-    revalidate: 3600,
-  });
+// async function RevenueChart({ businessName }: { businessName: string }) {
+//   const getAllOrdersCache = cache(getAllOrders, ['orders'], {
+//     tags: ['orders'],
+//     revalidate: 3600,
+//   });
 
-  const orders = await getAllOrdersCache(businessName);
-  const chartData = orders.map((order) => ({
-    createdAt: order.createdAt,
-    pricePaidInCents: order.price,
-  }));
-  return <Chart chartData={chartData} />;
-}
+//   const orders = await getAllOrdersCache(businessName);
+//   const chartData = orders.map((order) => ({
+//     createdAt: order.createdAt,
+//     pricePaidInCents: order.price,
+//   }));
+//   return <Chart chartData={chartData} />;
+// }
 // async function ScansChart({ scans }: { scans: number[] }) {
 //   const getAllOrdersCache = cache(getAllOrders, ["orders"], {
 //     tags: ["orders"],

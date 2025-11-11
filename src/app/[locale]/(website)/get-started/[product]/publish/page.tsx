@@ -54,7 +54,7 @@ export default async function page({ params }: { params: Promise<{ product: Prod
           </div>
         </div>
 
-        <Card className="  mb-12 overflow-hidden border-amber-200 bg-gradient-to-r from-yellow-50 to-yellow-100 py-0">
+        <Card className="  mb-12 overflow-hidden border-amber-200 bg-linear-to-r from-yellow-50 to-yellow-100 py-0">
           <div className="p-4 flex items-start gap-4">
             <div className="shrink-0 bg-amber-200 p-2 rounded-full">
               <Lightbulb className="h-6 w-6 text-amber-600" />

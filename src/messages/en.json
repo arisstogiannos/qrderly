@@ -159,11 +159,11 @@
   },
   "WhyUs": {
     "title": "Why scanby?",
-    "subtitle": "We let you create, launch, and manage everything on your own, in a matter of minutes—no business or third-party intervention needed.",
+    "subtitle": "We let you create, launch, and manage everything on your own, in a matter of minutes-no business or third-party intervention needed.",
     "bullets": {
       "1": {
         "title": "Create Instantly",
-        "subtitle": "Upload a photo or PDF of your printed menu, and we'll instantly turn it into a digital version using AI—no technical skills required."
+        "subtitle": "Upload a photo or PDF of your printed menu, and we'll instantly turn it into a digital version using AI-no technical skills required."
       },
       "2": {
         "title": "Customizable & Multilingual",
@@ -171,7 +171,7 @@
       },
       "3": {
         "title": "Seamless Managing",
-        "subtitle": "Update your menu, prices, and items instantly—no middlemen, no delays. Manage everything seamlessly from your own dashboard, anytime you want."
+        "subtitle": "Update your menu, prices, and items instantly-no middlemen, no delays. Manage everything seamlessly from your own dashboard, anytime you want."
       },
       "4": {
         "title": "Start for Free – No Credit Card Required",
@@ -207,7 +207,7 @@
 
     "faq1": {
       "question": "How does the Scanby QR menu work exactly?",
-      "answer": "Once you upload your menu, Scanby generates a unique QR code for your business. Simply print it and place it on your tables, counters, or menus. Customers scan it with their smartphone camera and instantly view your digital menu—no app downloads required, just instant access."
+      "answer": "Once you upload your menu, Scanby generates a unique QR code for your business. Simply print it and place it on your tables, counters, or menus. Customers scan it with their smartphone camera and instantly view your digital menu-no app downloads required, just instant access."
     },
     "faq2": {
       "question": "Can customers place orders directly through the QR menu?",
@@ -215,15 +215,15 @@
     },
     "faq3": {
       "question": "Is it difficult to set up? I'm not very tech-savvy.",
-      "answer": "Not at all! Scanby is designed for everyone—even if you have zero technical experience. Setup takes minutes, and you can easily manage your menus, orders, and settings from our intuitive, user-friendly admin dashboard."
+      "answer": "Not at all! Scanby is designed for everyone-even if you have zero technical experience. Setup takes minutes, and you can easily manage your menus, orders, and settings from our intuitive, user-friendly admin dashboard."
     },
     "faq4": {
       "question": "Can I update my menu after it's live?",
-      "answer": "Yes! You have full control to update your digital menu anytime. Whether it's adding a new item, adjusting prices, or highlighting specials, all changes happen in real-time—your customers always see the freshest version."
+      "answer": "Yes! You have full control to update your digital menu anytime. Whether it's adding a new item, adjusting prices, or highlighting specials, all changes happen in real-time-your customers always see the freshest version."
     },
     "faq5": {
       "question": "Can I use Scanby if I run multiple locations or franchises?",
-      "answer": "Definitely! Scanby lets you manage multiple venues from a single account. Each location gets its own menu, QR codes, and settings—all organized neatly in your dashboard."
+      "answer": "Definitely! Scanby lets you manage multiple venues from a single account. Each location gets its own menu, QR codes, and settings-all organized neatly in your dashboard."
     },
     "faq6": {
       "question": "What happens if I need help setting everything up or troubleshooting?",
@@ -231,7 +231,7 @@
     },
     "faq7": {
       "question": "What devices do customers need to use Scanby QR menus?",
-      "answer": "Customers just need a smartphone with a camera—no apps or special software needed. Our QR codes work universally with iPhones and Androids."
+      "answer": "Customers just need a smartphone with a camera-no apps or special software needed. Our QR codes work universally with iPhones and Androids."
     },
     "faq8": {
       "question": "Is the menu customizable to match my restaurant's brand?",
@@ -259,7 +259,7 @@
       "title": "Some Features",
       "Effortless Digital Menu from Images & PDFs!": {
         "title": "Effortless Digital Menu from Images & PDFs!",
-        "desc": "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry—just upload and let AI do the work!"
+        "desc": "Instantly convert your photo or PDF menu into a digital menu with AI-powered accuracy. No manual entry-just upload and let AI do the work!"
       },
       "Customizable Themes": {
         "title": "Customizable Themes",
@@ -267,11 +267,11 @@
       },
       "Real-Time Dashboard": {
         "title": "Real-Time Dashboard",
-        "desc": "Effortlessly update menu items, descriptions, and prices with just a few clicks. No need to reprint menus—changes reflect instantly across all customer devices."
+        "desc": "Effortlessly update menu items, descriptions, and prices with just a few clicks. No need to reprint menus-changes reflect instantly across all customer devices."
       },
       "Instant Digital Menu Access": {
         "title": "Instant Digital Menu Access",
-        "desc": "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required—just fast, convenient, and touch-free browsing."
+        "desc": "Guests simply scan a QR code to view the menu instantly on their smartphones. No app downloads required-just fast, convenient, and touch-free browsing."
       },
       "Multi-Language Support": {
         "title": "Multi-Language Support",
@@ -293,8 +293,8 @@
     "QR Menu": {
       "title": "QR Menu",
       "longTitle": "QR Menu – Instant Access, Effortless Browsing",
-      "desc": "Say goodbye to printed menus and hello to a modern, hassle-free service experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu—no downloads, no delays, no apps needed.",
-      "shortDesc": "Let your customers scan a QR code and instantly access your digital menu—no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
+      "desc": "Say goodbye to printed menus and hello to a modern, hassle-free service experience. With our QR Menu, your customers can simply scan a QR code using their smartphones and instantly access your digital menu-no downloads, no delays, no apps needed.",
+      "shortDesc": "Let your customers scan a QR code and instantly access your digital menu-no apps, no hassle. Keep your menu always up-to-date while reducing printing costs.",
       "videoPath": "/QR animation.webm",
       "button": "Learn More",
       "steps": {
@@ -309,7 +309,7 @@
       "longTitle": "Smart QR Menu – Seamless & Effortless Ordering",
       "button": "Learn More",
       "desc": "Take your QR Menu to the next level by allowing customers to browse, order, and pay directly from their phones. Enhance efficiency, reduce wait times, and improve the overall customer experience.",
-      "shortDesc": "Take your QR menu to the next level! Allow customers to browse your menu, place orders — all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
+      "shortDesc": "Take your QR menu to the next level! Allow customers to browse your menu, place orders - all without waiting for a waiter. Faster service, happier customers, and increased efficiency.",
       "steps": {
         "step1": "Setup The Menu - The interface simplifies the setup of the QR menu, with some extra configuration like stock & quantity or payment integration.",
         "step2": "Browse & Select Items - Guests add items to their carts, select preferences, and place the order directly from their phones.",
@@ -321,8 +321,8 @@
       "title": "Self Service Smart Menu",
       "longTitle": "Self Service Smart Menu",
       "button": "Learn More",
-      "desc": " Improve  your self service business customer and staff experience with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready — no waiting on long queues.",
-      "shortDesc": "Customers can scan, order from their table, and receive notification when it's ready to collect— no waiting on long queues. ",
+      "desc": " Improve  your self service business customer and staff experience with a QR ordering system! Customers can scan, order from their table, and only pick up their order when it's ready - no waiting on long queues.",
+      "shortDesc": "Customers can scan, order from their table, and receive notification when it's ready to collect- no waiting on long queues. ",
       "videoPath": "/smart QR animation.webm",
       "steps": {
         "step1": "Set Up Your Online Store - Customize your menu, pricing, and branding by following the exact same steps as setting up a QR menu.",
@@ -579,7 +579,7 @@
     "no": "No"
   },
   "businessSetupForm": {
-    "title": "Businesses Setup",
+    "title": "Business Setup",
     "businessName": "Business Name",
     "businessNameHint": "It will be used as a URL for your menu. Example: scanby.io/mybusiness/menu",
     "businessNameValidation": "Only letters, numbers, dashes (-), underscores (_), dots (.) and tildes (~) are allowed.",
@@ -740,7 +740,7 @@
     },
     "ordering": {
       "title": "Smart QR Menu with Ordering System | Easy Setup in 5 Min",
-      "description": "Combine your QR menu with a smart ordering system. Customers can scan, browse, and order — all from their phones. No apps, no fuss.",
+      "description": "Combine your QR menu with a smart ordering system. Customers can scan, browse, and order - all from their phones. No apps, no fuss.",
       "keywords": {
         "0": "ordering system",
         "1": "QR menu with ordering",
@@ -756,7 +756,7 @@
     },
     "selfService": {
       "title": "Self-Service Ordering Menu | Smart & Contactless Menus",
-      "description": "Empower your customers with self-service ordering. Let them scan, order, and enjoy—no waiters, no apps. Easy QR setup in minutes.",
+      "description": "Empower your customers with self-service ordering. Let them scan, order, and enjoy-no waiters, no apps. Easy QR setup in minutes.",
       "keywords": {
         "0": "self-service ordering",
         "1": "qr ordering system",
@@ -867,7 +867,7 @@
       "greeting": "Hi {username}",
       "message": "Thank you for using Scanby! We're excited to help you create beautiful, digital menus for your restaurant or business. The upgrade to the Pro Plan will allow you to have unlimited scans on your menus and access to more features.",
       "button": "Upgrade to Pro Plan",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "support": "Need help or have questions? Just reply to this email - our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -879,7 +879,7 @@
       "button": "Populate Menu Now",
       "message2": "If you dont want to populate your menu yourself, we can do it for you. Click the link and fill out the form and you don't have to do anything else.",
       "button2": "Add items to my menu",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "support": "Need help or have questions? Just reply to this email - our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -896,7 +896,7 @@
       },
       "accessInfo": "You now have access to all the features included in the {planName} plan. You can start creating QR menus right away!",
       "button": "Go to Dashboard",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "support": "Need help or have questions? Just reply to this email - our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -908,7 +908,7 @@
       "message": "Your free trial has now ended. To continue offering digital menus to your customers without interruption, please upgrade your plan.",
       "button": "Upgrade Now",
       "benefits": "With a paid plan, you'll continue to enjoy unlimited scans",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "support": "Need help or have questions? Just reply to this email - our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -920,7 +920,7 @@
       "button": "Create a Free Menu Now",
       "message2": "If you dont want to create your menu yourself, we can do it for you. Click the link and fill out the form and thats it. Our team will create your menu and send it to you.",
       "button2": "Order a Free Menu Now",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "support": "Need help or have questions? Just reply to this email - our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -930,7 +930,7 @@
       "greeting": "Hi {username},",
       "message": "Your menu is nearly ready. Add the final touches and go live to start accepting orders right away!",
       "button": "Finish My Menu",
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "support": "Need help or have questions? Just reply to this email - our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     },
@@ -941,7 +941,7 @@
       "message": "Click the button below to verify your email and unlock all features. Your menu journey starts now! The link will expire in 24 hours.",
       "button": "Activate My Account",
 
-      "support": "Need help or have questions? Just reply to this email — our team is ready to assist you!",
+      "support": "Need help or have questions? Just reply to this email - our team is ready to assist you!",
       "unsubscribe": "Unsubscribe",
       "unsubscribeDesc": "If you no longer want to receive these emails, you can unsubscribe from our emails by clicking the button below."
     }
@@ -1248,5 +1248,12 @@
       "comment-max": "Comment must be no more than 500 characters.",
       "email": "Invalid email address."
     }
+  },
+  "paymentSuccess": {
+    "title": "Payment Successful!",
+    "subtitle": "Thank you for your subscription",
+    "activated": "Your subscription has been activated successfully.",
+    "emailSent": "A confirmation email has been sent to your registered email address.",
+    "viewSubscriptionDetails": "View Subscription Details"
   }
 }

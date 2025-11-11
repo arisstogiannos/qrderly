@@ -1,6 +1,7 @@
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import Stripe from 'stripe';
 import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
@@ -28,6 +29,8 @@ export default async function SuccessPage({
   const user = (await auth())?.user;
   if (!user) return redirect('/sign-up');
 
+  const t = await getTranslations('paymentSuccess');
+
   const paramSessionId = (await searchParams).session_id;
   const successPageButton = (await searchParams).successPageButton;
   const successPageLink = (await searchParams).successPageLink;
@@ -53,7 +56,7 @@ export default async function SuccessPage({
   //   const isSuccess = paymentIntent.status === "succeeded";
 
   return (
-    <div className="flex mt-20 items-center justify-center bg-gradient-to-b from-green-50 to-white p-4">
+    <div className="flex mt-20 items-center justify-center bg-linear-to-b from-green-50 to-white p-4">
       <Confetti />
 
       <Card className="max-w-md w-full shadow-lg">
@@ -61,14 +64,12 @@ export default async function SuccessPage({
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
             <CheckCircle className="h-10 w-10 text-green-600" />
           </div>
-          <CardTitle className="text-2xl font-bold text-green-700">Payment Successful!</CardTitle>
-          <CardDescription className="text-base">Thank you for your subscription</CardDescription>
+          <CardTitle className="text-2xl font-bold text-green-700">{t('title')}</CardTitle>
+          <CardDescription className="text-base">{t('subtitle')}</CardDescription>
         </CardHeader>
         <CardContent className="text-center space-y-2 pb-4">
-          <p>Your subscription has been activated successfully.</p>
-          <p className="text-sm text-muted-foreground">
-            A confirmation email has been sent to your registered email address.
-          </p>
+          <p>{t('activated')}</p>
+          <p className="text-sm text-muted-foreground">{t('emailSent')}</p>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button asChild className="w-full bg-green-600 hover:bg-green-700">
@@ -78,7 +79,7 @@ export default async function SuccessPage({
             <Link
               href={`https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=${user.email}`}
             >
-              View Subscription Details
+              {t('viewSubscriptionDetails')}
             </Link>
           </Button>
         </CardFooter>

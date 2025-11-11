@@ -125,7 +125,7 @@ export default function OrderMenuForm({ onSubmit }: { onSubmit: () => void }) {
         description: t('success.description'),
       });
       onSubmit();
-      document.cookie = 'menu-order-submitted=true; path=/';
+      localStorage.setItem('menu-order-submitted', 'true');
 
       setFormData({
         product: '',
@@ -134,7 +134,7 @@ export default function OrderMenuForm({ onSubmit }: { onSubmit: () => void }) {
         images: [],
         phone: '',
       });
-    } catch (error) {
+    } catch (_error) {
       toast.error(t('error.title'), {
         description: t('error.description'),
       });
