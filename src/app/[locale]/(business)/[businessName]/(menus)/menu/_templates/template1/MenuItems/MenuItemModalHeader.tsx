@@ -1,27 +1,16 @@
-import DisplayPrice from "@/components/DisplayPrice";
-import {
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
-import type { MenuItemRequired } from "@/types";
-import React from "react";
+import DisplayPrice from '@/components/DisplayPrice';
+import { DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import type { MenuItemRequired } from '@/types';
 
-export default function MenuItemModalHeader({
-  menuItem,
-}: {
-  menuItem: MenuItemRequired;
-}) {
+export default function MenuItemModalHeader({ menuItem }: { menuItem: MenuItemRequired }) {
   return (
     <DrawerHeader className=" sticky top-0 py-7 bg-gradient-to-b from-background to-transparent from-70% flex items-start justify-between text-foreground flex-row">
       <div className="space-y-4">
         <DrawerTitle className="font-normal ">{menuItem.name}</DrawerTitle>
-        <DrawerDescription className="overflow-hidden">
-          {menuItem.description}
-        </DrawerDescription>
+        <DrawerDescription className="overflow-hidden">{menuItem.description}</DrawerDescription>
       </div>
       <p>
-        <DisplayPrice price={menuItem.priceInCents } />
+        <DisplayPrice price={menuItem.priceInCents} />
       </p>
     </DrawerHeader>
   );

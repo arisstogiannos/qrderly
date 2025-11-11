@@ -1,28 +1,20 @@
-import React from "react";
-import Features from "./Features";
-import type { ProductType } from "@/types";
-import { MainButton } from "../../(landing page)/_sections/hero/MainButton";
+import { ArrowRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import type { ProductType } from '@/types';
+import { MainButton } from '../../(landing page)/_sections/hero/MainButton';
+import Features from './Features';
 
-import { ArrowRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-
-export default async function ProductPage({
-  product,
-}: {
-  product: ProductType;
-}) {
-  const t = await getTranslations("productsData");
+export default async function ProductPage({ product }: { product: ProductType }) {
+  const t = await getTranslations('productsData');
   return (
     <section className="space-y-20  mt-20">
       <header className="flex justify-between flex-col  sm:text-center gap-y-3 sm:gap-y-8 mx-auto">
         <h1 className="text-[28px] sm:text-3xl md:text-7xl font-semibold  text-balance lg:px-40">
           {t(`${product.title}.longTitle`)}
         </h1>
-        <h2 className="text-base sm:text-2xl max-w-3xl mx-auto">
-          {t(`${product.title}.desc`)}
-        </h2>
+        <h2 className="text-base sm:text-2xl max-w-3xl mx-auto">{t(`${product.title}.desc`)}</h2>
         <MainButton className="w-fit md:mx-auto my-5 md:mb-10 flex gap-4  items-center text-xl">
-          {t("button")} <ArrowRight />
+          {t('button')} <ArrowRight />
         </MainButton>
       </header>
 

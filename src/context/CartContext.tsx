@@ -1,27 +1,19 @@
-"use client";
+'use client';
 
-import type {  CartItem, MenuItemRequired } from "@/types";
-import type React from "react";
-import {
-  createContext,type 
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
+import type React from 'react';
+import { createContext, type ReactNode, useContext, useState } from 'react';
+import type { CartItem, MenuItemRequired } from '@/types';
 
 type CartContextType = {
   cartItems: CartItem[];
   setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
   increaseItemQuantity: (cartItemId: string, currQuantity: number) => void;
   decreaseItemQuantity: (cartItemId: string, currQuantity: number) => void;
-  addToCart: (menuItem: MenuItemRequired, selectedPreferances: string,price:number) => void;
-  updateCartItem: (selectedPreferances: string, cartItemId: string,price:number) => void;
+  addToCart: (menuItem: MenuItemRequired, selectedPreferances: string, price: number) => void;
+  updateCartItem: (selectedPreferances: string, cartItemId: string, price: number) => void;
 };
 
-export const CartContext = createContext<CartContextType | undefined>(
-  undefined
-);
+export const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartContextProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -62,9 +54,8 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
                 menuItem: item.menuItem,
                 preferences: item.preferences,
               };
-            } 
-              return null;
-            
+            }
+            return null;
           }
 
           return item;
@@ -75,14 +66,14 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  function addToCart(menuItem: MenuItemRequired, selectedPreferances: string,price:number) {
+  function addToCart(menuItem: MenuItemRequired, selectedPreferances: string, price: number) {
     let itemToAdd: CartItem;
     setCartItems((prev) => {
       itemToAdd = {
         id: crypto.randomUUID(),
         quantity: 1,
         preferences: selectedPreferances,
-        price:price,
+        price: price,
         menuItem: {
           id: menuItem.id,
           name: menuItem.name,
@@ -96,15 +87,12 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
 
       const existingItemIndex = prev.findIndex(
         (item) =>
-          item.menuItem.id === itemToAdd.menuItem.id &&
-          item.preferences === itemToAdd.preferences
+          item.menuItem.id === itemToAdd.menuItem.id && item.preferences === itemToAdd.preferences,
       );
 
       if (existingItemIndex !== -1) {
         return prev.map((item, i) =>
-          existingItemIndex === i
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+          existingItemIndex === i ? { ...item, quantity: item.quantity + 1 } : item,
         );
       }
 
@@ -113,10 +101,10 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  function updateCartItem(selectedPreferances: string, cartItemId: string,price:number) {
+  function updateCartItem(selectedPreferances: string, cartItemId: string, price: number) {
     setCartItems((prev) => {
       const existingItemWithSameOptions = prev.find(
-        (item) => item.preferences === selectedPreferances
+        (item) => item.preferences === selectedPreferances,
       );
       const itemToUpdate = prev.find((item) => item.id === cartItemId);
 
@@ -129,18 +117,18 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
                     ...item,
                     quantity: item.quantity + (itemToUpdate?.quantity || 1),
                   }
-                : item
+                : item,
             )
             .filter((item) => item.id !== cartItemId);
         }
-        
+
         return prev.map((item) =>
           item.id === cartItemId
-        ? { ...item, preferences: selectedPreferances,price:price }
-        : item
-      );
-    }
-    return prev
+            ? { ...item, preferences: selectedPreferances, price: price }
+            : item,
+        );
+      }
+      return prev;
       // }
     });
   }
@@ -164,7 +152,7 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
 export function useCartContext() {
   const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error("useCartContext outside provider");
+    throw new Error('useCartContext outside provider');
   }
 
   return context;

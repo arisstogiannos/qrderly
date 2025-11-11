@@ -1,10 +1,9 @@
-import type { ProductURL } from "@/types";
-import { notFound, redirect } from "next/navigation";
-import React from "react";
-import { checkUser } from "../../isAllowed";
-import UploadingForm from "../../_components/generateItems/UploadingForm";
-import { getTranslations } from "next-intl/server";
-import BackButton from "../../_components/BackButton";
+import { notFound, redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import type { ProductURL } from '@/types';
+import BackButton from '../../_components/BackButton';
+import UploadingForm from '../../_components/generateItems/UploadingForm';
+import { checkUser } from '../../isAllowed';
 
 export default async function page({
   params,
@@ -13,7 +12,7 @@ export default async function page({
   params: Promise<{ product: ProductURL }>;
   searchParams: Promise<{ b: string }>;
 }) {
-  const t = await getTranslations("uploadingForm");
+  const t = await getTranslations('uploadingForm');
   const product = (await params).product;
   if (!product) notFound();
 
@@ -25,37 +24,34 @@ export default async function page({
   const b = (await searchParams).b;
 
   if (!b) {
-    if (result.redirect === "businessWithoutMenu") {
+    if (result.redirect === 'businessWithoutMenu') {
       redirect(`/get-started/${product}/menu-settings`);
     }
     // if (result.redirect !== "emptyMenu" && result.redirect === "noQR") {
     //   redirect("/get-started/" + product + "/customize-qr");
     // }
-    if (
-      result.redirect === "unpublishedMenu" ||
-      result.redirect === "noUnsetBusiness"
-    ) {
+    if (result.redirect === 'unpublishedMenu' || result.redirect === 'noUnsetBusiness') {
       redirect(`/get-started/${product}/publish`);
     }
   } else {
     if (b !== result.business.id) {
-      redirect("/unauthorized");
+      redirect('/unauthorized');
     }
   }
   return (
     <div className="space-y-8">
       <header className="max-w-xl space-y-2">
         <div className="flex items-center gap-x-5">
-          <h1 className="text-2xl font-medium">{t("title")}</h1>
+          <h1 className="text-2xl font-medium">{t('title')}</h1>
           <BackButton
             href={`/get-started/${product}/menu-settings`}
             businessId={result.business.id}
           />
         </div>
-        <p>{t("description")}</p>
+        <p>{t('description')}</p>
       </header>
 
-      <UploadingForm businessName={result.business.name ?? ""} />
+      <UploadingForm businessName={result.business.name ?? ''} />
     </div>
   );
 }

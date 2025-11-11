@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import type { MenuItem } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { SearchIcon } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-import type { Translation } from "@/types";
-import { SearchModal } from "./SearchModal";
-import { getMenuItems } from "@/app/[locale]/(business)/[businessName]/_actions/menu-items";
-import { useTranslations } from "next-intl";
+import type { MenuItem } from '@prisma/client';
+import { useQuery } from '@tanstack/react-query';
+import { SearchIcon } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { getMenuItems } from '@/app/[locale]/(business)/[businessName]/_actions/menu-items';
+import type { Translation } from '@/types';
+import { SearchModal } from './SearchModal';
 export function SearchBar({ businessName }: { businessName: string }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState<MenuItem[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const t = useTranslations("menus.search");
+  const t = useTranslations('menus.search');
 
   const searchParams = useSearchParams();
-  const lang = searchParams.get("l") ?? "";
+  const lang = searchParams.get('l') ?? '';
 
   const { data: items } = useQuery({
     queryKey: [`menu-items${businessName}`],
@@ -25,7 +25,6 @@ export function SearchBar({ businessName }: { businessName: string }) {
       return menuItems;
     },
     staleTime: Number.POSITIVE_INFINITY,
-    
   });
 
   useEffect(() => {
@@ -41,18 +40,14 @@ export function SearchBar({ businessName }: { businessName: string }) {
       <SearchIcon />
       <input
         type="text"
-        placeholder={t("placeholder")}
+        placeholder={t('placeholder')}
         className="bg-transparent placeholder:text-primary/70 w-full focus:outline-none"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onClick={() => setOpen(true)}
       />
       {filteredProducts.length > 0 && open && (
-        <SearchModal
-          products={filteredProducts}
-          setOpen={setOpen}
-          lang={lang}
-        />
+        <SearchModal products={filteredProducts} setOpen={setOpen} lang={lang} />
       )}
     </div>
   );
@@ -71,13 +66,13 @@ function filter(products: MenuItem[], lang: string, query: string) {
       condition =
         (existingTranslation.name?.toLowerCase().includes(query.toLowerCase()) ||
           existingTranslation.description?.toLowerCase().includes(query.toLowerCase())) &&
-        query !== "";
+        query !== '';
     } else {
       condition =
         (p.name.toLowerCase().includes(query.toLowerCase()) ||
           p.description?.toLowerCase().includes(query.toLowerCase()) ||
           p.categoryId.toLowerCase().includes(query.toLowerCase())) &&
-        query !== "";
+        query !== '';
     }
 
     return condition;

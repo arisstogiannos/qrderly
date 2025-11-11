@@ -1,27 +1,18 @@
-"use client";
-import type { Translation } from "@/types";
-import type { Category } from "@prisma/client";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+'use client';
+import type { Category } from '@prisma/client';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import type { Translation } from '@/types';
 
-export default function Categories({
-  categories,
-}: {
-  categories: Category[];
-}) {
-  const [currentCategory, setCurrentCategory] = useState(
-    categories.at(0)?.name
-  );
+export default function Categories({ categories }: { categories: Category[] }) {
+  const [currentCategory, setCurrentCategory] = useState(categories.at(0)?.name);
   const linksRef = useRef<Record<string, HTMLButtonElement | null>>({});
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const isUserClicking = useRef(false); // Prevent scroll effect on click
-  const lang = useSearchParams().get("l");
+  const lang = useSearchParams().get('l');
 
   useEffect(() => {
-    categories.forEach(
-      (cat) =>
-        (sectionsRef.current[cat.id] = document.getElementById(cat.id))
-    );
+    categories.forEach((cat) => (sectionsRef.current[cat.id] = document.getElementById(cat.id)));
 
     const handleScroll = () => {
       if (isUserClicking.current) return; // Prevent auto-scroll when user clicks
@@ -30,33 +21,30 @@ export default function Categories({
         const section = sectionsRef.current[category.id];
         if (!section) return false;
         const rect = section.getBoundingClientRect();
-        return (
-          rect.top <= window.innerHeight / 2 &&
-          rect.bottom >= window.innerHeight / 2
-        );
+        return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
       });
 
       if (visibleCategory) {
         setCurrentCategory(visibleCategory.id);
 
         linksRef.current[visibleCategory.id]?.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "center",
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
         });
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [categories, currentCategory]);
 
   function handleClick(category: string) {
     isUserClicking.current = true; // Mark as user click
     setCurrentCategory(category);
     sectionsRef.current[category]?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
+      behavior: 'smooth',
+      block: 'start',
     });
 
     // Re-enable auto-scroll after a delay
@@ -75,9 +63,8 @@ export default function Categories({
             ? JSON.parse(category.translations)
             : null;
 
-          const existingTranslation =
-            !!(lang && translationsAsJson && translationsAsJson[lang])
-         const nameToDisplay =
+          const existingTranslation = !!(lang && translationsAsJson && translationsAsJson[lang]);
+          const nameToDisplay =
             existingTranslation && translationsAsJson[lang].name
               ? translationsAsJson[lang].name
               : category.name;
@@ -89,9 +76,7 @@ export default function Categories({
                 if (el) linksRef.current[category.id] = el;
               }}
               className={`rounded-md px-5 py-2 text-sm font-medium transition-colors capitalize lg:text-base xl:hover:bg-primary text-nowrap ${
-                currentCategory === category.id
-                  ? "bg-primary"
-                  : "bg-primary/30"
+                currentCategory === category.id ? 'bg-primary' : 'bg-primary/30'
               }`}
               onClick={() => handleClick(category.id)}
             >

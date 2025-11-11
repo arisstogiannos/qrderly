@@ -1,81 +1,76 @@
-import { BusinessProvider } from "@/context/BusinessProvider";
-import { checkUserAuthorized } from "../_actions/authorization";
-import { AppSidebar } from "./_components/Nav/Navbar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { Toaster } from "@/components/ui/sonner";
-import {
-  CategoriesIcon,
-  ProductsIcon,
-  SalesIcon,
-} from "./_components/SharedComponents/Icons";
-
-import SubscriptionExpired from "./_components/SharedComponents/SubscriptionExpired";
-import { CloudUpload, LayoutDashboard, QrCode, Settings } from "lucide-react";
-import { OrderIcon } from "@/app/[locale]/(website)/products/_components/Icons";
-import OnboardingDialog from "./_components/SharedComponents/OnboardingDialog";
-import { Suspense } from "react";
+import { CloudUpload, LayoutDashboard, QrCode, Settings } from 'lucide-react';
+import { Suspense } from 'react';
+import { OrderIcon } from '@/app/[locale]/(website)/products/_components/Icons';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/sonner';
+import { BusinessProvider } from '@/context/BusinessProvider';
+import { checkUserAuthorized } from '../_actions/authorization';
+import { AppSidebar } from './_components/Nav/Navbar';
+import { CategoriesIcon, ProductsIcon, SalesIcon } from './_components/SharedComponents/Icons';
+import OnboardingDialog from './_components/SharedComponents/OnboardingDialog';
+import SubscriptionExpired from './_components/SharedComponents/SubscriptionExpired';
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: 'shadcn',
+    email: 'm@example.com',
+    avatar: '/avatars/shadcn.jpg',
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "",
+      title: 'Dashboard',
+      url: '',
       icon: <LayoutDashboard />,
       isActive: false,
     },
     {
-      title: "Upload Menu",
-      url: "upload-menu",
+      title: 'Upload Menu',
+      url: 'upload-menu',
       icon: <CloudUpload />,
       isActive: false,
     },
     {
-      title: "Qr Settings",
-      url: "qr",
+      title: 'Qr Settings',
+      url: 'qr',
       icon: <QrCode />,
       isActive: false,
     },
     {
-      title: "Menu",
-      url: "",
+      title: 'Menu',
+      url: '',
       icon: <OrderIcon />,
       isActive: false,
       items: [
         {
-          title: "Items",
-          url: "menu-items",
-          icon: <ProductsIcon href={"menu-items"} />,
+          title: 'Items',
+          url: 'menu-items',
+          icon: <ProductsIcon href={'menu-items'} />,
         },
         {
-          title: "Categories",
-          url: "categories",
+          title: 'Categories',
+          url: 'categories',
           icon: <CategoriesIcon href="categories" />,
         },
         {
-          title: "Settings",
-          url: "settings",
+          title: 'Settings',
+          url: 'settings',
           icon: <Settings color="white" />,
         },
       ],
     },
     {
-      title: "Orders",
-      url: "",
+      title: 'Orders',
+      url: '',
       icon: <OrderIcon />,
       items: [
         {
-          title: "All Orders",
-          url: "all-orders",
+          title: 'All Orders',
+          url: 'all-orders',
           icon: <SalesIcon href="all-orders" />,
         },
         {
-          title: "Live Orders",
-          url: "live-orders",
+          title: 'Live Orders',
+          url: 'live-orders',
           icon: <OrderIcon />,
         },
       ],
@@ -90,7 +85,7 @@ export default async function AdminLayout({
   children: React.ReactNode;
   params: Promise<{ businessName: string }>;
 }>) {
-  const businessName = (await params).businessName.replaceAll("-", " ");
+  const businessName = (await params).businessName.replaceAll('-', ' ');
   const { user, business } = await checkUserAuthorized(businessName);
 
   // const queryClient = getQueryClient();
@@ -117,12 +112,7 @@ export default async function AdminLayout({
 
   return (
     <SidebarProvider className="bg-primary">
-      <AppSidebar
-        links={data.navMain}
-        user={user}
-        business={business}
-        className="bg-primary"
-      />
+      <AppSidebar links={data.navMain} user={user} business={business} className="bg-primary" />
       <SidebarInset className="bg-primary ">
         {/* <div className="flex h-svh overflow-hidden bg-primary text-foreground"> */}
 

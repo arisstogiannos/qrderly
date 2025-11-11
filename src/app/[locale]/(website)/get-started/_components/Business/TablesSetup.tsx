@@ -1,19 +1,13 @@
-"use client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
+'use client';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
-export default function TablesSetup({
-  initialTables,
-}: {
-  initialTables?: string[];
-}) {
+export default function TablesSetup({ initialTables }: { initialTables?: string[] }) {
   const [noTables, setNoTables] = useState(initialTables?.length ?? 3);
-  const [tables, setTables] = useState<string[]>(
-    initialTables ?? ["1", "2", "3"]
-  );
-  const t = useTranslations("tablesSetup");
+  const [tables, setTables] = useState<string[]>(initialTables ?? ['1', '2', '3']);
+  const t = useTranslations('tablesSetup');
 
   function handleTableNumberChange(value: number) {
     if (value > tables.length) {
@@ -31,8 +25,8 @@ export default function TablesSetup({
   return (
     <div className="grid gap-3">
       <div className="grid gap-1 max-w-lg">
-        <Label htmlFor="noTables">{t("numberOfTables")}</Label>
-        <p className="text-sm text-muted-foreground">{t("description")}</p>
+        <Label htmlFor="noTables">{t('numberOfTables')}</Label>
+        <p className="text-sm text-muted-foreground">{t('description')}</p>
         <Input
           id="noTables"
           name="noTables"
@@ -43,9 +37,7 @@ export default function TablesSetup({
           className="w-20 my-1"
         />
       </div>
-      <p className="text-sm">
-        {t("tableRange", { noTables })}
-      </p>
+      <p className="text-sm">{t('tableRange', { noTables })}</p>
       <div className="flex flex-row flex-wrap gap-2">
         {tables.map((table, i) => (
           <div key={i} className="flex items-center gap-2">
@@ -54,21 +46,19 @@ export default function TablesSetup({
               name={`table-${i + 1}`}
               type="text"
               pattern="[^,]*"
-              title={`${t("validation")}`}
+              title={`${t('validation')}`}
               defaultValue={table}
               onChange={(e) =>
-                setTables((prev) =>
-                  prev.map((p, index) => (i === index ? e.target.value : p))
-                )
+                setTables((prev) => prev.map((p, index) => (i === index ? e.target.value : p)))
               }
-              placeholder={t("placeholder", { tableNumber: i + 1 })}
+              placeholder={t('placeholder', { tableNumber: i + 1 })}
               className="max-w-20"
               required
             />
           </div>
         ))}
       </div>
-      <input hidden defaultValue={tables.join(",")} name="tables" />
+      <input hidden defaultValue={tables.join(',')} name="tables" />
     </div>
   );
 }

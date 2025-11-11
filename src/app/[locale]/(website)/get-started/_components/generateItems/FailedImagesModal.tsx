@@ -1,13 +1,11 @@
-
-import React from "react";
-import { useTranslations } from "next-intl";
-import CloudImage from "@/components/CloudImage";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
-import { useParams } from "next/navigation";
+import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import CloudImage from '@/components/CloudImage';
+import { Button } from '@/components/ui/button';
+import { Link } from '@/i18n/navigation';
 
 export default function FailedImagesModal({ images }: { images: string[] }) {
-  const t = useTranslations("uploadingForm");
+  const t = useTranslations('uploadingForm');
 
   const product = useParams().product?.toString();
   return (
@@ -28,12 +26,11 @@ export default function FailedImagesModal({ images }: { images: string[] }) {
         <Button asChild className="w-full">
           <Link
             href={{
-              pathname: "/get-started/[product]/customize-qr",
-              params: { product: product ?? "" },
+              pathname: '/get-started/[product]/customize-qr',
+              params: { product: product ?? '' },
             }}
           >
-            {t("failedImagesDialogBtn")}
-            
+            {t('failedImagesDialogBtn')}
           </Link>
         </Button>
       </div>

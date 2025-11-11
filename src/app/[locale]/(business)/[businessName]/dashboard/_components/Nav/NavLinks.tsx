@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import type { ReactNode } from 'react';
 import {
   SidebarGroup,
   SidebarMenu,
@@ -6,11 +9,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
-import { getTranslations } from "next-intl/server";
-import Link from "next/link";
-
-import type { ReactNode } from "react";
+} from '@/components/ui/sidebar';
 
 export async function NavLinks({
   items,
@@ -29,7 +28,7 @@ export async function NavLinks({
   }[];
   activeBusinessName: string;
 }) {
-  const t = await getTranslations("admin.navbar")
+  const t = await getTranslations('admin.navbar');
   return (
     <SidebarGroup className="mt-4">
       <SidebarMenu>
@@ -37,27 +36,19 @@ export async function NavLinks({
           ? items.map((item) =>
               item.items ? (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    isActive={false}
-                    className="pointer-events-none"
-                  >
+                  <SidebarMenuButton isActive={false} className="pointer-events-none">
                     <span>{t(item.title)}</span>
                   </SidebarMenuButton>
                   {item.items?.length ? (
                     <SidebarMenuSub>
                       {item.items.map((item) => (
-                        <SidebarMenuSubItem
-                          className="bg-transparent "
-                          key={item.title}
-                        >
+                        <SidebarMenuSubItem className="bg-transparent " key={item.title}>
                           <SidebarMenuSubButton
                             asChild
                             className="bg-transparent text-base py-4 transition-colors hover:bg-accent/30 hover:text-background text-nowrap w-fit"
                           >
                             <Link
-                              href={
-                                `/${activeBusinessName.replaceAll(" ", "-")}/dashboard/${item.url}`
-                              }
+                              href={`/${activeBusinessName.replaceAll(' ', '-')}/dashboard/${item.url}`}
                             >
                               {item.icon}
 
@@ -77,16 +68,14 @@ export async function NavLinks({
                     // isActive={true}
                   >
                     <Link
-                      href={
-                        `/${activeBusinessName.replaceAll(" ", "-")}/dashboard/${item.url}`
-                      }
+                      href={`/${activeBusinessName.replaceAll(' ', '-')}/dashboard/${item.url}`}
                     >
                       {item.icon}
                       <span className="text-nowrap">{t(item.title)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              )
+              ),
             )
           : items[0].items?.map((item) => (
               <SidebarMenuItem key={item.title} className="mt-1  ">
@@ -95,11 +84,7 @@ export async function NavLinks({
                   asChild
                   // isActive={true}
                 >
-                  <Link
-                    href={
-                      `/${activeBusinessName.replaceAll(" ", "-")}/dashboard/${item.url}`
-                    }
-                  >
+                  <Link href={`/${activeBusinessName.replaceAll(' ', '-')}/dashboard/${item.url}`}>
                     {item.icon}
                     <span className="text-nowrap">{t(item.title)}</span>
                   </Link>

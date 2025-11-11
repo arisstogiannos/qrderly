@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Check } from "lucide-react";
-import { createSession } from "../../subscriptionActions";
-import type { BillingType } from "@prisma/client";
-import type { ExtendedUser, ProductURL } from "@/types";
-import { productMap } from "@/data";
-import Loader from "@/components/Loader";
+import type { BillingType } from '@prisma/client';
+import { Check } from 'lucide-react';
+import { useState } from 'react';
+import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { productMap } from '@/data';
+import type { ExtendedUser, ProductURL } from '@/types';
+import { createSession } from '../../subscriptionActions';
 
 type thisProps = {
   plan: {
@@ -26,24 +26,21 @@ type thisProps = {
 };
 
 export function ChooseTier({ plan, user, businessId, action }: thisProps) {
-  const [billingState, setBillingState] = useState<BillingType>("YEARLY");
+  const [billingState, setBillingState] = useState<BillingType>('YEARLY');
   const [isPending, setIsPending] = useState(false);
 
-  const product = plan.title.toLowerCase().replaceAll(" ", "-") as ProductURL;
+  const product = plan.title.toLowerCase().replaceAll(' ', '-') as ProductURL;
 
   const unpublishedTrial = user?.subscriptions.find(
-    (s) =>
-      s.businessId == null &&
-      s.billing === "FREETRIAL" &&
-      s.product === productMap[product]
+    (s) => s.businessId == null && s.billing === 'FREETRIAL' && s.product === productMap[product],
   );
   const hasActiveFreeTrial = user?.business.find(
     (b) =>
       b.subscription &&
-      b.subscription.billing === "FREETRIAL" &&
+      b.subscription.billing === 'FREETRIAL' &&
       b.product === productMap[product] &&
       b.menu &&
-      b.menu.published
+      b.menu.published,
   );
 
   return (
@@ -72,10 +69,7 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
         <p className="text-xl font-medium">Pro</p>
 
         <p className="text-xl font-semibold">
-          {
-            plan.billing[billingState === "MONTHLY" ? "monthly" : "yearly"]
-              .price
-          }
+          {plan.billing[billingState === 'MONTHLY' ? 'monthly' : 'yearly'].price}
         </p>
         <ul className="space-y-3">
           {plan.pro.map((bullet) => (
@@ -93,18 +87,17 @@ export function ChooseTier({ plan, user, businessId, action }: thisProps) {
           type="submit"
           formAction={createSession.bind(
             null,
-            plan.billing[billingState === "MONTHLY" ? "monthly" : "yearly"]
-              .price_id,
+            plan.billing[billingState === 'MONTHLY' ? 'monthly' : 'yearly'].price_id,
             billingState,
             productMap[product],
             businessId,
-            unpublishedTrial?.id ?? "",
+            unpublishedTrial?.id ?? '',
             `/get-started/${product}/publish`,
-            "procceed to publishing"
+            'procceed to publishing',
           )}
           className="w-full mt-auto"
         >
-          {isPending ? <Loader /> : "Continue"}
+          {isPending ? <Loader /> : 'Continue'}
         </Button>
       </div>
     </form>
@@ -123,25 +116,25 @@ function Switch({
       <div className="relative w-full h-full">
         <div
           className={`absolute w-1/2 h-full bg-primary rounded-full top-1/2 transform -translate-y-1/2 transition-all duration-500 ${
-            billing === "YEARLY" ? "left-0" : "left-1/2"
+            billing === 'YEARLY' ? 'left-0' : 'left-1/2'
           }`}
         />
         <div className=" grid grid-cols-2 gap-10 items-center  bg-background w-fit rounded-full px-3 py-2">
           <button
             type="button"
             className={`z-10 text-center cursor-pointer transition-colors duration-300 delay-75 ${
-              billing === "YEARLY" ? "text-background" : "text-foreground"
+              billing === 'YEARLY' ? 'text-background' : 'text-foreground'
             }`}
-            onClick={() => setBilling("YEARLY")}
+            onClick={() => setBilling('YEARLY')}
           >
             Yearly (save 20%)
           </button>
           <button
             type="button"
             className={`z-10 text-center cursor-pointer transition-colors duration-300 delay-75 ${
-              billing === "MONTHLY" ? "text-background" : "text-foreground"
+              billing === 'MONTHLY' ? 'text-background' : 'text-foreground'
             }`}
-            onClick={() => setBilling("MONTHLY")}
+            onClick={() => setBilling('MONTHLY')}
           >
             Monthly
           </button>

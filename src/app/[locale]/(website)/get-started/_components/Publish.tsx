@@ -1,23 +1,18 @@
-"use client";
-import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal";
-import { Button } from "@/components/ui/button";
-import { plandata, productMap } from "@/data";
-import type { ExtendedUser, ProductURL } from "@/types";
-import React, { type ReactNode, useActionState, useEffect } from "react";
-import { ChooseTier } from "./ChooseTierModal";
-import { createMenu } from "../actions";
-import Loader from "@/components/Loader";
-import { ErrorMessage } from "@/components/Messages";
-import { ArrowRight, Rocket } from "lucide-react";
-import Link from "next/link";
-import { Link as IntlLink } from "@/i18n/navigation";
-import {
-  MainButton,
-  MainButtonPlain,
-} from "../../(landing page)/_sections/hero/MainButton";
-import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import Confetti from "../../payment-successful/Confetti";
+'use client';
+import { ArrowRight, Rocket } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { type ReactNode, useActionState } from 'react';
+import { Modal } from '@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal';
+import Loader from '@/components/Loader';
+import { ErrorMessage } from '@/components/Messages';
+import { Button } from '@/components/ui/button';
+import { plandata, productMap } from '@/data';
+import { Link as IntlLink } from '@/i18n/navigation';
+import type { ExtendedUser, ProductURL } from '@/types';
+import { MainButtonPlain } from '../../(landing page)/_sections/hero/MainButton';
+import Confetti from '../../payment-successful/Confetti';
+import { createMenu } from '../actions';
+import { ChooseTier } from './ChooseTierModal';
 
 export default function Publish({
   product,
@@ -30,9 +25,7 @@ export default function Publish({
   businessId: string;
   inngestJobId?: string;
 }) {
-  const selectedProduct = plandata.find(
-    (p) => p.product === productMap[product]
-  );
+  const selectedProduct = plandata.find((p) => p.product === productMap[product]);
 
   // const { data: inngestJob } = useQuery({
   //   queryKey: [inngestJobId],
@@ -48,24 +41,17 @@ export default function Publish({
   const existingPaidSub = user.subscriptions.find(
     (s) =>
       (s.businessId == null || s.businessId === businessId) &&
-      s.billing !== "FREETRIAL" &&
-      s.product === productMap[product]
+      s.billing !== 'FREETRIAL' &&
+      s.product === productMap[product],
   );
 
-  const publishedMenuBusiness = user.business.find(
-    (b) => b.id === businessId && b.menu?.published
-  );
+  const publishedMenuBusiness = user.business.find((b) => b.id === businessId && b.menu?.published);
 
   const [state, action, isPending] = useActionState(
     existingPaidSub
-      ? createMenu.bind(
-          null,
-          product,
-          existingPaidSub.billing,
-          existingPaidSub.businessId ?? ""
-        )
-      : createMenu.bind(null, product, "FREETRIAL", ""),
-    null
+      ? createMenu.bind(null, product, existingPaidSub.billing, existingPaidSub.businessId ?? '')
+      : createMenu.bind(null, product, 'FREETRIAL', ''),
+    null,
   );
 
   if (!selectedProduct) return <div>invalid product</div>;
@@ -75,13 +61,11 @@ export default function Publish({
     render = (
       <Success
         url={
-          !!state
+          state
             ? state?.businessNameUrl +
-              (product === "qr-menu"
-                ? "/menu"
-                : `/smart-menu?table=${state.adminEncryptedTableId}`)
-            : publishedMenuBusiness?.name.replaceAll(" ", "-") +
-              (product === "qr-menu" ? "/menu" : "/smart-menu?table=admin")
+              (product === 'qr-menu' ? '/menu' : `/smart-menu?table=${state.adminEncryptedTableId}`)
+            : publishedMenuBusiness?.name.replaceAll(' ', '-') +
+              (product === 'qr-menu' ? '/menu' : '/smart-menu?table=admin')
         }
       />
     );
@@ -93,12 +77,7 @@ export default function Publish({
     );
   } else if (!state?.error) {
     render = (
-      <ChooseTier
-        plan={selectedProduct}
-        user={user}
-        businessId={businessId}
-        action={action}
-      />
+      <ChooseTier plan={selectedProduct} user={user} businessId={businessId} action={action} />
     );
   }
 
@@ -115,36 +94,25 @@ export default function Publish({
     <>
       {state?.success && <Confetti />}
       <Modal
-        title={
-          !isPending && !state?.success && !publishedMenuBusiness
-            ? "Publish"
-            : ""
-        }
+        title={!isPending && !state?.success && !publishedMenuBusiness ? 'Publish' : ''}
         subtitle={
-          !isPending && !state?.success && !publishedMenuBusiness
-            ? "Choose tier to procced"
-            : ""
+          !isPending && !state?.success && !publishedMenuBusiness ? 'Choose tier to procced' : ''
         }
         classNames=" lg:w-fit min-w-fit pt-5"
         trigger={
-          <form
-            className="ml-auto w-full sm:w-fit mt-auto "
-            action={existingPaidSub ? action : ""}
-          >
+          <form className="ml-auto w-full sm:w-fit mt-auto " action={existingPaidSub ? action : ''}>
             <MainButtonPlain
               type={
-                existingPaidSub && !state?.success && !publishedMenuBusiness
-                  ? "submit"
-                  : "button"
+                existingPaidSub && !state?.success && !publishedMenuBusiness ? 'submit' : 'button'
               }
               className=" max-2xl:text-xl w-full sm:w-fit "
             >
               <span className="w-full flex-center gap-x-3">
                 {state?.success ? (
-                  "View"
+                  'View'
                 ) : (
                   <>
-                    {" "}
+                    {' '}
                     <Rocket /> Publish
                   </>
                 )}
@@ -162,31 +130,31 @@ export default function Publish({
 }
 
 function Success({ url }: { url: string }) {
-  const t = useTranslations("publish");
+  const t = useTranslations('publish');
   return (
     <div className="flex flex-col items-center gap-y-8">
       <div className="flex flex-col items-center gap-y-1 text-center">
-        <p className="text-4xl font-medium ">{t("success")}</p>
+        <p className="text-4xl font-medium ">{t('success')}</p>
       </div>
       <div className="flex flex-col gap-3 lg:flex-row pb-5 lg:pb-0">
-        <Button size={"lg"} asChild>
+        <Button size={'lg'} asChild>
           <IntlLink
             href={{
-              params: { businessName: url.split("/")[0] },
-              pathname: "/[businessName]/dashboard",
-              query: { onboarding: "true" },
+              params: { businessName: url.split('/')[0] },
+              pathname: '/[businessName]/dashboard',
+              query: { onboarding: 'true' },
             }}
             replace={true}
           >
-            {t("visitDashboard")} <ArrowRight />
+            {t('visitDashboard')} <ArrowRight />
           </IntlLink>
         </Button>
-        <Button size={"lg"} asChild>
+        <Button size={'lg'} asChild>
           <IntlLink
             //@ts-expect-error
             href={`/${url}`}
           >
-            {t("visitMenu")} <ArrowRight />
+            {t('visitMenu')} <ArrowRight />
           </IntlLink>
         </Button>
       </div>

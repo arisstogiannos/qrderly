@@ -1,8 +1,8 @@
-import type { Category, Menu, MenuItem } from "@prisma/client";
-import { MenuItems } from "./MenuItems/MenuItems";
-import Categories from "./Categories";
-import { Navbar } from "./Nav/Navbar";
-import { Suspense } from "react";
+import type { Category, Menu, MenuItem } from '@prisma/client';
+import { Suspense } from 'react';
+import Categories from './Categories';
+import { MenuItems } from './MenuItems/MenuItems';
+import { Navbar } from './Nav/Navbar';
 
 export default function Template2({
   menu,
@@ -25,9 +25,9 @@ export default function Template2({
         </Suspense>
 
         <div className="my-container pt-5">
-        <Suspense>
-          <MenuItems categories={categories} menuItems={menuItems} />
-        </Suspense>
+          <Suspense>
+            <MenuItems categories={categories} menuItems={menuItems} />
+          </Suspense>
         </div>
       </div>
     </>

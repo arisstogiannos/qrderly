@@ -1,32 +1,23 @@
-import React, { type ReactNode } from "react";
-import MenuFooter from "@/components/MenuFooter";
-import { Toaster } from "@/components/ui/sonner";
-import { cache } from "@/lib/cache";
-import {
-  getActiveMenuNotCached,
-  getActiveMenusNotCached,
-} from "../_actions/menu";
-import { notFound } from "next/navigation";
-import ScrollToTop from "@/components/ScrollToTop";
-import ExpiredMenu from "./_components/ExpiredMenu";
+import { type ReactNode } from 'react';
+import MenuFooter from '@/components/MenuFooter';
+import ScrollToTop from '@/components/ScrollToTop';
+import { Toaster } from '@/components/ui/sonner';
+import { cache } from '@/lib/cache';
+import { getActiveMenuNotCached, getActiveMenusNotCached } from '../_actions/menu';
+import ExpiredMenu from './_components/ExpiredMenu';
 
 export const dynamicParams = true; // or false, to 404 on unknown paths
-// export const revalidate =60; 
-
+// export const revalidate =60;
 
 export async function generateStaticParams() {
-  const getActiveMenusCache = cache(getActiveMenusNotCached, ["active-menus"], {
-    tags: ["active-menus"],
+  const getActiveMenusCache = cache(getActiveMenusNotCached, ['active-menus'], {
+    tags: ['active-menus'],
   });
-  const menus = await getActiveMenusCache([
-    "QR_MENU",
-    "SMART_QR_MENU",
-    "SELF_SERVICE_QR_MENU",
-  ]);
+  const menus = await getActiveMenusCache(['QR_MENU', 'SMART_QR_MENU', 'SELF_SERVICE_QR_MENU']);
 
   return menus.map((menu) => ({
-    locale: "en",
-    businessName: String(menu.business.name).replaceAll(" ", "-"),
+    locale: 'en',
+    businessName: String(menu.business.name).replaceAll(' ', '-'),
   }));
 }
 
@@ -37,23 +28,19 @@ export default async function layout({
   children: ReactNode;
   params: Promise<{ businessName: string }>;
 }) {
-  const businessName = (await params).businessName.replaceAll("-", " ");
+  const businessName = (await params).businessName.replaceAll('-', ' ');
 
-  const getActiveMenu = cache(
-    getActiveMenuNotCached,
-    [`active-menu${businessName}`],
-    {
-      tags: [`active-menu${businessName}`],
-    }
-  );
+  const getActiveMenu = cache(getActiveMenuNotCached, [`active-menu${businessName}`], {
+    tags: [`active-menu${businessName}`],
+  });
 
   const menu = await getActiveMenu(businessName);
 
   if (!menu) {
-    return <ExpiredMenu/>
+    return <ExpiredMenu />;
   }
 
-  const colors = menu.theme.split(",");
+  const colors = menu.theme.split(',');
 
   return (
     <div className="">

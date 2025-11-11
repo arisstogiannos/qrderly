@@ -1,134 +1,121 @@
-"use client";
-import { Card, CardContent } from "@/components/ui/card";
-import type { MenuItem } from "@prisma/client";
-import { CardModalProvider } from "@/context/CardModalProvider";
-import MenuItemModal, {
-	ModalTrigger,
-} from "../../../_components/MenuItemModal/MenuItemModal";
-import type { Translation } from "@/types";
-import { useSearchParams } from "next/navigation";
-import DisplayPrice from "@/components/DisplayPrice";
-import { useCartContext } from "@/context/CartContext";
-import { Plus } from "lucide-react";
-import { toast } from "sonner";
-import { useTranslations } from "next-intl";
+'use client';
+import type { MenuItem } from '@prisma/client';
+import { Plus } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
+import DisplayPrice from '@/components/DisplayPrice';
+import { Card, CardContent } from '@/components/ui/card';
+import { CardModalProvider } from '@/context/CardModalProvider';
+import { useCartContext } from '@/context/CartContext';
+import type { Translation } from '@/types';
+import MenuItemModal, { ModalTrigger } from '../../../_components/MenuItemModal/MenuItemModal';
 
 export function MenuItemCard({
-	id,
-	name,
-	priceInCents,
-	description,
-	imagePath,
-	preferences,
-	translations,
+  id,
+  name,
+  priceInCents,
+  description,
+  imagePath,
+  preferences,
+  translations,
 }: MenuItem) {
-	const lang = useSearchParams().get("l");
-	const { cartItems, addToCart } = useCartContext();
-	const t = useTranslations("menus.order");
-	const productInCart = cartItems.filter((item) => item.menuItem.id === id);
-	let quantity = 0;
-	if (productInCart.length > 0) {
-		for (let i = 0; i < productInCart.length; i++) {
-			quantity += productInCart[i].quantity;
-		}
-	}
+  const lang = useSearchParams().get('l');
+  const { cartItems, addToCart } = useCartContext();
+  const t = useTranslations('menus.order');
+  const productInCart = cartItems.filter((item) => item.menuItem.id === id);
+  let quantity = 0;
+  if (productInCart.length > 0) {
+    for (let i = 0; i < productInCart.length; i++) {
+      quantity += productInCart[i].quantity;
+    }
+  }
 
-	const translationsAsJson: Translation | null = translations
-		? JSON.parse(translations)
-		: null;
+  const translationsAsJson: Translation | null = translations ? JSON.parse(translations) : null;
 
-	const existingTranslation =
-		lang && translationsAsJson && translationsAsJson[lang];
-	name =
-		existingTranslation &&
-		translationsAsJson[lang].name &&
-		translationsAsJson[lang].name !== "null"
-			? translationsAsJson[lang].name
-			: name;
-	description =
-		existingTranslation &&
-		translationsAsJson[lang].description &&
-		translationsAsJson[lang].description !== "null"
-			? translationsAsJson[lang].description
-			: description;
-	return (
-		<CardModalProvider>
-			<ModalTrigger>
-				<Card
-					id={name}
-					className={
-						"flex py-2 px-2 flex-row border-0 border-b-2 border-foreground/10 shadow-none    rounded-none  min-[390px]:min-w-[350px] max-w-full relative  min-h-[100px]  overflow-hidden  text-foreground bg-transparent  transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full"
-					}
-				>
-					<CardContent
-						className={
-							"flex w-full justify-between py-1 px-0 h-full border-0 shadow-none"
-						}
-					>
-						<div className="space-y-1 lg:space-y-1  w-[80%]">
-							<h3 className={"text-base lg:text-lg capitalize"}>{name}</h3>
-							<p
-								className={
-									"line-clamp-2 text-sm text-foreground/60 tracking-wide lg:text-sm "
-								}
-							>
-								{description}
-							</p>
-						</div>
-						<span className="lg:text-lg text-foreground">
-							<DisplayPrice price={priceInCents} />
-						</span>
-						{quantity !== 0 ? (
-							<div className="absolute right-0 bottom-0 flex size-8 items-center justify-center rounded-tl-xl bg-primary font-medium">
-								{quantity}
-							</div>
-						) : (
-							<button
-								onClick={(e) => {
-									if (!preferences) {
-										e.preventDefault();
-										e.stopPropagation();
-										addToCart(
-											{
-												id,
-												name,
-												priceInCents,
-												description,
-												imagePath,
-												preferences,
-												translations,
-											},
-											"",
-											priceInCents,
-										);
-										toast.success(t("toast"), {
-											duration: 1500,
-										});
-									}
-								}}
-								type="button"
-								className="absolute right-0 bottom-0 flex size-8 items-center justify-center rounded-tl-md bg-primary font-medium cursor-pointer"
-							>
-								<Plus />
-							</button>
-						)}
-					</CardContent>
-				</Card>
-			</ModalTrigger>
-			<MenuItemModal
-				withImage={false}
-				menuItem={{
-					id,
-					name,
-					priceInCents,
-					description,
-					imagePath,
-					preferences,
-					translations,
-				}}
-			/>
-		</CardModalProvider>
-	);
+  const existingTranslation = lang && translationsAsJson && translationsAsJson[lang];
+  name =
+    existingTranslation && translationsAsJson[lang].name && translationsAsJson[lang].name !== 'null'
+      ? translationsAsJson[lang].name
+      : name;
+  description =
+    existingTranslation &&
+    translationsAsJson[lang].description &&
+    translationsAsJson[lang].description !== 'null'
+      ? translationsAsJson[lang].description
+      : description;
+  return (
+    <CardModalProvider>
+      <ModalTrigger>
+        <Card
+          id={name}
+          className={
+            'flex py-2 px-2 flex-row border-0 border-b-2 border-foreground/10 shadow-none    rounded-none  min-[390px]:min-w-[350px] max-w-full relative  min-h-[100px]  overflow-hidden  text-foreground bg-transparent  transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-lg lg:hover:shadow-primary lg:min-w-full lg:max-w-full'
+          }
+        >
+          <CardContent
+            className={'flex w-full justify-between py-1 px-0 h-full border-0 shadow-none'}
+          >
+            <div className="space-y-1 lg:space-y-1  w-[80%]">
+              <h3 className={'text-base lg:text-lg capitalize'}>{name}</h3>
+              <p className={'line-clamp-2 text-sm text-foreground/60 tracking-wide lg:text-sm '}>
+                {description}
+              </p>
+            </div>
+            <span className="lg:text-lg text-foreground">
+              <DisplayPrice price={priceInCents} />
+            </span>
+            {quantity !== 0 ? (
+              <div className="absolute right-0 bottom-0 flex size-8 items-center justify-center rounded-tl-xl bg-primary font-medium">
+                {quantity}
+              </div>
+            ) : (
+              <button
+                onClick={(e) => {
+                  if (!preferences) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addToCart(
+                      {
+                        id,
+                        name,
+                        priceInCents,
+                        description,
+                        imagePath,
+                        preferences,
+                        translations,
+                      },
+                      '',
+                      priceInCents,
+                    );
+                    toast.success(t('toast'), {
+                      duration: 1500,
+                    });
+                  }
+                }}
+                type="button"
+                className="absolute right-0 bottom-0 flex size-8 items-center justify-center rounded-tl-md bg-primary font-medium cursor-pointer"
+              >
+                <Plus />
+              </button>
+            )}
+          </CardContent>
+        </Card>
+      </ModalTrigger>
+      <MenuItemModal
+        withImage={false}
+        menuItem={{
+          id,
+          name,
+          priceInCents,
+          description,
+          imagePath,
+          preferences,
+          translations,
+        }}
+      />
+    </CardModalProvider>
+  );
 }
 
 // export function ProductCardSkeleton({

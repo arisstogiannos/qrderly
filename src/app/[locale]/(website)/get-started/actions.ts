@@ -1,17 +1,17 @@
-"use server";
+'use server';
 
-import { auth } from "@/auth";
-import { productMap, productMapURL } from "@/data";
-import { db } from "@/db";
-import type { ProductURL } from "@/types";
-import type { BillingType, Menu, Product, Template } from "@prisma/client";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
-import { z } from "zod";
-import type { Options } from "qr-code-styling";
-import getSession from "@/lib/getSession";
-import { sendFeedbackEmail, sendMenuCreatedEmail } from "@/email/mail";
-import { encryptTable } from "@/lib/table-crypt";
+import type { BillingType, Menu, Product, Template } from '@prisma/client';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { redirect } from 'next/navigation';
+import type { Options } from 'qr-code-styling';
+import { z } from 'zod';
+import { auth } from '@/auth';
+import { productMap, productMapURL } from '@/data';
+import { db } from '@/db';
+import { sendFeedbackEmail, sendMenuCreatedEmail } from '@/email/mail';
+import getSession from '@/lib/getSession';
+import { encryptTable } from '@/lib/table-crypt';
+import type { ProductURL } from '@/types';
 
 const businessSchema = z.object({
   name: z.string(),
@@ -25,7 +25,7 @@ export async function submitBusinessInfo(
   product: ProductURL,
   existingBusinessId: string | undefined,
   prevstate: any,
-  formData: FormData
+  formData: FormData,
 ) {
   const result = businessSchema.safeParse(Object.fromEntries(formData));
 
@@ -44,7 +44,7 @@ export async function submitBusinessInfo(
     if (existingBusiness) {
       return {
         errors: {
-          name: ["bussiness name already exists. Try adding a number"],
+          name: ['bussiness name already exists. Try adding a number'],
         },
       };
     }
@@ -52,15 +52,15 @@ export async function submitBusinessInfo(
     const user = session?.user;
 
     if (!user?.id) {
-      redirect("/unauthorized");
+      redirect('/unauthorized');
     }
     const freebusinesses = user.business.filter(
-      (b) => b.subscription && b.subscription.billing === "FREETRIAL"
+      (b) => b.subscription && b.subscription.billing === 'FREETRIAL',
     );
 
     if (freebusinesses.length > 3) {
       return {
-        error: "You have more than 3 free menus. You have to upgrade to pro.",
+        error: 'You have more than 3 free menus. You have to upgrade to pro.',
       };
     }
     try {
@@ -78,7 +78,7 @@ export async function submitBusinessInfo(
     } catch (err) {
       console.error(err);
       return {
-        error: "Something went wrong!",
+        error: 'Something went wrong!',
       };
     }
   } else {
@@ -91,13 +91,12 @@ export async function submitBusinessInfo(
           type: data.type,
           currency: data.currency,
           tables: data.tables,
-
         },
       });
     } catch (err) {
       console.error(err);
       return {
-        error: "Something went wrong!",
+        error: 'Something went wrong!',
       };
     }
   }
@@ -106,9 +105,9 @@ export async function submitBusinessInfo(
 }
 
 const menuSettingsSchema = z.object({
-  defaultLanguage: z.string().nonempty({ message: "Required field" }),
-  language: z.string().nonempty({ message: "Required field" }),
-  template: z.string().nonempty({ message: "Required field" }),
+  defaultLanguage: z.string().nonempty({ message: 'Required field' }),
+  language: z.string().nonempty({ message: 'Required field' }),
+  template: z.string().nonempty({ message: 'Required field' }),
   background: z.string(),
   secondary: z.string(),
   primary: z.string(),
@@ -120,7 +119,7 @@ export async function submitMenuSettings(
   menu: Menu | undefined,
   setup: boolean,
   prevstate: any,
-  formData: FormData
+  formData: FormData,
 ) {
   const result = menuSettingsSchema.safeParse(Object.fromEntries(formData));
   if (!result.success) {
@@ -129,19 +128,9 @@ export async function submitMenuSettings(
     };
   }
 
-  const {
-    defaultLanguage,
-    language,
-    background,
-    secondary,
-    primary,
-    text,
-    template,
-  } = result.data;
+  const { defaultLanguage, language, background, secondary, primary, text, template } = result.data;
 
   const selectedTheme = `${background},${secondary},${primary},${text}`;
-
-
 
   try {
     if (menu) {
@@ -168,7 +157,7 @@ export async function submitMenuSettings(
     }
   } catch {
     return {
-      error: "Something went wrong",
+      error: 'Something went wrong',
     };
   }
   if (setup) redirect(`/get-started/${productMapURL[product]}/generate-items`);
@@ -177,28 +166,24 @@ export async function submitMenuSettings(
 
   const business = session?.user.business.find((b) => b.id === businessId);
   revalidateTag(`active-menu${business?.name}`);
-  return { success: "Changes saved!" };
+  return { success: 'Changes saved!' };
 }
 
-export async function createMenu(
-  product: ProductURL,
-  tier: BillingType,
-  businessId: string
-) {
+export async function createMenu(product: ProductURL, tier: BillingType, businessId: string) {
   const user = (await auth())?.user;
 
   if (!user?.id) {
-    return { error: "Sign in first" };
+    return { error: 'Sign in first' };
   }
 
   const business = user.business.find(
-    (b) => b.menu?.published === false && b.product === productMap[product]
+    (b) => b.menu?.published === false && b.product === productMap[product],
   );
 
   if (!business) {
     return {
       error:
-        "You dont have a business to create menu for-Either you havent create any business either you already have menus for all your businesses",
+        'You dont have a business to create menu for-Either you havent create any business either you already have menus for all your businesses',
     };
   }
 
@@ -216,7 +201,7 @@ export async function createMenu(
     (s) =>
       (s.businessId == null || s.businessId === businessId) &&
       s.billing === tier &&
-      s.product === productMap[product]
+      s.product === productMap[product],
   );
 
   try {
@@ -241,7 +226,7 @@ export async function createMenu(
   } catch (err) {
     console.error(err);
     return {
-      error: "Something went wrong-Please go back to step 1 and try again.",
+      error: 'Something went wrong-Please go back to step 1 and try again.',
     };
   }
 
@@ -251,39 +236,41 @@ export async function createMenu(
   });
 
   revalidateTag(`active-menu${business.name}`);
-  revalidateTag("active-menus");
-  revalidatePath(`/en/${business.name.replaceAll(" ", "-")}`);
-  revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/menu`);
-  revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/smart-menu`);
+  revalidateTag('active-menus');
+  revalidatePath(`/en/${business.name.replaceAll(' ', '-')}`);
+  revalidatePath(`/en/${business.name.replaceAll(' ', '-')}/menu`);
+  revalidatePath(`/en/${business.name.replaceAll(' ', '-')}/smart-menu`);
 
+  const adminEncryptedTableId = await encryptTable(`admin|${business.name}`);
+  const businessNameUrl = business.name.replaceAll(' ', '-');
 
-  const adminEncryptedTableId = await encryptTable(`admin|${business.name}`)
-  const businessNameUrl = business.name.replaceAll(" ", "-");
-
- await saveQR(business.id, { data: `${process.env.NEXT_PUBLIC_SERVER_URL}/${businessNameUrl}/${menu.type === "QR_MENU" ? "menu" : "smart-menu"}`, height: 300, width: 300,margin:10 }, "Scan For Menu")
+  await saveQR(
+    business.id,
+    {
+      data: `${process.env.NEXT_PUBLIC_SERVER_URL}/${businessNameUrl}/${menu.type === 'QR_MENU' ? 'menu' : 'smart-menu'}`,
+      height: 300,
+      width: 300,
+      margin: 10,
+    },
+    'Scan For Menu',
+  );
 
   if (user.email) {
     await Promise.all([
-
       sendMenuCreatedEmail(
         user.email,
-        user.name ?? "user",
+        user.name ?? 'user',
         business.name,
-        menu.type === "QR_MENU"
-          ? "menu"
-          : `smart-menu?table=${adminEncryptedTableId}`
+        menu.type === 'QR_MENU' ? 'menu' : `smart-menu?table=${adminEncryptedTableId}`,
       ),
-      sendFeedbackEmail(
-        user.email,
-        user.name ?? "user",
-      )
-    ])
+      sendFeedbackEmail(user.email, user.name ?? 'user'),
+    ]);
   }
 
   return {
-    success: "Proccess Complete",
+    success: 'Proccess Complete',
     businessNameUrl,
-    adminEncryptedTableId
+    adminEncryptedTableId,
   };
 }
 
@@ -328,33 +315,33 @@ export async function saveQR(
   businessId: string,
   qrOptions: Options,
   text: string,
-  product?: ProductURL
+  product?: ProductURL,
 ) {
   const { imageOptions, ...rest } = qrOptions;
   try {
     await db.qR.upsert({
       where: { businessId },
       create: {
-        link: qrOptions.data ?? "",
+        link: qrOptions.data ?? '',
         businessId,
         qrOptions: JSON.stringify({ ...rest }),
         text,
       },
       update: {
-        link: qrOptions.data ?? "",
+        link: qrOptions.data ?? '',
         businessId,
         qrOptions: JSON.stringify({ ...rest }),
         text,
       },
     });
     // revalidatePath(`/en/${business.name.replaceAll(" ", "-")}/dashboard`);
-    // revalidatePath(`/el/${business.name.replaceAll(" ", "-")}/dashboard`); 
+    // revalidatePath(`/el/${business.name.replaceAll(" ", "-")}/dashboard`);
   } catch (err) {
     console.error(err);
-    return { error: "Something went wrong!" };
+    return { error: 'Something went wrong!' };
   }
   if (product) {
     redirect(`/get-started/${product}/publish`);
   }
-  return { success: "QR code saved!" };
+  return { success: 'QR code saved!' };
 }

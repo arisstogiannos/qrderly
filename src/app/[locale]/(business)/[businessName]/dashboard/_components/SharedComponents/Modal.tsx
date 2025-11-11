@@ -1,5 +1,7 @@
-"use client";
-import * as React from "react";
+'use client';
+
+import { ChevronDown } from 'lucide-react';
+import * as React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -7,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Drawer,
   DrawerClose,
@@ -16,11 +18,9 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-
-import { ChevronDown } from "lucide-react";
-import { ModalProvider } from "@/context/ModalProvider";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/drawer';
+import { ModalProvider } from '@/context/ModalProvider';
+import { cn } from '@/lib/utils';
 
 export function Modal({
   title,
@@ -33,7 +33,7 @@ export function Modal({
   classNames,
   animate = true,
   showDesc = false,
-  setOpenParent
+  setOpenParent,
 }: {
   title: string;
   subtitle: string;
@@ -56,8 +56,8 @@ export function Modal({
       setIsDesktop(window.innerWidth > 770);
     }
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -70,15 +70,12 @@ export function Modal({
 
   if (isDesktop) {
     return (
-      <Dialog 
-        open={openParent ?? initialOpen ?? open} 
-        onOpenChange={handleOpenChange}
-      >
+      <Dialog open={openParent ?? initialOpen ?? open} onOpenChange={handleOpenChange}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent 
-          className={cn("max-w-xl", classNames)} 
-          animate={animate} 
-          onCloseAutoFocus={(e) => e.preventDefault()} 
+        <DialogContent
+          className={cn('max-w-xl', classNames)}
+          animate={animate}
+          onCloseAutoFocus={(e) => e.preventDefault()}
           autoFocus={false}
         >
           <DialogHeader>
@@ -94,20 +91,17 @@ export function Modal({
   }
 
   return (
-    <Drawer 
-      open={openParent ?? initialOpen ?? open} 
-      onOpenChange={handleOpenChange}
-    >
+    <Drawer open={openParent ?? initialOpen ?? open} onOpenChange={handleOpenChange}>
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent 
-        className={cn("px-4 pb-2", classNames)} 
-        animate={animate} 
-        onCloseAutoFocus={(e) => e.preventDefault()} 
+      <DrawerContent
+        className={cn('px-4 pb-2', classNames)}
+        animate={animate}
+        onCloseAutoFocus={(e) => e.preventDefault()}
         autoFocus={false}
       >
         <DrawerHeader className="text-left ml-0 p-0 pb-4">
           <DrawerTitle className="text-xl">{title}</DrawerTitle>
-          <DrawerDescription className={!showDesc ? "sr-only" : "text-pretty pr-20"}>
+          <DrawerDescription className={!showDesc ? 'sr-only' : 'text-pretty pr-20'}>
             {subtitle}
           </DrawerDescription>
           <DrawerClose>

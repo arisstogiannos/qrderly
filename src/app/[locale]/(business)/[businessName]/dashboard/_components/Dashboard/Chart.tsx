@@ -1,43 +1,36 @@
-"use client";
-import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+'use client';
+import { useEffect, useState } from 'react';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import DisplayPrice from '@/components/DisplayPrice';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useEffect, useState } from "react";
+} from '@/components/ui/chart';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   calculateAvg,
   chartTimePeriod,
   formatAndGroupData,
   setDataDateRange,
-} from "@/lib/chartFunctions";
-import DisplayPrice from "@/components/DisplayPrice";
+} from '@/lib/chartFunctions';
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
-    color: "var(--primary)",
+    label: 'Desktop',
+    color: 'var(--primary)',
   },
   mobile: {
-    label: "Mobile",
-    color: "var(--chart-2)",
+    label: 'Mobile',
+    color: 'var(--chart-2)',
   },
 } satisfies ChartConfig;
 
@@ -62,7 +55,7 @@ export default function Chart({
       chartData,
       chartTimePeriod.at(0)?.value.createdAfter,
       chartTimePeriod.at(0)?.value.createdBefore,
-      setFormattedChartData
+      setFormattedChartData,
     );
   }, [chartData]);
 
@@ -87,7 +80,7 @@ export default function Chart({
                 chartData,
                 new Date(jsonValue.createdAfter),
                 new Date(jsonValue.createdBefore),
-                setFormattedChartData
+                setFormattedChartData,
               );
             }}
             // defaultValue={JSON.stringify(chartTimePeriod.at(0)?.value)}

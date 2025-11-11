@@ -1,31 +1,15 @@
-import { PrismaClient } from '@prisma/client'
-import { PrismaLibSQL } from '@prisma/adapter-libsql'
-import { createClient } from '@libsql/client'
-
+import { createClient } from '@libsql/client';
+import { PrismaLibSQL } from '@prisma/adapter-libsql';
+import { PrismaClient } from '@prisma/client';
 
 const libsql = createClient({
   url: `${process.env.TURSO_DATABASE_URL}`,
   // url: `libsql://estiasisaas-aris.turso.io`,
   authToken: `${process.env.TURSO_AUTH_TOKEN}`,
-})
+});
 
-const adapter = new PrismaLibSQL(libsql)
-export const db = new PrismaClient({ adapter })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const adapter = new PrismaLibSQL(libsql);
+export const db = new PrismaClient({ adapter });
 
 // // db.ts
 // import { PrismaClient } from '@prisma/client';
@@ -39,7 +23,7 @@ export const db = new PrismaClient({ adapter })
 //  * Generate a unique database name from the business name.
 //  */
 // export function getDatabaseName(businessName: string): string {
-//   return md5(businessName);  
+//   return md5(businessName);
 // }
 
 // /**
@@ -47,7 +31,7 @@ export const db = new PrismaClient({ adapter })
 //  * For example: <hashedBusinessName>-<TURSO_ORG>.turso.io
 //  */
 // function getDatabaseUrl(dbName: string): string {
-//   return `${dbName}-${process.env.TURSO_ORG}.turso.io`;  
+//   return `${dbName}-${process.env.TURSO_ORG}.turso.io`;
 // }
 
 // /**
@@ -55,7 +39,7 @@ export const db = new PrismaClient({ adapter })
 //  * For example: libsql://<hashedBusinessName>-<TURSO_ORG>.turso.io
 //  */
 // function getLibsqlUrl(businessName: string): string {
-//   const dbName = getDatabaseName(businessName);  
+//   const dbName = getDatabaseName(businessName);
 //   const url = getDatabaseUrl(dbName);
 //   return `libsql://${url}`;
 // }
@@ -65,14 +49,14 @@ export const db = new PrismaClient({ adapter })
 //  * If it doesn’t exist, create one and cache it.
 //  */
 // export function getPrismaClientForBusiness(businessName: string): PrismaClient {
-//   // Use the businessName (or its hash) as the key  
+//   // Use the businessName (or its hash) as the key
 //   const key = businessName;
 //   if (prismaClientCache[key]) {
-//     return prismaClientCache[key];  
+//     return prismaClientCache[key];
 //   }
 
 //   const libsqlClient = createClient({
-//     url: getLibsqlUrl(businessName),  
+//     url: getLibsqlUrl(businessName),
 //     authToken: process.env.TURSO_GROUP_AUTH_TOKEN,
 //   });
 //   const adapter = new PrismaLibSQL(libsqlClient);
@@ -80,17 +64,6 @@ export const db = new PrismaClient({ adapter })
 //   prismaClientCache[key] = client;
 //   return client;
 // }
-
-
-
-
-
-
-
-
-
-
-
 
 // // db.ts
 // import { PrismaClient } from "@prisma/client";
@@ -100,11 +73,9 @@ export const db = new PrismaClient({ adapter })
 // import md5 from "md5";
 // import { redirect } from "next/navigation";
 
-
-
 // // Create a Turso client for database management
 // const turso = createTursoClient({
-//   token: process.env.TURSO_API_TOKEN!,  
+//   token: process.env.TURSO_API_TOKEN!,
 //   org: process.env.TURSO_ORG!,
 // });
 
@@ -113,7 +84,7 @@ export const db = new PrismaClient({ adapter })
 //  * Here we use md5(userId) to generate a stable name per user.
 //  */
 // export function getDatabaseName(businessName:string): string | null {
-  
+
 //   return businessName ? md5(businessName) : null;
 // }
 
@@ -122,7 +93,7 @@ export const db = new PrismaClient({ adapter })
 //  * For example: `<dbName>-<TURSO_ORG>.turso.io`
 //  */
 // function getDatabaseUrl(dbName: string | null): string | null {
-//   return dbName ? `${dbName}-${process.env.TURSO_ORG}.turso.io` : null;  
+//   return dbName ? `${dbName}-${process.env.TURSO_ORG}.turso.io` : null;
 // }
 
 // /**
@@ -130,7 +101,7 @@ export const db = new PrismaClient({ adapter })
 //  * For example: `libsql://<dbName>-<TURSO_ORG>.turso.io`
 //  */
 // function getLibsqlUrl(businessName:string): string | null {
-//   const dbName = businessName ? md5(businessName) : null;  
+//   const dbName = businessName ? md5(businessName) : null;
 //   const url = getDatabaseUrl(dbName);
 //   console.log({ url });
 //   return url ? `libsql://${url}` : null;
@@ -141,7 +112,7 @@ export const db = new PrismaClient({ adapter })
 //  * For example: `https://<dbName>-<TURSO_ORG>.turso.io/dump`
 //  */
 // export function getDumpUrl(businessName:string): string | null {
-//   const dbName = getDatabaseName(businessName);  
+//   const dbName = getDatabaseName(businessName);
 //   const url = getDatabaseUrl(dbName);
 //   return url ? `https://${url}/dump` : null;
 // }
@@ -150,14 +121,14 @@ export const db = new PrismaClient({ adapter })
 //  * Checks whether the tenant's database exists using the Turso API.
 //  */
 // export async function checkDatabaseExists(businessName:string): Promise<boolean> {
-//   const dbName = getDatabaseName(businessName);  
+//   const dbName = getDatabaseName(businessName);
 //   if (!dbName) return false;
 
 //   try {
-//     await turso.databases.get(dbName);  
+//     await turso.databases.get(dbName);
 //     return true;
 //   } catch (error) {
-//     console.error("Error checking database existence:", error);  
+//     console.error("Error checking database existence:", error);
 //     return false;
 //   }
 // }
@@ -167,41 +138,23 @@ export const db = new PrismaClient({ adapter })
 //  * It builds the connection URL dynamically and uses PrismaLibSQL as the adapter.
 //  */
 // export async function getDatabaseClient(businessName:string): Promise<PrismaClient | null> {
-//   const url = getLibsqlUrl(businessName);  
+//   const url = getLibsqlUrl(businessName);
 
 //   if (!url) {
-//     console.error("Failed to create database client: URL is null.");  
+//     console.error("Failed to create database client: URL is null.");
 //     return redirect("/welcome");
 //   }
 
 //   try {
 //     const libsqlClient = createLibsqlClient({
-//       url,  
+//       url,
 //       authToken: process.env.TURSO_AUTH_TOKEN,
 //     });
 //     const adapter = new PrismaLibSQL(libsqlClient);
 //     const db = new PrismaClient({ adapter });
 //     return db;
 //   } catch (error) {
-//     console.error("Failed to create database client:", error);  
+//     console.error("Failed to create database client:", error);
 //     return null;
 //   }
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

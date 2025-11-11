@@ -1,9 +1,8 @@
-import { verifyToken } from "@/lib/tokens";
-import { Link } from "@/i18n/navigation";
-import React from "react";
-import { sendWelcomeEmail } from "@/email/mail";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { after } from "next/server";
+import { after } from 'next/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { sendWelcomeEmail } from '@/email/mail';
+import { Link } from '@/i18n/navigation';
+import { verifyToken } from '@/lib/tokens';
 
 export default async function AccountVerificationPage({
   searchParams,
@@ -13,11 +12,9 @@ export default async function AccountVerificationPage({
   params: Promise<{ locale: string }>;
 }) {
   setRequestLocale((await params).locale);
-  const t = await getTranslations("accountVerification");
+  const t = await getTranslations('accountVerification');
   const token = (await searchParams).token;
-  let result:
-    | { success?: boolean; error?: string; email?: string; userName?: string }
-    | undefined;
+  let result: { success?: boolean; error?: string; email?: string; userName?: string } | undefined;
   if (token) {
     result = await verifyToken(token);
   }
@@ -33,23 +30,17 @@ export default async function AccountVerificationPage({
       <div className="flex flex-col items-center justify-center gap-5">
         {result?.success && (
           <>
-            <h2 className="text-3xl font-medium text-foreground text-center">
-              {t("success")}
-            </h2>
-            <p className="text-lg text-muted-foreground text-center">
-              {t("continue")}
-            </p>
+            <h2 className="text-3xl font-medium text-foreground text-center">{t('success')}</h2>
+            <p className="text-lg text-muted-foreground text-center">{t('continue')}</p>
             <Link
-              href={"/login"}
+              href={'/login'}
               className="rounded-lg bg-primary px-7 py-3 text-xl text-primary-foreground"
             >
-              {t("signIn")}
+              {t('signIn')}
             </Link>
           </>
         )}
-        {result?.error && (
-          <h2 className="text-xl font-medium">{result?.error}</h2>
-        )}
+        {result?.error && <h2 className="text-xl font-medium">{result?.error}</h2>}
       </div>
     </div>
   );

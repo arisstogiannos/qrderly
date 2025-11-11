@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import { FileText, QrCode, Users } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { FileText, QrCode, Users } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface ActivityFeedCardProps {
-  isOrderingMenu: boolean
+  isOrderingMenu: boolean;
 }
 
 export function ActivityFeedCard({ isOrderingMenu }: ActivityFeedCardProps) {
@@ -43,7 +43,9 @@ export function ActivityFeedCard({ isOrderingMenu }: ActivityFeedCardProps) {
               </div>
               <div className="flex-1 space-y-1">
                 <p className="text-sm font-medium">New Customer</p>
-                <p className="text-xs text-muted-foreground">You received an order from a new customer</p>
+                <p className="text-xs text-muted-foreground">
+                  You received an order from a new customer
+                </p>
                 <p className="text-xs text-muted-foreground">2 days ago</p>
               </div>
             </div>
@@ -51,5 +53,5 @@ export function ActivityFeedCard({ isOrderingMenu }: ActivityFeedCardProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

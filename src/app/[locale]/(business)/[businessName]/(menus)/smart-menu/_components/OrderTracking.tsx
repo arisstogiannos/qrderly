@@ -1,12 +1,11 @@
-"use client";
-import PreparingAnimation from "@/components/PreparingAnimation";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
-import { getOrderById } from "../../../_actions/orders";
-import CheckAnimation from "@/components/CheckAnimation";
-import type { RequiredOrder } from "@/types";
-import { useTranslations } from "next-intl";
-
+'use client';
+import { useQuery } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
+import CheckAnimation from '@/components/CheckAnimation';
+import PreparingAnimation from '@/components/PreparingAnimation';
+import type { RequiredOrder } from '@/types';
+import { getOrderById } from '../../../_actions/orders';
 
 export default function OrderTracking({
   initial,
@@ -18,21 +17,20 @@ export default function OrderTracking({
   const { data: order, isLoading } = useQuery({
     queryKey: [initial.id],
     queryFn: async () => await getOrderById(initial.id),
-    refetchInterval: (query) =>
-      query.state.data?.status === "PENDING" ? 5000 : false,
+    refetchInterval: (query) => (query.state.data?.status === 'PENDING' ? 5000 : false),
     initialData: initial,
   });
-  const t = useTranslations("menus.order");
+  const t = useTranslations('menus.order');
   useEffect(() => {
-    if (order?.status === "COMPLETED") {
+    if (order?.status === 'COMPLETED') {
       document.cookie = `${businessName}order=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
 
       const playAudio = async () => {
         try {
-          const audio = new Audio("/new-order-audio.mp3"); // Ensure the file exists in public/
+          const audio = new Audio('/new-order-audio.mp3'); // Ensure the file exists in public/
           await audio.play(); // Handle promise rejection properly
         } catch (error) {
-          console.error("Audio playback failed:", error);
+          console.error('Audio playback failed:', error);
         }
       };
 
@@ -41,21 +39,19 @@ export default function OrderTracking({
   }, [order]);
 
   if (!order) return null;
-  return order.status === "PENDING" || isLoading ? (
+  return order.status === 'PENDING' || isLoading ? (
     <>
-      <h2 className="text-3xl font-medium text-center">{t("orderReceived")}</h2>
-      <p className="text-foreground/50 font-normal text-center">
-        {t("orderReceivedDescription")}
-      </p>
+      <h2 className="text-3xl font-medium text-center">{t('orderReceived')}</h2>
+      <p className="text-foreground/50 font-normal text-center">{t('orderReceivedDescription')}</p>
       <div className="my-4">
         <PreparingAnimation />
       </div>
     </>
   ) : (
     <>
-      <h2 className="text-3xl font-medium ">{t("orderReady")}</h2>
+      <h2 className="text-3xl font-medium ">{t('orderReady')}</h2>
       <p className="text-foreground/50 font-normal mx-auto text-center mt-1">
-        {t("orderReadyDescription")}
+        {t('orderReadyDescription')}
       </p>
       <div className="my-4">
         <CheckAnimation />

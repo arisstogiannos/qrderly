@@ -1,8 +1,7 @@
-"use server";
+'use server';
 
-import { db } from "@/db";
-import { revalidateTag } from "next/cache";
-import { z } from "zod";
+import { z } from 'zod';
+import { db } from '@/db';
 
 const TabelsSchema = z.object({
   tables: z.string(),
@@ -26,15 +25,14 @@ export async function saveTables(businessId: string, prev: any, formData: FormDa
   });
 
   return {
-    success:true
-  }
+    success: true,
+  };
 
-//   revalidateTag("business"+businessId)
+  //   revalidateTag("business"+businessId)
 }
 export async function getCurrency(businessName: string) {
-
   return await db.business.findUnique({
-    where:{name:businessName},
-    select:{currency:true}
-  })
+    where: { name: businessName },
+    select: { currency: true },
+  });
 }

@@ -1,5 +1,9 @@
-import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
+import { CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import { notFound, redirect } from 'next/navigation';
+import Stripe from 'stripe';
+import { auth } from '@/auth';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -7,14 +11,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
-import Link from "next/link";
-
-import { notFound, redirect } from "next/navigation";
-import React from "react";
-import Stripe from "stripe";
-import Confetti from "./Confetti";
+} from '@/components/ui/card';
+import Confetti from './Confetti';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -28,7 +26,7 @@ export default async function SuccessPage({
   }>;
 }) {
   const user = (await auth())?.user;
-  if (!user) return redirect("/sign-up");
+  if (!user) return redirect('/sign-up');
 
   const paramSessionId = (await searchParams).session_id;
   const successPageButton = (await searchParams).successPageButton;
@@ -42,7 +40,7 @@ export default async function SuccessPage({
       return notFound();
     }
   } catch (error) {
-    console.error("Error retrieving session:", error);
+    console.error('Error retrieving session:', error);
     return notFound();
   }
 
@@ -63,12 +61,8 @@ export default async function SuccessPage({
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
             <CheckCircle className="h-10 w-10 text-green-600" />
           </div>
-          <CardTitle className="text-2xl font-bold text-green-700">
-            Payment Successful!
-          </CardTitle>
-          <CardDescription className="text-base">
-            Thank you for your subscription
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold text-green-700">Payment Successful!</CardTitle>
+          <CardDescription className="text-base">Thank you for your subscription</CardDescription>
         </CardHeader>
         <CardContent className="text-center space-y-2 pb-4">
           <p>Your subscription has been activated successfully.</p>

@@ -1,9 +1,9 @@
-"use client";
-import type { MenuItem } from "@prisma/client";
-import CloudImage from "@/components/CloudImage";
-import type { Translation } from "@/types";
-import DisplayPrice from "@/components/DisplayPrice";
-import Link from "next/link";
+'use client';
+import type { MenuItem } from '@prisma/client';
+import Link from 'next/link';
+import CloudImage from '@/components/CloudImage';
+import DisplayPrice from '@/components/DisplayPrice';
+import type { Translation } from '@/types';
 
 export function SearchModal({
   products,
@@ -31,22 +31,15 @@ export function SearchModal({
         return (
           <Link key={p.id} href={`#${p.name}`}>
             <div className="flex gap-3 border-t border-t-secondary/20 p-2 text-black first-of-type:border-t-0 hover:bg-foreground/10 transition-colors ">
-              {p.imagePath && <div className="relative size-16 flex-shrink-0 place-content-center overflow-hidden rounded-lg">
-                <CloudImage
-                  src={p.imagePath ?? ""}
-                  fill
-                  alt={p.name}
-                  className="object-cover"
-                />
-              </div>}
+              {p.imagePath && (
+                <div className="relative size-16 flex-shrink-0 place-content-center overflow-hidden rounded-lg">
+                  <CloudImage src={p.imagePath ?? ''} fill alt={p.name} className="object-cover" />
+                </div>
+              )}
               <div>
-                <p className="">
-                  {existingTranslation ? translationsAsJson[lang].name : p.name}
-                </p>
+                <p className="">{existingTranslation ? translationsAsJson[lang].name : p.name}</p>
                 <p className="line-clamp-2 text-sm text-muted-foreground">
-                  {existingTranslation
-                    ? translationsAsJson[lang].description
-                    : p.description}
+                  {existingTranslation ? translationsAsJson[lang].description : p.description}
                 </p>
               </div>
               <p className="ml-auto text-sm">

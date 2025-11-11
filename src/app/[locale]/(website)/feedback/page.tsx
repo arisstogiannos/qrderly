@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
-import type React from "react";
-import FeedbackForm from "./FeedbackForm";
-import { Suspense } from "react";
+import { Suspense } from 'react';
+import FeedbackForm from './FeedbackForm';
 
 export default function page() {
   return (

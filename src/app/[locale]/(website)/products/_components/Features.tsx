@@ -1,10 +1,16 @@
-"use client";
-import type { FeatureType } from "@/types";
-import { AnimatePresence, useInView, motion } from "framer-motion";
-import { useTranslations } from "next-intl";
-import React, {  useEffect, useRef, useState } from "react";
+'use client';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
+import { useTranslations } from 'next-intl';
+import { useEffect, useRef, useState } from 'react';
+import type { FeatureType } from '@/types';
 
-export default function Features({ features, theme = "light" }: { features: FeatureType[], theme: "light" | "dark" }) {
+export default function Features({
+  features,
+  theme = 'light',
+}: {
+  features: FeatureType[];
+  theme: 'light' | 'dark';
+}) {
   const [videoSrc, setVideoSrc] = useState<string>(features[0].video);
   return (
     <div className="grid xl:grid-cols-2">
@@ -25,36 +31,39 @@ function Feature({
   desc,
   setVideo,
   theme,
-}: FeatureType & { setVideo: (v: string) => void, theme: "light" | "dark" }) {
+}: FeatureType & { setVideo: (v: string) => void; theme: 'light' | 'dark' }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-400px" });
-  const t = useTranslations("productsData.features")
+  const isInView = useInView(ref, { margin: '-400px' });
+  const t = useTranslations('productsData.features');
 
   useEffect(() => {
     if (isInView) {
       setVideo(video);
     }
-  }, [isInView,setVideo,video]);
+  }, [isInView, setVideo, video]);
 
   return (
     <div ref={ref} className="space-y-5 text-background">
-      <div  className="flex  gap-4 2xl:max-w-2xl xl:last-of-type:mb-60 ">
-        <span className={`size-10 lg:size-14 flex-center p-2 min-w-10 lg:min-w-14 md:mt-1 rounded-full ${theme === "light" ? "bg-primary text-foreground" : "bg-foreground text-primary"}`}>
+      <div className="flex  gap-4 2xl:max-w-2xl xl:last-of-type:mb-60 ">
+        <span
+          className={`size-10 lg:size-14 flex-center p-2 min-w-10 lg:min-w-14 md:mt-1 rounded-full ${theme === 'light' ? 'bg-primary text-foreground' : 'bg-foreground text-primary'}`}
+        >
           {icon}
         </span>
         <div className="space-y-1 sm:space-y-2 text-pretty">
-          <h3 className={` text-2xl md:text-5xl  ${theme === "light" ? "text-background font-medium " : "text-foreground font-semibold"}`}>{t(`${title}.title`)}</h3>
-          <p className={`text-lg md:text-2xl  font-normal ${theme === "light" ? "text-background" : "text-foreground"}`}>{t(`${title}.desc`)}</p>
+          <h3
+            className={` text-2xl md:text-5xl  ${theme === 'light' ? 'text-background font-medium ' : 'text-foreground font-semibold'}`}
+          >
+            {t(`${title}.title`)}
+          </h3>
+          <p
+            className={`text-lg md:text-2xl  font-normal ${theme === 'light' ? 'text-background' : 'text-foreground'}`}
+          >
+            {t(`${title}.desc`)}
+          </p>
         </div>
       </div>
-      <video
-        autoPlay
-        muted
-        playsInline
-        loop
-        className="xl:hidden  rounded-3xl"
-        src={video}
-      />
+      <video autoPlay muted playsInline loop className="xl:hidden  rounded-3xl" src={video} />
     </div>
   );
 }

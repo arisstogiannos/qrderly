@@ -1,10 +1,9 @@
-"use server";
+'use server';
 
-import { db } from "@/db";
-import { sendTrialEndedEmail } from "@/email/mail";
-import { cache } from "@/lib/cache";
-import type { Product } from "@prisma/client";
-import { revalidateTag, unstable_cache } from "next/cache";
+import type { Product } from '@prisma/client';
+import { revalidateTag, unstable_cache } from 'next/cache';
+import { db } from '@/db';
+import { sendTrialEndedEmail } from '@/email/mail';
 
 export async function getMenu(businessName: string) {
   const menu = await db.menu.findFirst({
@@ -37,12 +36,12 @@ export const getActiveMenus = unstable_cache(
         business: {
           OR: [
             {
-              subscription: { billing: "FREETRIAL" },
+              subscription: { billing: 'FREETRIAL' },
               menu: { is: { noScans: { lte: 200 } } },
             },
             {
               subscription: {
-                billing: { not: "FREETRIAL" },
+                billing: { not: 'FREETRIAL' },
                 expiresAt: { gte: new Date() },
               },
             },
@@ -54,71 +53,66 @@ export const getActiveMenus = unstable_cache(
 
     return menus;
   },
-  ["active-menus"],
+  ['active-menus'],
   {
-    tags: ["active-menus"],
-  }
+    tags: ['active-menus'],
+  },
 );
-export const getActiveMenusNotCached = 
-  async (types?: Product[]) => {
-    const menus = await db.menu.findMany({
-      where: {
-        published: true,
-        OR:[
-          {type:types?.[0]},
-          {type:types?.[1]},
-          {type:types?.[2]},
+export const getActiveMenusNotCached = async (types?: Product[]) => {
+  const menus = await db.menu.findMany({
+    where: {
+      published: true,
+      OR: [{ type: types?.[0] }, { type: types?.[1] }, { type: types?.[2] }],
+      business: {
+        OR: [
+          {
+            subscription: { billing: 'FREETRIAL' },
+            menu: { is: { noScans: { lte: 200 } } },
+          },
+          {
+            subscription: {
+              billing: { not: 'FREETRIAL' },
+              hasExpired: false,
+            },
+          },
         ],
-        business: {
-          OR: [
-            {
-              subscription: { billing: "FREETRIAL" },
-              menu: { is: { noScans: { lte: 200 } } },
-            },
-            {
-              subscription: {
-                billing: { not: "FREETRIAL" },
-                hasExpired: false,
-              },
-            },
-          ],
-        },
       },
-      include: { business: { select: { name: true } } },
-    });
+    },
+    include: { business: { select: { name: true } } },
+  });
 
-    return menus;
-  }
+  return menus;
+};
 
-  // export const getActiveMenu = cache(
-  //   async (businessName: string) => {
-  //     const menu = await db.menu.findFirst({
-  //       where: {
-  //         published: true,
-  //         business: {
-  //           name: businessName,
-  //           OR: [
-  //             {
-  //               subscription: { billing: "FREETRIAL" },
-  //               menu: { is: { noScans: { lte: 200 } } },
-  //             },
-  //             {
-  //               subscription: {
-  //                 billing: { not: "FREETRIAL" },
-  //                 expiresAt: { gte: new Date() },
-  //               },
-  //             },
-  //           ],
-  //         },
-  //       },
-  //       include: { business: { select: { name: true } } },
-  //     });
-  
-  //     console.log("activemenu fetxh")
-  
-  //     return menu;
-  //   }
-  // );
+// export const getActiveMenu = cache(
+//   async (businessName: string) => {
+//     const menu = await db.menu.findFirst({
+//       where: {
+//         published: true,
+//         business: {
+//           name: businessName,
+//           OR: [
+//             {
+//               subscription: { billing: "FREETRIAL" },
+//               menu: { is: { noScans: { lte: 200 } } },
+//             },
+//             {
+//               subscription: {
+//                 billing: { not: "FREETRIAL" },
+//                 expiresAt: { gte: new Date() },
+//               },
+//             },
+//           ],
+//         },
+//       },
+//       include: { business: { select: { name: true } } },
+//     });
+
+//     console.log("activemenu fetxh")
+
+//     return menu;
+//   }
+// );
 
 // export const getActiveMenu = cache(
 //   async (businessName: string) => {
@@ -153,71 +147,63 @@ export const getActiveMenusNotCached =
 //     tags: ["active-menu"],
 //   }
 // );
-export const getActiveMenuNotCached = 
-  async (businessName: string) => {
-    const menu = await db.menu.findFirst({
-      where: {
-        published: true,
-        business: {
-          name: businessName,
-          OR: [
-            {
-              subscription: { billing: "FREETRIAL" },
-              menu: { is: { noScans: { lte: 200 } } },
+export const getActiveMenuNotCached = async (businessName: string) => {
+  const menu = await db.menu.findFirst({
+    where: {
+      published: true,
+      business: {
+        name: businessName,
+        OR: [
+          {
+            subscription: { billing: 'FREETRIAL' },
+            menu: { is: { noScans: { lte: 200 } } },
+          },
+          {
+            subscription: {
+              billing: { not: 'FREETRIAL' },
+              hasExpired: false,
             },
-            {
-              subscription: {
-                billing: { not: "FREETRIAL" },
-                hasExpired: false,
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
-      include: { business: { select: { name: true } } },
-    });
+    },
+    include: { business: { select: { name: true } } },
+  });
 
+  return menu;
+};
 
-
-
-    return menu;
-  }
-
-
-  export async function incrementMenuScans(id:string,businessId:string){
-   const menu = await db.menu.update({
-      where:{id},
-      data:{
-        noScans:{
-          increment:1
-        }
-      }
-    })
-    
-    await db.scan.create({data:{businessId}})
-    revalidateTag(`scans${businessId}`)
-    return menu.noScans
-  }
-  export async function deactivateMenu(businessName:string){
-    revalidateTag(`active-menu${businessName}`)
-    revalidateTag("active-menus")
-    const user = await db.user.findFirst({
-      where: {
-       business:{some:{name:businessName}},
+export async function incrementMenuScans(id: string, businessId: string) {
+  const menu = await db.menu.update({
+    where: { id },
+    data: {
+      noScans: {
+        increment: 1,
       },
-    });
-    if(user){
-      await sendTrialEndedEmail(user.email,user.name,businessName)
-    }
+    },
+  });
 
-
+  await db.scan.create({ data: { businessId } });
+  revalidateTag(`scans${businessId}`);
+  return menu.noScans;
+}
+export async function deactivateMenu(businessName: string) {
+  revalidateTag(`active-menu${businessName}`);
+  revalidateTag('active-menus');
+  const user = await db.user.findFirst({
+    where: {
+      business: { some: { name: businessName } },
+    },
+  });
+  if (user) {
+    await sendTrialEndedEmail(user.email, user.name, businessName);
   }
+}
 
+export async function getMenuByBusinessName(businessName: string) {
+  const menu = await db.menu.findFirst({
+    where: { business: { name: businessName } },
+  });
 
-  export async function getMenuByBusinessName(businessName:string){
-    const menu = await db.menu.findFirst({
-      where: { business: { name: businessName } },
-    });
-
-    return menu
-  }
+  return menu;
+}

@@ -1,6 +1,6 @@
-"use client";
-import type { Category } from "@prisma/client";
-import { useEffect, useRef, useState } from "react";
+'use client';
+import type { Category } from '@prisma/client';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Categories({ categories }: { categories: Category[] }) {
   const [currentCategory, setCurrentCategory] = useState(categories.at(0)?.name);
@@ -10,8 +10,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
 
   useEffect(() => {
     categories.forEach(
-      (cat) =>
-        (sectionsRef.current[cat.name] = document.getElementById(cat.name)),
+      (cat) => (sectionsRef.current[cat.name] = document.getElementById(cat.name)),
     );
 
     const handleScroll = () => {
@@ -21,10 +20,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
         const section = sectionsRef.current[category.name];
         if (!section) return false;
         const rect = section.getBoundingClientRect();
-        return (
-          rect.top <= window.innerHeight / 2 &&
-          rect.bottom >= window.innerHeight / 2
-        );
+        return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
       });
 
       if (visibleCategory) {
@@ -32,23 +28,23 @@ export default function Categories({ categories }: { categories: Category[] }) {
 
         // Scroll the category button into view only when user is scrolling
         linksRef.current[visibleCategory.name]?.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "center",
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
         });
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [categories, currentCategory]);
 
   function handleClick(category: string) {
     isUserClicking.current = true; // Mark as user click
     setCurrentCategory(category);
     sectionsRef.current[category]?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
+      behavior: 'smooth',
+      block: 'center',
     });
 
     // Re-enable auto-scroll after a delay
@@ -69,7 +65,7 @@ export default function Categories({ categories }: { categories: Category[] }) {
               if (el) linksRef.current[category.name] = el;
             }}
             className={`rounded-md px-5 py-2 text-sm font-medium transition-colors capitalize lg:text-base xl:hover:bg-primary ${
-              currentCategory === category.name ? "bg-primary" : "bg-primary/30"
+              currentCategory === category.name ? 'bg-primary' : 'bg-primary/30'
             }`}
             onClick={() => handleClick(category.name)}
           >

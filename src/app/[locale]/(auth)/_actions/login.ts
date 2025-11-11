@@ -1,19 +1,15 @@
-"use server";
+'use server';
 
-import { z } from "zod";
-import { signIn, signOut as authSignOut, auth } from "@/auth";
-import { AuthError } from "next-auth";
-import { db } from "@/db";
-import { sendVerificationEmail } from "@/email/mail";
-import { generateVerificationToken } from "@/lib/tokens";
-import getSession from "@/lib/getSession";
+import { AuthError } from 'next-auth';
+import { z } from 'zod';
+import { signOut as authSignOut, signIn } from '@/auth';
+import { db } from '@/db';
+import { sendVerificationEmail } from '@/email/mail';
+import { generateVerificationToken } from '@/lib/tokens';
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }).trim(),
-  password: z
-    .string()
-    .min(8, { message: "Password should be at least 8 characters" })
-    .trim(),
+  email: z.string().email({ message: 'Invalid email address' }).trim(),
+  password: z.string().min(8, { message: 'Password should be at least 8 characters' }).trim(),
 });
 
 export async function login(prevState: any, formData: FormData) {
@@ -35,49 +31,45 @@ export async function login(prevState: any, formData: FormData) {
   if (!existingUser) {
     return {
       errors: {
-        email: ["Invalid email"],
+        email: ['Invalid email'],
       },
     };
   }
 
   if (!existingUser.password) {
-    return { error: "Try logging in with authentication providers" };
+    return { error: 'Try logging in with authentication providers' };
   }
 
   if (!existingUser.emailVerified) {
-    const verificationToken = await generateVerificationToken(
-      existingUser.email,
-    );
+    const verificationToken = await generateVerificationToken(existingUser.email);
     await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token,
-      existingUser.name
+      existingUser.name,
     );
-    return { success: "Confirmation email sent" };
+    return { success: 'Confirmation email sent' };
   }
 
   try {
-
-    await signIn("credentials", {
+    await signIn('credentials', {
       email,
       password,
       // redirectTo: "/get-started",
-      redirect:false
+      redirect: false,
     });
-    return { loggedIn: "Login successful" };
+    return { loggedIn: 'Login successful' };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
-        case "CredentialsSignin":
-          return { error: "Invalid credentials!" };
+        case 'CredentialsSignin':
+          return { error: 'Invalid credentials!' };
         default:
-          return { error: "Something went wrong!" };
+          return { error: 'Something went wrong!' };
       }
     }
     throw error;
   }
 }
-
 
 export async function signOut() {
   await authSignOut({
@@ -86,6 +78,6 @@ export async function signOut() {
 }
 export async function signOutDashboard() {
   await authSignOut({
-    redirectTo:"/login" ,
+    redirectTo: '/login',
   });
 }

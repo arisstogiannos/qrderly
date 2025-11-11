@@ -1,21 +1,18 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
-import React, { Suspense, useEffect, useState } from "react";
-import { usePlanContext } from "./PlanContext";
-import type { ProductURL } from "@/types";
-import { BillingType } from "@prisma/client";
-import { productMap } from "@/data";
-import {
-  createFreeSubscription,
-  createSession,
-} from "../../subscriptionActions";
-import { Check } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
-import { getSale } from "@/app/[locale]/banner";
-import Loader from "@/components/Loader";
+'use client';
+import { BillingType } from '@prisma/client';
+import { useQuery } from '@tanstack/react-query';
+import { Check } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import { Suspense, useEffect, useState } from 'react';
+import { getSale } from '@/app/[locale]/banner';
+import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { productMap } from '@/data';
+import { Link } from '@/i18n/navigation';
+import type { ProductURL } from '@/types';
+import { createFreeSubscription, createSession } from '../../subscriptionActions';
+import { usePlanContext } from './PlanContext';
 
 type thisProps = {
   plan: {
@@ -29,18 +26,18 @@ type thisProps = {
   index: number;
 };
 
-export const dynamic = "error";
+export const dynamic = 'error';
 
 export default function Plan({ plan, index }: thisProps) {
   const { selectedPlanType } = usePlanContext();
-  const t = useTranslations("plandata");
+  const t = useTranslations('plandata');
   const [showSale, setShowSale] = useState(false);
 
   const { data } = useQuery({
     queryFn: async () => {
       return await getSale();
     },
-    queryKey: ["banner"],
+    queryKey: ['banner'],
   });
 
   // Show sale after component mounts for animation
@@ -81,9 +78,7 @@ export default function Plan({ plan, index }: thisProps) {
           {/* Original price with strikethrough, fades out */}
           <span
             className={`text-3xl font-semibold  transition-all duration-500  origin-left ${
-              showSale
-                ? "opacity-70 scale-80 line-through text-muted-foreground"
-                : "opacity-100"
+              showSale ? 'opacity-70 scale-80 line-through text-muted-foreground' : 'opacity-100'
             }`}
           >
             {originalPrice}
@@ -93,9 +88,7 @@ export default function Plan({ plan, index }: thisProps) {
           <div className="flex items-center gap-2">
             <span
               className={`text-3xl font-bold text-primary transition-all duration-500  ${
-                showSale
-                  ? "opacity-100 scale-100"
-                  : "opacity-0 scale-90 -translate-x-4"
+                showSale ? 'opacity-100 scale-100' : 'opacity-0 scale-90 -translate-x-4'
               }`}
             >
               {salePrice}
@@ -104,7 +97,7 @@ export default function Plan({ plan, index }: thisProps) {
             {/* Sale badge */}
             <span
               className={`bg-primary text-background text-sm font-bold px-2 py-1 rounded-full transition-all duration-500 ${
-                showSale ? "opacity-100 scale-100" : "opacity-0 scale-50"
+                showSale ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
               }`}
             >
               20% OFF
@@ -151,26 +144,19 @@ function Buttons({
 }) {
   const { selectedPlanType } = usePlanContext();
   const { data: session } = useSession();
-  const t = useTranslations("plandata");
+  const t = useTranslations('plandata');
   const [loading, setLoading] = useState(false);
   const [loadingfree, setLoadingfree] = useState(false);
-  const productUrl: ProductURL = plan.title
-    .toLowerCase()
-    .replaceAll(" ", "-") as ProductURL;
+  const productUrl: ProductURL = plan.title.toLowerCase().replaceAll(' ', '-') as ProductURL;
 
-  const billing =
-    selectedPlanType === "yearly" ? BillingType.YEARLY : BillingType.MONTHLY;
-  const product =
-    productMap[plan.title.toLowerCase().replaceAll(" ", "-") as ProductURL];
+  const billing = selectedPlanType === 'yearly' ? BillingType.YEARLY : BillingType.MONTHLY;
+  const product = productMap[plan.title.toLowerCase().replaceAll(' ', '-') as ProductURL];
 
   const business = session?.user?.business.find(
-    (b) =>
-      b.product === product &&
-      b.subscription &&
-      b.subscription.billing === "FREETRIAL"
+    (b) => b.product === product && b.subscription && b.subscription.billing === 'FREETRIAL',
   );
 
-  const businessId = business?.id ?? "";
+  const businessId = business?.id ?? '';
   return (
     <div className=" flex flex-col gap-4 mt-auto">
       <Button
@@ -181,21 +167,21 @@ function Buttons({
             plan.billing[selectedPlanType].price_id,
             billing,
             product,
-            "",
-            "",
+            '',
+            '',
             `/get-started/${productUrl}/business-setup`,
-            "create your menu"
+            'create your menu',
           );
         }}
         className="rounded-full bg-foreground text-xl py-6"
       >
-        {loading ? <Loader className="text-xs h-6" /> : t("button")}
+        {loading ? <Loader className="text-xs h-6" /> : t('button')}
       </Button>
 
       {!business ? (
         <Button
           disabled={loadingfree}
-          variant={"outline"}
+          variant={'outline'}
           className="rounded-full  text-xl py-6 w-full"
           onClick={() => {
             setLoadingfree(true);
@@ -205,11 +191,11 @@ function Buttons({
         >
           <Link
             href={{
-              pathname: "/get-started/[product]/business-setup",
+              pathname: '/get-started/[product]/business-setup',
               params: { product: productUrl },
             }}
           >
-            {loadingfree ? <Loader className="text-xs h-6" /> : t("free")}
+            {loadingfree ? <Loader className="text-xs h-6" /> : t('free')}
           </Link>
         </Button>
       ) : (
@@ -222,18 +208,18 @@ function Buttons({
               billing,
               product,
               businessId,
-              business?.subscription?.id ?? "",
-              "/",
-              "go back to homepage"
+              business?.subscription?.id ?? '',
+              '/',
+              'go back to homepage',
             );
           }}
-          variant={"outline"}
+          variant={'outline'}
           className="rounded-full  text-xl py-6 w-full whitespace-normal "
         >
           {loadingfree ? (
             <Loader className="text-xs h-6" />
           ) : (
-            t("upgrade", { business: business.name })
+            t('upgrade', { business: business.name })
           )}
         </Button>
       )}
@@ -246,10 +232,7 @@ function ButtonFallback() {
     <div className=" flex flex-col gap-4 mt-auto animate-pulse">
       <Button className="rounded-full bg-foreground text-xl py-6" />
 
-      <Button
-        variant={"outline"}
-        className="rounded-full  text-xl py-6 w-full"
-      />
+      <Button variant={'outline'} className="rounded-full  text-xl py-6 w-full" />
     </div>
   );
 }

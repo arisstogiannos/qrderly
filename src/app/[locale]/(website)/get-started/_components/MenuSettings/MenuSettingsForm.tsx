@@ -1,18 +1,17 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircleIcon, Save, TriangleAlert } from "lucide-react";
-import React, { useActionState, useEffect } from "react";
-import { submitMenuSettings } from "../../actions";
-import { ProductURL } from "@/types";
-import Loader from "@/components/Loader";
-import { useSearchParams } from "next/navigation";
-import type { Menu, Product, Template } from "@prisma/client";
-import TemplateSelect from "./TemplateSelect";
-import LanguageSettings from "./LanguageSettings";
-import ThemeSettings from "./ThemeSettings";
-import type { Language } from "deepl-node";
-import { toast } from "sonner";
-import { useTranslations } from "next-intl";
+'use client';
+import type { Menu, Product, Template } from '@prisma/client';
+import type { Language } from 'deepl-node';
+import { ArrowRight, CheckCircleIcon, Save, TriangleAlert } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useActionState, useEffect } from 'react';
+import { toast } from 'sonner';
+import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { submitMenuSettings } from '../../actions';
+import LanguageSettings from './LanguageSettings';
+import TemplateSelect from './TemplateSelect';
+import ThemeSettings from './ThemeSettings';
 
 export default function MenuSettingsForm({
   businessId,
@@ -31,9 +30,9 @@ export default function MenuSettingsForm({
 }) {
   const [state, action, isPending] = useActionState(
     submitMenuSettings.bind(null, businessId, product, menu, setup),
-    null
+    null,
   );
-  const template: Template = (useSearchParams().get("t") as Template) ?? "T1";
+  const template: Template = (useSearchParams().get('t') as Template) ?? 'T1';
 
   useEffect(() => {
     if (!setup) {
@@ -41,36 +40,32 @@ export default function MenuSettingsForm({
         toast(state.success, {
           duration: 1500,
           icon: <CheckCircleIcon />,
-          position: "top-left",
+          position: 'top-left',
           style: {
-            backgroundColor: "lightgreen",
-            color: "darkgreen",
-            borderColor: "darkgreen",
+            backgroundColor: 'lightgreen',
+            color: 'darkgreen',
+            borderColor: 'darkgreen',
           },
         });
       } else if (state?.error) {
         toast(state.error, {
           duration: 1500,
           icon: <TriangleAlert />,
-          position: "top-left",
+          position: 'top-left',
           style: {
-            backgroundColor: "red",
-            color: "darkred",
-            borderColor: "darkred",
+            backgroundColor: 'red',
+            color: 'darkred',
+            borderColor: 'darkred',
           },
         });
       }
     }
   }, [state, setup]);
-  const t = useTranslations("menu settings");
+  const t = useTranslations('menu settings');
 
   return (
     <>
-      <TemplateSelect
-        template={template}
-        menu={menu}
-        errors={state?.errors?.template}
-      />
+      <TemplateSelect template={template} menu={menu} errors={state?.errors?.template} />
       <LanguageSettings
         srcLanguages={srcLanguages}
         targetLanguages={targetLanguages}
@@ -99,11 +94,11 @@ export default function MenuSettingsForm({
         ) : !setup ? (
           <>
             <Save />
-            {t("Save")}
+            {t('Save')}
           </>
         ) : (
           <>
-            {t("next")} <ArrowRight className="size-5" />
+            {t('next')} <ArrowRight className="size-5" />
           </>
         )}
       </Button>

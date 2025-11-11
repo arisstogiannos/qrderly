@@ -1,9 +1,9 @@
-"use client";
-import { useEffect } from "react";
+'use client';
+import { useEffect } from 'react';
 
 export function usePreventRefresh(
-  message = "Changes you made may not be saved. Are you sure you want to leave?",
-  shouldPrevent = true
+  message = 'Changes you made may not be saved. Are you sure you want to leave?',
+  shouldPrevent = true,
 ) {
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -13,10 +13,10 @@ export function usePreventRefresh(
       }
     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [message,shouldPrevent]);
+  }, [message, shouldPrevent]);
 }

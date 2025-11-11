@@ -1,17 +1,16 @@
-"use client";
+'use client';
 
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { useTranslations } from 'next-intl';
 import {
-  Dialog as DialogShadcn,
   DialogContent,
   DialogDescription,
   DialogHeader,
-} from "@/components/ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
+  Dialog as DialogShadcn,
+} from '@/components/ui/dialog';
 
-import ProgressSteps from "./Progress";
-
-import FailedImagesModal from "./FailedImagesModal";
-import { useTranslations } from "next-intl";
+import FailedImagesModal from './FailedImagesModal';
+import ProgressSteps from './Progress';
 
 export default function Dialog({
   jobId,
@@ -24,7 +23,7 @@ export default function Dialog({
   isProcessing: boolean;
   runningTime: number;
 }) {
-  const t = useTranslations("uploadingForm");
+  const t = useTranslations('uploadingForm');
 
   return (
     <DialogShadcn open={!!jobId}>
@@ -32,11 +31,11 @@ export default function Dialog({
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-left">
             {failedImages && failedImages.length > 0
-              ? t("failedImagesDialogTitle")
-              : t("dialogTitle")}
+              ? t('failedImagesDialogTitle')
+              : t('dialogTitle')}
           </DialogTitle>
           {failedImages && failedImages.length > 0 ? (
-            <DialogDescription>{t("failedImagesDialogDesc")}</DialogDescription>
+            <DialogDescription>{t('failedImagesDialogDesc')}</DialogDescription>
           ) : null}
         </DialogHeader>
         {failedImages && failedImages.length > 0 ? (

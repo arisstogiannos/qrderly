@@ -1,11 +1,11 @@
-import { plandata } from "@/data";
-import { db } from "@/db";
-import SubscriptionConfirmationEmail from "@/email/components/orders/PurchaseReceipt";
-import type { BillingType, Product } from "@prisma/client";
-import { revalidateTag } from "next/cache";
-import { type NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
-import Stripe from "stripe";
+import type { BillingType, Product } from '@prisma/client';
+import { revalidateTag } from 'next/cache';
+import { type NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import Stripe from 'stripe';
+import { plandata } from '@/data';
+import { db } from '@/db';
+import SubscriptionConfirmationEmail from '@/email/components/orders/PurchaseReceipt';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const resend = new Resend(process.env.RESEND_API_KEY as string);
@@ -13,43 +13,38 @@ const resend = new Resend(process.env.RESEND_API_KEY as string);
 export async function POST(req: NextRequest) {
   const event = await stripe.webhooks.constructEvent(
     await req.text(),
-    req.headers.get("stripe-signature") as string,
-    process.env.STRIPE_WEBHOOK_SECRET as string
+    req.headers.get('stripe-signature') as string,
+    process.env.STRIPE_WEBHOOK_SECRET as string,
   );
 
-  if (event.type === "checkout.session.completed") {
-    const session = await stripe.checkout.sessions.retrieve(
-      event.data.object.id,
-      {
-        expand: ["line_items", "customer", "subscription"],
-      }
-    );
+  if (event.type === 'checkout.session.completed') {
+    const session = await stripe.checkout.sessions.retrieve(event.data.object.id, {
+      expand: ['line_items', 'customer', 'subscription'],
+    });
     const userId = session.metadata?.userId;
     const product = session.metadata?.product as Product;
     const billing = session.metadata?.billing as BillingType;
     const email = session.metadata?.email;
-    const businessId = session.metadata?.businessId ?? "";
-    const subToUpgrade = session.metadata?.freeSubscriptionId ?? "";
+    const businessId = session.metadata?.businessId ?? '';
+    const subToUpgrade = session.metadata?.freeSubscriptionId ?? '';
 
     if (!userId || !billing || !product || !email) {
-      return new NextResponse("Bad Request: Missing Metadata", { status: 400 });
+      return new NextResponse('Bad Request: Missing Metadata', { status: 400 });
     }
 
     const currentDate = new Date();
     const expireDate =
-      billing === "MONTHLY"
+      billing === 'MONTHLY'
         ? new Date(currentDate.setMonth(currentDate.getMonth() + 1))
         : new Date(currentDate.setFullYear(currentDate.getFullYear() + 1));
 
     const subscriptionId =
-      typeof session.subscription === "object"
-        ? session.subscription?.id
-        : session.subscription;
+      typeof session.subscription === 'object' ? session.subscription?.id : session.subscription;
     const subscriptionData = {
       userId: userId,
       billing: billing,
       product: product,
-      businessId: businessId !== "" ? businessId : null,
+      businessId: businessId !== '' ? businessId : null,
       expiresAt: expireDate,
       stripeSubId: subscriptionId,
       hasExpired: false,
@@ -57,7 +52,7 @@ export async function POST(req: NextRequest) {
 
     let query;
 
-    if (subToUpgrade !== "") {
+    if (subToUpgrade !== '') {
       query = { id: subToUpgrade };
     } else {
       query = { businessId_product: { businessId, product } };
@@ -75,18 +70,22 @@ export async function POST(req: NextRequest) {
     await resend.emails.send({
       from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
       to: email,
-      subject: "Order Confirmation",
-      react: <SubscriptionConfirmationEmail billingCycle={sub.billing} planName={sub.product} planPrice={""} startDate={sub.purchasedAt.toLocaleDateString()} username="user" dashboardUrl=""  />,
+      subject: 'Order Confirmation',
+      react: (
+        <SubscriptionConfirmationEmail
+          billingCycle={sub.billing}
+          planName={sub.product}
+          planPrice={''}
+          startDate={sub.purchasedAt.toLocaleDateString()}
+          username="user"
+          dashboardUrl=""
+        />
+      ),
     });
-
-
-  } else if (event.type === "customer.subscription.deleted") {
-    const subscription = await stripe.subscriptions.retrieve(
-      event.data.object.id,
-      {
-        expand: ["customer"],
-      }
-    );
+  } else if (event.type === 'customer.subscription.deleted') {
+    const subscription = await stripe.subscriptions.retrieve(event.data.object.id, {
+      expand: ['customer'],
+    });
     const sub = await db.subscription.update({
       where: {
         stripeSubId: subscription.id,
@@ -96,21 +95,18 @@ export async function POST(req: NextRequest) {
     });
 
     revalidateTag(`active-menu${sub?.business?.name}`);
-
-    
-  } else if (event.type === "customer.subscription.updated") {
+  } else if (event.type === 'customer.subscription.updated') {
     const updatedSub = event.data.object;
     const newPlan = updatedSub.items.data[0].plan;
     const newSubProduct = plandata.find(
       (plan) =>
-        plan.billing[newPlan.interval === "month" ? "monthly" : "yearly"]
-          .price_id === newPlan.id
+        plan.billing[newPlan.interval === 'month' ? 'monthly' : 'yearly'].price_id === newPlan.id,
     );
     if (newSubProduct) {
       const sub = await db.subscription.update({
         where: { stripeSubId: updatedSub.id },
         data: {
-          billing: newPlan.interval === "month" ? "MONTHLY" : "YEARLY",
+          billing: newPlan.interval === 'month' ? 'MONTHLY' : 'YEARLY',
           product: newSubProduct.product,
           purchasedAt: new Date(),
           renewedAt: new Date(),

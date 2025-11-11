@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import OrderMenuForm from "./OrderMenuForm";
-import Success from "./Success";
-
-
+import { useEffect, useState } from 'react';
+import OrderMenuForm from './OrderMenuForm';
+import Success from './Success';
 
 export default function OrderMenu() {
   const [success, setSuccess] = useState(false);
   useEffect(() => {
-    const menuOrderSubmitted = document.cookie.split('; ').find(row => row.startsWith('menu-order-submitted='));
+    const menuOrderSubmitted = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('menu-order-submitted='));
     if (menuOrderSubmitted) {
       setSuccess(true);
     }

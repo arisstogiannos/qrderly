@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
+import type { Settings } from '@prisma/client';
+import { Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -13,21 +14,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
-import type { Settings } from "@prisma/client";
-import { updateSettings } from "./actions";
-import { useTranslations } from "next-intl";
-import { deleteAccount } from "../../(business)/[businessName]/dashboard/_actions/deleteAccount";
+} from '@/components/ui/dialog';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
+import { deleteAccount } from '../../(business)/[businessName]/dashboard/_actions/deleteAccount';
+import { updateSettings } from './actions';
 
-export default function UserSettings({
-  settings,
-  userId,
-}: {
-  settings: Settings;
-  userId: string;
-}) {
-  const t = useTranslations("userSettings");
+export default function UserSettings({ settings, userId }: { settings: Settings; userId: string }) {
+  const t = useTranslations('userSettings');
   const [notifications, setNotifications] = useState({
     receiveMenuNotifications: settings.receiveMenuNotifications,
     receiveOrderNotifications: settings.receiveOrderNotifications,
@@ -48,18 +42,12 @@ export default function UserSettings({
 
   useEffect(() => {
     setSettingsChanged(
-      settings.receiveMenuNotifications !==
-        notifications.receiveMenuNotifications ||
-        settings.receiveOrderNotifications !==
-          notifications.receiveOrderNotifications ||
-        settings.receivePromotionNotifications !==
-          notifications.receivePromotionNotifications ||
-        settings.receiveNewsletterNotifications !==
-          notifications.receiveNewsletterNotifications ||
-        settings.receiveSurveyNotifications !==
-          notifications.receiveSurveyNotifications ||
-        settings.receiveFeedbackNotifications !==
-          notifications.receiveFeedbackNotifications
+      settings.receiveMenuNotifications !== notifications.receiveMenuNotifications ||
+        settings.receiveOrderNotifications !== notifications.receiveOrderNotifications ||
+        settings.receivePromotionNotifications !== notifications.receivePromotionNotifications ||
+        settings.receiveNewsletterNotifications !== notifications.receiveNewsletterNotifications ||
+        settings.receiveSurveyNotifications !== notifications.receiveSurveyNotifications ||
+        settings.receiveFeedbackNotifications !== notifications.receiveFeedbackNotifications,
     );
   }, [notifications, settings]);
 
@@ -76,58 +64,56 @@ export default function UserSettings({
 
   return (
     <div className="container max-w-4xl py-8 mx-auto">
-      <h1 className="mb-6 text-3xl font-bold">{t("title")}</h1>
+      <h1 className="mb-6 text-3xl font-bold">{t('title')}</h1>
 
       <section className="mb-10 flex flex-col">
         <div className="mb-4 flex md:items-center flex-col md:flex-row justify-between">
-          <h2 className="text-xl font-semibold">{t("emailNotifications.title")}</h2>
-          <p className="text-sm text-muted-foreground">
-            {t("emailNotifications.description")}
-          </p>
+          <h2 className="text-xl font-semibold">{t('emailNotifications.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('emailNotifications.description')}</p>
         </div>
         <Separator className="mb-6" />
 
         <div className="space-y-4">
           <NotificationCard
-            title={t("emailNotifications.menuUpdates.title")}
-            description={t("emailNotifications.menuUpdates.description")}
+            title={t('emailNotifications.menuUpdates.title')}
+            description={t('emailNotifications.menuUpdates.description')}
             checked={notifications.receiveMenuNotifications}
-            onToggle={() => handleToggle("receiveMenuNotifications")}
+            onToggle={() => handleToggle('receiveMenuNotifications')}
           />
 
           <NotificationCard
-            title={t("emailNotifications.orderStatus.title")}
-            description={t("emailNotifications.orderStatus.description")}
+            title={t('emailNotifications.orderStatus.title')}
+            description={t('emailNotifications.orderStatus.description')}
             checked={notifications.receiveOrderNotifications}
-            onToggle={() => handleToggle("receiveOrderNotifications")}
+            onToggle={() => handleToggle('receiveOrderNotifications')}
           />
 
           <NotificationCard
-            title={t("emailNotifications.promotions.title")}
-            description={t("emailNotifications.promotions.description")}
+            title={t('emailNotifications.promotions.title')}
+            description={t('emailNotifications.promotions.description')}
             checked={notifications.receivePromotionNotifications}
-            onToggle={() => handleToggle("receivePromotionNotifications")}
+            onToggle={() => handleToggle('receivePromotionNotifications')}
           />
 
           <NotificationCard
-            title={t("emailNotifications.newsletter.title")}
-            description={t("emailNotifications.newsletter.description")}
+            title={t('emailNotifications.newsletter.title')}
+            description={t('emailNotifications.newsletter.description')}
             checked={notifications.receiveNewsletterNotifications}
-            onToggle={() => handleToggle("receiveNewsletterNotifications")}
+            onToggle={() => handleToggle('receiveNewsletterNotifications')}
           />
 
           <NotificationCard
-            title={t("emailNotifications.surveys.title")}
-            description={t("emailNotifications.surveys.description")}
+            title={t('emailNotifications.surveys.title')}
+            description={t('emailNotifications.surveys.description')}
             checked={notifications.receiveSurveyNotifications}
-            onToggle={() => handleToggle("receiveSurveyNotifications")}
+            onToggle={() => handleToggle('receiveSurveyNotifications')}
           />
 
           <NotificationCard
-            title={t("emailNotifications.feedback.title")}
-            description={t("emailNotifications.feedback.description")}
+            title={t('emailNotifications.feedback.title')}
+            description={t('emailNotifications.feedback.description')}
             checked={notifications.receiveFeedbackNotifications}
-            onToggle={() => handleToggle("receiveFeedbackNotifications")}
+            onToggle={() => handleToggle('receiveFeedbackNotifications')}
           />
         </div>
         <Button
@@ -135,45 +121,40 @@ export default function UserSettings({
           onClick={() => handleSave()}
           disabled={isSaving || !settingsChanged}
         >
-          {isSaving ? t("saving") : t("saveChanges")}
+          {isSaving ? t('saving') : t('saveChanges')}
         </Button>
       </section>
 
       <section className="mt-12">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-red-600">{t("dangerZone.title")}</h2>
+          <h2 className="text-xl font-semibold text-red-600">{t('dangerZone.title')}</h2>
         </div>
         <Separator className="mb-6" />
 
         <Card className="border-red-200 bg-red-50 p-6">
           <div className="flex items-start justify-between flex-col md:flex-row gap-y-4">
             <div className="space-y-2">
-              <h3 className="font-medium text-red-800">{t("dangerZone.deleteAccount.title")}</h3>
-              <p className="text-sm text-red-700">
-                {t("dangerZone.deleteAccount.description")}
-              </p>
+              <h3 className="font-medium text-red-800">{t('dangerZone.deleteAccount.title')}</h3>
+              <p className="text-sm text-red-700">{t('dangerZone.deleteAccount.description')}</p>
             </div>
             <Dialog>
               <DialogTrigger asChild>
-                <Button
-                  variant="destructive"
-                  className="flex items-center gap-2 w-full md:w-fit"
-                >
+                <Button variant="destructive" className="flex items-center gap-2 w-full md:w-fit">
                   <Trash2 className="h-4 w-4" />
-                  {t("dangerZone.deleteAccount.title")}
+                  {t('dangerZone.deleteAccount.title')}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>{t("dangerZone.deleteAccount.confirmTitle")}</DialogTitle>
+                  <DialogTitle>{t('dangerZone.deleteAccount.confirmTitle')}</DialogTitle>
                   <DialogDescription>
-                    {t("dangerZone.deleteAccount.confirmDescription")}
+                    {t('dangerZone.deleteAccount.confirmDescription')}
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                  <Button variant="outline">{t("dangerZone.deleteAccount.cancel")}</Button>
+                  <Button variant="outline">{t('dangerZone.deleteAccount.cancel')}</Button>
                   <Button variant="destructive" onClick={deleteAccount}>
-                    {t("dangerZone.deleteAccount.confirm")}
+                    {t('dangerZone.deleteAccount.confirm')}
                   </Button>
                 </DialogFooter>
               </DialogContent>

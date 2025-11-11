@@ -1,31 +1,31 @@
-"use client"
+'use client';
 
-import { createContext, type ReactNode, useContext, useState } from "react"
+import { createContext, type ReactNode, useContext, useState } from 'react';
 
 type thisType = {
-    open:boolean,
-    setOpen:(v:boolean)=>void,
-    price:number,
-    setPrice: React.Dispatch<React.SetStateAction<number>>;
-}
+  open: boolean;
+  setOpen: (v: boolean) => void;
+  price: number;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
+};
 
-export const CardModalContext = createContext<thisType | undefined>(undefined)
+export const CardModalContext = createContext<thisType | undefined>(undefined);
 
-export function CardModalProvider({children}:{children:ReactNode}) {
-    const [open,setOpen] = useState(false)
-    const [price,setPrice] = useState(0)
-    
+export function CardModalProvider({ children }: { children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const [price, setPrice] = useState(0);
+
   return (
-    <CardModalContext.Provider value={{open,setOpen,price,setPrice}}>
+    <CardModalContext.Provider value={{ open, setOpen, price, setPrice }}>
       {children}
     </CardModalContext.Provider>
-  )
+  );
 }
 
 export function useCardModalContext() {
   const context = useContext(CardModalContext);
   if (context === undefined) {
-    throw new Error("useCardModalContext outside provider");
+    throw new Error('useCardModalContext outside provider');
   }
 
   return context;

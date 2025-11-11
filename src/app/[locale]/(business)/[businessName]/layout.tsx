@@ -1,7 +1,7 @@
-import React, { type ReactNode } from "react";
-import { cache } from "@/lib/cache";
-import { getCurrency } from "./_actions/business";
-import { CurrencyProvider } from "@/context/CurrencyProvider";
+import { type ReactNode } from 'react';
+import { CurrencyProvider } from '@/context/CurrencyProvider';
+import { cache } from '@/lib/cache';
+import { getCurrency } from './_actions/business';
 
 export default async function layout({
   children,
@@ -10,7 +10,7 @@ export default async function layout({
   children: ReactNode;
   params: Promise<{ businessName: string }>;
 }) {
-  const businessName = (await params).businessName.replaceAll("-", " ");
+  const businessName = (await params).businessName.replaceAll('-', ' ');
 
   const getCurrencyCache = cache(getCurrency, [`currency${businessName}`], {
     tags: [`currency${businessName}`],
@@ -18,9 +18,5 @@ export default async function layout({
 
   const result = await getCurrencyCache(businessName);
 
-  return (
-    <CurrencyProvider currency={result?.currency ?? "EUR"}>
-      {children}
-    </CurrencyProvider>
-  );
+  return <CurrencyProvider currency={result?.currency ?? 'EUR'}>{children}</CurrencyProvider>;
 }

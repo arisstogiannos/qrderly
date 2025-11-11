@@ -1,8 +1,14 @@
-
-import Image from "next/image"
-import { Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Plus } from 'lucide-react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 export async function MenuManagementCard() {
   return (
@@ -34,7 +40,9 @@ export async function MenuManagementCard() {
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-semibold">Margherita Pizza</h4>
-                    <p className="text-sm text-muted-foreground">Fresh tomatoes, mozzarella, basil</p>
+                    <p className="text-sm text-muted-foreground">
+                      Fresh tomatoes, mozzarella, basil
+                    </p>
                   </div>
                   <div className="font-medium">$12.99</div>
                 </div>
@@ -60,7 +68,9 @@ export async function MenuManagementCard() {
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-semibold">Pasta Carbonara</h4>
-                    <p className="text-sm text-muted-foreground">Eggs, cheese, pancetta, black pepper</p>
+                    <p className="text-sm text-muted-foreground">
+                      Eggs, cheese, pancetta, black pepper
+                    </p>
                   </div>
                   <div className="font-medium">$14.99</div>
                 </div>
@@ -86,7 +96,9 @@ export async function MenuManagementCard() {
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-semibold">Tiramisu</h4>
-                    <p className="text-sm text-muted-foreground">Coffee-soaked ladyfingers, mascarpone</p>
+                    <p className="text-sm text-muted-foreground">
+                      Coffee-soaked ladyfingers, mascarpone
+                    </p>
                   </div>
                   <div className="font-medium">$8.99</div>
                 </div>
@@ -127,5 +139,5 @@ export async function MenuManagementCard() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

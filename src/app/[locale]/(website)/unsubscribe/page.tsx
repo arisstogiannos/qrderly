@@ -1,20 +1,20 @@
-import { auth } from '@/auth'
-import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation';
+import { auth } from '@/auth';
 
 export default async function UnsubscribePage({ params }: { params: Promise<{ email?: string }> }) {
-    const user = (await auth())?.user
- 
-    const { email } = await params
+  const user = (await auth())?.user;
 
-    if (!email && !user?.email) {
-        redirect("/login")
-    }
+  const { email } = await params;
 
-    if (user?.email && email && user.email !== email) {
-        redirect("/")
-    }
-    
-    redirect("/user-settings")
+  if (!email && !user?.email) {
+    redirect('/login');
+  }
 
-    return null
+  if (user?.email && email && user.email !== email) {
+    redirect('/');
+  }
+
+  redirect('/user-settings');
+
+  return null;
 }

@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
+import type { ReactNode } from 'react';
+import CloudImage from '@/components/CloudImage';
+import DisplayPrice from '@/components/DisplayPrice';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer";
-import type { ReactNode } from "react";
-import CloudImage from "@/components/CloudImage";
-import { useCardModalContext } from "@/context/CardModalProvider";
-import MenuItemOptionsForm from "./MenuItemForm";
-import type { MenuItemRequired } from "@/types";
-import DisplayPrice from "@/components/DisplayPrice";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+} from '@/components/ui/drawer';
+import { useCardModalContext } from '@/context/CardModalProvider';
+import { useIsMobile } from '@/hooks/use-mobile';
+import type { MenuItemRequired } from '@/types';
+import MenuItemOptionsForm from './MenuItemForm';
 
 export default function MenuItemModal({
   menuItem,
@@ -89,9 +89,7 @@ function MenuItemModalHeader({ menuItem }: { menuItem: MenuItemRequired }) {
     <DrawerHeader className=" sticky top-0 py-7 px-0 bg-gradient-to-b from-background to-transparent from-70% flex items-start justify-between  flex-row">
       <div className="space-y-4">
         <DrawerTitle className="font-normal ">{menuItem.name}</DrawerTitle>
-        <DrawerDescription className="overflow-hidden">
-          {menuItem.description}
-        </DrawerDescription>
+        <DrawerDescription className="overflow-hidden">{menuItem.description}</DrawerDescription>
       </div>
       <p>
         <DisplayPrice price={menuItem.priceInCents} />

@@ -1,9 +1,8 @@
-"use server";
+'use server';
 
-import getSession from "@/lib/getSession";
-import { UserRole } from "@prisma/client";
-import { redirect } from "next/navigation";
-
+import { UserRole } from '@prisma/client';
+import { redirect } from 'next/navigation';
+import getSession from '@/lib/getSession';
 
 export async function checkUserAuthorized(businessName: string) {
   const session = await getSession();
@@ -11,11 +10,11 @@ export async function checkUserAuthorized(businessName: string) {
   const businesses = session?.user.business;
 
   if (userRole !== UserRole.ADMIN) {
-    redirect("/unauthorized");
+    redirect('/unauthorized');
   }
 
   if (!businesses) {
-    redirect("/unauthorized");
+    redirect('/unauthorized');
   }
 
   for (const b of businesses) {
@@ -24,5 +23,5 @@ export async function checkUserAuthorized(businessName: string) {
     }
   }
 
-  redirect("/unauthorized");
+  redirect('/unauthorized');
 }

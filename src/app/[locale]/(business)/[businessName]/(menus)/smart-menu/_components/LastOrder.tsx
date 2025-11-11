@@ -1,20 +1,20 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { Modal } from "../../../dashboard/_components/SharedComponents/Modal";
+'use client';
+import { useEffect, useState } from 'react';
+import { Modal } from '../../../dashboard/_components/SharedComponents/Modal';
 
-export default function LastOrder({businessName}:{businessName:string}) {
-  const [lastOrder,setLastOrder] = useState<string | undefined>(undefined);
+export default function LastOrder({ businessName }: { businessName: string }) {
+  const [lastOrder, setLastOrder] = useState<string | undefined>(undefined);
   useEffect(() => {
     const orderCookie = document.cookie
-      .split("; ")
+      .split('; ')
       .find((row) => row.startsWith(`${businessName}order=`))
-      ?.split("=")[1];
+      ?.split('=')[1];
 
-    setLastOrder(orderCookie)
+    setLastOrder(orderCookie);
   });
   return (
-    <Modal title="Last Order" subtitle="Continiue from your last order?" trigger={null}  >LastOrder</Modal>
-  )
+    <Modal title="Last Order" subtitle="Continiue from your last order?" trigger={null}>
+      LastOrder
+    </Modal>
+  );
 }

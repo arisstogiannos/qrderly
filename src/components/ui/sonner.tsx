@@ -1,32 +1,35 @@
-"use client"
+'use client';
 
-import { cn } from "@/lib/utils"
-import { useTheme } from "next-themes"
-import { Toaster as Sonner, type ToasterProps } from "sonner"
+import { useTheme } from 'next-themes';
+import { Toaster as Sonner, type ToasterProps } from 'sonner';
+import { cn } from '@/lib/utils';
 
 const variants = {
-  success:"bg-green",
-  error:"bg-red",
-  normal:""
-}
+  success: 'bg-green',
+  error: 'bg-red',
+  normal: '',
+};
 
-const Toaster = ({ variant = "normal",...props }: ToasterProps&{variant?:"success" | "error" | "normal"}) => {
-  const { theme = "system" } = useTheme()
+const Toaster = ({
+  variant = 'normal',
+  ...props
+}: ToasterProps & { variant?: 'success' | 'error' | 'normal' }) => {
+  const { theme = 'system' } = useTheme();
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
-      className={cn("toaster group",variants[variant])}
+      theme={theme as ToasterProps['theme']}
+      className={cn('toaster group', variants[variant])}
       style={
         {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
+          '--normal-bg': 'var(--popover)',
+          '--normal-text': 'var(--popover-foreground)',
+          '--normal-border': 'var(--border)',
         } as React.CSSProperties
       }
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Toaster }
+export { Toaster };

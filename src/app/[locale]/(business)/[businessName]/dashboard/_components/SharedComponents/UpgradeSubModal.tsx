@@ -1,40 +1,36 @@
-import React, { startTransition, useState } from "react";
-import { Modal } from "./Modal";
-import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { BillingType, Product } from "@prisma/client";
-import type { BusinessExtended } from "@/types";
-import { plandata } from "@/data";
-import { createSession } from "@/app/[locale]/(website)/subscriptionActions";
-import Loader from "@/components/Loader";
+import { BillingType } from '@prisma/client';
+import { Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { createSession } from '@/app/[locale]/(website)/subscriptionActions';
+import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { plandata } from '@/data';
+import type { BusinessExtended } from '@/types';
+import { Modal } from './Modal';
 
-export default function UpgradeSubModal({
-  business,
-}: {
-  business: BusinessExtended;
-}) {
-  const t = useTranslations("admin.navbar");
+export default function UpgradeSubModal({ business }: { business: BusinessExtended }) {
+  const t = useTranslations('admin.navbar');
 
   const product = plandata.find((plan) => plan.product === business.product);
   if (!product) return null;
 
   return (
     <Modal
-      title={t("Upgrade to Pro")}
-      subtitle={t("Choose billing cycle")}
+      title={t('Upgrade to Pro')}
+      subtitle={t('Choose billing cycle')}
       trigger={
-        <Button variant={"ghost"} className="w-full text-left justify-start font-medium">
+        <Button variant={'ghost'} className="w-full text-left justify-start font-medium">
           <Sparkles />
-          {t("Upgrade to Pro")}
+          {t('Upgrade to Pro')}
         </Button>
       }
       classNames="pt-5"
     >
       <div className="grid lg:grid-cols-2 gap-5 ">
         <Plan
-        title={t("monthly")}
-        btn={t("continue")}
+          title={t('monthly')}
+          btn={t('continue')}
           price={product.billing.monthly.price}
           btnFn={createSession.bind(
             null,
@@ -42,14 +38,14 @@ export default function UpgradeSubModal({
             BillingType.MONTHLY,
             product.product,
             business.id,
-            business.subscription?.id ?? "",
-            `/${business.name.replaceAll(" ","-")}/dashboard`,
-            "Go Back to Dashboard"
+            business.subscription?.id ?? '',
+            `/${business.name.replaceAll(' ', '-')}/dashboard`,
+            'Go Back to Dashboard',
           )}
         />
         <Plan
-        title={t("yearly")}
-        btn={t("continue")}
+          title={t('yearly')}
+          btn={t('continue')}
           price={product.billing.yearly.price}
           btnFn={createSession.bind(
             null,
@@ -57,9 +53,9 @@ export default function UpgradeSubModal({
             BillingType.YEARLY,
             product.product,
             business.id,
-            business.subscription?.id ?? "",
-            `/${business.name.replaceAll(" ","-")}/dashboard`,
-            "Go Back to Dashboard"
+            business.subscription?.id ?? '',
+            `/${business.name.replaceAll(' ', '-')}/dashboard`,
+            'Go Back to Dashboard',
           )}
         />
       </div>
@@ -67,11 +63,21 @@ export default function UpgradeSubModal({
   );
 }
 
-function Plan({ price, btnFn ,title,btn}: { price: string; btnFn: () => Promise<void>,title:string,btn:string }) {
+function Plan({
+  price,
+  btnFn,
+  title,
+  btn,
+}: {
+  price: string;
+  btnFn: () => Promise<void>;
+  title: string;
+  btn: string;
+}) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
-      setLoading(true);
+    setLoading(true);
 
     btnFn().finally(() => {
       setLoading(false);

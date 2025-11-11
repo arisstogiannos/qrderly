@@ -1,16 +1,11 @@
-"use server";
+'use server';
 
-import {
-  translateTextToMultiple,
-  translateTextToMultipleDeepL,
-} from "@/app/translation";
-import { db } from "@/db";
-import { cache } from "@/lib/cache";
-import type { Translation } from "@/types";
-import type { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
-import { revalidateTag } from "next/cache";
-import { z } from "zod";
-import { getMenuByBusinessName } from "./menu";
+import type { SourceLanguageCode, TargetLanguageCode } from 'deepl-node';
+import { revalidateTag } from 'next/cache';
+import { z } from 'zod';
+import { translateTextToMultipleDeepL } from '@/app/translation';
+import { db } from '@/db';
+import type { Translation } from '@/types';
 
 export async function getCategories(businessName: string) {
   const categories = await db.category.findMany({
@@ -35,11 +30,7 @@ const CategorySchema = z.object({
 });
 type Category = z.infer<typeof CategorySchema>;
 
-export async function upsertCategory(
-  businessName: string,
-  prev: unknown,
-  formData: FormData
-) {
+export async function upsertCategory(businessName: string, prev: unknown, formData: FormData) {
   const result = CategorySchema.safeParse(Object.fromEntries(formData));
 
   if (!result.success) {
@@ -60,7 +51,7 @@ export async function upsertCategory(
     const translations: Translation = {};
 
     if (menu) {
-      const languages = menu.languages.split(",") as TargetLanguageCode[];
+      const languages = menu.languages.split(',') as TargetLanguageCode[];
       const srcLang = languages.reverse().pop() as SourceLanguageCode;
 
       if (srcLang) {
@@ -71,22 +62,22 @@ export async function upsertCategory(
             textToTranslate,
             srcLang,
             languages,
-            description
+            description,
           );
 
           for (let i = 0; i < translationResult.length; i++) {
             const translation = translationResult[i];
 
             translations[languages[i]] = {
-              name: translation !== "" ? translation : name,
-              description: "",
+              name: translation !== '' ? translation : name,
+              description: '',
               preferences: null,
             };
           }
         }
       }
       await db.category.upsert({
-        where: { id: id ?? "" },
+        where: { id: id ?? '' },
         create: {
           name,
           description,
@@ -105,7 +96,7 @@ export async function upsertCategory(
 
     return {
       data: result.data,
-      error: "Something went wrong!",
+      error: 'Something went wrong!',
     };
   }
 
@@ -123,11 +114,9 @@ const TranslationCategorySchema = z.object({
 export async function updateTranslationCategory(
   businessName: string,
   prev: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
-  const result = TranslationCategorySchema.safeParse(
-    Object.fromEntries(formData)
-  );
+  const result = TranslationCategorySchema.safeParse(Object.fromEntries(formData));
 
   if (!result.success) {
     const rawData = Object.fromEntries(formData) as Partial<Category>;
@@ -153,7 +142,7 @@ export async function updateTranslationCategory(
 
     return {
       data: result.data,
-      error: "Something went wrong!",
+      error: 'Something went wrong!',
     };
   }
 
@@ -164,10 +153,9 @@ export async function updateTranslationCategory(
 
 export async function createCategories(
   businessName: string,
-  categories: { name: string; description: string }[]
+  categories: { name: string; description: string }[],
 ) {
-
-  if(categories.length===0) return{data:[]}
+  if (categories.length === 0) return { data: [] };
   try {
     const menu = await db.menu.findFirst({
       where: { business: { name: businessName } },
@@ -176,7 +164,7 @@ export async function createCategories(
     const translations: { [index: number]: Translation } = {};
 
     if (menu) {
-      const languages = menu.languages.split(",");
+      const languages = menu.languages.split(',');
       const srcLang = languages.reverse().pop();
 
       if (srcLang) {
@@ -188,17 +176,14 @@ export async function createCategories(
               category.name,
               srcLang as SourceLanguageCode,
               languages as TargetLanguageCode[],
-              category.description
+              category.description,
             );
 
             translations[index] = translations[index] || {};
 
             for (let i = 0; i < translationResult.length; i++) {
               translations[index][languages[i]] = {
-                name:
-                  translationResult[i] !== ""
-                    ? translationResult[i]
-                    : category.name,
+                name: translationResult[i] !== '' ? translationResult[i] : category.name,
                 description: null,
                 preferences: null,
               };
@@ -222,16 +207,15 @@ export async function createCategories(
       });
       revalidateTag(`categories${businessName}`);
       return { data: result };
-    } 
-      return {
-        error: "Something went wrong!",
-      };
-    
+    }
+    return {
+      error: 'Something went wrong!',
+    };
   } catch (error) {
     console.error(`create item er: ${error}`);
 
     return {
-      error: "Something went wrong!",
+      error: 'Something went wrong!',
     };
   }
 
@@ -242,7 +226,7 @@ export async function createCategories(
 export async function deleteCategory(id: string, businessName: string) {
   const category = await db.category.delete({ where: { id } });
 
-  if (!category) return { success: false, error: "Something went wrong" };
+  if (!category) return { success: false, error: 'Something went wrong' };
 
   revalidateTag(`categories${businessName}`);
   return { success: true };

@@ -1,8 +1,8 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useTranslations } from "next-intl";
-import type React from "react";
-import { useCallback, useRef } from "react";
+import { useTranslations } from 'next-intl';
+import type React from 'react';
+import { useCallback, useRef } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function QeColors({
   setBgColor,
@@ -16,42 +16,36 @@ export default function QeColors({
   setBgColor: (v: string) => void;
 }) {
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
-  const t = useTranslations("qr settings");
+  const t = useTranslations('qr settings');
 
-  const handleDotColorChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newColor = e.target.value;
+  const handleDotColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newColor = e.target.value;
 
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
 
-      debounceRef.current = setTimeout(() => {
-        setDotColor(newColor);
-      }, 200); // Adjust debounce time as needed
-    },
-    []
-  );
+    debounceRef.current = setTimeout(() => {
+      setDotColor(newColor);
+    }, 200); // Adjust debounce time as needed
+  }, []);
 
-  const handleBgColorChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newColor = e.target.value;
+  const handleBgColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newColor = e.target.value;
 
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
 
-      debounceRef.current = setTimeout(() => {
-        setBgColor(newColor);
-      }, 200); // Adjust debounce time as needed
-    },
-    []
-  );
+    debounceRef.current = setTimeout(() => {
+      setBgColor(newColor);
+    }, 200); // Adjust debounce time as needed
+  }, []);
 
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="dotColor">{t("colors")}</Label>
+        <Label htmlFor="dotColor">{t('colors')}</Label>
         <Input
           name="dotColor"
           id="dotColor"

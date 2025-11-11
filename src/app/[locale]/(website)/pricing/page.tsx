@@ -1,21 +1,17 @@
-import React from "react";
-import { Switch } from "./_components/Switch";
-import { plandata } from "@/data";
-import Plan from "./_components/Plan";
-import { PlanProvider } from "./_components/PlanContext";
-import { getTranslations } from "next-intl/server";
-import {setRequestLocale} from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { plandata } from '@/data';
+import Plan from './_components/Plan';
+import { PlanProvider } from './_components/PlanContext';
+import { Switch } from './_components/Switch';
 
-export const dynamic = "error"
- 
+export const dynamic = 'error';
 
-
-export default async function page({params}:{params: Promise<{locale: string}>}) {
+export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale;
- 
+
   // Enable static rendering
   setRequestLocale(locale);
-  const t = await getTranslations("plandata");
+  const t = await getTranslations('plandata');
   return (
     <PlanProvider>
       <div className="flex flex-col gap-10 items-center w-full mt-10">
@@ -24,7 +20,7 @@ export default async function page({params}:{params: Promise<{locale: string}>})
         </div>
         <header className="mx-auto space-y-8">
           <h2 className="capitalize text-5xl md:text-7xl font-medium mx-auto text-center">
-            {t("title")}
+            {t('title')}
           </h2>
           <Switch />
         </header>

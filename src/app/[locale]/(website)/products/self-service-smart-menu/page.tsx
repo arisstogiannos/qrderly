@@ -1,13 +1,12 @@
-import React from "react";
-import ProductPage from "../_components/ProductPage";
-import { productsData } from "@/data";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { productsData } from '@/data';
+import ProductPage from '../_components/ProductPage';
 
-export const dynamic = "error";
+export const dynamic = 'error';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("metadata");
+  const t = await getTranslations('metadata');
 
   const meta = t.raw('selfService') as {
     title: string;
@@ -76,11 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
 //   },
 // };
 
-export default async function page({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale;
   setRequestLocale(locale);
   const smMenu = { ...productsData[2] };

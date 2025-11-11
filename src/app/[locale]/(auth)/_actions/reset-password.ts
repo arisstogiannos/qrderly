@@ -1,13 +1,12 @@
-"use server";
-import { z } from "zod";
-import { db } from "@/db";
-import bcrypt from "bcryptjs";
-import { generatePasswordResetToken } from "@/lib/tokens";
-import { sendResetPasswordEmail } from "@/email/mail";
-
+'use server';
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
+import { db } from '@/db';
+import { sendResetPasswordEmail } from '@/email/mail';
+import { generatePasswordResetToken } from '@/lib/tokens';
 
 const resetPasswordSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }).trim(),
+  email: z.string().email({ message: 'Invalid email address' }).trim(),
 });
 
 export async function resetPassword(prevState: any, formData: FormData) {
@@ -30,7 +29,7 @@ export async function resetPassword(prevState: any, formData: FormData) {
   if (!user) {
     return {
       errors: {
-        email: ["Email not found"],
+        email: ['Email not found'],
       },
     };
   }
@@ -38,20 +37,16 @@ export async function resetPassword(prevState: any, formData: FormData) {
   const resetToken = await generatePasswordResetToken(user.email);
   await sendResetPasswordEmail(resetToken.email, resetToken.token, user.name);
 
-  return { success: "Password reset email sent" };
+  return { success: 'Password reset email sent' };
 }
 
-
 const newPasswordSchema = z.object({
-  newPassword: z
-    .string()
-    .min(8, { message: "Password should be at least 8 characters" })
-    .trim(),
+  newPassword: z.string().min(8, { message: 'Password should be at least 8 characters' }).trim(),
   confirmPassword: z
     .string()
-    .min(8, { message: "Password should be at least 8 characters" })
+    .min(8, { message: 'Password should be at least 8 characters' })
     .trim(),
-  token: z.string().min(8, { message: "Token does not exist" }).trim(),
+  token: z.string().min(8, { message: 'Token does not exist' }).trim(),
 });
 
 export async function newPassword(prevState: any, formData: FormData) {
@@ -67,20 +62,20 @@ export async function newPassword(prevState: any, formData: FormData) {
   const existingToken = await db.token.findFirst({
     where: {
       token,
-      type:"RESET_PASSWORD"
+      type: 'RESET_PASSWORD',
     },
   });
 
   if (!existingToken) {
     return {
-      error: "An error occured. Try again!",
+      error: 'An error occured. Try again!',
     };
   }
 
   const hasExpired = new Date(existingToken.expiresAt) < new Date();
   if (hasExpired) {
     return {
-      error: "Reset token has expired.",
+      error: 'Reset token has expired.',
     };
   }
 
@@ -97,9 +92,9 @@ export async function newPassword(prevState: any, formData: FormData) {
 
   if (!existingUser) {
     return {
-      error: "User does not exist",
+      error: 'User does not exist',
     };
   }
 
-  return { success: "Password has changed succesfully !" };
+  return { success: 'Password has changed succesfully !' };
 }

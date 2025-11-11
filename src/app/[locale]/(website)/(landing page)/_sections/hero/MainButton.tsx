@@ -1,46 +1,46 @@
-"use client";
-import type React from "react";
-import { PenLine, Sparkles } from "lucide-react";
-import { Modal } from "@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal";
-import { cn } from "@/lib/utils";
-import { Link, useRouter } from "@/i18n/navigation";
-import { ModalProvider, useModalContext } from "@/context/ModalProvider";
-import { useTranslations } from "next-intl";
-import { useSession } from "next-auth/react";
-import AuthModal from "@/app/[locale]/(auth)/_components/AuthModal";
-import { useState } from "react";
-import { Button as Btn } from "@/components/ui/button";
+'use client';
+import { PenLine, Sparkles } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import type React from 'react';
+import { useState } from 'react';
+import AuthModal from '@/app/[locale]/(auth)/_components/AuthModal';
+import { Modal } from '@/app/[locale]/(business)/[businessName]/dashboard/_components/SharedComponents/Modal';
+import { Button as Btn } from '@/components/ui/button';
+import { useModalContext } from '@/context/ModalProvider';
+import { Link, useRouter } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
 
 export function MainButton({
   children,
   ...props
-}: React.ComponentProps<"button"> & { asChild?: boolean }) {
-  const t = useTranslations("MainButton");
+}: React.ComponentProps<'button'> & { asChild?: boolean }) {
+  const t = useTranslations('MainButton');
 
   return (
     <Modal
-      title={t("title")}
-      subtitle={t("subtitle")}
+      title={t('title')}
+      subtitle={t('subtitle')}
       trigger={<Button {...props}>{children}</Button>}
       classNames="py-5 xl:max-w-2xl 2xl:max-w-2xl"
       animate={false}
     >
       <div className="grid  grid-cols-1 md:grid-cols-2 gap-6 p-4">
         <MethodCard
-          href={{ pathname: "/get-started", hash: "" }}
+          href={{ pathname: '/get-started', hash: '' }}
           icon={<PenLine className="w-8 h-8 text-primary" />}
-          title={t("createYourself.title")}
-          description={t("createYourself.description")}
+          title={t('createYourself.title')}
+          description={t('createYourself.description')}
           gradient="from-background/80 to-background"
           hoverGradient="from-primary/5 via-background/90 to-background"
           recommended={true}
         />
 
         <MethodCard
-          href={{ pathname: "/", hash: "#order-menu-form" }}
+          href={{ pathname: '/', hash: '#order-menu-form' }}
           icon={<Sparkles className="w-8 h-8 text-primary" />}
-          title={t("letUsCreate.title")}
-          description={t("letUsCreate.description")}
+          title={t('letUsCreate.title')}
+          description={t('letUsCreate.description')}
           gradient="from-background/80 to-background"
           hoverGradient="from-primary/5 via-background/90 to-background"
         />
@@ -52,22 +52,22 @@ export function Button({
   className,
   children,
   asChild = false,
-  variant = "primary",
+  variant = 'primary',
   ...props
-}: React.ComponentProps<"button"> & { asChild?: boolean } & { variant?: "primary" | "secondary" | "outline" }) {
+}: React.ComponentProps<'button'> & { asChild?: boolean } & {
+  variant?: 'primary' | 'secondary' | 'outline';
+}) {
   return (
     <Btn
       {...props}
       // @ts-expect-error
       variant={variant}
       className={cn(
-        " font-medium leading-6 text-lg !px-5 py-6 3xl:text-2xl   text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-full  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
-        className
+        ' font-medium leading-6 text-lg !px-5 py-6 3xl:text-2xl   text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-full  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group',
+        className,
       )}
     >
-
       {children}
-
     </Btn>
   );
 }
@@ -77,7 +77,7 @@ interface MethodCardProps {
   description: string;
   gradient: string;
   hoverGradient: string;
-  href: { pathname: "/get-started" | "/"; hash: string };
+  href: { pathname: '/get-started' | '/'; hash: string };
   recommended?: boolean;
 }
 
@@ -91,12 +91,12 @@ function MethodCard({
   recommended = false,
 }: MethodCardProps) {
   const { setOpen } = useModalContext();
-  const t = useTranslations("MainButton");
+  const t = useTranslations('MainButton');
   const router = useRouter();
 
   return (
     <>
-      {href.hash !== "" ? (
+      {href.hash !== '' ? (
         <button
           type="button"
           onClick={(e) => {
@@ -114,7 +114,7 @@ function MethodCard({
           {/* Background gradients */}
           {recommended && (
             <span className="absolute z-10  top-0 left-0 bg-primary text-background px-2 py-1 rounded-br-lg text-sm">
-              {t("recommended")}
+              {t('recommended')}
             </span>
           )}
 
@@ -150,7 +150,7 @@ function MethodCard({
           {/* Background gradients */}
           {recommended && (
             <span className="absolute z-10  top-0 left-0 bg-primary text-background px-2 py-1 rounded-br-lg text-sm">
-              {t("recommended")}
+              {t('recommended')}
             </span>
           )}
 
@@ -186,20 +186,22 @@ export function MainButtonLink({
   href,
   children,
   className,
-  variant = "primary",
+  variant = 'primary',
   ...props
-}: React.ComponentProps<"a"> & { variant?: "primary" | "secondary" | "outline" }) {
+}: React.ComponentProps<'a'> & { variant?: 'primary' | 'secondary' | 'outline' }) {
   return (
-    <Button asChild variant={variant} className={cn(
-      " font-medium bg-background border-2 border-foreground text-foreground leading-6 text-lg !px-5 py-6 3xl:text-2xl hover:text-primary  shadow-lg  rounded-full  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
-      className
-    )}>
-
+    <Button
+      asChild
+      variant={variant}
+      className={cn(
+        ' font-medium bg-background border-2 border-foreground text-foreground leading-6 text-lg !px-5 py-6 3xl:text-2xl hover:text-primary  shadow-lg  rounded-full  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group',
+        className,
+      )}
+    >
       <Link
         //@ts-expect-error
         href={href}
         {...props}
-
       >
         {children}
       </Link>
@@ -213,9 +215,9 @@ export function MainButtonLinkAuth({
   className,
   redirectUrl,
   ...props
-}: React.ComponentProps<"a"> & { redirectUrl: string }) {
-  const isLoggedin = useSession().status === "authenticated";
-  const [isOpen, setIsOpen] = useState(false)
+}: React.ComponentProps<'a'> & { redirectUrl: string }) {
+  const isLoggedin = useSession().status === 'authenticated';
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <Link
@@ -225,12 +227,12 @@ export function MainButtonLinkAuth({
         onClick={(e) => {
           if (!isLoggedin) {
             e.preventDefault();
-            setIsOpen(true)
+            setIsOpen(true);
           }
         }}
         className={cn(
-          " inline-block p-px font-medium leading-6 text-lg 3xl:text-2xl  text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
-          className
+          ' inline-block p-px font-medium leading-6 text-lg 3xl:text-2xl  text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group',
+          className,
         )}
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -247,17 +249,13 @@ export function MainButtonLinkAuth({
     </>
   );
 }
-export function MainButtonPlain({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"button">) {
+export function MainButtonPlain({ children, className, ...props }: React.ComponentProps<'button'>) {
   return (
     <button
       {...props}
       className={cn(
-        " inline-block p-px font-medium leading-6  text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group",
-        className
+        ' inline-block p-px font-medium leading-6  text-background hover:text-primary bg-foreground shadow-lg cursor-pointer rounded-2xl  shadow-primary/70 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-primary relative group',
+        className,
       )}
     >
       <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

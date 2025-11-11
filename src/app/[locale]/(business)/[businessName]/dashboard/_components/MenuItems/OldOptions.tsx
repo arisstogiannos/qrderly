@@ -1,76 +1,58 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
+'use client';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
-export default function Options({
-  defaultOptions,
-}: {
-  defaultOptions?: string;
-}) {
+export default function Options({ defaultOptions }: { defaultOptions?: string }) {
   const serializeOptions = (opts: { name: string; values: string[] }[]) => {
-    return opts
-      .map((opt) => `${opt.name}__${opt.values.join("---")}`)
-      .join("/+/");
+    return opts.map((opt) => `${opt.name}__${opt.values.join('---')}`).join('/+/');
   };
 
   // Function to convert string back to array
   const deserializeOptions = (str: string) => {
     if (!str) return [];
-    return str.split("/+/").map((opt) => {
-      const [name, values] = opt.split("__");
-      return { name, values: values ? values.split("---") : [] };
+    return str.split('/+/').map((opt) => {
+      const [name, values] = opt.split('__');
+      return { name, values: values ? values.split('---') : [] };
     });
   };
 
-  
-  const defaultOptionsDeserialized = deserializeOptions(defaultOptions || "");
+  const defaultOptionsDeserialized = deserializeOptions(defaultOptions || '');
   const [options, setOptions] = useState<{ name: string; values: string[] }[]>(
-    defaultOptions ? defaultOptionsDeserialized : []
+    defaultOptions ? defaultOptionsDeserialized : [],
   );
 
   // Function to convert array to string for database storage
 
   // Add a new option
   const addOption = () => {
-    setOptions([...options, { name: "New Option", values: ["New Value"] }]);
+    setOptions([...options, { name: 'New Option', values: ['New Value'] }]);
   };
 
   // Update option name
   const updateOptionName = (index: number, newName: string) => {
-    setOptions((prev) =>
-      prev.map((opt, i) => (i === index ? { ...opt, name: newName } : opt))
-    );
+    setOptions((prev) => prev.map((opt, i) => (i === index ? { ...opt, name: newName } : opt)));
   };
 
   // Update option value
-  const updateOptionValue = (
-    index: number,
-    valueIndex: number,
-    newValue: string
-  ) => {
+  const updateOptionValue = (index: number, valueIndex: number, newValue: string) => {
     setOptions((prev) =>
       prev.map((opt, i) =>
         i === index
           ? {
               ...opt,
-              values: opt.values.map((val, j) =>
-                j === valueIndex ? newValue : val
-              ),
+              values: opt.values.map((val, j) => (j === valueIndex ? newValue : val)),
             }
-          : opt
-      )
+          : opt,
+      ),
     );
   };
-
 
   // Add a new value to an option
   const addValue = (index: number) => {
     setOptions((prev) =>
-      prev.map((opt, i) =>
-        i === index ? { ...opt, values: [...opt.values, "New Value"] } : opt
-      )
+      prev.map((opt, i) => (i === index ? { ...opt, values: [...opt.values, 'New Value'] } : opt)),
     );
   };
 
@@ -86,10 +68,7 @@ export default function Options({
   return (
     <div className="space-y-4">
       {options.map((option, i) => (
-        <div
-          key={i}
-          className="flex flex-col  gap-4 p-3 border-accent border-2 rounded-xl"
-        >
+        <div key={i} className="flex flex-col  gap-4 p-3 border-accent border-2 rounded-xl">
           {/* Option Name Input */}
           <Input
             value={option.name}
@@ -101,18 +80,17 @@ export default function Options({
           <div className="flex flex-col gap-2 min-w-40">
             {option.values.map((value, j) => (
               <div key={j} className="flex gap-4">
-
-              <Input
-                value={value}
-                onChange={(e) => updateOptionValue(i, j, e.target.value)}
-                placeholder="Option Value"
+                <Input
+                  value={value}
+                  onChange={(e) => updateOptionValue(i, j, e.target.value)}
+                  placeholder="Option Value"
                 />
-              <Input
-                value={value}
-                onChange={(e) => updateOptionValue(i, j, e.target.value)}
-                placeholder="Extra Price"
+                <Input
+                  value={value}
+                  onChange={(e) => updateOptionValue(i, j, e.target.value)}
+                  placeholder="Extra Price"
                 />
-                </div>
+              </div>
             ))}
 
             {/* Add Value Button */}

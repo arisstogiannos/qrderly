@@ -1,46 +1,29 @@
-import { formatCurrency } from "@/lib/formatter";
-import { ProductURL } from "@/types";
-import type { Subscription } from "@prisma/client";
-import { Column, Img, Row, Section, Text } from "@react-email/components";
+import type { Subscription } from '@prisma/client';
+import { Column, Row, Section, Text } from '@react-email/components';
+import { formatCurrency } from '@/lib/formatter';
 
+const dateFormatter = Intl.DateTimeFormat('en', { dateStyle: 'medium' });
 
-
-const dateFormatter = Intl.DateTimeFormat("en", { dateStyle: "medium" });
-
-export default function OrderInformation({ sub }:{sub: Subscription}) {
+export default function OrderInformation({ sub }: { sub: Subscription }) {
   return (
     <>
       <Section>
         <Row>
-          <Column >
-            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
-              Order ID
-            </Text>
-            <Text className=" mt-0 mr-4">{"sub?.id"}</Text>
+          <Column>
+            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">Order ID</Text>
+            <Text className=" mt-0 mr-4">{'sub?.id'}</Text>
           </Column>
           <Column>
-            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
-              Purchase On
-            </Text>
-            <Text className=" mt-0 mr-4">
-              {dateFormatter.format(sub?.purchasedAt)}
-            </Text>
+            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">Purchase On</Text>
+            <Text className=" mt-0 mr-4">{dateFormatter.format(sub?.purchasedAt)}</Text>
           </Column>
           <Column>
-            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
-              Price Paid
-            </Text>
-            <Text className=" mt-0 mr-4">
-              {formatCurrency(100 )}
-            </Text>
+            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">Price Paid</Text>
+            <Text className=" mt-0 mr-4">{formatCurrency(100)}</Text>
           </Column>
           <Column>
-            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">
-              Product
-            </Text>
-            <Text className=" mt-0 mr-4">
-             {sub?.product}
-            </Text>
+            <Text className=" mr-4 text-gray-500 whitespace-nowrap text-nowrap">Product</Text>
+            <Text className=" mt-0 mr-4">{sub?.product}</Text>
           </Column>
         </Row>
       </Section>

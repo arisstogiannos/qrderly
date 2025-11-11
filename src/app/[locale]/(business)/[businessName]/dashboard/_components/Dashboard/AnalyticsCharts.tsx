@@ -1,21 +1,21 @@
-"use client";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+'use client';
+import { useTranslations } from 'next-intl';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  AreaChart,
   Area,
-  BarChart,
+  AreaChart,
   Bar,
-  XAxis,
-  YAxis,
+  BarChart,
   CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
   Cell,
   Legend,
-} from "../chart";
-import { useTranslations } from "next-intl";
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from '../chart';
 
 interface AnalyticsChartsProps {
   visitData: { name: string; visits: number }[];
@@ -24,7 +24,7 @@ interface AnalyticsChartsProps {
   totalScans?: number;
 }
 
-const COLORS = ["#524DF0", "#2F2BC2", "#080492", "#06036C"];
+const COLORS = ['#524DF0', '#2F2BC2', '#080492', '#06036C'];
 
 export default function AnalyticsCharts({
   orderData,
@@ -32,14 +32,14 @@ export default function AnalyticsCharts({
   visitData,
   totalScans,
 }: AnalyticsChartsProps) {
-  const t = useTranslations("dashboard");
+  const t = useTranslations('dashboard');
 
   return orderData && menuItemData ? (
     <Tabs defaultValue="visits">
       <TabsList className="max-w-72 min-[390px]:max-w-80 sm:max-w-fit overflow-x-auto justify-start">
-        <TabsTrigger value="visits">{t("menuVisits")}</TabsTrigger>
-        <TabsTrigger value="orders">{t("orders")}</TabsTrigger>
-        <TabsTrigger value="items">{t("popularItems")}</TabsTrigger>
+        <TabsTrigger value="visits">{t('menuVisits')}</TabsTrigger>
+        <TabsTrigger value="orders">{t('orders')}</TabsTrigger>
+        <TabsTrigger value="items">{t('popularItems')}</TabsTrigger>
       </TabsList>
       <TabsContent value="visits" className="mt-4">
         <div className="h-[300px] max-sm:-translate-x-6">
@@ -49,12 +49,7 @@ export default function AnalyticsCharts({
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="visits"
-                stroke="#8884d8"
-                fill="#8884d8"
-              />
+              <Area type="monotone" dataKey="visits" stroke="#8884d8" fill="#8884d8" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -89,15 +84,10 @@ export default function AnalyticsCharts({
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
-                  label={({ name, percent }) =>
-                    `${name} ${(percent * 100).toFixed(0)}%`
-                  }
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 >
                   {menuItemData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip />
@@ -111,26 +101,15 @@ export default function AnalyticsCharts({
   ) : (
     <div className="h-[300px] ">
       {totalScans && (
-        <p className="font-medium text-lg mb-5">
-          {`${t("totalScans")}: ${totalScans}`}
-        </p>
+        <p className="font-medium text-lg mb-5">{`${t('totalScans')}: ${totalScans}`}</p>
       )}
-      <ResponsiveContainer
-        width="100%"
-        height="90%"
-        className={"-translate-x-8"}
-      >
+      <ResponsiveContainer width="100%" height="90%" className={'-translate-x-8'}>
         <AreaChart data={visitData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="visits"
-            stroke="#8884d8"
-            fill="#8884d8"
-          />
+          <Area type="monotone" dataKey="visits" stroke="#8884d8" fill="#8884d8" />
         </AreaChart>
       </ResponsiveContainer>
     </div>
