@@ -34,7 +34,7 @@ async function ProductCard({ product }: { product: ProductType }) {
       <h3 className="mb-5">{t(`${product.title}.shortDesc`)}</h3>
       <Suspense>
         <MainButtonLinkAuth
-          className="mt-auto shadow-none bg-primary hover:text-background"
+          className="mt-auto shadow-none bg-primary hover:text-background xl:text-lg"
           href={`/get-started/${product.link}/business-setup`}
           redirectUrl={`/get-started/${product.link}/business-setup`}
         >
