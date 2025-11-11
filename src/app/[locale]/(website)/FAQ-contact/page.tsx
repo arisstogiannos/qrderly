@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import ContactForm from './_components/ContactForm';
 import FAQAccordition from './_components/FAQAccordition';
 
-export const dynamic = 'error';
+// export const dynamic = 'error';
 
 export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale;

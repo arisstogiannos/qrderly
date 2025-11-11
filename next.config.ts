@@ -19,16 +19,7 @@ function isNextImage({ url }: UrlMatcherContext): boolean {
 }
 
 const nextConfig: NextConfig = {
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '5mb',
-    },
-  },
+  cacheComponents: true,
   images: {
     remotePatterns: [
       {
@@ -104,4 +95,27 @@ const withPWA = nextPwa({
 });
 
 const withNextIntl = createNextIntlPlugin();
-export default withNextIntl(withPWA(nextConfig));
+
+type ExperimentalConfigWithDeprecatedTurbo =
+  | (NonNullable<NextConfig['experimental']> & {
+      turbo?: NextConfig['turbopack'];
+    })
+  | undefined;
+
+const config = withNextIntl(withPWA(nextConfig));
+
+const experimentalWithDeprecatedTurbo =
+  config.experimental as ExperimentalConfigWithDeprecatedTurbo;
+
+if (experimentalWithDeprecatedTurbo?.turbo) {
+  const { turbo, ...experimental } = experimentalWithDeprecatedTurbo;
+
+  config.turbopack = {
+    ...(config.turbopack ?? {}),
+    ...turbo,
+  };
+
+  config.experimental = Object.keys(experimental).length > 0 ? experimental : undefined;
+}
+
+export default config;

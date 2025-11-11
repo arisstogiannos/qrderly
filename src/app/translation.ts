@@ -1,6 +1,6 @@
 'use server';
 import * as deepl from 'deepl-node';
-import { cache } from '@/lib/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 import type { Language } from '@/types';
 
 const authKey = '90e7ff7d-bb64-4e87-933c-931770bb27c9:fx';
@@ -12,6 +12,10 @@ export async function translateTextDeepL(
   targetLang: deepl.TargetLanguageCode,
   context?: string,
 ) {
+  'use cache';
+  cacheLife({ revalidate: 60 * 60 * 24 * 7 });
+  cacheTag(`deepl:${srcLang}:${targetLang}:${text}`);
+
   const start = new Date().getTime();
   const result = await translator.translateText(text, srcLang, targetLang, { context: context });
   const elapsed = new Date().getTime() - start;
@@ -25,14 +29,9 @@ export async function translateTextArrayToMultipleDeepL(
   targetLanguages: deepl.TargetLanguageCode[],
   context?: string,
 ) {
-  const translationsPromises = targetLanguages.map((l) => {
-    const translateTextDeepLCached = cache(
-      translateTextArrayDeepL,
-      [`${srcLang}-${l}-${text}`],
-      { revalidate: 604800, tags: [`${srcLang}-${l}-${text}`] }, // Cache for 7 days
-    );
-    return translateTextDeepLCached(text, srcLang, l, context);
-  });
+  const translationsPromises = targetLanguages.map((l) =>
+    translateTextArrayDeepL(text, srcLang, l, context),
+  );
   const translations = await Promise.all(translationsPromises);
 
   return translations;
@@ -43,6 +42,10 @@ export async function translateTextArrayDeepL(
   targetLang: deepl.TargetLanguageCode,
   context?: string,
 ) {
+  'use cache';
+  cacheLife({ revalidate: 60 * 60 * 24 * 7 });
+  cacheTag(`deepl-array:${srcLang}:${targetLang}:${text.join('|')}`);
+
   const start = new Date().getTime();
   const result = await translator.translateText(text, srcLang, targetLang, { context: context });
   const elapsed = new Date().getTime() - start;
@@ -56,14 +59,9 @@ export async function translateTextToMultipleDeepL(
   targetLanguages: deepl.TargetLanguageCode[],
   context?: string,
 ) {
-  const translationsPromises = targetLanguages.map((l) => {
-    const translateTextDeepLCached = cache(
-      translateTextDeepL,
-      [`${srcLang}-${l}-${text}`],
-      { revalidate: 604800, tags: [`${srcLang}-${l}-${text}`] }, // Cache for 7 days
-    );
-    return translateTextDeepLCached(text, srcLang, l, context);
-  });
+  const translationsPromises = targetLanguages.map((l) =>
+    translateTextDeepL(text, srcLang, l, context),
+  );
   const translations = await Promise.all(translationsPromises);
 
   return translations as string[];

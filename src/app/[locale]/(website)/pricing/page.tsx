@@ -4,7 +4,7 @@ import Plan from './_components/Plan';
 import { PlanProvider } from './_components/PlanContext';
 import { Switch } from './_components/Switch';
 
-export const dynamic = 'error';
+// export const dynamic = 'error';
 
 export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale;

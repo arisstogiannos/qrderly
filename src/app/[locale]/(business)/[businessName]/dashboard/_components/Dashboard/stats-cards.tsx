@@ -1,7 +1,7 @@
+import { cacheLife, cacheTag } from 'next/cache';
 import { getTranslations } from 'next-intl/server';
 import DisplayPrice from '@/components/DisplayPrice';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { cache } from '@/lib/cache';
 import type { BusinessExtended } from '@/types';
 import { getTotalOrders, getTotalRevenue } from '../../_actions/stats';
 
@@ -11,20 +11,26 @@ interface StatsCardsProps {
 }
 
 export async function StatsCards({ business }: StatsCardsProps) {
-  const getTotalOrdersCache = cache(getTotalOrders, [`orders-stats${business.name}`], {
-    tags: [`orders${business.name}`],
-    revalidate: 3600,
-  });
+  async function getTotalOrdersCached() {
+    'use cache';
+    cacheTag(`orders${business.name}`);
+    cacheLife({ revalidate: 60 * 60 });
 
-  const getTotalRevenueCache = cache(getTotalRevenue, [`totalRevenue${business.name}`], {
-    tags: [`orders${business.name}`],
-    revalidate: 3600,
-  });
+    return getTotalOrders(business.id);
+  }
+
+  async function getTotalRevenueCached() {
+    'use cache';
+    cacheTag(`orders${business.name}`);
+    cacheLife({ revalidate: 60 * 60 });
+
+    return getTotalRevenue(business.id);
+  }
   const totalScans = business.menu?.noScans;
 
   const [totalOrders, totalRevenue] = await Promise.all([
-    getTotalOrdersCache(business.id),
-    getTotalRevenueCache(business.id),
+    getTotalOrdersCached(),
+    getTotalRevenueCached(),
   ]);
 
   const t = await getTranslations('dashboard');

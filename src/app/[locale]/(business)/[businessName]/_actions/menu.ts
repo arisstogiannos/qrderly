@@ -1,7 +1,7 @@
 'use server';
 
 import type { Product } from '@prisma/client';
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { cacheLife, cacheTag, revalidateTag } from 'next/cache';
 import { db } from '@/db';
 import { sendTrialEndedEmail } from '@/email/mail';
 
@@ -27,37 +27,35 @@ export async function getMenus(type: Product) {
 
   return menus;
 }
-export const getActiveMenus = unstable_cache(
-  async (type: Product) => {
-    const menus = await db.menu.findMany({
-      where: {
-        published: true,
-        type: type,
-        business: {
-          OR: [
-            {
-              subscription: { billing: 'FREETRIAL' },
-              menu: { is: { noScans: { lte: 200 } } },
-            },
-            {
-              subscription: {
-                billing: { not: 'FREETRIAL' },
-                expiresAt: { gte: new Date() },
-              },
-            },
-          ],
-        },
-      },
-      include: { business: { select: { name: true } } },
-    });
+export async function getActiveMenus(type: Product) {
+  'use cache';
+  cacheTag('active-menus');
+  cacheLife({ revalidate: 60 * 60 });
 
-    return menus;
-  },
-  ['active-menus'],
-  {
-    tags: ['active-menus'],
-  },
-);
+  const menus = await db.menu.findMany({
+    where: {
+      published: true,
+      type: type,
+      business: {
+        OR: [
+          {
+            subscription: { billing: 'FREETRIAL' },
+            menu: { is: { noScans: { lte: 200 } } },
+          },
+          {
+            subscription: {
+              billing: { not: 'FREETRIAL' },
+              expiresAt: { gte: new Date() },
+            },
+          },
+        ],
+      },
+    },
+    include: { business: { select: { name: true } } },
+  });
+
+  return menus;
+}
 export const getActiveMenusNotCached = async (types?: Product[]) => {
   const menus = await db.menu.findMany({
     where: {
@@ -184,12 +182,12 @@ export async function incrementMenuScans(id: string, businessId: string) {
   });
 
   await db.scan.create({ data: { businessId } });
-  revalidateTag(`scans${businessId}`);
+  revalidateTag(`scans${businessId}`, 'max');
   return menu.noScans;
 }
 export async function deactivateMenu(businessName: string) {
-  revalidateTag(`active-menu${businessName}`);
-  revalidateTag('active-menus');
+  revalidateTag(`active-menu${businessName}`, 'max');
+  revalidateTag('active-menus', 'max');
   const user = await db.user.findFirst({
     where: {
       business: { some: { name: businessName } },

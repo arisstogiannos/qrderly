@@ -1,12 +1,11 @@
 'use server';
 import type { Category } from '@prisma/client';
 import type { SourceLanguageCode, TargetLanguageCode } from 'deepl-node';
-import { revalidateTag } from 'next/cache';
+import { cacheLife, cacheTag, revalidateTag } from 'next/cache';
 import { z } from 'zod';
 import { translateTextArrayToMultipleDeepL } from '@/app/translation';
 import { deleteImage, uploadImage } from '@/cloudinary';
 import { db } from '@/db';
-import { cache } from '@/lib/cache';
 import type { MenuItemAI, Option, Translation, TranslationAI } from '@/types';
 import { getMenuByBusinessName } from './menu';
 
@@ -89,6 +88,14 @@ const MenuItemSchema = z.object({
 });
 type MenuItem = z.infer<typeof MenuItemSchema>;
 
+async function getCachedMenuByBusinessName(businessName: string) {
+  'use cache';
+  cacheTag(`menu${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getMenuByBusinessName(businessName);
+}
+
 export async function upsertMenuItem(
   businessName: string,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -117,11 +124,7 @@ export async function upsertMenuItem(
     categoryId,
   } = result.data;
   try {
-    const getCachedMenu = cache(getMenuByBusinessName, [`menu${businessName}`], {
-      tags: [`menu${businessName}`],
-    });
-
-    const menu = await getCachedMenu(businessName);
+    const menu = await getCachedMenuByBusinessName(businessName);
 
     const translations: Translation = {};
 
@@ -226,8 +229,8 @@ export async function upsertMenuItem(
     };
   }
 
-  revalidateTag(`menu-items${businessName}`);
-  revalidateTag(`categories${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
+  revalidateTag(`categories${businessName}`, 'max');
 
   return { success: true };
 }
@@ -279,7 +282,7 @@ export async function updateItemTranslation(
     };
   }
 
-  revalidateTag(`menu-items${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
   return { success: true };
 }
 
@@ -288,11 +291,8 @@ export async function createMenuItems(
   menuItems: MenuItemAI[],
   categories: Category[],
 ) {
-  const getMenuCached = cache(getMenuByBusinessName, [`menu${businessName}`], {
-    tags: [`menu${businessName}`],
-  });
   try {
-    const menu = await getMenuByBusinessName(businessName);
+    const menu = await getCachedMenuByBusinessName(businessName);
 
     if (menu) {
       const data = menuItems.map((item, i) => {
@@ -323,9 +323,9 @@ export async function createMenuItems(
     };
   }
 
-  revalidateTag(`menu-items${businessName}`);
-  revalidateTag(`categories${businessName}`);
-  revalidateTag(`generate-items${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
+  revalidateTag(`categories${businessName}`, 'max');
+  revalidateTag(`generate-items${businessName}`, 'max');
   return { success: true };
 }
 
@@ -354,8 +354,8 @@ function convertTranslationFormat(inputJson: TranslationAI[]): Translation | { e
 export async function deleteMenuItem(id: string, businessName: string) {
   const menuItem = await db.menuItem.delete({ where: { id } });
 
-  revalidateTag(`menu-items${businessName}`);
-  revalidateTag(`categories${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
+  revalidateTag(`categories${businessName}`, 'max');
 
   if (menuItem.imagePath) await deleteImage(menuItem.imagePath);
 
@@ -364,5 +364,5 @@ export async function deleteMenuItem(id: string, businessName: string) {
 
 export async function toggleActive(id: string, active: boolean, businessName: string) {
   await db.menuItem.update({ where: { id }, data: { isAvailable: active } });
-  revalidateTag(`menu-items${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
 }

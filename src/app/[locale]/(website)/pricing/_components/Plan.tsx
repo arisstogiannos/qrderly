@@ -26,7 +26,7 @@ type thisProps = {
   index: number;
 };
 
-export const dynamic = 'error';
+// export const dynamic = 'error';
 
 export default function Plan({ plan, index }: thisProps) {
   const { selectedPlanType } = usePlanContext();

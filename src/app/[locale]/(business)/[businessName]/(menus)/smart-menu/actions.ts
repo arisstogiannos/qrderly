@@ -46,7 +46,7 @@ export async function submitOrder(
       },
     },
   });
-  revalidateTag(`orders${businessName}`);
+  revalidateTag(`orders${businessName}`, 'max');
   const cookieStore = await cookies();
   cookieStore.set(`${businessName}order`, order.id, {
     expires: new Date().setHours(new Date().getHours() + 2),

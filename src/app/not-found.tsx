@@ -1,8 +1,13 @@
 import { ArrowLeft, Search } from 'lucide-react';
+import { cacheLife, cacheTag } from 'next/cache';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-export default function NotFound() {
+export default async function NotFound() {
+  'use cache';
+  cacheTag('not-found');
+  cacheLife('weeks');
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 px-4 text-center">
       <div className="mx-auto max-w-md flex flex-col">

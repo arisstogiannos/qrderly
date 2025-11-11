@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { DownloadIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { XIcon, DownloadIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 

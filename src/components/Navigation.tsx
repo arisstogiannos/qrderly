@@ -46,7 +46,7 @@ type hrefType =
 
 export function NavigationDesktop() {
   const t = useTranslations('navbar');
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   return (
     <NavigationMenu>
       <NavigationMenuList>
