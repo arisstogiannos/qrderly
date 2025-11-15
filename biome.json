@@ -22,7 +22,8 @@
       "!!**/payload-types.ts",
       "!!**/next-env.d.ts",
       "!!**/importMap.js",
-      "!!**/migrations"
+      "!!**/migrations",
+      "!!**/*.css"
     ]
   },
   "javascript": {
@@ -42,6 +43,12 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "nursery": {
+        "useSortedClasses": {
+          "level": "off",
+          "fix": "none"
+        }
+      },
       "recommended": true,
       "complexity": {
         "noForEach": "off",
@@ -96,7 +103,10 @@
           "level": "warn",
           "fix": "safe"
         },
-        "useImportType": "off"
+        "useImportType": {
+          "level": "warn",
+          "fix": "safe"
+        }
       },
       "a11y": {
         "useValidAnchor": "warn",

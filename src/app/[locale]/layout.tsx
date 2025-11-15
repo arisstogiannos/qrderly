@@ -89,7 +89,7 @@ export default async function LocaleLayout({
         </Suspense>
       </head>
       <body
-        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
+        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)] bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
       >
         <NextIntlClientProvider>
           <Providers>

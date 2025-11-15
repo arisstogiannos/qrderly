@@ -12,6 +12,8 @@ function getDashboardScope(): string {
     decodeURIComponent(pathname).match(/^\/[^/]+\/[^/]+\/dashboard/) ||
     decodeURIComponent(pathname).match(/^\/[^/]+\/[^/]+\/πίνακας ελέγχου/);
 
+  console.log('dashboardMatch', dashboardMatch);
+
   if (!dashboardMatch) {
     return '/';
   }
@@ -35,11 +37,9 @@ async function registerDashboardServiceWorker(scope: string): Promise<void> {
     const registration = await navigator.serviceWorker.register('/dashboard-sw.js', { scope });
 
     if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
       console.log('Service Worker registered successfully', registration);
     }
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Dashboard PWA registration failed', error);
   }
 }

@@ -8,10 +8,10 @@
   @apply flex justify-center items-center;
 }
 @utility my-container {
-  @apply mx-auto w-[92vw] min-[390px]:w-[95vw]  sm:w-[620px] md:w-[740px] lg:w-[980px] xl:w-[1240px] 2xl:w-[1440px] min-[100rem]:w-[1640px];
+  @apply mx-auto w-[92vw] min-[390px]:w-[95vw]  sm:w-[620px] md:w-[740px] lg:w-[980px] xl:w-[1240px] 2xl:w-[1440px] 3xl:w-[1640px];
 }
 @utility my-container-padding {
-  @apply mx-auto w-[92vw] min-[390px]:w-[95vw]  sm:w-[620px] md:w-[740px] lg:w-[980px] xl:w-[1240px] 2xl:w-[1440px] min-[100rem]:w-[1640px];
+  @apply mx-auto w-[92vw] min-[390px]:w-[95vw]  sm:w-[620px] md:w-[740px] lg:w-[980px] xl:w-[1240px] 2xl:w-[1440px] 3xl:w-[1640px];
 }
 @utility animate-pulse-slow {
   animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;

@@ -91,21 +91,16 @@ export function PWAInstallPrompt() {
           : 'fade-in-0 slide-in-from-top-25 animate-in',
       )}
     >
-      <div className="mx-auto flex max-w-md items-center gap-3 rounded-lg border bg-background px-4 py-3 shadow-lg">
+      <div className="mx-auto flex max-w-lg items-center gap-3 rounded-lg border bg-background px-4 py-3 shadow-lg">
         <div className="flex flex-1 items-center gap-3">
           <DownloadIcon className="size-5 text-primary" />
-          <div className="flex-1">
+          <div className="flex-1 pr-4">
             <p className="text-sm font-medium">{t('title')}</p>
             <p className="text-xs text-muted-foreground">{t('description')}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            onClick={handleInstallClick}
-            disabled={isInstalling}
-            className="shrink-0"
-          >
+          <Button onClick={handleInstallClick} disabled={isInstalling} className="shrink-0">
             {isInstalling ? t('installing') : t('install')}
           </Button>
           <Button

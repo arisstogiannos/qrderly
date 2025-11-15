@@ -1,5 +1,6 @@
 import { CloudUpload, LayoutDashboard, QrCode, Settings } from 'lucide-react';
 import type { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 import { OrderIcon } from '@/app/[locale]/(website)/products/_components/Icons';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
@@ -100,11 +101,12 @@ export default async function AdminLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ businessName: string }>;
+  params: Promise<{ businessName: string; locale: string }>;
 }>) {
+  const locale = (await params).locale;
   const businessName = (await params).businessName.replaceAll('-', ' ');
   const { user, business } = await checkUserAuthorized(businessName);
-
+  setRequestLocale(locale);
   // const queryClient = getQueryClient();
 
   // if (businessName) {
@@ -136,7 +138,6 @@ export default async function AdminLayout({
         <section className="my-container h-full  overflow-y-auto overflow-x-hidden rounded-xl bg-background w-full p-2 sm:p-10 sm:pb-0 ">
           <SubscriptionExpired business={business} />
           {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
-          <PWAInstallPrompt />
           <BusinessProvider businessName={businessName} business={business}>
             {children}
           </BusinessProvider>
@@ -146,6 +147,7 @@ export default async function AdminLayout({
             <OnboardingDialog />
           </Suspense>
           <DashboardPWARegister />
+          <PWAInstallPrompt />
         </section>
         {/* </div> */}
       </SidebarInset>
