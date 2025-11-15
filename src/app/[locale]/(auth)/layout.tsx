@@ -11,9 +11,9 @@ export default async function layout({
   children: ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const t = await getTranslations('auth');
   const locale = (await params).locale;
   setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: 'auth' });
   return (
     <div>
       <div className="absolute top-0  left-0 -z-10  xl:w-full h-screen overflow-x-hidden w-screen">

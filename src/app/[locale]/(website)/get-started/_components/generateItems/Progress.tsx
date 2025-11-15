@@ -45,7 +45,9 @@ export default function ProgressSteps({
     }
 
     return () => {
-      timeouts.forEach((timeout) => clearTimeout(timeout));
+      timeouts.forEach((timeout) => {
+        clearTimeout(timeout);
+      });
     };
   }, [isRunning, currentStep]);
 

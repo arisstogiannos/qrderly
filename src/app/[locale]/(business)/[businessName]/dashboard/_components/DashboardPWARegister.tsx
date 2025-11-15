@@ -8,7 +8,9 @@ function getDashboardScope(): string {
   }
 
   const { pathname } = window.location;
-  const dashboardMatch = pathname.match(/^\/[^/]+\/[^/]+\/dashboard/);
+  const dashboardMatch =
+    decodeURIComponent(pathname).match(/^\/[^/]+\/[^/]+\/dashboard/) ||
+    decodeURIComponent(pathname).match(/^\/[^/]+\/[^/]+\/πίνακας ελέγχου/);
 
   if (!dashboardMatch) {
     return '/';

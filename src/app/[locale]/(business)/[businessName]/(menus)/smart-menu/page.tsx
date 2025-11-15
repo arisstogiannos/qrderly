@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from 'next/cache';
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { CartContextProvider } from '@/context/CartContext';
@@ -11,10 +12,14 @@ import ActiveOrder from './_components/ActiveOrder';
 import Template1 from './_templates/template1/Template1';
 import Template2 from './_templates/template2/Template2';
 
-// export const dynamicParams = true; // or false, to 404 on unknown paths
+// export const dynamicParams = true; // Allow dynamic routes for any business name
 // export const revalidate =60;
 
-export async function generateMetadata({ params }: { params: Promise<{ businessName: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ businessName: string }>;
+}): Promise<Metadata> {
   const businessName = (await params).businessName.replaceAll('-', ' ');
 
   return {
@@ -68,7 +73,7 @@ async function getActiveMenuItemsCached(businessName: string) {
 export async function generateStaticParams() {
   const menus = await getActiveMenusCached(['SMART_QR_MENU', 'SELF_SERVICE_QR_MENU']);
 
-  return menus.flatMap((menu) => [
+  const params = menus.flatMap((menu) => [
     {
       locale: 'en',
       businessName: String(menu.business.name).replaceAll(' ', '-'),
@@ -78,10 +83,25 @@ export async function generateStaticParams() {
       businessName: String(menu.business.name).replaceAll(' ', '-'),
     },
   ]);
+
+  // Next.js 16 requires at least one result when using Cache Components
+  if (params.length === 0) {
+    return [
+      {
+        locale: 'en',
+        businessName: 'placeholder',
+      },
+    ];
+  }
+
+  return params;
 }
 
 export default async function page({ params }: { params: Promise<{ businessName: string }> }) {
+  'use cache';
   const businessName = (await params).businessName.replaceAll('-', ' ');
+  cacheTag(`smart-menu${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
 
   const menu = await getActiveMenuCached(businessName);
 

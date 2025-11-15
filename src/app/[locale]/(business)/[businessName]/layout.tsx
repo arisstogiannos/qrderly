@@ -6,7 +6,7 @@ import { getCurrency } from './_actions/business';
 async function getCurrencyCached(businessName: string) {
   'use cache';
   cacheTag(`currency${businessName}`);
-  cacheLife({ revalidate: 60 * 60 * 24 });
+  cacheLife('max');
 
   return getCurrency(businessName);
 }
@@ -18,7 +18,10 @@ export default async function layout({
   children: ReactNode;
   params: Promise<{ businessName: string }>;
 }) {
+  'use cache';
   const businessName = (await params).businessName.replaceAll('-', ' ');
+  cacheTag(`${businessName}`);
+  cacheLife('max');
 
   const result = await getCurrencyCached(businessName);
 

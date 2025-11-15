@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from 'next/cache';
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getCategories } from '../../_actions/categories';
 import { getActiveMenuNotCached, getActiveMenusNotCached } from '../../_actions/menu';
@@ -14,15 +15,31 @@ import Template2 from './_templates/template2/Template2';
 export async function generateStaticParams() {
   const menus = await getActiveMenusNotCached(['QR_MENU']);
 
-  return menus.flatMap((menu) =>
+  const params = menus.flatMap((menu) =>
     ['en', 'el'].map((locale) => ({
       locale,
       businessName: String(menu.business.name).replaceAll(' ', '-'),
     })),
   );
+
+  // Next.js 16 requires at least one result when using Cache Components
+  if (params.length === 0) {
+    return [
+      {
+        locale: 'en',
+        businessName: 'placeholder',
+      },
+    ];
+  }
+
+  return params;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ businessName: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ businessName: string }>;
+}): Promise<Metadata> {
   const businessName = (await params).businessName.replaceAll('-', ' ');
 
   return {

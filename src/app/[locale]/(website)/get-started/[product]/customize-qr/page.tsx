@@ -5,6 +5,7 @@ import type { ProductURL } from '@/types';
 import BackButton from '../../_components/BackButton';
 import QrCreator from '../../_components/qr/QrCreator';
 import { checkUser } from '../../isAllowed';
+
 export default async function page({
   params,
   searchParams,

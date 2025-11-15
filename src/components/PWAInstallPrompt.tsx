@@ -30,9 +30,9 @@ export function PWAInstallPrompt() {
       setDeferredPrompt(null);
     }
 
-    const isDismissed = localStorage.getItem('pwa-install-prompt-dismissed');
+    const dismissedInStorage = localStorage.getItem('pwa-install-prompt-dismissed');
 
-    if (isDismissed) {
+    if (dismissedInStorage) {
       setIsVisible(false);
       return;
     }
@@ -85,10 +85,10 @@ export function PWAInstallPrompt() {
   return (
     <div
       className={cn(
-        'fixed top-4 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 fill-mode-forwards ease-in-out ',
-        !isDismissed
+        'fixed top-4 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 fill-mode-forwards ease-in-out',
+        isDismissed
           ? 'fade-out-0 slide-out-to-top-25 animate-out'
-          : 'fade-in-0 slide-in-from-top-25 animate-in ',
+          : 'fade-in-0 slide-in-from-top-25 animate-in',
       )}
     >
       <div className="mx-auto flex max-w-md items-center gap-3 rounded-lg border bg-background px-4 py-3 shadow-lg">

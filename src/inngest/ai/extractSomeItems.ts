@@ -32,7 +32,6 @@ export const extractSomeItemsJob = inngest.createFunction(
 
     const menu = await getMenuByBusinessName(businessName);
     const languages = menu?.languages.split(',') || [];
-    const srcLang = languages.reverse().pop();
     let aiResults: unknown;
 
     if (fileType === 'pdf') {
@@ -72,7 +71,9 @@ export const extractSomeItemsJob = inngest.createFunction(
               // copiedPages.forEach((p) => newPdf.addPage(p));
               const pdfBytes = await newPdf.save();
 
-              const blobPart = new Blob([pdfBytes], { type: 'application/pdf' });
+              const blobPart = new Blob([new Uint8Array(pdfBytes).buffer], {
+                type: 'application/pdf',
+              });
 
               const uploadedFile = await ai.files.upload({ file: blobPart });
               if (!uploadedFile) return [];
@@ -198,13 +199,12 @@ export const extractSomeItemsJob = inngest.createFunction(
 
     // Add existing categories to the map
 
-    // biome-ignore lint/complexity/noForEach: <explanation>
-    existingCategories.forEach((c) =>
+    existingCategories.forEach((c) => {
       allCategories.set(c.name, {
         name: c.name,
         description: c.description ?? '',
-      }),
-    );
+      });
+    });
 
     const allCategoriesArray = Array.from(allCategories.values());
 

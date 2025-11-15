@@ -38,7 +38,6 @@ export const extractAllItemsJob = inngest.createFunction(
 
     const menu = await getMenuByBusinessName(businessName);
     const languages = menu?.languages.split(',') || [];
-    const srcLang = languages.reverse().pop();
     let aiResults: unknown;
 
     if (fileType === 'pdf') {
@@ -77,7 +76,9 @@ export const extractAllItemsJob = inngest.createFunction(
               // copiedPages.forEach((p) => newPdf.addPage(p));
               const pdfBytes = await newPdf.save();
 
-              const blobPart = new Blob([pdfBytes], { type: 'application/pdf' });
+              const blobPart = new Blob([new Uint8Array(pdfBytes).buffer], {
+                type: 'application/pdf',
+              });
 
               const uploadedFile = await ai.files.upload({ file: blobPart });
               if (!uploadedFile) return [];

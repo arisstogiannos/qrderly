@@ -92,7 +92,6 @@ export async function generateMetadata({
 
   return {
     manifest: `/${normalizedLocale}/${normalizedBusinessName}/dashboard/manifest.webmanifest`,
-    themeColor: '#0f172a',
   };
 }
 
@@ -137,6 +136,7 @@ export default async function AdminLayout({
         <section className="my-container h-full  overflow-y-auto overflow-x-hidden rounded-xl bg-background w-full p-2 sm:p-10 sm:pb-0 ">
           <SubscriptionExpired business={business} />
           {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
+          <PWAInstallPrompt />
           <BusinessProvider businessName={businessName} business={business}>
             {children}
           </BusinessProvider>
@@ -146,7 +146,6 @@ export default async function AdminLayout({
             <OnboardingDialog />
           </Suspense>
           <DashboardPWARegister />
-          <PWAInstallPrompt />
         </section>
         {/* </div> */}
       </SidebarInset>

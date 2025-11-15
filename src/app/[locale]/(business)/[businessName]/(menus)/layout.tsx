@@ -28,10 +28,22 @@ async function getActiveMenuCached(businessName: string) {
 export async function generateStaticParams() {
   const menus = await getActiveMenusCached(['QR_MENU', 'SMART_QR_MENU', 'SELF_SERVICE_QR_MENU']);
 
-  return menus.map((menu) => ({
+  const params = menus.map((menu) => ({
     locale: 'en',
     businessName: String(menu.business.name).replaceAll(' ', '-'),
   }));
+
+  // Next.js 16 requires at least one result when using Cache Components
+  if (params.length === 0) {
+    return [
+      {
+        locale: 'en',
+        businessName: 'placeholder',
+      },
+    ];
+  }
+
+  return params;
 }
 
 export default async function layout({

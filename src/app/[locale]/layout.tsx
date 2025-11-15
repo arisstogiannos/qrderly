@@ -92,7 +92,9 @@ export default async function LocaleLayout({
         className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
       >
         <NextIntlClientProvider>
-          <Providers>{children}</Providers>
+          <Providers>
+            <Suspense fallback={null}>{children}</Suspense>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>
