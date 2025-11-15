@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "rmdir /s /q .next && next dev",
-    "build": "rmdir /s /q .next && next build",
+    "dev": "next dev",
+    "dev:fresh": "rmdir /s /q .next && next dev",
+    "build": " next build",
+    "build:fresh": "rmdir /s /q .next && next build",
     "start": "next start",
     "postinstall": "prisma generate",
     "email": "email dev --dir src/email ",
