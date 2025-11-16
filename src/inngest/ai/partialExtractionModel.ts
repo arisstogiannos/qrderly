@@ -16,8 +16,8 @@ export async function partialExtractionAI(
       .generateContentStream({
         model: 'gemini-2.0-flash',
         contents: [
-          createPartFromUri(uploadedFile.uri ?? '', uploadedFile.mimeType ?? ''),
           createUserContent([
+            createPartFromUri(uploadedFile.uri ?? '', uploadedFile.mimeType ?? ''),
             `
             You are a menu parser AI that creates a digital menu from a physical. The user is giving you an image or PDF of a menu. Your task is to extract only the **new** menu items that are not already present in the user's existing menu. You have to successfully find and return the new items in the menu. The user will provide you with a list of existing menu items that should be excluded from the response. You have to be very accurate and precise in your extraction and translation. 
             
