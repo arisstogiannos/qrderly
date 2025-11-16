@@ -6,7 +6,7 @@ import { productsData } from '@/data';
 import type { ProductType } from '@/types';
 import { MainButtonLinkAuth } from '../(landing page)/_sections/hero/MainButton';
 
-export const dynamic = 'error';
+// export const dynamic = 'error';
 
 export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale;

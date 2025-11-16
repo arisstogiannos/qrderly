@@ -7,7 +7,7 @@ import RegisterForm from '../_components/RegisterForm';
 export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale;
   setRequestLocale(locale);
-  const t = await getTranslations('registerPage');
+  const t = await getTranslations({ locale, namespace: 'registerPage' });
 
   return (
     <FormWrapper title={t('title')} subtitle={t('subtitle')}>

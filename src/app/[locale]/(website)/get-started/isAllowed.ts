@@ -1,10 +1,18 @@
 'use server';
+import { cacheLife, cacheTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getMenuItemsByMenuId } from '@/app/[locale]/(business)/[businessName]/_actions/menu-items';
 import { auth } from '@/auth';
 import { productMap } from '@/data';
-import { cache } from '@/lib/cache';
 import type { BusinessExtended, ExtendedUser, ProductURL } from '@/types';
+
+async function getMenuItemsByMenuIdCached(menuId: string, businessName: string) {
+  'use cache';
+  cacheTag(`generate-items${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getMenuItemsByMenuId(menuId);
+}
 
 export async function checkUser(product: ProductURL): Promise<{
   business: BusinessExtended;
@@ -30,10 +38,7 @@ export async function checkUser(product: ProductURL): Promise<{
       return { business: b, redirect: 'businessWithoutMenu', user };
     }
     if (!b.menu.published) {
-      const getMenuItemsByMenuIdCached = cache(getMenuItemsByMenuId, [`generate-items${b.name}`], {
-        tags: [`generate-items${b.name}`],
-      });
-      const menuItems = await getMenuItemsByMenuIdCached(b.menu.id);
+      const menuItems = await getMenuItemsByMenuIdCached(b.menu.id, b.name);
 
       if (menuItems.length === 0) return { business: b, redirect: 'emptyMenu', user };
 

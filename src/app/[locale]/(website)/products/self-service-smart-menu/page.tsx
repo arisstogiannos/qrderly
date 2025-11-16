@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { productsData } from '@/data';
 import ProductPage from '../_components/ProductPage';
 
-export const dynamic = 'error';
+// export const dynamic = 'error';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('metadata');

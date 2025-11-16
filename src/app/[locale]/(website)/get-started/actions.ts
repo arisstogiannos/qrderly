@@ -165,7 +165,7 @@ export async function submitMenuSettings(
   const session = await getSession();
 
   const business = session?.user.business.find((b) => b.id === businessId);
-  revalidateTag(`active-menu${business?.name}`);
+  revalidateTag(`active-menu${business?.name}`, 'max');
   return { success: 'Changes saved!' };
 }
 
@@ -235,8 +235,8 @@ export async function createMenu(product: ProductURL, tier: BillingType, busines
     data: { published: true },
   });
 
-  revalidateTag(`active-menu${business.name}`);
-  revalidateTag('active-menus');
+  revalidateTag(`active-menu${business.name}`, 'max');
+  revalidateTag('active-menus', 'max');
   revalidatePath(`/en/${business.name.replaceAll(' ', '-')}`);
   revalidatePath(`/en/${business.name.replaceAll(' ', '-')}/menu`);
   revalidatePath(`/en/${business.name.replaceAll(' ', '-')}/smart-menu`);

@@ -19,16 +19,11 @@ function isNextImage({ url }: UrlMatcherContext): boolean {
 }
 
 const nextConfig: NextConfig = {
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '5mb',
-    },
-  },
+  cacheComponents: true,
+  // Disable source maps in production to avoid invalid source map warnings
+  productionBrowserSourceMaps: false,
+  // Disable server source maps to avoid build-time warnings
+  enablePrerenderSourceMaps: false,
   images: {
     remotePatterns: [
       {
@@ -37,12 +32,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  serverExternalPackages: [
-    '@libsql/client',
-    '@prisma/adapter-libsql',
-    '@prisma/client',
-    'prettier',
-  ],
+  serverExternalPackages: ['@prisma/client', 'prettier', 'prisma'],
   async rewrites() {
     return [
       {
@@ -104,4 +94,7 @@ const withPWA = nextPwa({
 });
 
 const withNextIntl = createNextIntlPlugin();
-export default withNextIntl(withPWA(nextConfig));
+
+const config = withNextIntl(withPWA(nextConfig));
+
+export default config;

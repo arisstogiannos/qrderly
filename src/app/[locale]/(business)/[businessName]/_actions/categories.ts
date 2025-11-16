@@ -100,7 +100,7 @@ export async function upsertCategory(businessName: string, prev: unknown, formDa
     };
   }
 
-  revalidateTag(`categories${businessName}`);
+  revalidateTag(`categories${businessName}`, 'max');
   return { success: true };
   // redirect("/test/dashboard/menu-items");
 }
@@ -146,7 +146,7 @@ export async function updateTranslationCategory(
     };
   }
 
-  revalidateTag(`categories${businessName}`);
+  revalidateTag(`categories${businessName}`, 'max');
   return { success: true };
   // redirect("/test/dashboard/menu-items");
 }
@@ -205,7 +205,7 @@ export async function createCategories(
       const result = await db.category.createManyAndReturn({
         data: data,
       });
-      revalidateTag(`categories${businessName}`);
+      revalidateTag(`categories${businessName}`, 'max');
       return { data: result };
     }
     return {
@@ -228,6 +228,6 @@ export async function deleteCategory(id: string, businessName: string) {
 
   if (!category) return { success: false, error: 'Something went wrong' };
 
-  revalidateTag(`categories${businessName}`);
+  revalidateTag(`categories${businessName}`, 'max');
   return { success: true };
 }

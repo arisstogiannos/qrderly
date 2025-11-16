@@ -46,23 +46,21 @@ type hrefType =
 
 export function NavigationDesktop() {
   const t = useTranslations('navbar');
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {t('Home')}
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/">{t('Home')}</Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem className="">
           <NavigationMenuTrigger>{t('Products')}</NavigationMenuTrigger>
           <NavigationMenuContent className="bg-foreground rounded-2xl">
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[300px] bg-foreground text-background  rounded-xl">
               {/* <li className="row-span-3">
-                <NavigationMenuLink asChild className="bg-foreground pointer-events-none">
+                <NavigationMenuLink asChild asChild className="bg-foreground pointer-events-none">
                   <div
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-black p-6 no-underline outline-none focus:shadow-md"
                   >
@@ -90,18 +88,14 @@ export function NavigationDesktop() {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <Link href="/pricing" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {t('Pricing')}
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/pricing">{t('Pricing')}</Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem className="mr-2">
-          <Link href="/FAQ-contact" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {t('FAQ/Contact')}
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/FAQ-contact">{t('FAQ/Contact')}</Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <I18nLanguageSelect />
 
@@ -124,14 +118,14 @@ const ListItem = forwardRef<HTMLAnchorElement, React.ComponentPropsWithoutRef<ty
   ({ className, title, children, ...props }, ref) => {
     return (
       <li className="hover:bg-background/10 rounded-xl transition-all duration-300">
-        <Link ref={ref} {...props}>
-          <NavigationMenuLink asChild className="hover:text-primary">
+        <NavigationMenuLink asChild className="hover:text-primary">
+          <Link ref={ref} {...props}>
             <div className={cn('block select-none space-y-1 rounded-md p-3 ', className)}>
               <div className="text-sm font-medium leading-none">{title}</div>
               <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
             </div>
-          </NavigationMenuLink>
-        </Link>
+          </Link>
+        </NavigationMenuLink>
       </li>
     );
   },

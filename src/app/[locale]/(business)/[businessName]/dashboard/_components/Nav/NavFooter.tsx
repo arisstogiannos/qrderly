@@ -45,7 +45,7 @@ export function NavFooter({
   const { isMobile } = useSidebar();
   const [adminEncryptedTableId, setAdminEncryptedTableId] = useState('');
   const [isDeletingBusiness, setIsDeletingBusiness] = useState(false);
-  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+  // const [isDeletingAccount, setIsDeletingAccount] = useState(false);
   const t = useTranslations('admin.navbar');
 
   useEffect(() => {

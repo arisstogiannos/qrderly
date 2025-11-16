@@ -1,5 +1,6 @@
+import { cacheLife, cacheTag } from 'next/cache';
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { cache } from '@/lib/cache';
 import { getCategories } from '../../_actions/categories';
 import { getActiveMenuNotCached, getActiveMenusNotCached } from '../../_actions/menu';
 import { getActiveMenuItems } from '../../_actions/menu-items';
@@ -8,21 +9,37 @@ import ScanTracker from '../_components/ScanTracker';
 import Template1 from './_templates/template1/Template1';
 import Template2 from './_templates/template2/Template2';
 
-export const dynamicParams = true; // or false, to 404 on unknown paths
+// export const dynamicParams = true; // or false, to 404 on unknown paths
 // export const revalidate =60;
 
 export async function generateStaticParams() {
   const menus = await getActiveMenusNotCached(['QR_MENU']);
 
-  return menus.flatMap((menu) =>
+  const params = menus.flatMap((menu) =>
     ['en', 'el'].map((locale) => ({
       locale,
       businessName: String(menu.business.name).replaceAll(' ', '-'),
     })),
   );
+
+  // Next.js 16 requires at least one result when using Cache Components
+  if (params.length === 0) {
+    return [
+      {
+        locale: 'en',
+        businessName: 'placeholder',
+      },
+    ];
+  }
+
+  return params;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ businessName: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ businessName: string }>;
+}): Promise<Metadata> {
   const businessName = (await params).businessName.replaceAll('-', ' ');
 
   return {
@@ -33,17 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<{ businessN
 
 export default async function page({ params }: { params: Promise<{ businessName: string }> }) {
   const businessName = (await params).businessName.replaceAll('-', ' ');
-  const getCachedCategories = cache(getCategories, [`categories${businessName}`], {
-    tags: [`categories${businessName}`],
-  });
-  const getCachedMenuItems = cache(getActiveMenuItems, [`active-menu-items${businessName}`], {
-    tags: [`menu-items${businessName}`],
-  });
-  const getActiveMenu = cache(getActiveMenuNotCached, [`active-menu${businessName}`], {
-    tags: [`active-menu${businessName}`],
-  });
-
-  const menu = await getActiveMenu(businessName);
+  const menu = await getActiveMenuCached(businessName);
 
   if (!menu) {
     return <ExpiredMenu />;
@@ -56,8 +63,8 @@ export default async function page({ params }: { params: Promise<{ businessName:
   // }
 
   const [categories, products] = await Promise.all([
-    getCachedCategories(businessName),
-    getCachedMenuItems(businessName),
+    getCategoriesCached(businessName),
+    getActiveMenuItemsCached(businessName),
   ]);
 
   const colors = menu.theme.split(',');
@@ -95,4 +102,28 @@ export default async function page({ params }: { params: Promise<{ businessName:
       )}
     </main>
   );
+}
+
+async function getActiveMenuCached(businessName: string) {
+  'use cache';
+  cacheTag(`active-menu${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getActiveMenuNotCached(businessName);
+}
+
+async function getCategoriesCached(businessName: string) {
+  'use cache';
+  cacheTag(`categories${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getCategories(businessName);
+}
+
+async function getActiveMenuItemsCached(businessName: string) {
+  'use cache';
+  cacheTag(`menu-items${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getActiveMenuItems(businessName);
 }

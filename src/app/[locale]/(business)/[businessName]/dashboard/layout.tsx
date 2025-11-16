@@ -1,17 +1,18 @@
-import type { Metadata } from 'next';
 import { CloudUpload, LayoutDashboard, QrCode, Settings } from 'lucide-react';
+import type { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 import { OrderIcon } from '@/app/[locale]/(website)/products/_components/Icons';
+import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { BusinessProvider } from '@/context/BusinessProvider';
 import { checkUserAuthorized } from '../_actions/authorization';
-import { AppSidebar } from './_components/Nav/Navbar';
 import { DashboardPWARegister } from './_components/DashboardPWARegister';
+import { AppSidebar } from './_components/Nav/Navbar';
 import { CategoriesIcon, ProductsIcon, SalesIcon } from './_components/SharedComponents/Icons';
 import OnboardingDialog from './_components/SharedComponents/OnboardingDialog';
 import SubscriptionExpired from './_components/SharedComponents/SubscriptionExpired';
-import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
 
 const data = {
   user: {
@@ -92,7 +93,6 @@ export async function generateMetadata({
 
   return {
     manifest: `/${normalizedLocale}/${normalizedBusinessName}/dashboard/manifest.webmanifest`,
-    themeColor: '#0f172a',
   };
 }
 
@@ -101,11 +101,12 @@ export default async function AdminLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ businessName: string }>;
+  params: Promise<{ businessName: string; locale: string }>;
 }>) {
+  const locale = (await params).locale;
   const businessName = (await params).businessName.replaceAll('-', ' ');
   const { user, business } = await checkUserAuthorized(businessName);
-
+  setRequestLocale(locale);
   // const queryClient = getQueryClient();
 
   // if (businessName) {

@@ -1,24 +1,49 @@
+import { cacheLife, cacheTag } from 'next/cache';
 import { type ReactNode } from 'react';
 import MenuFooter from '@/components/MenuFooter';
 import ScrollToTop from '@/components/ScrollToTop';
 import { Toaster } from '@/components/ui/sonner';
-import { cache } from '@/lib/cache';
 import { getActiveMenuNotCached, getActiveMenusNotCached } from '../_actions/menu';
 import ExpiredMenu from './_components/ExpiredMenu';
 
-export const dynamicParams = true; // or false, to 404 on unknown paths
+// export const dynamicParams = true; // or false, to 404 on unknown paths
 // export const revalidate =60;
 
-export async function generateStaticParams() {
-  const getActiveMenusCache = cache(getActiveMenusNotCached, ['active-menus'], {
-    tags: ['active-menus'],
-  });
-  const menus = await getActiveMenusCache(['QR_MENU', 'SMART_QR_MENU', 'SELF_SERVICE_QR_MENU']);
+async function getActiveMenusCached(types: Parameters<typeof getActiveMenusNotCached>[0]) {
+  'use cache';
+  cacheTag('active-menus');
+  cacheLife({ revalidate: 60 * 60 });
 
-  return menus.map((menu) => ({
+  return getActiveMenusNotCached(types);
+}
+
+async function getActiveMenuCached(businessName: string) {
+  'use cache';
+  cacheTag(`active-menu${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getActiveMenuNotCached(businessName);
+}
+
+export async function generateStaticParams() {
+  const menus = await getActiveMenusCached(['QR_MENU', 'SMART_QR_MENU', 'SELF_SERVICE_QR_MENU']);
+
+  const params = menus.map((menu) => ({
     locale: 'en',
     businessName: String(menu.business.name).replaceAll(' ', '-'),
   }));
+
+  // Next.js 16 requires at least one result when using Cache Components
+  if (params.length === 0) {
+    return [
+      {
+        locale: 'en',
+        businessName: 'placeholder',
+      },
+    ];
+  }
+
+  return params;
 }
 
 export default async function layout({
@@ -30,11 +55,7 @@ export default async function layout({
 }) {
   const businessName = (await params).businessName.replaceAll('-', ' ');
 
-  const getActiveMenu = cache(getActiveMenuNotCached, [`active-menu${businessName}`], {
-    tags: [`active-menu${businessName}`],
-  });
-
-  const menu = await getActiveMenu(businessName);
+  const menu = await getActiveMenuCached(businessName);
 
   if (!menu) {
     return <ExpiredMenu />;

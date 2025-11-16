@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { DownloadIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { XIcon, DownloadIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -30,9 +30,9 @@ export function PWAInstallPrompt() {
       setDeferredPrompt(null);
     }
 
-    const isDismissed = localStorage.getItem('pwa-install-prompt-dismissed');
+    const dismissedInStorage = localStorage.getItem('pwa-install-prompt-dismissed');
 
-    if (isDismissed) {
+    if (dismissedInStorage) {
       setIsVisible(false);
       return;
     }
@@ -85,27 +85,22 @@ export function PWAInstallPrompt() {
   return (
     <div
       className={cn(
-        'fixed top-4 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 fill-mode-forwards ease-in-out ',
-        !isDismissed
+        'fixed top-4 left-1/2 z-50 -translate-x-1/2 transform transition-all duration-300 fill-mode-forwards ease-in-out',
+        isDismissed
           ? 'fade-out-0 slide-out-to-top-25 animate-out'
-          : 'fade-in-0 slide-in-from-top-25 animate-in ',
+          : 'fade-in-0 slide-in-from-top-25 animate-in',
       )}
     >
-      <div className="mx-auto flex max-w-md items-center gap-3 rounded-lg border bg-background px-4 py-3 shadow-lg">
+      <div className="mx-auto flex max-w-lg items-center gap-3 rounded-lg border bg-background px-4 py-3 shadow-lg">
         <div className="flex flex-1 items-center gap-3">
           <DownloadIcon className="size-5 text-primary" />
-          <div className="flex-1">
+          <div className="flex-1 pr-4">
             <p className="text-sm font-medium">{t('title')}</p>
             <p className="text-xs text-muted-foreground">{t('description')}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            onClick={handleInstallClick}
-            disabled={isInstalling}
-            className="shrink-0"
-          >
+          <Button onClick={handleInstallClick} disabled={isInstalling} className="shrink-0">
             {isInstalling ? t('installing') : t('install')}
           </Button>
           <Button

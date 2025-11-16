@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       update: subscriptionData,
     });
 
-    revalidateTag(`active-menu${sub?.business?.name}`);
+    revalidateTag(`active-menu${sub?.business?.name}`, 'max');
 
     await resend.emails.send({
       from: `Scanby <${process.env.SENDER_EMAIL as string}>`,
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
       select: { business: true },
     });
 
-    revalidateTag(`active-menu${sub?.business?.name}`);
+    revalidateTag(`active-menu${sub?.business?.name}`, 'max');
   } else if (event.type === 'customer.subscription.updated') {
     const updatedSub = event.data.object;
     const newPlan = updatedSub.items.data[0].plan;
@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
         },
         select: { business: { select: { name: true } } },
       });
-      revalidateTag(`active-menu${sub?.business?.name}`);
+      revalidateTag(`active-menu${sub?.business?.name}`, 'max');
     }
   }
 

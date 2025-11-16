@@ -38,7 +38,7 @@ export default function QrDownLoad({
     let qrImageBlob: Blob;
 
     if (qrBlob instanceof Buffer) {
-      qrImageBlob = new Blob([qrBlob], { type: 'image/png' });
+      qrImageBlob = new Blob([new Uint8Array(qrBlob)], { type: 'image/png' });
     } else if (qrBlob instanceof Blob) {
       qrImageBlob = qrBlob;
     } else {
@@ -50,7 +50,9 @@ export default function QrDownLoad({
     const qrURL = URL.createObjectURL(qrImageBlob);
 
     qrImage.src = qrURL;
-    await new Promise((resolve) => (qrImage.onload = resolve));
+    await new Promise((resolve) => {
+      qrImage.onload = resolve;
+    });
 
     const qrSize = 3000;
 
@@ -123,7 +125,7 @@ export default function QrDownLoad({
 
       // ✅ Fix: Convert Buffer to Blob if needed
       if (qrData instanceof Buffer) {
-        qrData = new Blob([qrData], { type: 'image/png' });
+        qrData = new Blob([new Uint8Array(qrData)], { type: 'image/png' });
       }
 
       if (!(qrData instanceof Blob)) continue; // Skip if not a valid image
@@ -133,7 +135,9 @@ export default function QrDownLoad({
       const qrURL = URL.createObjectURL(qrData);
 
       qrImage.src = qrURL;
-      await new Promise((resolve) => (qrImage.onload = resolve));
+      await new Promise((resolve) => {
+        qrImage.onload = resolve;
+      });
 
       // Create new canvas (QR size + space for text)
       const qrSize = 3000;

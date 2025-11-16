@@ -1,27 +1,27 @@
+import { cacheLife, cacheTag } from 'next/cache';
 import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 import Loader from '@/components/Loader';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { cache } from '@/lib/cache';
 import { checkUserAuthorized } from '../../_actions/authorization';
 import { getAllOrders } from '../../_actions/orders';
 import AllOrdersTable from '../_components/Order/AllOrdersTable';
 
-// const getOrdersCache = unstable_cache(getAllOrders, ["all-orders-a-s"], {
-//   tags: ["all-orders-a"],
-//   revalidate: false,
-// });
+async function getAllOrdersCached(businessName: string) {
+  'use cache';
+  cacheTag(`orders${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getAllOrders(businessName);
+}
+
 export default async function page({ params }: { params: Promise<{ businessName: string }> }) {
   const businessName = (await params).businessName.replaceAll('-', ' ');
   await checkUserAuthorized(businessName);
 
-  const getAllOrdersCache = cache(getAllOrders, [`orders${businessName}`], {
-    tags: [`orders${businessName}`],
-    revalidate: 3600,
-  });
   const t = await getTranslations('admin.orders');
 
-  const orders = await getAllOrdersCache(businessName);
+  const orders = await getAllOrdersCached(businessName);
 
   return (
     <section className="space-y-10">

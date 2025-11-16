@@ -60,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
-export const dynamicParams = true; // or false, to 404 on unknown paths
+// export const dynamicParams = true; // or false, to 404 on unknown paths
 // export const revalidate = 60
 export async function generateStaticParams() {
   return [
@@ -89,10 +89,12 @@ export default async function LocaleLayout({
         </Suspense>
       </head>
       <body
-        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)]     bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
+        className={`${instrumentsSans.variable} antialiased font-[family-name:var(--font-instrument-sans)] bg-background overflow-x-hidden selection:bg-accent selection:text-primary`}
       >
         <NextIntlClientProvider>
-          <Providers>{children}</Providers>
+          <Providers>
+            <Suspense fallback={null}>{children}</Suspense>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>
