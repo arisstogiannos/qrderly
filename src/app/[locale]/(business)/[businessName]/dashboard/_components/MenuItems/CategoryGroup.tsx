@@ -1,28 +1,24 @@
-import CloudImage from "@/components/CloudImage";
-import DisplayPrice from "@/components/DisplayPrice";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Modal } from "../SharedComponents/Modal";
+import { CheckCircle, Edit, MoreVertical, XCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { startTransition } from 'react';
+import CloudImage from '@/components/CloudImage';
+import DisplayPrice from '@/components/DisplayPrice';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { CheckCircle, Edit, MoreVertical, XCircle } from "lucide-react";
-import type {
-  CategoryWithItemCount,
-  MenuItemWithCategory,
-  Translation,
-} from "@/types";
-import { useTranslations } from "next-intl";
-import MenuItemForm from "./MenuItemForm";
-import TranslatedMenuItemForm from "./TranslatedMenuItemForm";
-import DeleteModal from "../SharedComponents/DeleteModal";
-import { useBusinessContext } from "@/context/BusinessProvider";
-import { toggleActive } from "../../../_actions/menu-items";
-import { cn } from "@/lib/utils";
-import { startTransition } from "react";
+} from '@/components/ui/dropdown-menu';
+import { useBusinessContext } from '@/context/BusinessProvider';
+import { cn } from '@/lib/utils';
+import type { CategoryWithItemCount, MenuItemWithCategory, Translation } from '@/types';
+import { toggleActive } from '../../../_actions/menu-items';
+import DeleteModal from '../SharedComponents/DeleteModal';
+import { Modal } from '../SharedComponents/Modal';
+import MenuItemForm from './MenuItemForm';
+import TranslatedMenuItemForm from './TranslatedMenuItemForm';
 
 export default function MenuCategorySection({
   items,
@@ -40,23 +36,22 @@ export default function MenuCategorySection({
   handleDelete: (item: MenuItemWithCategory) => void;
   setOptimisticItem: (action: {
     newItem: MenuItemWithCategory;
-    type: "delete" | "add" | "update";
+    type: 'delete' | 'add' | 'update';
   }) => void;
   categories: CategoryWithItemCount[];
 }) {
-  const t = useTranslations("admin.menu items");
+  const t = useTranslations('admin.menu items');
   const { business } = useBusinessContext();
 
   const categoryTranslationsAsJson: Translation | null = category.translations
     ? JSON.parse(category.translations)
     : null;
 
-  const translatedCategoryName =
-    categoryTranslationsAsJson?.[language]?.name || category.name;
+  const translatedCategoryName = categoryTranslationsAsJson?.[language]?.name || category.name;
 
   async function handleTogglActive(item: MenuItemWithCategory) {
     startTransition(() => {
-      setOptimisticItem({ newItem: {...item,isAvailable:!item.isAvailable}, type: "update" });
+      setOptimisticItem({ newItem: { ...item, isAvailable: !item.isAvailable }, type: 'update' });
     });
     await toggleActive(item.id, !item.isAvailable, business.name);
   }
@@ -88,8 +83,8 @@ export default function MenuCategorySection({
               key={item.id}
               id={translatedItem.name}
               className={cn(
-                "flex px-3 py-2 flex-row rounded-2xl shadow-lg border-primary/30 border-2  min-[390px]:min-w-[350px] max-w-full relative  min-h-[100px]  overflow-hidden  text-foreground bg-transparent  transition-all duration-300 lg:min-w-full lg:max-w-full",
-                !item.isAvailable ? "text-foreground/30 border-primary/10 " : ""
+                'flex px-3 py-2 flex-row rounded-2xl shadow-lg border-primary/30 border-2  min-[390px]:min-w-[350px] max-w-full relative  min-h-[100px]  overflow-hidden  text-foreground bg-transparent  transition-all duration-300 lg:min-w-full lg:max-w-full',
+                !item.isAvailable ? 'text-foreground/30 border-primary/10 ' : '',
               )}
             >
               <div className="absolute bottom-2 right-2 z-10">
@@ -109,18 +104,18 @@ export default function MenuCategorySection({
                       <Modal
                         trigger={
                           <Button variant="ghost" className="w-full ">
-                            <Edit className="mr-2 h-4 w-4" /> {t("edit")}
+                            <Edit className="mr-2 h-4 w-4" /> {t('edit')}
                           </Button>
                         }
                         title={
-                          language === languages.split(",")[0]
-                            ? "Edit item"
-                            : "Edit item translations"
+                          language === languages.split(',')[0]
+                            ? 'Edit item'
+                            : 'Edit item translations'
                         }
                         subtitle=""
                         classNames="pt-5"
                       >
-                        {language === languages.split(",")[0] ? (
+                        {language === languages.split(',')[0] ? (
                           <MenuItemForm
                             categories={categories}
                             item={item}
@@ -136,12 +131,12 @@ export default function MenuCategorySection({
                       </Modal>
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      variant={!item.isAvailable ? "default" : "destructive"}
+                      variant={!item.isAvailable ? 'default' : 'destructive'}
                       asChild
                     >
                       <Button
                         className="w-full cursor-pointer"
-                        variant={"ghost"}
+                        variant={'ghost'}
                         onClick={() => handleTogglActive(item)}
                       >
                         {item.isAvailable ? (
@@ -158,20 +153,17 @@ export default function MenuCategorySection({
                       </Button>
                     </DropdownMenuItem>
                     <DropdownMenuItem variant="destructive" asChild>
-                      <DeleteModal
-                        item={item}
-                        action={() => handleDelete(item)}
-                      />
+                      <DeleteModal item={item} action={() => handleDelete(item)} />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
 
-              {business.menu?.template === "T1" ? (
+              {business.menu?.template === 'T1' ? (
                 <div className="relative max-w-28 min-w-28 min-h-28 max-h-28 rounded-xl overflow-hidden">
-                  {item.imagePath !== "pending" ? (
+                  {item.imagePath !== 'pending' ? (
                     <CloudImage
-                      src={item.imagePath || ""}
+                      src={item.imagePath || ''}
                       fill
                       alt={item.name}
                       className="object-cover"
@@ -183,20 +175,14 @@ export default function MenuCategorySection({
               ) : null}
               <CardContent
                 className={
-                  "flex w-full justify-between gap-2 py-1 px-0 h-full border-0 shadow-none"
+                  'flex w-full justify-between gap-2 py-1 px-0 h-full border-0 shadow-none'
                 }
               >
                 <div className="space-y-1 lg:space-y-1  w-[80%]">
-                  <h3
-                    className={"text-base lg:text-lg capitalize line-clamp-2"}
-                  >
+                  <h3 className={'text-base lg:text-lg capitalize line-clamp-2'}>
                     {translatedItem.name}
                   </h3>
-                  <p
-                    className={
-                      "line-clamp-2 text-sm text-muted-foreground lg:text-sm "
-                    }
-                  >
+                  <p className={'line-clamp-2 text-sm text-muted-foreground lg:text-sm '}>
                     {translatedItem.description}
                   </p>
                 </div>

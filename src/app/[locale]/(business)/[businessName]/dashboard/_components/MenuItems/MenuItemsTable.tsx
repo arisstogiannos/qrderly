@@ -1,13 +1,13 @@
-"use client";
-import { startTransition } from "react";
-import { deleteMenuItem } from "../../../_actions/menu-items";
-import {TriangleAlert } from "lucide-react";
-import { useFiltersContext } from "@/context/FiltersProvider";
-import type { MenuItem } from "@prisma/client";
-import { toast } from "sonner";
-import type { CategoryWithItemCount, Translation } from "@/types";
-import { useTranslations } from "next-intl";
-import MenuCategorySection from "./CategoryGroup";
+'use client';
+import type { MenuItem } from '@prisma/client';
+import { TriangleAlert } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { startTransition } from 'react';
+import { toast } from 'sonner';
+import { useFiltersContext } from '@/context/FiltersProvider';
+import type { CategoryWithItemCount, Translation } from '@/types';
+import { deleteMenuItem } from '../../../_actions/menu-items';
+import MenuCategorySection from './CategoryGroup';
 
 type MenuItemWithCategory = MenuItem & {
   category: {
@@ -25,26 +25,26 @@ export default function MenuItemsTable({
   businessName: string;
   setOptimisticItem: (action: {
     newItem: MenuItemWithCategory;
-    type: "delete" | "add" | "update";
+    type: 'delete' | 'add' | 'update';
   }) => void;
   categories: CategoryWithItemCount[];
 }) {
   const { searchQuery, category, language, languages } = useFiltersContext();
-  const t = useTranslations("admin.menu items");
+  const t = useTranslations('admin.menu items');
 
   function handleDelete(item: MenuItemWithCategory) {
     startTransition(() => {
-      setOptimisticItem({ newItem: item, type: "delete" });
+      setOptimisticItem({ newItem: item, type: 'delete' });
     });
     deleteMenuItem(item.id, businessName).catch(() => {
-      toast("Failed to delete item, rolling back...", {
+      toast('Failed to delete item, rolling back...', {
         duration: 2000,
         icon: <TriangleAlert />,
-        position: "bottom-right",
+        position: 'bottom-right',
         style: {
-          backgroundColor: "red",
-          color: "darkred",
-          borderColor: "darkred",
+          backgroundColor: 'red',
+          color: 'darkred',
+          borderColor: 'darkred',
         },
       });
     });
@@ -64,7 +64,7 @@ export default function MenuItemsTable({
       acc[categoryId].push(item);
       return acc;
     },
-    {} as Record<string, MenuItemWithCategory[]>
+    {} as Record<string, MenuItemWithCategory[]>,
   );
 
   // Get unique category IDs that have items
@@ -72,43 +72,34 @@ export default function MenuItemsTable({
 
   return (
     <div className="w-full">
-     
-        <div className="grid gap-6">
-          {categoryIds.map((catId) => {
-            const cat = categories.find((c) => c.id === catId);
-            if (!cat) return null;
+      <div className="grid gap-6">
+        {categoryIds.map((catId) => {
+          const cat = categories.find((c) => c.id === catId);
+          if (!cat) return null;
 
-            return (
-              <MenuCategorySection
-                key={catId}
-                items={groupedItems[catId]}
-                category={cat}
-                language={language}
-                languages={languages}
-                handleDelete={handleDelete}
-                setOptimisticItem={setOptimisticItem}
-                categories={categories}
-              />
-            );
-          })}
-        </div>
+          return (
+            <MenuCategorySection
+              key={catId}
+              items={groupedItems[catId]}
+              category={cat}
+              language={language}
+              languages={languages}
+              handleDelete={handleDelete}
+              setOptimisticItem={setOptimisticItem}
+              categories={categories}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
 
-
-
 function filterCategory(items: MenuItemWithCategory[], category: string) {
-  return items.filter(
-    (item) => item.categoryId === category || category === "all"
-  );
+  return items.filter((item) => item.categoryId === category || category === 'all');
 }
 
-function filterSearch(
-  items: MenuItemWithCategory[],
-  query: string,
-  language: string
-) {
+function filterSearch(items: MenuItemWithCategory[], query: string, language: string) {
   return items.filter((item) => {
     // Parse translations if they exist
     const translations: Translation | null = item.translations
@@ -117,8 +108,7 @@ function filterSearch(
 
     // Get translated name and description (fallback to default if missing)
     const translatedName = translations?.[language]?.name || item.name;
-    const translatedDescription =
-      translations?.[language]?.description || item.description || "";
+    const translatedDescription = translations?.[language]?.description || item.description || '';
 
     // Check against translated values
     return (
@@ -132,13 +122,13 @@ function filterItems(
   items: MenuItemWithCategory[],
   query: string,
   category: string,
-  language: string
+  language: string,
 ) {
   let filteredItems = items;
-  if (query !== "") {
+  if (query !== '') {
     filteredItems = filterSearch(filteredItems, query, language);
   }
-  if (category !== "") {
+  if (category !== '') {
     filteredItems = filterCategory(filteredItems, category);
   }
 

@@ -1,21 +1,16 @@
-"use client";
-import DisplayPrice from "@/components/DisplayPrice";
-import { Button } from "@/components/ui/button";
-import { useCardModalContext } from "@/context/CardModalProvider";
-import { useCartContext } from "@/context/CartContext";
-import type { CartItem } from "@/types";
-import { Edit2, MinusIcon, PlusIcon, X } from "lucide-react";
-import { useTranslations } from "next-intl";
+'use client';
+import { Edit2, MinusIcon, PlusIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import DisplayPrice from '@/components/DisplayPrice';
+import { Button } from '@/components/ui/button';
+import { useCardModalContext } from '@/context/CardModalProvider';
+import { useCartContext } from '@/context/CartContext';
+import type { CartItem } from '@/types';
 
-export default function MenuItemModalFooter({
-  item,
-}: {
-  item: CartItem | undefined;
-}) {
+export default function MenuItemModalFooter({ item }: { item: CartItem | undefined }) {
   const { increaseItemQuantity, decreaseItemQuantity } = useCartContext();
   const { price } = useCardModalContext();
-  const t = useTranslations("menus.order");
-
+  const t = useTranslations('menus.order');
 
   return (
     <div className="fixed bottom-0 left-0 w-full bg-gradient-to-t from-background from-60% to-transparent p-4 ">
@@ -40,11 +35,8 @@ export default function MenuItemModalFooter({
           </div>
         ) : null}
         {item ? (
-          <Button
-            type="submit"
-            className="flex  items-center justify-center gap-3 capitalize grow"
-          >
-            {t("updateOrder")} <DisplayPrice price={price} />
+          <Button type="submit" className="flex  items-center justify-center gap-3 capitalize grow">
+            {t('updateOrder')} <DisplayPrice price={price} />
             <Edit2 />
           </Button>
         ) : (
@@ -52,7 +44,7 @@ export default function MenuItemModalFooter({
             type="submit"
             className="flex w-full items-center justify-center gap-3 capitalize"
           >
-            {t("addToCart")} <DisplayPrice price={price} />
+            {t('addToCart')} <DisplayPrice price={price} />
             {/* <AddToCartIcon /> */}
           </Button>
         )}

@@ -1,25 +1,24 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+'use client';
+import type { Business } from '@prisma/client';
+import { ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useActionState } from 'react';
+import Loader from '@/components/Loader';
+import { ErrorMessage } from '@/components/Messages';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { ArrowRight } from "lucide-react";
-
-import React, { useActionState } from "react";
-import { submitBusinessInfo } from "../../actions";
-import { ErrorMessage } from "@/components/Messages";
-import type { ProductURL } from "@/types";
-import Loader from "@/components/Loader";
-import TablesSetup from "./TablesSetup";
-import { supportedCurrencies } from "@/lib/formatter";
-import { useTranslations } from "next-intl";
-import type { Business } from "@prisma/client";
+} from '@/components/ui/select';
+import { supportedCurrencies } from '@/lib/formatter';
+import type { ProductURL } from '@/types';
+import { submitBusinessInfo } from '../../actions';
+import TablesSetup from './TablesSetup';
 
 export default function BusinessSetupForm({
   product,
@@ -30,20 +29,20 @@ export default function BusinessSetupForm({
 }) {
   const [state, action, isPending] = useActionState(
     submitBusinessInfo.bind(null, product, existingBusiness?.id),
-    null
+    null,
   );
-  const t = useTranslations("businessSetupForm");
+  const t = useTranslations('businessSetupForm');
 
   return (
     <form action={action} className="flex flex-col gap-6 max-w-3xl">
       <div className="grid gap-3">
         <div className="space-y-1">
-          <Label htmlFor="name">{t("businessName")}</Label>
-          <p className="text-sm text-muted-foreground">{t("businessNameHint")}</p>
+          <Label htmlFor="name">{t('businessName')}</Label>
+          <p className="text-sm text-muted-foreground">{t('businessNameHint')}</p>
         </div>
         <Input
           pattern="[A-Za-z0-9\-._~ ]*"
-          title={t("businessNameValidation")}
+          title={t('businessNameValidation')}
           id="name"
           name="name"
           type="text"
@@ -51,43 +50,31 @@ export default function BusinessSetupForm({
           defaultValue={existingBusiness?.name}
         />
         {state?.errors?.name?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
+          return <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />;
         })}
       </div>
       <div className="grid gap-3">
-        <Label htmlFor="type">{t("businessType")}</Label>
+        <Label htmlFor="type">{t('businessType')}</Label>
         <Select name="type" required defaultValue={existingBusiness?.type}>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder={t("businessTypePlaceholder")}  />
+            <SelectValue placeholder={t('businessTypePlaceholder')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={"restaurant"}>{t("restaurant")}</SelectItem>
-            <SelectItem value={"bar"}>{t("bar")}</SelectItem>
-            <SelectItem value={"cafeteria"}>{t("cafeteria")}</SelectItem>
-            <SelectItem value={"other"}>{t("other")}</SelectItem>
+            <SelectItem value={'restaurant'}>{t('restaurant')}</SelectItem>
+            <SelectItem value={'bar'}>{t('bar')}</SelectItem>
+            <SelectItem value={'cafeteria'}>{t('cafeteria')}</SelectItem>
+            <SelectItem value={'other'}>{t('other')}</SelectItem>
           </SelectContent>
         </Select>
         {state?.errors?.type?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
+          return <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />;
         })}
       </div>
       <div className="grid gap-3">
-        <Label htmlFor="currency">{t("currency")}</Label>
+        <Label htmlFor="currency">{t('currency')}</Label>
         <Select name="currency" required defaultValue={existingBusiness?.currency}>
-          <SelectTrigger className="w-full" >
-            <SelectValue placeholder={t("currencyPlaceholder")} />
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder={t('currencyPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
             {supportedCurrencies.map((currency) => (
@@ -98,40 +85,28 @@ export default function BusinessSetupForm({
           </SelectContent>
         </Select>
         {state?.errors?.type?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
+          return <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />;
         })}
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="country">{t("country")}</Label>
-        <Input id="country" name="country" type="text" required defaultValue={existingBusiness?.location.split("-")[0]} />
+        <Label htmlFor="country">{t('country')}</Label>
+        <Input
+          id="country"
+          name="country"
+          type="text"
+          required
+          defaultValue={existingBusiness?.location.split('-')[0]}
+        />
         {state?.errors?.country?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
+          return <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />;
         })}
       </div>
-      {product === "smart-ordering-qr-menu" && (
+      {product === 'smart-ordering-qr-menu' && (
         <div className="grid gap-3">
           <TablesSetup />
           {state?.errors?.tables?.map((er) => {
-            return (
-              <ErrorMessage
-                key={er}
-                classNames="text-sm bg-transparent p-0 "
-                msg={er}
-              />
-            );
+            return <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />;
           })}
         </div>
       )}
@@ -145,7 +120,7 @@ export default function BusinessSetupForm({
           <Loader className="text-xs" />
         ) : (
           <>
-            {t("next")} <ArrowRight className="size-5" />
+            {t('next')} <ArrowRight className="size-5" />
           </>
         )}
       </Button>

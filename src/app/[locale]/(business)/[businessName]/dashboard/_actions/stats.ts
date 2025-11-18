@@ -1,6 +1,6 @@
-"use server";
+'use server';
 
-import { db } from "@/db";
+import { db } from '@/db';
 
 export async function getTotalScans(businessId: string) {
   return await db.scan.count({ where: { businessId } });
@@ -9,17 +9,14 @@ export async function getTotalOrders(businessId: string) {
   return await db.order.count({ where: { businessId } });
 }
 export async function getTotalRevenue(businessId: string) {
-  const orders=  await db.order.findMany({ where: { businessId },select:{price:true} });
-  let totalRevenue = 0
-  orders.forEach((or)=>totalRevenue+=or.price)
+  const orders = await db.order.findMany({ where: { businessId }, select: { price: true } });
+  let totalRevenue = 0;
+  orders.forEach((or) => (totalRevenue += or.price));
 
-  return totalRevenue
+  return totalRevenue;
 }
 
-
-
-
-const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export async function getOrdersPerDay(businessId: string) {
   const sevenDaysAgo = new Date();
@@ -65,7 +62,6 @@ export async function getOrdersPerDay(businessId: string) {
 }
 
 export async function getScansPerDay(businessId: string) {
-
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
@@ -108,21 +104,18 @@ export async function getScansPerDay(businessId: string) {
 }
 
 export async function getPopularItems(businessId: string) {
-
   const popularItems = await db.menuItem.findMany({
     where: {
-      menu:{business:{id:businessId}},
-      
+      menu: { business: { id: businessId } },
     },
-    select:{_count:{select:{orderItems:true}},name:true},
-    orderBy:{orderItems:{_count:"desc"}},
-    take:4
+    select: { _count: { select: { orderItems: true } }, name: true },
+    orderBy: { orderItems: { _count: 'desc' } },
+    take: 4,
   });
 
-  return popularItems.filter((it)=>it._count.orderItems>0).flatMap((it)=>({name:it.name,value:it._count.orderItems}))
+  return popularItems
+    .filter((it) => it._count.orderItems > 0)
+    .flatMap((it) => ({ name: it.name, value: it._count.orderItems }));
 }
 
-
-function formatData(data:any[]){
-
-}
+function formatData(data: any[]) {}

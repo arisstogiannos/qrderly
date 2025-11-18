@@ -1,10 +1,9 @@
-import React from "react";
-import ProductPage from "../_components/ProductPage";
-import { productsData } from "@/data";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { productsData } from '@/data';
+import ProductPage from '../_components/ProductPage';
 
-export const dynamic = "error";
+// export const dynamic = 'error';
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('metadata');
 
@@ -45,35 +44,31 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-  // openGraph: {
-  //   title: "QR Ordering App - Order Food Seamlessly",
-  //   description: "Transform your restaurant experience with QR-based ordering. Browse, order, and pay effortlessly.",
-  //   url: "https://your-qr-ordering-app.com",
-  //   siteName: "QR Ordering App",
-  //   images: [
-  //     {
-  //       url: "/og-image.jpg",
-  //       width: 1200,
-  //       height: 630,
-  //       alt: "QR Ordering App Screenshot",
-  //     },
-  //   ],
-  //   locale: "en_US",
-  //   type: "website",
-  // },
-  // twitter: {
-  //   card: "summary_large_image",
-  //   site: "@yourTwitterHandle",
-  //   title: "QR Ordering App - Contactless Food Ordering",
-  //   description: "Scan, order, and enjoy a seamless dining experience.",
-  //   images: ["/twitter-card.jpg"],
-  // },
+// openGraph: {
+//   title: "QR Ordering App - Order Food Seamlessly",
+//   description: "Transform your restaurant experience with QR-based ordering. Browse, order, and pay effortlessly.",
+//   url: "https://your-qr-ordering-app.com",
+//   siteName: "QR Ordering App",
+//   images: [
+//     {
+//       url: "/og-image.jpg",
+//       width: 1200,
+//       height: 630,
+//       alt: "QR Ordering App Screenshot",
+//     },
+//   ],
+//   locale: "en_US",
+//   type: "website",
+// },
+// twitter: {
+//   card: "summary_large_image",
+//   site: "@yourTwitterHandle",
+//   title: "QR Ordering App - Contactless Food Ordering",
+//   description: "Scan, order, and enjoy a seamless dining experience.",
+//   images: ["/twitter-card.jpg"],
+// },
 
-export default async function page({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const locale = (await params).locale;
   setRequestLocale(locale);
   const smMenu = { ...productsData[1] };

@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { CheckCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
-import Loader from "@/components/Loader";
-import { useTranslations } from "next-intl";
+import { CheckCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import Loader from '@/components/Loader';
+import { cn } from '@/lib/utils';
 
 export default function ProgressSteps({
   taskIsRunning,
-  time
+  time,
 }: {
   taskIsRunning: boolean;
-  time?:number
+  time?: number;
 }) {
-  const t = useTranslations("progress");
+  const t = useTranslations('progress');
   const [isRunning, setIsRunning] = useState(true);
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
-    { id: 1, title: t("extractingItems") },
-    { id: 2, title: t("translatingLanguages") },
-    { id: 3, title: t("creatingMenu") },
+    { id: 1, title: t('extractingItems') },
+    { id: 2, title: t('translatingLanguages') },
+    { id: 3, title: t('creatingMenu') },
   ];
 
   useEffect(() => {
@@ -34,18 +34,20 @@ export default function ProgressSteps({
       if (currentStep < 3) {
         const timeout = setTimeout(() => {
           setCurrentStep((prev) => prev + 1);
-        }, time??8000);
+        }, time ?? 8000);
         timeouts.push(timeout);
       } else if (currentStep === 3) {
         const resetTimeout = setTimeout(() => {
           setIsRunning(false);
-        }, time??6000);
+        }, time ?? 6000);
         timeouts.push(resetTimeout);
       }
     }
 
     return () => {
-      timeouts.forEach((timeout) => clearTimeout(timeout));
+      timeouts.forEach((timeout) => {
+        clearTimeout(timeout);
+      });
     };
   }, [isRunning, currentStep]);
 
@@ -62,9 +64,9 @@ export default function ProgressSteps({
           <div
             key={step.id}
             className={cn(
-              "flex items-center p-4 border rounded-lg transition-all duration-200",
-              currentStep === step.id ? "border-primary" : "border-border",
-              currentStep < step.id ? "opacity-50" : "opacity-100"
+              'flex items-center p-4 border rounded-lg transition-all duration-200',
+              currentStep === step.id ? 'border-primary' : 'border-border',
+              currentStep < step.id ? 'opacity-50' : 'opacity-100',
             )}
           >
             <div className="mr-4 w-6 h-6 flex items-center justify-center">
@@ -80,10 +82,10 @@ export default function ProgressSteps({
               <p className="font-medium">{step.title}</p>
               <p className="text-sm text-muted-foreground">
                 {currentStep > step.id
-                  ? t("completed")
+                  ? t('completed')
                   : currentStep === step.id
-                  ? t("inProgress")
-                  : t("waiting")}
+                    ? t('inProgress')
+                    : t('waiting')}
               </p>
             </div>
           </div>

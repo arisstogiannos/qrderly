@@ -1,32 +1,25 @@
-import React from "react";
+import { cacheLife, cacheTag } from 'next/cache';
+import { FiltersProvider } from '@/context/FiltersProvider';
+import { checkUserAuthorized } from '../../_actions/authorization';
+import { getCategoriesWithItemCount } from '../../_actions/categories';
+import CategoriesPage from '../_components/Categories/CategoriesPage';
 
-import { checkUserAuthorized } from "../../_actions/authorization";
-import { cache } from "@/lib/cache";
-import {
-  getCategories,
-  getCategoriesWithItemCount,
-} from "../../_actions/categories";
-import CategoriesPage from "../_components/Categories/CategoriesPage";
-import { FiltersProvider } from "@/context/FiltersProvider";
+async function getCategoriesWithItemCountCached(businessName: string) {
+  'use cache';
+  cacheTag(`categories${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
 
-export default async function page({
-  params,
-}: {
-  params: Promise<{ businessName: string }>;
-}) {
-  const businessName = (await params).businessName.replaceAll("-", " ");
-  const getCategoriesCached = cache(
-    getCategoriesWithItemCount,
-    [`categories with item count${businessName}`],
-    { tags: [`categories${businessName}`] }
-  );
+  return getCategoriesWithItemCount(businessName);
+}
 
-  const categories = await getCategoriesCached(businessName);
+export default async function page({ params }: { params: Promise<{ businessName: string }> }) {
+  const businessName = (await params).businessName.replaceAll('-', ' ');
+  const categories = await getCategoriesWithItemCountCached(businessName);
 
   const { business } = await checkUserAuthorized(businessName);
 
   return (
-    <FiltersProvider languages={business.menu?.languages??""}>
+    <FiltersProvider languages={business.menu?.languages ?? ''}>
       <CategoriesPage categories={categories} businessName={businessName} />
     </FiltersProvider>
   );

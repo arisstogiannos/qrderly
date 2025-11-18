@@ -1,4 +1,14 @@
-"use client";
+'use client';
+import { MoreVertical, TriangleAlert } from 'lucide-react';
+import { startTransition } from 'react';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Table,
   TableBody,
@@ -6,29 +16,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import React, { startTransition } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {  MoreVertical, TriangleAlert } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  deleteCategory,
-} from "../../../_actions/categories";
-import { Modal } from "../SharedComponents/Modal";
-import CategoriesForm from "./CategoriesForm";
-import DeleteModal from "../SharedComponents/DeleteModal";
-import type {
-  CategoryWithItemCount,
-  Translation,
-} from "@/types";
-import { toast } from "sonner";
-import { useFiltersContext } from "@/context/FiltersProvider";
-import TranslatedCategoryForm from "./TranslatedCategoryForm";
+} from '@/components/ui/table';
+import { useFiltersContext } from '@/context/FiltersProvider';
+import type { CategoryWithItemCount, Translation } from '@/types';
+import { deleteCategory } from '../../../_actions/categories';
+import DeleteModal from '../SharedComponents/DeleteModal';
+import { Modal } from '../SharedComponents/Modal';
+import CategoriesForm from './CategoriesForm';
+import TranslatedCategoryForm from './TranslatedCategoryForm';
 
 export default function CategoriesTable({
   categories,
@@ -39,16 +34,11 @@ export default function CategoriesTable({
   businessName: string;
   setOptimisticCategory: (action: {
     newItem: CategoryWithItemCount;
-    type: "delete" | "add" | "update";
+    type: 'delete' | 'add' | 'update';
   }) => void;
 }) {
   const { searchQuery, category, language, languages } = useFiltersContext();
-  const filteredCategories = filterItems(
-    categories,
-    searchQuery,
-    category,
-    language
-  );
+  const filteredCategories = filterItems(categories, searchQuery, category, language);
 
   // const { businessName } = useBusinessContext();
   // const {
@@ -65,22 +55,21 @@ export default function CategoriesTable({
   // });
 
   // if (isLoading) return <Loader />;
-  if (!categories || categories.length === 0)
-    return <div>No Categories Found</div>;
+  if (!categories || categories.length === 0) return <div>No Categories Found</div>;
 
   function handleDelete(item: CategoryWithItemCount) {
     startTransition(() => {
-      setOptimisticCategory({ newItem: item, type: "delete" });
+      setOptimisticCategory({ newItem: item, type: 'delete' });
     });
     deleteCategory(item.id, businessName).catch(() => {
-      toast("Failed to delete item, rolling back...", {
+      toast('Failed to delete item, rolling back...', {
         duration: 2000,
         icon: <TriangleAlert />,
-        position: "bottom-right",
+        position: 'bottom-right',
         style: {
-          backgroundColor: "red",
-          color: "darkred",
-          borderColor: "darkred",
+          backgroundColor: 'red',
+          color: 'darkred',
+          borderColor: 'darkred',
         },
       });
     });
@@ -109,16 +98,17 @@ export default function CategoriesTable({
           // ✅ Create a new object instead of mutating item
           const translatedItem = {
             ...item,
-            name: existingTranslation &&  existingTranslation.name ? existingTranslation.name : item.name,
+            name:
+              existingTranslation && existingTranslation.name
+                ? existingTranslation.name
+                : item.name,
           };
 
           return (
             <TableRow key={translatedItem.id}>
               <TableCell>{translatedItem.name}</TableCell>
               <TableCell>{translatedItem.description}</TableCell>
-              <TableCell>
-                {translatedItem._count ? translatedItem._count.menuItems : 0}
-              </TableCell>
+              <TableCell>{translatedItem._count ? translatedItem._count.menuItems : 0}</TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger className="cursor-pointer">
@@ -132,19 +122,15 @@ export default function CategoriesTable({
                     <DropdownMenuItem asChild>
                       <Modal
                         trigger={
-                          <Button
-                            variant={"ghost"}
-                            size={"sm"}
-                            className="w-full text-sm px-0"
-                          >
-                            Edit{" "}
+                          <Button variant={'ghost'} size={'sm'} className="w-full text-sm px-0">
+                            Edit{' '}
                           </Button>
                         }
                         title="Edit item"
                         subtitle=""
                         classNames="pt-5"
                       >
-                        {language === languages.split(",")[0] ? (
+                        {language === languages.split(',')[0] ? (
                           <CategoriesForm
                             setOptimisticCategory={setOptimisticCategory}
                             item={translatedItem}
@@ -179,11 +165,7 @@ export default function CategoriesTable({
   );
 }
 
-function filterSearch(
-  items: CategoryWithItemCount[],
-  query: string,
-  language: string
-) {
+function filterSearch(items: CategoryWithItemCount[], query: string, language: string) {
   return items.filter((item) => {
     // Parse translations if they exist
     const translations: Translation | null = item.translations
@@ -192,8 +174,7 @@ function filterSearch(
 
     // Get translated name and description (fallback to default if missing)
     const translatedName = translations?.[language]?.name || item.name;
-    const translatedDescription =
-      translations?.[language]?.description || item.description || "";
+    const translatedDescription = translations?.[language]?.description || item.description || '';
 
     // Check against translated values
     return (
@@ -207,10 +188,10 @@ function filterItems(
   items: CategoryWithItemCount[],
   query: string,
   category: string,
-  language: string
+  language: string,
 ) {
   let filteredItems = items;
-  if (query !== "") {
+  if (query !== '') {
     filteredItems = filterSearch(filteredItems, query, language);
   }
 

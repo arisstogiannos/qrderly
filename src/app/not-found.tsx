@@ -1,8 +1,13 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Search } from "lucide-react"
+import { ArrowLeft, Search } from 'lucide-react';
+import { cacheLife, cacheTag } from 'next/cache';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
-export default function NotFound() {
+export default async function NotFound() {
+  'use cache';
+  cacheTag('not-found');
+  cacheLife('weeks');
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 px-4 text-center">
       <div className="mx-auto max-w-md flex flex-col">
@@ -22,20 +27,23 @@ export default function NotFound() {
         <h2 className="mb-4 text-2xl font-bold text-slate-900">Page not found</h2>
 
         <p className="mb-8 text-slate-600">
-          Sorry, we couldn't find the page you're looking for. It might have been moved, deleted, or never existed.
+          Sorry, we couldn't find the page you're looking for. It might have been moved, deleted, or
+          never existed.
         </p>
 
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mx-auto">
-          <Button
-            asChild
-          >
+          <Button asChild>
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Home
             </Link>
           </Button>
 
-          <Button asChild variant="outline" className="border-slate-300 text-slate-700 hover:bg-slate-100">
+          <Button
+            asChild
+            variant="outline"
+            className="border-slate-300 text-slate-700 hover:bg-slate-100"
+          >
             <Link href="/FAQ-contact">Contact Support</Link>
           </Button>
         </div>
@@ -45,5 +53,5 @@ export default function NotFound() {
         <p>© {new Date().getFullYear()} Scanby. All rights reserved.</p>
       </div>
     </div>
-  )
+  );
 }

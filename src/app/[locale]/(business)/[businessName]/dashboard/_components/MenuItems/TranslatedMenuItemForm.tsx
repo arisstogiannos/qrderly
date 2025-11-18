@@ -1,40 +1,33 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import React, {
-  type FormEvent,
-  startTransition,
-  useActionState,
-  useEffect,
-} from "react";
-import { updateItemTranslation } from "../../../_actions/menu-items";
-import { ErrorMessage } from "@/components/Messages";
-import Loader from "@/components/Loader";
-import type { MenuItem } from "@prisma/client";
-import { useBusinessContext } from "@/context/BusinessProvider";
-
-import { useModalContext } from "@/context/ModalProvider";
-import { getQueryClient } from "../../../../../../../../react-query";
-
-import type {  MenuItemWithCategory } from "@/types";
+'use client';
+import type { MenuItem } from '@prisma/client';
+import { type FormEvent, startTransition, useActionState, useEffect } from 'react';
+import Loader from '@/components/Loader';
+import { ErrorMessage } from '@/components/Messages';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useBusinessContext } from '@/context/BusinessProvider';
+import { useModalContext } from '@/context/ModalProvider';
+import type { MenuItemWithCategory } from '@/types';
+import { getQueryClient } from '../../../../../../../../react-query';
+import { updateItemTranslation } from '../../../_actions/menu-items';
 
 export default function TranslatedMenuItemForm({
   item,
   setOptimisticItem,
-  language
+  language,
 }: {
   item: MenuItem;
   setOptimisticItem: (action: {
     newItem: MenuItemWithCategory;
-    type: "delete" | "add" | "update";
+    type: 'delete' | 'add' | 'update';
   }) => void;
-  language:string
+  language: string;
 }) {
   const { businessName } = useBusinessContext();
   const [state, action, isPending] = useActionState(
     updateItemTranslation.bind(null, businessName),
-    null
+    null,
   );
   const { setOpen } = useModalContext();
 
@@ -42,7 +35,7 @@ export default function TranslatedMenuItemForm({
     if (state?.success) {
       const queryClient = getQueryClient();
       queryClient.invalidateQueries({
-        queryKey: ["menu-items"],
+        queryKey: ['menu-items'],
       });
     } else {
       setOpen(true);
@@ -54,22 +47,22 @@ export default function TranslatedMenuItemForm({
     const data = Object.fromEntries(formData);
     const newItem: MenuItemWithCategory = {
       id: item.id,
-      name: (data.name as string) ?? "",
-      description: (data.description as string) || null, 
+      name: (data.name as string) ?? '',
+      description: (data.description as string) || null,
       priceInCents: Number(data.priceInCents) || 0,
       categoryId: data.categoryId as string,
       menuId: data.menuId as string,
-      isAvailable: true, 
+      isAvailable: true,
       createdAt: new Date(),
       updatedAt: new Date(),
-      category: { name: data.category as string }, 
-      preferences: (data.preferences as string) || null, 
-      translations: (data.translations as string) || null, 
-      imagePath: "pending", 
-      stock: null, 
+      category: { name: data.category as string },
+      preferences: (data.preferences as string) || null,
+      translations: (data.translations as string) || null,
+      imagePath: 'pending',
+      stock: null,
     };
     startTransition(() => {
-      setOptimisticItem({ newItem, type:  "update" });
+      setOptimisticItem({ newItem, type: 'update' });
     });
     setOpen(false);
   }
@@ -94,13 +87,7 @@ export default function TranslatedMenuItemForm({
           placeholder="Enter the menu items name"
         />
         {state?.errors?.name?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
+          return <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />;
         })}
       </div>
       <div className="space-y-2">
@@ -108,9 +95,7 @@ export default function TranslatedMenuItemForm({
         <Input
           name="description"
           id="description"
-          defaultValue={
-            (item?.description || state?.data?.description) ?? undefined
-          }
+          defaultValue={(item?.description || state?.data?.description) ?? undefined}
           required
           minLength={1}
           maxLength={100}
@@ -118,13 +103,7 @@ export default function TranslatedMenuItemForm({
         />
 
         {state?.errors?.description?.map((er) => {
-          return (
-            <ErrorMessage
-              key={er}
-              classNames="text-sm bg-transparent p-0 "
-              msg={er}
-            />
-          );
+          return <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />;
         })}
       </div>
 
@@ -132,7 +111,7 @@ export default function TranslatedMenuItemForm({
       <input type="text" name="language" defaultValue={language} hidden />
       <input type="text" name="translations" defaultValue={item.translations ?? undefined} hidden />
       <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? <Loader /> : "Save"}
+        {isPending ? <Loader /> : 'Save'}
       </Button>
       {state?.error ? <ErrorMessage msg={state.error} /> : null}
     </form>

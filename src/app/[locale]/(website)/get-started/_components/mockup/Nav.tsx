@@ -1,5 +1,4 @@
-import { MenuIcon, SearchIcon, ShoppingBag } from "lucide-react";
-import React from "react";
+import { SearchIcon, ShoppingBag } from 'lucide-react';
 
 export default function Nav() {
   return (
@@ -8,14 +7,12 @@ export default function Nav() {
         <p className=" text-base  font-bold uppercase text-primary-mockup">Your Business</p>
         <div className="flex items-center gap-x-1">
           <div className="relative rounded-full bg-foreground-mockup p-2 text-text-mockup">
-            <ShoppingBag size={"1.5em"} />
+            <ShoppingBag size={'1.5em'} />
             <div className="absolute left-0 top-3/4 size-5 place-content-center  rounded-full bg-primary-mockup text-center text-xs">
               1
             </div>
           </div>
-          <div className=" rounded-full bg-foreground-mockup p-2 text-text-mockup">
-            EN
-          </div>
+          <div className=" rounded-full bg-foreground-mockup p-2 text-text-mockup">EN</div>
         </div>
       </div>
 

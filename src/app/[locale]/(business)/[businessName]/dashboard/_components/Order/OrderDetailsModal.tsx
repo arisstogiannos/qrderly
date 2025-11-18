@@ -1,3 +1,4 @@
+import { useFormatter, useTranslations } from 'next-intl';
 import {
   Table,
   TableBody,
@@ -5,21 +6,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import type { OrderWithItems } from "@/types";
-import { useFormatter } from "next-intl";
-import { useTranslations } from "next-intl";
-import React from "react";
+} from '@/components/ui/table';
+import type { OrderWithItems } from '@/types';
 
-export default function OrderDetailsModal({
-  order,
-}: {
-  order?: OrderWithItems;
-}) {
-  const t = useTranslations("orderDetailsModal");
+export default function OrderDetailsModal({ order }: { order?: OrderWithItems }) {
+  const t = useTranslations('orderDetailsModal');
 
   if (!order) {
-    return <div>{t("noOrderSelected")}</div>;
+    return <div>{t('noOrderSelected')}</div>;
   }
   const formatter = useFormatter();
 
@@ -28,13 +22,13 @@ export default function OrderDetailsModal({
       <div className="flex flex-col gap-10 justify-between">
         <div className="flex gap-16">
           <p>
-            {t("table")}: {order.table}
+            {t('table')}: {order.table}
           </p>
           <p>
-            {t("date")}:{" "}
+            {t('date')}:{' '}
             {formatter.dateTime(new Date(order.createdAt), {
-              dateStyle: "medium",
-              timeStyle: "short",
+              dateStyle: 'medium',
+              timeStyle: 'short',
             })}
           </p>
         </div>
@@ -46,14 +40,14 @@ export default function OrderDetailsModal({
 }
 
 function ItemsTable({ order }: { order: OrderWithItems }) {
-  const t = useTranslations("orderDetailsModal");
+  const t = useTranslations('orderDetailsModal');
 
   return (
     <Table className="text-base  grow w-fit  overflow-x-visible overflow-y-hidden">
       <TableHeader className="text-lg">
         <TableRow className="lg:lg:hover:bg-transparent">
-          <TableHead>{t("product")}</TableHead>
-          <TableHead>{t("preferences")}</TableHead>
+          <TableHead>{t('product')}</TableHead>
+          <TableHead>{t('preferences')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -61,7 +55,7 @@ function ItemsTable({ order }: { order: OrderWithItems }) {
           <TableRow key={item.id}>
             <TableCell>{item.menuItem.name}</TableCell>
             <TableCell className="flex gap-5">
-              {item.preferences.split(", ").map((pr) => (
+              {item.preferences.split(', ').map((pr) => (
                 <span key={pr} className="p-2 bg-secondary rounded-lg">
                   {pr}
                 </span>

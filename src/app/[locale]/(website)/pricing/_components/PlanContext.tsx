@@ -1,17 +1,17 @@
-"use client";
-import { createContext, useContext, useState, type ReactNode } from "react";
+'use client';
+import { createContext, type ReactNode, useContext, useState } from 'react';
 
 type PlanContextType = {
-  selectedPlanType: "yearly" | "monthly";
-  setSelectedPlanType: (type: "yearly" | "monthly") => void;
+  selectedPlanType: 'yearly' | 'monthly';
+  setSelectedPlanType: (type: 'yearly' | 'monthly') => void;
 };
 
-type selectedPlanType="yearly" | "monthly"
+type selectedPlanType = 'yearly' | 'monthly';
 
 const PlanContext = createContext<PlanContextType | undefined>(undefined);
 
 export const PlanProvider = ({ children }: { children: ReactNode }) => {
-  const [selectedPlanType, setSelectedPlanType] = useState<selectedPlanType>("yearly");
+  const [selectedPlanType, setSelectedPlanType] = useState<selectedPlanType>('yearly');
 
   return (
     <PlanContext.Provider value={{ selectedPlanType, setSelectedPlanType }}>
@@ -23,7 +23,7 @@ export const PlanProvider = ({ children }: { children: ReactNode }) => {
 export const usePlanContext = () => {
   const context = useContext(PlanContext);
   if (!context) {
-    throw new Error("usePlanContext must be used within a PlanProvider");
+    throw new Error('usePlanContext must be used within a PlanProvider');
   }
   return context;
 };

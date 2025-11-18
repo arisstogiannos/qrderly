@@ -1,79 +1,70 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  getTotalOrders,
-  getTotalRevenue,
-} from "../../_actions/stats";
-import DisplayPrice from "@/components/DisplayPrice";
-import { cache } from "@/lib/cache";
-import type { BusinessExtended } from "@/types";
-import { getTranslations } from "next-intl/server";
+import { cacheLife, cacheTag } from 'next/cache';
+import { getTranslations } from 'next-intl/server';
+import DisplayPrice from '@/components/DisplayPrice';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type { BusinessExtended } from '@/types';
+import { getTotalOrders, getTotalRevenue } from '../../_actions/stats';
 
 interface StatsCardsProps {
   isOrderingMenu: boolean;
   business: BusinessExtended;
 }
 
-export async function StatsCards({
-  business,
-}: StatsCardsProps) {
-  const getTotalOrdersCache = cache(
-    getTotalOrders,
-    [`orders-stats${business.name}`],
-    {
-      tags: [`orders${business.name}`],
-      revalidate: 3600,
-    }
-  );
+export async function StatsCards({ business }: StatsCardsProps) {
+  async function getTotalOrdersCached() {
+    'use cache';
+    cacheTag(`orders${business.name}`);
+    cacheLife({ revalidate: 60 * 60 });
 
-  const getTotalRevenueCache = cache(
-    getTotalRevenue,
-    [`totalRevenue${business.name}`],
-    {
-      tags: [`orders${business.name}`],
-      revalidate: 3600,
-    }
-  );
+    return getTotalOrders(business.id);
+  }
+
+  async function getTotalRevenueCached() {
+    'use cache';
+    cacheTag(`orders${business.name}`);
+    cacheLife({ revalidate: 60 * 60 });
+
+    return getTotalRevenue(business.id);
+  }
   const totalScans = business.menu?.noScans;
 
   const [totalOrders, totalRevenue] = await Promise.all([
-    getTotalOrdersCache(business.id),
-    getTotalRevenueCache(business.id),
+    getTotalOrdersCached(),
+    getTotalRevenueCached(),
   ]);
 
-  const t = await getTranslations("dashboard")
+  const t = await getTranslations('dashboard');
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium">{t("qrCodeScans")}</CardTitle>
+          <CardTitle className="text-sm font-medium">{t('qrCodeScans')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{totalScans}</div>
         </CardContent>
       </Card>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">{t("totalOrders")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalOrders}</div>
-          </CardContent>
-        </Card>
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium">{t('totalOrders')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">{totalOrders}</div>
+        </CardContent>
+      </Card>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">{t("totalSales")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              <DisplayPrice price={totalRevenue} />
-            </div>
-          </CardContent>
-        </Card>
-
-   
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium">{t('totalSales')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">
+            <DisplayPrice price={totalRevenue} />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
@@ -82,9 +73,7 @@ interface StatsCardsPropsSkeleton {
   isOrderingMenu: boolean;
 }
 
-export function StatsCardsLoadingSkeleton({
-  isOrderingMenu,
-}: StatsCardsPropsSkeleton) {
+export function StatsCardsLoadingSkeleton({ isOrderingMenu }: StatsCardsPropsSkeleton) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <Card>
@@ -110,9 +99,7 @@ export function StatsCardsLoadingSkeleton({
       {isOrderingMenu && (
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">
-              Average Order Value
-            </CardTitle>
+            <CardTitle className="text-sm font-medium">Average Order Value</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="bg-accent animate-pulse h-7 w-20"></div>
@@ -129,9 +116,7 @@ export function StatsCardsLoadingSkeleton({
             </CardHeader>
             <CardContent>
               <div className="bg-accent animate-pulse h-7 w-20"></div>
-              <p className="text-xs text-muted-foreground">
-                +3 from last month
-              </p>
+              <p className="text-xs text-muted-foreground">+3 from last month</p>
             </CardContent>
           </Card>
         </>

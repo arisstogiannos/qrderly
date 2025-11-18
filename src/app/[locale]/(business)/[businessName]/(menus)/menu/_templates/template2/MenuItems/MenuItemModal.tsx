@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import type { ReactNode } from "react";
-import { useCardModalContext } from "@/context/CardModalProvider";
-import type { MenuItemRequired } from "@/types";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import type { ReactNode } from 'react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Drawer, DrawerContent } from '@/components/ui/drawer';
+import { useCardModalContext } from '@/context/CardModalProvider';
+import { useIsMobile } from '@/hooks/use-mobile';
+import type { MenuItemRequired } from '@/types';
 
 export default function MenuItemModal({
   children,

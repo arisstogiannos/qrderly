@@ -1,9 +1,7 @@
-"use client";
-import { Label } from "@/components/ui/label";
-import React from "react";
-import ColorPicker from "./ColorPicker";
-import type { ReadonlyURLSearchParams } from "next/navigation";
-import updateSearchParams from "@/lib/updateSearchParams";
+'use client';
+import type { ReadonlyURLSearchParams } from 'next/navigation';
+import { Label } from '@/components/ui/label';
+import updateSearchParams from '@/lib/updateSearchParams';
 
 export default function RadioGroup({
   name,

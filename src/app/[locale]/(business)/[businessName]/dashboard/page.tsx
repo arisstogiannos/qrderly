@@ -1,49 +1,37 @@
-import React, { Suspense } from "react";
-import { checkUserAuthorized } from "../_actions/authorization";
-import Chart from "./_components/Dashboard/Chart";
-import { getAllOrders } from "../_actions/orders";
-import { cache } from "@/lib/cache";
-import { getTranslations } from "next-intl/server";
-import {
-  StatsCards,
-  StatsCardsLoadingSkeleton,
-} from "./_components/Dashboard/stats-cards";
-import { BusinessInfoCard } from "./_components/Dashboard/business-info-card";
-import { QrCodeCard } from "./_components/Dashboard/qr-code-card";
-import {
-  AnalyticsCard,
-  AnalyticsCardSkeleton,
-} from "./_components/Dashboard/analytics-card";
-import { SubscriptionStatusCard } from "./_components/Dashboard/subscription-status-card";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { plandata } from "@/data";
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-export default async function page({
-  params,
-}: {
-  params: Promise<{ businessName: string }>;
-}) {
-  const businessName = (await params).businessName.replaceAll("-", " ");
-  const { business } = await checkUserAuthorized(businessName);
-  const isOrderingMenu = business.product !== "QR_MENU";
+import { ArrowUpRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
+import { Button } from '@/components/ui/button';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { plandata } from '@/data';
+import { Link } from '@/i18n/navigation';
+import { checkUserAuthorized } from '../_actions/authorization';
+import { AnalyticsCard, AnalyticsCardSkeleton } from './_components/Dashboard/analytics-card';
+import { BusinessInfoCard } from './_components/Dashboard/business-info-card';
+import { QrCodeCard } from './_components/Dashboard/qr-code-card';
+import { StatsCards, StatsCardsLoadingSkeleton } from './_components/Dashboard/stats-cards';
+import { SubscriptionStatusCard } from './_components/Dashboard/subscription-status-card';
 
-  const t = await getTranslations("dashboard");
+export default async function page({ params }: { params: Promise<{ businessName: string }> }) {
+  const businessName = (await params).businessName.replaceAll('-', ' ');
+  const { business } = await checkUserAuthorized(businessName);
+  const isOrderingMenu = business.product !== 'QR_MENU';
+
+  const t = await getTranslations('dashboard');
 
   const plan = plandata.find((plan) => plan.product === business.product);
 
   return (
     <div className="flex flex-1 flex-col">
       <header className="flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:px-6">
-        <h1 className="font-medium text-2xl">{t("title")}</h1>
+        <h1 className="font-medium text-2xl">{t('title')}</h1>
         <SidebarTrigger className="lg:absolute top-3 left-2" />
         <Button className="mt-2 hidden lg:flex" asChild>
           <Link
             //@ts-expect-error
-            href={`/${business.name.replaceAll(" ", "-")}${business.menu?.type === "QR_MENU" ? "/menu" : "/smart-menu"}`}
+            href={`/${business.name.replaceAll(' ', '-')}${business.menu?.type === 'QR_MENU' ? '/menu' : '/smart-menu'}`}
           >
-            {t("visitLiveMenu")} <ArrowUpRight />
+            {t('visitLiveMenu')} <ArrowUpRight />
           </Link>
         </Button>
       </header>
@@ -52,30 +40,23 @@ export default async function page({
           <Button className="mt-2 flex lg:hidden" asChild>
             <Link
               //@ts-expect-error
-              href={`/${business.name.replaceAll(" ", "-")}${business.menu?.type === "QR_MENU" ? "/menu" : "/smart-menu"}`}
+              href={`/${business.name.replaceAll(' ', '-')}${business.menu?.type === 'QR_MENU' ? '/menu' : '/smart-menu'}`}
             >
-              {t("visitLiveMenu")} <ArrowUpRight />
+              {t('visitLiveMenu')} <ArrowUpRight />
             </Link>
           </Button>
           {/* Toggle for demo purposes */}
 
           {/* Quick stats */}
           {isOrderingMenu && (
-            <Suspense
-              fallback={
-                <StatsCardsLoadingSkeleton isOrderingMenu={isOrderingMenu} />
-              }
-            >
+            <Suspense fallback={<StatsCardsLoadingSkeleton isOrderingMenu={isOrderingMenu} />}>
               <StatsCards business={business} isOrderingMenu={isOrderingMenu} />
             </Suspense>
           )}
 
           {/* Analytics section */}
           <Suspense fallback={<AnalyticsCardSkeleton />}>
-            <AnalyticsCard
-              isOrderingMenu={isOrderingMenu}
-              business={business}
-            />
+            <AnalyticsCard isOrderingMenu={isOrderingMenu} business={business} />
           </Suspense>
 
           {/* Business and QR section */}
@@ -96,13 +77,10 @@ export default async function page({
           {/* Subscription status */}
           <SubscriptionStatusCard
             {...{
-              billing: business.subscription?.billing ?? "FREETRIAL",
+              billing: business.subscription?.billing ?? 'FREETRIAL',
               price:
-                plan?.billing[
-                  business.subscription?.billing === "MONTHLY"
-                    ? "monthly"
-                    : "yearly"
-                ].price ?? "",
+                plan?.billing[business.subscription?.billing === 'MONTHLY' ? 'monthly' : 'yearly']
+                  .price ?? '',
               title: business.product,
               scans: business.menu?.noScans ?? 0,
             }}
@@ -113,19 +91,19 @@ export default async function page({
   );
 }
 
-async function RevenueChart({ businessName }: { businessName: string }) {
-  const getAllOrdersCache = cache(getAllOrders, ["orders"], {
-    tags: ["orders"],
-    revalidate: 3600,
-  });
+// async function RevenueChart({ businessName }: { businessName: string }) {
+//   const getAllOrdersCache = cache(getAllOrders, ['orders'], {
+//     tags: ['orders'],
+//     revalidate: 3600,
+//   });
 
-  const orders = await getAllOrdersCache(businessName);
-  const chartData = orders.map((order) => ({
-    createdAt: order.createdAt,
-    pricePaidInCents: order.price,
-  }));
-  return <Chart chartData={chartData} />;
-}
+//   const orders = await getAllOrdersCache(businessName);
+//   const chartData = orders.map((order) => ({
+//     createdAt: order.createdAt,
+//     pricePaidInCents: order.price,
+//   }));
+//   return <Chart chartData={chartData} />;
+// }
 // async function ScansChart({ scans }: { scans: number[] }) {
 //   const getAllOrdersCache = cache(getAllOrders, ["orders"], {
 //     tags: ["orders"],

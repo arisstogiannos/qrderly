@@ -1,8 +1,8 @@
-import { AddLanguageComboBox } from "@/components/ComboBox";
-import type { Language } from "@/types";
-import { XCircle } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { XCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { AddLanguageComboBox } from '@/components/ComboBox';
+import type { Language } from '@/types';
 
 export default function LanguageInput({
   languages,
@@ -11,19 +11,20 @@ export default function LanguageInput({
   languages: readonly Language[];
   existingLanguages?: string;
 }) {
-  const existingLanguagesArray = existingLanguages?.split(",");
+  const existingLanguagesArray = existingLanguages?.split(',');
   const defaultLanguage = existingLanguagesArray?.reverse().pop();
   const formatedexistingLanguagesArray = languages.filter((l) =>
-    existingLanguagesArray?.some((el) => el === l.code)
+    existingLanguagesArray?.some((el) => el === l.code),
   );
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>(
-    formatedexistingLanguagesArray ?? []
+    formatedexistingLanguagesArray ?? [],
   );
-  const [selectedLanguageCodesSerialized, setSelectedLanguageCodesSerialized] =
-    useState<string | undefined>(undefined);
+  const [selectedLanguageCodesSerialized, setSelectedLanguageCodesSerialized] = useState<
+    string | undefined
+  >(undefined);
 
   useEffect(() => {
-    const serialized = selectedLanguages.map((l) => l.code).join(",");
+    const serialized = selectedLanguages.map((l) => l.code).join(',');
     setSelectedLanguageCodesSerialized(serialized);
   }, [selectedLanguages]);
 
@@ -34,7 +35,7 @@ export default function LanguageInput({
       if (selectedLanguages.length < 5) {
         setSelectedLanguages((prev) => [...prev, newLanguage]);
       } else {
-        toast.error("You can only add up to 5 languages");
+        toast.error('You can only add up to 5 languages');
       }
     } else {
       setSelectedLanguages((prev) => prev.filter((l) => l.name !== name));

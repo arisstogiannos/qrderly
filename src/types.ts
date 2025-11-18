@@ -9,9 +9,9 @@ import type {
   QR,
   Subscription,
   UserRole,
-} from "@prisma/client";
-import type { User } from "next-auth";
-import type { ReactNode } from "react";
+} from '@prisma/client';
+import type { User } from 'next-auth';
+import type { ReactNode } from 'react';
 
 export type ProductType = {
   title: string;
@@ -25,19 +25,16 @@ export type ProductType = {
 
 export type Option = {
   name: string;
-  type: "single" | "multiple";
+  type: 'single' | 'multiple';
   values: { name: string; price: string }[];
 };
 
-export type ProductURL =
-  | "qr-menu"
-  | "smart-ordering-qr-menu"
-  | "self-service-smart-menu";
+export type ProductURL = 'qr-menu' | 'smart-ordering-qr-menu' | 'self-service-smart-menu';
 
 export type Cart = Order & {
   cartItems: CartItem[];
 };
-export type OrderWithItems = Omit<Order, "businessId"> & {
+export type OrderWithItems = Omit<Order, 'businessId'> & {
   createdAt: Date;
   orderItems: OrderItemWithMenuItem[];
 };
@@ -55,7 +52,7 @@ export type CartItem = {
 
 export type MenuItemRequired = Omit<
   MenuItem,
-  "stock" | "isAvailable" | "createdAt" | "categoryId" | "menuId" | "updatedAt"
+  'stock' | 'isAvailable' | 'createdAt' | 'categoryId' | 'menuId' | 'updatedAt'
 >;
 
 export type FeatureType = {
@@ -93,7 +90,9 @@ export type MenuItemWithCategory = MenuItem & {
 export type Translation = Record<
   string,
   {
-    name: string | null; description: string | undefined | null; preferences: { name: string; values: string[] }[] | null;
+    name: string | null;
+    description: string | undefined | null;
+    preferences: { name: string; values: string[] }[] | null;
   }
 >;
 export type TranslationAI = {

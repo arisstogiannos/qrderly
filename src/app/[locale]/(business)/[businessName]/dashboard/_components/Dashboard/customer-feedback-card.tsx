@@ -1,7 +1,14 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 export function CustomerFeedbackCard() {
   return (
@@ -15,7 +22,6 @@ export function CustomerFeedbackCard() {
           <div>
             <div className="mb-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
-      
                 <span className="text-sm font-medium">Sarah M.</span>
               </div>
               <div className="flex items-center">
@@ -24,7 +30,7 @@ export function CustomerFeedbackCard() {
                     key={star}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    fill={star <= 5 ? "currentColor" : "none"}
+                    fill={star <= 5 ? 'currentColor' : 'none'}
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
@@ -37,14 +43,14 @@ export function CustomerFeedbackCard() {
               </div>
             </div>
             <p className="text-sm">
-              "The digital menu was so easy to use! I loved being able to see photos of all the dishes."
+              "The digital menu was so easy to use! I loved being able to see photos of all the
+              dishes."
             </p>
             <p className="mt-1 text-xs text-muted-foreground">April 12, 2025</p>
           </div>
           <div>
             <div className="mb-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
-            
                 <span className="text-sm font-medium">James T.</span>
               </div>
               <div className="flex items-center">
@@ -53,7 +59,7 @@ export function CustomerFeedbackCard() {
                     key={star}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    fill={star <= 4 ? "currentColor" : "none"}
+                    fill={star <= 4 ? 'currentColor' : 'none'}
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
@@ -65,7 +71,9 @@ export function CustomerFeedbackCard() {
                 ))}
               </div>
             </div>
-            <p className="text-sm">"Ordering was quick and efficient. The QR code system is brilliant!"</p>
+            <p className="text-sm">
+              "Ordering was quick and efficient. The QR code system is brilliant!"
+            </p>
             <p className="mt-1 text-xs text-muted-foreground">April 10, 2025</p>
           </div>
         </div>
@@ -76,5 +84,5 @@ export function CustomerFeedbackCard() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

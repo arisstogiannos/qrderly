@@ -1,30 +1,23 @@
-"use client";
-import { MinusIcon, PlusIcon } from "lucide-react";
-import React from "react";
-import { useCartContext } from "@/context/CartContext";
-import CloudImage from "@/components/CloudImage";
-import type{ CartItem as CartItemType, Translation } from "@/types";
-import { Button } from "@/components/ui/button";
-import { useSearchParams } from "next/navigation";
-import DisplayPrice from "@/components/DisplayPrice";
+'use client';
+import { MinusIcon, PlusIcon } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import CloudImage from '@/components/CloudImage';
+import DisplayPrice from '@/components/DisplayPrice';
+import { Button } from '@/components/ui/button';
+import { useCartContext } from '@/context/CartContext';
+import type { CartItem as CartItemType, Translation } from '@/types';
 
-export function CartItem({
-  item,
-  displayImage,
-}: {
-  item: CartItemType;
-  displayImage: boolean;
-}) {
+export function CartItem({ item, displayImage }: { item: CartItemType; displayImage: boolean }) {
   const { menuItem, quantity, id, price } = item;
   const context = useCartContext();
   const increaseContextItemQuantity = context?.increaseItemQuantity;
   const decreaseContextItemQuantity = context?.decreaseItemQuantity;
   const searchParams = useSearchParams();
-  const lang = searchParams.get("l") ?? 0;
+  const lang = searchParams.get('l') ?? 0;
   const translationsAsJson: Translation | null = item.menuItem.translations
     ? JSON.parse(item.menuItem.translations)
     : null;
-  const existingTranslation = !!translationsAsJson?.[lang] ;
+  const existingTranslation = !!translationsAsJson?.[lang];
 
   function handleIncrease() {
     increaseContextItemQuantity(id, quantity);
@@ -35,10 +28,10 @@ export function CartItem({
 
   return (
     <div className="flex w-full gap-x-5 rounded-lg bg-secondary p-3 h-[120px] duration-1000">
-      {(displayImage && menuItem.imagePath) && (
+      {displayImage && menuItem.imagePath && (
         <div className="relative size-20 overflow-hidden rounded-lg object-fill md:size-28">
           <CloudImage
-            src={menuItem.imagePath }
+            src={menuItem.imagePath}
             fill
             className="absolute inset-0 object-cover"
             alt={menuItem.name}
@@ -47,9 +40,7 @@ export function CartItem({
       )}
       <div className="flex  flex-col gap-y-0">
         <span className="capitalize">
-          {existingTranslation
-            ? translationsAsJson[lang].name
-            : item.menuItem.name}
+          {existingTranslation ? translationsAsJson[lang].name : item.menuItem.name}
         </span>
         <span className="line-clamp-2 text-sm text-muted-foreground first-letter:uppercase md:text-base">
           {item.preferences}

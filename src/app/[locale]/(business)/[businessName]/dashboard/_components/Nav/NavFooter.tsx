@@ -1,44 +1,39 @@
-"use client";
+'use client';
+import { ChevronsUpDown, CreditCard, Eye, LogOut, Trash, TriangleAlert, User2 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { signOutDashboard } from '@/app/[locale]/(auth)/_actions/login';
+import I18nLanguageSelect from '@/components/I18nLanguageSelect';
+import { Button } from '@/components/ui/button';
 import {
-  ChevronsUpDown,
-  CreditCard,
-  Eye,
-  LogOut,
-  Trash,
-  TriangleAlert,
-  User2,
-} from "lucide-react";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import {
-  signOutDashboard,
-} from "@/app/[locale]/(auth)/_actions/login";
-import type { BusinessExtended, ExtendedUser } from "@/types";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
-import I18nLanguageSelect from "@/components/I18nLanguageSelect";
-import UpgradeSubModal from "../SharedComponents/UpgradeSubModal";
-import { useEffect, useState } from "react";
-import { encryptTable } from "@/lib/table-crypt";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { deleteBusiness } from "../../_actions/deleteBusiness";
-import { Link  as IntlLink} from "@/i18n/navigation";
-import Link from "next/link";
-
+} from '@/components/ui/sidebar';
+import { Link as IntlLink } from '@/i18n/navigation';
+import { encryptTable } from '@/lib/table-crypt';
+import type { BusinessExtended, ExtendedUser } from '@/types';
+import { deleteBusiness } from '../../_actions/deleteBusiness';
+import UpgradeSubModal from '../SharedComponents/UpgradeSubModal';
 
 export function NavFooter({
   user,
@@ -48,10 +43,10 @@ export function NavFooter({
   activeBusiness: BusinessExtended;
 }) {
   const { isMobile } = useSidebar();
-  const [adminEncryptedTableId, setAdminEncryptedTableId] = useState("");
-  const [isDeletingBusiness, setIsDeletingBusiness] = useState(false)
-  const [isDeletingAccount, setIsDeletingAccount] = useState(false)
-  const t = useTranslations("admin.navbar");
+  const [adminEncryptedTableId, setAdminEncryptedTableId] = useState('');
+  const [isDeletingBusiness, setIsDeletingBusiness] = useState(false);
+  // const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+  const t = useTranslations('admin.navbar');
 
   useEffect(() => {
     async function encryptAdmin() {
@@ -81,15 +76,13 @@ export function NavFooter({
           asChild
         >
           <Link
-            href={
-              `/${activeBusiness.name.replaceAll(" ", "-")}${activeBusiness.menu?.type === "QR_MENU" ? "/menu" : "/smart-menu"}?table=${adminEncryptedTableId}`
-            }
+            href={`/${activeBusiness.name.replaceAll(' ', '-')}${activeBusiness.menu?.type === 'QR_MENU' ? '/menu' : '/smart-menu'}?table=${adminEncryptedTableId}`}
             target="_blank"
           >
             <span className="size-8 rounded-lg bg-foreground text-background flex-center">
               <Eye className="size-6" />
             </span>
-            <span className="truncate">{t("Visit Live Menu")}</span>
+            <span className="truncate">{t('Visit Live Menu')}</span>
           </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
@@ -124,11 +117,11 @@ export function NavFooter({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
-            {activeBusiness.subscription?.billing === "FREETRIAL" ? (
+            {activeBusiness.subscription?.billing === 'FREETRIAL' ? (
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                   <UpgradeSubModal business={activeBusiness} />
@@ -144,50 +137,72 @@ export function NavFooter({
                   href={`https://billing.stripe.com/p/login/14kbLiaQugGt4bm4gg?prefilled_email=${user.email}`}
                 >
                   <CreditCard />
-                  {t("Subscriptions") }
+                  {t('Subscriptions')}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <IntlLink href={"/user-settings"}>
-                < User2/>
-               {t("Settings")}
+                <IntlLink href={'/user-settings'}>
+                  <User2 />
+                  {t('Settings')}
                 </IntlLink>
               </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive" onClick={()=>setIsDeletingBusiness(true)}>
+              <DropdownMenuItem variant="destructive" onClick={() => setIsDeletingBusiness(true)}>
                 <Trash />
-               {`${t("delete")} ${activeBusiness.name}`}
+                {`${t('delete')} ${activeBusiness.name}`}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={signOutDashboard}>
               <LogOut />
-              {t("Logout")}
+              {t('Logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
-     
-      <DeleteBusinessModal isOpen={isDeletingBusiness} setIsOpen={setIsDeletingBusiness} businessId={activeBusiness.id} />
+
+      <DeleteBusinessModal
+        isOpen={isDeletingBusiness}
+        setIsOpen={setIsDeletingBusiness}
+        businessId={activeBusiness.id}
+      />
     </SidebarMenu>
   );
 }
 
-
-
-function DeleteBusinessModal({isOpen, setIsOpen, businessId}:{isOpen:boolean, setIsOpen: (isOpen:boolean)=>void, businessId:string }){
-  const [isDeleting, setIsDeleting] = useState(false)
-  const t = useTranslations("admin.navbar")
-  return <Dialog open={isOpen} onOpenChange={setIsOpen}>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle className="flex items-center gap-2 "><TriangleAlert className="size-5" /> {t("deleteBusiness")}</DialogTitle>
-        <DialogDescription>
-          {t("deleteBusinessDesc")}
-        </DialogDescription>
-      </DialogHeader>
-      <DialogFooter>
-        <Button variant="destructive" autoFocus={false} disabled={isDeleting} onClick={()=>{setIsDeleting(true); deleteBusiness(businessId)} }>{t("deleteBusiness")}</Button>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>
+function DeleteBusinessModal({
+  isOpen,
+  setIsOpen,
+  businessId,
+}: {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  businessId: string;
+}) {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const t = useTranslations('admin.navbar');
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 ">
+            <TriangleAlert className="size-5" /> {t('deleteBusiness')}
+          </DialogTitle>
+          <DialogDescription>{t('deleteBusinessDesc')}</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button
+            variant="destructive"
+            autoFocus={false}
+            disabled={isDeleting}
+            onClick={() => {
+              setIsDeleting(true);
+              deleteBusiness(businessId);
+            }}
+          >
+            {t('deleteBusiness')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
 }

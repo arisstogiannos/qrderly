@@ -1,16 +1,12 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { Toaster } from "sonner";
-import Banner from "@/components/Banner";
-import ScrollToTop from "@/components/ScrollToTop";
-import { getSale } from "../banner";
-import Analytics from "@/components/Analytics";
+import { Toaster } from 'sonner';
+import Analytics from '@/components/Analytics';
+import Banner from '@/components/Banner';
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
+import ScrollToTop from '@/components/ScrollToTop';
+import { getSale } from '../banner';
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
   const banner = await getSale();
   return (
     <>
@@ -23,7 +19,7 @@ export default async function Layout({
       <ScrollToTop />
       <Footer />
       <Toaster />
-      <Analytics />
+      {process.env.NODE_ENV === 'production' && <Analytics />}
     </>
   );
 }

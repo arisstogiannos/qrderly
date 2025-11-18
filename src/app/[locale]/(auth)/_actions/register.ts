@@ -1,22 +1,17 @@
-"use server";
+'use server';
 
-import { z } from "zod";
-
-import { db } from "@/db";
-import bcrypt from "bcryptjs";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/email/mail";
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
+import { db } from '@/db';
+import { sendVerificationEmail } from '@/email/mail';
+import { generateVerificationToken } from '@/lib/tokens';
 
 // Register
 
 const registerSchema = z.object({
   name: z.string(),
-  email: z.string().email({ message: "Invalid email address" }).trim(),
-  password: z
-    .string()
-    .min(6, { message: "Password should be at least 6 characters" })
-    .trim(),
-
+  email: z.string().email({ message: 'Invalid email address' }).trim(),
+  password: z.string().min(6, { message: 'Password should be at least 6 characters' }).trim(),
 });
 
 export async function register(prevState: any, formData: FormData) {
@@ -28,7 +23,6 @@ export async function register(prevState: any, formData: FormData) {
     };
   }
 
-
   const { email, password, name } = result.data;
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -37,7 +31,7 @@ export async function register(prevState: any, formData: FormData) {
   if (existingUser) {
     return {
       errors: {
-        email: ["Email already exists"],
+        email: ['Email already exists'],
       },
     };
   }
@@ -47,23 +41,18 @@ export async function register(prevState: any, formData: FormData) {
       name,
       email,
       password: hashedPassword,
-      role: "ADMIN",
-      settings:{
-        create:{
-          createdAt:new Date()
-        }
-      }
+      role: 'ADMIN',
+      settings: {
+        create: {
+          createdAt: new Date(),
+        },
+      },
     },
   });
 
   const verificationToken = await generateVerificationToken(email);
-  
 
-  await sendVerificationEmail(
-    verificationToken.email,
-    verificationToken.token,
-    user.name
-  );
+  await sendVerificationEmail(verificationToken.email, verificationToken.token, user.name);
 
-  return { success: "Confirmation email sent" };
+  return { success: 'Confirmation email sent' };
 }

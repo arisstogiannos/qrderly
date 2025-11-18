@@ -1,26 +1,25 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import type { UserRole } from '@prisma/client';
+import NextAuth, { type DefaultSession } from 'next-auth';
+import authConfig from './auth.config';
+import { db } from './db';
+import { sendWelcomeEmail } from './email/mail';
+import type { BusinessExtended, ExtendedSubscription } from './types';
 
-import authConfig from "./auth.config";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-
-import type { UserRole } from "@prisma/client";
-import { db } from "./db";
-import type { BusinessExtended, ExtendedSubscription } from "./types";
-import { sendWelcomeEmail } from "./email/mail";
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
     user: {
       role: UserRole;
       business: BusinessExtended[];
       subscriptions: ExtendedSubscription[];
-    } & DefaultSession["user"];
+    } & DefaultSession['user'];
   }
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
-    signIn: "/login",
-    error: "/error",
+    signIn: '/login',
+    error: '/error',
   },
   events: {
     async linkAccount({ user }) {
@@ -31,7 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             createdAt: new Date(),
           },
         });
-        if(user.email) await sendWelcomeEmail(user.email, user.name ?? "scanbier");
+        if (user.email) await sendWelcomeEmail(user.email, user.name ?? 'scanbier');
       }
       await db.user.update({
         where: { id: user.id },
@@ -41,17 +40,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider !== "credentials") return true;
+      if (account?.provider !== 'credentials') return true;
 
       const existingUser = await db.user.findUnique({ where: { id: user.id } });
 
       if (!existingUser?.emailVerified) return false;
 
-
       return true;
     },
     async jwt({ token, trigger, session }) {
-      if (trigger === "update") {
+      if (trigger === 'update') {
         return { ...token, ...session.user };
       }
 
@@ -73,7 +71,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               location: true,
               type: true,
               qr: true,
-              subscription: true
+              subscription: true,
             },
           },
           role: true,
@@ -104,14 +102,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           session.user.role = token.role as UserRole;
         }
         if (token.subscriptions) {
-          session.user.subscriptions =
-            token.subscriptions as ExtendedSubscription[];
+          session.user.subscriptions = token.subscriptions as ExtendedSubscription[];
         }
       }
       return session;
     },
   },
   adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
+  session: { strategy: 'jwt' },
   ...authConfig,
 });

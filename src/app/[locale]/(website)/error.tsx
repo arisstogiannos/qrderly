@@ -1,8 +1,7 @@
-"use client"; // Error boundaries must be Client Components
+'use client'; // Error boundaries must be Client Components
 
-import { ErrorMessage } from "@/components/Messages";
-import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { ErrorMessage } from '@/components/Messages';
+import { Button } from '@/components/ui/button';
 
 export default function Error({
   error,

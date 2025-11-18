@@ -1,23 +1,22 @@
-"use client";
-import type React from "react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useActionState } from "react";
-import { Link } from "@/i18n/navigation";
-import { newPassword } from "../_actions/reset-password";
-import { ErrorMessage, SuccessMessage } from "@/components/Messages";
-import { FormWrapper } from "./FormWrapper";
-import Loader from "@/components/Loader";
-import { useTranslations } from "next-intl";
+'use client';
+import { useTranslations } from 'next-intl';
+import type React from 'react';
+import { useActionState, useState } from 'react';
+import Loader from '@/components/Loader';
+import { ErrorMessage, SuccessMessage } from '@/components/Messages';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Link } from '@/i18n/navigation';
+import { newPassword } from '../_actions/reset-password';
+import { FormWrapper } from './FormWrapper';
 
 export function NewPasswordForm({ token }: { token: string }) {
   const [state, newPasswordAction, isPending] = useActionState(newPassword, null);
-  const t = useTranslations("newPasswordForm");
+  const t = useTranslations('newPasswordForm');
 
   const [formData, setFormData] = useState({
-    newPassword: "",
-    confirmPassword: "",
+    newPassword: '',
+    confirmPassword: '',
   });
 
   const passwordsMatch =
@@ -31,20 +30,18 @@ export function NewPasswordForm({ token }: { token: string }) {
 
   if (state?.success) {
     return (
-      <FormWrapper title={t("title")} subtitle="">
+      <FormWrapper title={t('title')} subtitle="">
         <div className="flex flex-col items-center justify-center space-y-6 p-6 md:p-8">
-          <p className="text-center text-2xl font-medium ">
-            {t("successMessage")}
-          </p>
+          <p className="text-center text-2xl font-medium ">{t('successMessage')}</p>
           <Button asChild className="mt-3 w-28 p-6 text-lg">
-            <Link href={"/login"}>{t("signIn")}</Link>
+            <Link href={'/login'}>{t('signIn')}</Link>
           </Button>
         </div>
       </FormWrapper>
     );
   }
   return (
-    <FormWrapper title={t("title")} subtitle="">
+    <FormWrapper title={t('title')} subtitle="">
       <form action={newPasswordAction} className="space-y-6">
         <div className="flex flex-col gap-6">
           <div className="grid gap-2">
@@ -53,7 +50,7 @@ export function NewPasswordForm({ token }: { token: string }) {
               id="new-password"
               name="newPassword"
               type="password"
-              placeholder={t("newPasswordPlaceholder")}
+              placeholder={t('newPasswordPlaceholder')}
               required
               value={formData.newPassword}
               onChange={handleChange}
@@ -71,8 +68,8 @@ export function NewPasswordForm({ token }: { token: string }) {
               required
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder={t("confirmPasswordPlaceholder")}
-              className={`${!passwordsMatch ? " outline-1 outline-red-500 focus-visible:outline focus-visible:ring-0" : ""}`}
+              placeholder={t('confirmPasswordPlaceholder')}
+              className={`${!passwordsMatch ? ' outline-1 outline-red-500 focus-visible:outline focus-visible:ring-0' : ''}`}
             />
             {state?.errors?.confirmPassword?.map((er) => (
               <ErrorMessage key={er} classNames="text-sm bg-transparent p-0 " msg={er} />
@@ -84,7 +81,7 @@ export function NewPasswordForm({ token }: { token: string }) {
             type="submit"
             className="mt-3 w-full p-6 text-lg"
           >
-            {isPending ? <Loader /> : t("reset")}
+            {isPending ? <Loader /> : t('reset')}
           </Button>
         </div>
         {(state?.error || state?.errors?.token || state?.success) && (

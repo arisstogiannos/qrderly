@@ -1,15 +1,15 @@
-"use server"
-import { db } from "@/db";
-import { v4 as uuidv4 } from "uuid";
+'use server';
+import { v4 as uuidv4 } from 'uuid';
+import { db } from '@/db';
 
 export const generateVerificationToken = async (email: string, time?: number) => {
   const token = uuidv4();
-  const expires = new Date(new Date().getTime() + (time || 30) * 60 * 1000); 
+  const expires = new Date(new Date().getTime() + (time || 30) * 60 * 1000);
 
   const existingToken = await db.token.findFirst({
     where: {
       email,
-      type: "VALIDATION",
+      type: 'VALIDATION',
     },
     orderBy: {
       createdAt: 'desc',
@@ -20,7 +20,7 @@ export const generateVerificationToken = async (email: string, time?: number) =>
     await db.token.delete({
       where: {
         id: existingToken.id,
-        type: "VALIDATION",
+        type: 'VALIDATION',
       },
     });
   }
@@ -29,7 +29,7 @@ export const generateVerificationToken = async (email: string, time?: number) =>
     data: {
       email,
       token,
-      type: "VALIDATION",
+      type: 'VALIDATION',
       expiresAt: expires,
     },
   });
@@ -46,13 +46,13 @@ export const verifyToken = async (token: string) => {
 
   if (!verificationToken) {
     return {
-      error: "Invalid token",
+      error: 'Invalid token',
     };
   }
 
   if (new Date(verificationToken.expiresAt) < new Date()) {
     return {
-      error: "Token has expired",
+      error: 'Token has expired',
     };
   }
 
@@ -66,30 +66,30 @@ export const verifyToken = async (token: string) => {
     },
   });
 
-  return { success: true ,userName:user.name,email:verificationToken.email};
+  return { success: true, userName: user.name, email: verificationToken.email };
 };
 
 export const verifyResetToken = async (token: string) => {
   const validToken = await db.token.findFirst({
     where: {
       token,
-      type:"RESET_PASSWORD"
+      type: 'RESET_PASSWORD',
     },
   });
 
   if (!validToken) {
     return {
-      error: "Invalid token",
+      error: 'Invalid token',
     };
   }
 
   if (new Date(validToken.expiresAt) < new Date()) {
     return {
-      error: "Token has expired",
+      error: 'Token has expired',
     };
   }
 
-  return { success: true,token:validToken.token};
+  return { success: true, token: validToken.token };
 };
 
 export const generatePasswordResetToken = async (email: string) => {
@@ -99,7 +99,7 @@ export const generatePasswordResetToken = async (email: string) => {
   const existingToken = await db.token.findFirst({
     where: {
       email,
-      type: "RESET_PASSWORD",
+      type: 'RESET_PASSWORD',
     },
   });
 
@@ -107,8 +107,7 @@ export const generatePasswordResetToken = async (email: string) => {
     await db.token.delete({
       where: {
         id: existingToken.id,
-        type:"RESET_PASSWORD"
-
+        type: 'RESET_PASSWORD',
       },
     });
   }
@@ -116,7 +115,7 @@ export const generatePasswordResetToken = async (email: string) => {
   const newPasswordResetToken = await db.token.create({
     data: {
       email,
-      type: "RESET_PASSWORD",
+      type: 'RESET_PASSWORD',
       token,
       expiresAt,
     },

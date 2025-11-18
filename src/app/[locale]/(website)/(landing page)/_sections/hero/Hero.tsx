@@ -1,52 +1,52 @@
-import { ArrowRight } from "lucide-react";
-import React from "react";
-import { MainButton, MainButtonLink } from "./MainButton";
-import { getTranslations } from "next-intl/server";
-import PhoneMockup from "./PhoneMockup";
+import { ArrowRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import { MainButton, MainButtonLink } from './MainButton';
+import PhoneMockup from './PhoneMockup';
 
 export default async function Hero() {
-    const t = await getTranslations("Hero");
-    return (
-        <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-10 grid-rows-[auto_auto] gap-y-8 md:gap-y-16 xl:grid-rows-1 xl:mt-20 xl:h-[700px] mb-0 lg:mb-40">
-            <AnimatedBlobs />
-            {/* <div className="absolute top-0  left-0 -z-10  xl:w-full h-screen overflow-x-hidden w-screen backgroundMesh   " /> */}
-            <div className="space-y-5 mt-10 sm:mt-0 2xl:mt-10 3xl:mt-24">
-                <h1 className=" font-bold  text-[40px] text-center lg:text-left md:text-6xl leading-tight  ">
-                    {t("title")}
-                </h1>
-                <h2 className="text-xl font-medium md:text-4xl text-center lg:text-left text-pretty">
-                    {t("subtitle")}
-                </h2>
-                <div className="w-full flex justify-center mt-8 2xl:mt-14 gap-3 md:gap-5  lg:justify-start items-center ">
-                    <MainButton className="md:text-xl text-nowrap  text-center ">
-                        {t("button")} <ArrowRight />
-                    </MainButton>
-                    <MainButtonLink
-                    
-                        href="/Bruncherie/smart-menu"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variant="outline"
-                        className="text-center md:text-xl bg-transparent border transition-all border-foreground hover:text-background hover:bg-foreground font-medium"
-                    >
-                        {t("demoButton")}
-                    </MainButtonLink>
-                </div>
-            </div>
-
-            <PhoneMockup />
+  const t = await getTranslations('Hero');
+  return (
+    <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-10 grid-rows-[auto_auto] gap-y-8 md:gap-y-16 xl:grid-rows-1 xl:mt-20 xl:h-[700px] mb-0 lg:mb-40">
+      <AnimatedBlobs />
+      {/* <div className="absolute top-0  left-0 -z-10  xl:w-full h-screen overflow-x-hidden w-screen backgroundMesh   " /> */}
+      <div className="space-y-5 mt-10 sm:mt-0 2xl:mt-10 3xl:mt-24">
+        <h1 className=" font-bold  text-[40px] text-center lg:text-left md:text-6xl leading-tight  ">
+          {t('title')}
+        </h1>
+        <h2 className="text-xl font-medium md:text-4xl text-center lg:text-left text-pretty">
+          {t('subtitle')}
+        </h2>
+        <div className="w-full flex justify-center mt-8 2xl:mt-14 gap-3 md:gap-5  lg:justify-start items-center ">
+          <MainButton className="md:text-xl text-nowrap  text-center ">
+            {t('button')} <ArrowRight />
+          </MainButton>
+          <MainButtonLink
+            href="/Bruncherie/smart-menu"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outline"
+            className="text-center md:text-xl bg-transparent border transition-all border-foreground hover:text-background hover:bg-foreground font-medium"
+          >
+            {t('demoButton')}
+          </MainButtonLink>
         </div>
-    );
+      </div>
+
+      <PhoneMockup />
+    </div>
+  );
 }
-
-
-
 
 function AnimatedBlobs() {
   return (
     <div className="w-full top-0 left-1/2 -translate-x-1/2 absolute -z-40 h-[75vh] md:h-[120vh] bg-background flex items-center justify-center overflow-hidden">
-    <div className="bg-background/60 z-50 h-full absolute top-0 left-0 w-full backdrop-blur-[50px]"/>
-      <svg width="800" height="600" viewBox="0 0 800 600" className="w-full h-full md:-translate-y-1/4">
+      <div className="bg-background/60 z-50 h-full absolute top-0 left-0 w-full backdrop-blur-[50px]" />
+      <svg
+        width="800"
+        height="600"
+        viewBox="0 0 800 600"
+        className="w-full h-full md:-translate-y-1/4"
+      >
         {/* Abstract Shape 1 - Morphing geometric form */}
         <path fill="#ff6b6b" opacity="1">
           <animate
@@ -134,5 +134,5 @@ function AnimatedBlobs() {
         </path>
       </svg>
     </div>
-  )
+  );
 }

@@ -1,15 +1,14 @@
-"use client";
+'use client';
 
-import { type LottieOptions, useLottie } from "lottie-react";
-import landingLottie from "./landing-lottie.json";
+import { type LottieOptions, useLottie } from 'lottie-react';
+import landingLottie from './landing-lottie.json';
+
 const LandingLottie = () => {
-  const defaultOptions:LottieOptions = {
+  const defaultOptions: LottieOptions = {
     animationData: landingLottie,
     loop: true,
     autoplay: true,
-
   };
-
 
   const { View } = useLottie(defaultOptions);
 

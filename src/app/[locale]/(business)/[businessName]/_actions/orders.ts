@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import { db } from "@/db";
-import getSession from "@/lib/getSession";
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache';
+import { db } from '@/db';
+import getSession from '@/lib/getSession';
 
 export async function getAllOrders(businessName: string) {
   const orders = await db.order.findMany({
@@ -32,7 +32,7 @@ export async function getOrderById(id: string) {
         select: {
           menuItem: { select: { name: true, priceInCents: true } },
           quantity: true,
-          price:true
+          price: true,
         },
       },
     },
@@ -42,7 +42,7 @@ export async function getOrderById(id: string) {
 }
 export async function getPendingOrders(businessName: string) {
   const orders = await db.order.findMany({
-    where: { business: { name: businessName }, status: "PENDING" },
+    where: { business: { name: businessName }, status: 'PENDING' },
     select: {
       createdAt: true,
       orderItems: { include: { menuItem: true } },
@@ -52,7 +52,7 @@ export async function getPendingOrders(businessName: string) {
       completedAt: true,
       id: true,
     },
-    orderBy: { createdAt: "asc" },
+    orderBy: { createdAt: 'asc' },
   });
 
   return orders;
@@ -65,9 +65,9 @@ export async function deletOrder(id: string, businessName?: string) {
     });
   } catch (err) {
     console.error(err);
-    return { success: false, error: "Something went wrong!" };
+    return { success: false, error: 'Something went wrong!' };
   }
-  revalidateTag(`orders${businessName}`);
+  revalidateTag(`orders${businessName}`, 'max');
   return { success: true };
 }
 
@@ -76,14 +76,14 @@ export async function completeOrder(id: string) {
     const order = await db.order.update({
       where: { id },
       data: {
-        status: "COMPLETED",
+        status: 'COMPLETED',
       },
     });
-    const business = (await getSession())?.user.business.find((b)=> b.id ===  order.businessId);
-    revalidateTag(`order${business?.name}`);
+    const business = (await getSession())?.user.business.find((b) => b.id === order.businessId);
+    revalidateTag(`order${business?.name}`, 'max');
   } catch (err) {
     console.error(err);
-    return { success: false, error: "Something went wrong!" };
+    return { success: false, error: 'Something went wrong!' };
   }
   return { success: true };
 }

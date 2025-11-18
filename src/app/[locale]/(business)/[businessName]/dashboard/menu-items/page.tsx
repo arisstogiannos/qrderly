@@ -1,32 +1,34 @@
-import React from "react";
-import { FiltersProvider } from "@/context/FiltersProvider";
+import { cacheLife, cacheTag } from 'next/cache';
+import { FiltersProvider } from '@/context/FiltersProvider';
+import { checkUserAuthorized } from '../../_actions/authorization';
+import { getCategoriesWithItemCount } from '../../_actions/categories';
+import { getMenuItems } from '../../_actions/menu-items';
+import MenuItemsPage from '../_components/MenuItems/MenuItemsPage';
 
-import { checkUserAuthorized } from "../../_actions/authorization";
-import { getMenuItems } from "../../_actions/menu-items";
-import MenuItemsPage from "../_components/MenuItems/MenuItemsPage";
-import { cache } from "@/lib/cache";
-import { getCategoriesWithItemCount } from "../../_actions/categories";
+async function getMenuItemsCached(businessName: string) {
+  'use cache';
+  cacheTag(`menu-items${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
 
-export default async function page({
-  params,
-}: {
-  params: Promise<{ businessName: string }>;
-}) {
-  const businessName = (await params).businessName.replaceAll("-", " ")
-  const {business} = await checkUserAuthorized(businessName);
+  return getMenuItems(businessName);
+}
 
-  const getMenuItmesCached = cache(getMenuItems, [`menu-items${businessName}`], {
-    tags: [`menu-items${businessName}`],
-  });
+async function getCategoriesWithItemCountCached(businessName: string) {
+  'use cache';
+  cacheTag(`categories${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
 
-  const menuitems = await getMenuItmesCached(businessName);
-  const getCategoriesCached = cache(getCategoriesWithItemCount, [`categories${businessName}`], {
-    tags: [`categories${businessName}`],
-  });
+  return getCategoriesWithItemCount(businessName);
+}
 
-  const categories = await getCategoriesCached(businessName);
+export default async function page({ params }: { params: Promise<{ businessName: string }> }) {
+  const businessName = (await params).businessName.replaceAll('-', ' ');
+  const { business } = await checkUserAuthorized(businessName);
+
+  const menuitems = await getMenuItemsCached(businessName);
+  const categories = await getCategoriesWithItemCountCached(businessName);
   // const geMenuItmesCached = cache(getMenuItems,["menu-items",  businessName ],{tags:["menu-items", businessName]});
-  const languages = business.menu?.languages??""
+  const languages = business.menu?.languages ?? '';
 
   return (
     <FiltersProvider languages={languages}>

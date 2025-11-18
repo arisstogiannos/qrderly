@@ -1,13 +1,9 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
-export default function CustomThemeMaker({
-  defaultColors,
-}: {
-  defaultColors: string[];
-}) {
-  const variables = ["background", "secondary", "primary", "text"];
+export default function CustomThemeMaker({ defaultColors }: { defaultColors: string[] }) {
+  const variables = ['background', 'secondary', 'primary', 'text'];
   const [colors, setColors] = useState<string[]>(defaultColors);
 
   useEffect(() => {
@@ -15,7 +11,7 @@ export default function CustomThemeMaker({
   }, [defaultColors]);
 
   function handleColorChange(color: string, index: number, varName: string) {
-    const root = document.querySelector(":root") as HTMLElement;
+    const root = document.querySelector(':root') as HTMLElement;
     const variable = `--${varName}-mockup`;
     if (root) {
       root.style.setProperty(variable, color);
@@ -31,10 +27,7 @@ export default function CustomThemeMaker({
       <p className="text-sm sm:text-base text-muted-foreground">Customize</p>
       {variables.map((v, i) => (
         <div key={v} className="flex gap-2">
-          <Label
-            htmlFor={v}
-            className="cursor-pointer flex justify-between w-full"
-          >
+          <Label htmlFor={v} className="cursor-pointer flex justify-between w-full">
             {v}
             <Input
               value={colors[i]}

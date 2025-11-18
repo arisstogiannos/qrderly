@@ -1,22 +1,21 @@
-"use client";
+'use client';
 
-import type React from "react";
-import { useState } from "react";
-import { Check, ChevronRight, Lightbulb, MessageSquare } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { useSearchParams } from "next/navigation";
-import { Modal } from "./Modal";
-import { z } from "zod";
-import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import { toast } from "sonner";
-import { sendFeedbackEmailAdmin } from "@/email/mail";
-import Loader from "@/components/Loader";
-import updateSearchParams from "@/lib/updateSearchParams";
+import { ChevronRight, Lightbulb, MessageSquare } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+import type React from 'react';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Textarea } from '@/components/ui/textarea';
+import { sendFeedbackEmailAdmin } from '@/email/mail';
+import updateSearchParams from '@/lib/updateSearchParams';
+import { Modal } from './Modal';
 
 type OnboardingStep = {
   title: string;
@@ -26,29 +25,21 @@ type OnboardingStep = {
 };
 
 const feedbackFormSchema = z.object({
-  rating: z.string().min(1, { message: "validation.rating" }),
+  rating: z.string().min(1, { message: 'validation.rating' }),
   feedbackType: z.string().optional(),
-  comment: z
-    .string().max(500, { message: "validation.comment-max" }).optional().or(z.literal(""))
-,
-  email: z
-    .string()
-    .email({ message: "validation.email" })
-    .optional()
-    .or(z.literal("")),
+  comment: z.string().max(500, { message: 'validation.comment-max' }).optional().or(z.literal('')),
+  email: z.string().email({ message: 'validation.email' }).optional().or(z.literal('')),
 });
 
 export default function OnboardingDialog() {
   const [currentStep, setCurrentStep] = useState(0);
   const [rating, setRating] = useState<number | null>(null);
-  const [feedback, setFeedback] = useState("");
-  const isOnboarding =useSearchParams().get("onboarding") === "true"
+  const [feedback, setFeedback] = useState('');
+  const isOnboarding = useSearchParams().get('onboarding') === 'true';
   const [isSubmitting, setIsSubmitting] = useState(false);
   const session = useSession();
-  const t = useTranslations("onboardingDialog");
-  const [errors, setErrors] = useState<{ rating?: string; comment?: string }>(
-    {}
-  );
+  const t = useTranslations('onboardingDialog');
+  const [errors, setErrors] = useState<{ rating?: string; comment?: string }>({});
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -67,7 +58,7 @@ export default function OnboardingDialog() {
       feedbackFormSchema.parse({
         rating: rating?.toString(),
         comment: feedback,
-        email: session.data?.user.email ?? "",
+        email: session.data?.user.email ?? '',
       });
       setErrors({});
       return true;
@@ -76,7 +67,7 @@ export default function OnboardingDialog() {
         const fieldErrors: { [key: string]: string } = {};
         for (const error of err.errors) {
           const field = error.path[0];
-          if (typeof field === "string") {
+          if (typeof field === 'string') {
             fieldErrors[field] = t(error.message);
           }
         }
@@ -92,35 +83,34 @@ export default function OnboardingDialog() {
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    updateSearchParams("onboarding","false")
+    updateSearchParams('onboarding', 'false');
 
     try {
       const feedbackData = {
-        rating: rating?.toString() ?? "5",
-        feedback: "onboarding",
+        rating: rating?.toString() ?? '5',
+        feedback: 'onboarding',
         message: feedback,
-        email: session.data?.user.email ?? "",
+        email: session.data?.user.email ?? '',
       };
 
       await sendFeedbackEmailAdmin(null, feedbackData);
 
-      toast.success(t("success.title"), {
-        description: t("success.description"),
+      toast.success(t('success.title'), {
+        description: t('success.description'),
       });
     } catch (error) {
-      toast.error(t("error.title"), {
-        description: t("error.description"),
+      toast.error(t('error.title'), {
+        description: t('error.description'),
       });
     } finally {
       setIsSubmitting(false);
-
     }
   };
 
   const steps: OnboardingStep[] = [
     {
-      title: t("steps.0.title"),
-      description: t("steps.0.description"),
+      title: t('steps.0.title'),
+      description: t('steps.0.description'),
       icon: <Lightbulb className="h-6 w-6 text-primary" />,
       content: (
         <div className="space-y-4">
@@ -140,12 +130,12 @@ export default function OnboardingDialog() {
       ),
     },
     {
-      title: t("steps.1.title"),
-      description: t("steps.1.description"),
+      title: t('steps.1.title'),
+      description: t('steps.1.description'),
       icon: <MessageSquare className="h-6 w-6 text-primary" />,
       content: (
         <div className="space-y-4">
-          <p>{t("steps.1.prompt")}</p>
+          <p>{t('steps.1.prompt')}</p>
           <RadioGroup
             value={rating?.toString()}
             onValueChange={(value) => setRating(Number.parseInt(value))}
@@ -162,8 +152,8 @@ export default function OnboardingDialog() {
                     htmlFor={`rating-${value}`}
                     className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 ${
                       rating === value
-                        ? "border-primary bg-primary/10"
-                        : "border-muted hover:border-muted-foreground/50"
+                        ? 'border-primary bg-primary/10'
+                        : 'border-muted hover:border-muted-foreground/50'
                     }`}
                   >
                     {value}
@@ -179,22 +169,18 @@ export default function OnboardingDialog() {
               ))}
             </div>
           </RadioGroup>
-          {errors.rating && (
-            <p className="text-sm text-destructive">{errors.rating}</p>
-          )}
+          {errors.rating && <p className="text-sm text-destructive">{errors.rating}</p>}
           <div className="space-y-2">
-            <Label htmlFor="feedback">{t("steps.1.textareaLabel")}</Label>
+            <Label htmlFor="feedback">{t('steps.1.textareaLabel')}</Label>
             <Textarea
               id="feedback"
-              placeholder={t("steps.1.textareaPlaceholder")}
+              placeholder={t('steps.1.textareaPlaceholder')}
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               className="min-h-[100px]"
             />
           </div>
-          {errors.comment && (
-            <p className="text-sm text-destructive">{errors.comment}</p>
-          )}
+          {errors.comment && <p className="text-sm text-destructive">{errors.comment}</p>}
         </div>
       ),
     },
@@ -207,7 +193,7 @@ export default function OnboardingDialog() {
       title={currentStepData.title}
       showDesc
       firstOpen={isOnboarding}
-      initialOpen={isOnboarding?undefined:false}
+      initialOpen={isOnboarding ? undefined : false}
       subtitle={currentStepData.description}
       trigger={null}
       classNames="pt-5"
@@ -218,7 +204,7 @@ export default function OnboardingDialog() {
             <div
               key={index}
               className={`h-1.5 w-12 rounded-full ${
-                index === currentStep ? "bg-primary" : "bg-accent"
+                index === currentStep ? 'bg-primary' : 'bg-accent'
               }`}
             />
           ))}
@@ -230,16 +216,16 @@ export default function OnboardingDialog() {
           <div className="flex gap-2">
             {currentStep > 0 && (
               <Button variant="outline" onClick={handlePrevious}>
-                {t("buttons.back")}
+                {t('buttons.back')}
               </Button>
             )}
             {currentStep < steps.length - 1 ? (
               <Button onClick={handleNext}>
-                {t("buttons.next")} <ChevronRight className="ml-1 h-4 w-4" />
+                {t('buttons.next')} <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             ) : (
               <Button onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? <Loader /> : t("buttons.submit")}
+                {isSubmitting ? <Loader /> : t('buttons.submit')}
               </Button>
             )}
           </div>

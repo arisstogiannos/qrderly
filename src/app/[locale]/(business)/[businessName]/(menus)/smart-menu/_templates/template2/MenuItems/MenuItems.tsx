@@ -1,9 +1,7 @@
-import type { Category, MenuItem } from "@prisma/client";
-import { MenuItemCard } from "./MenuItemCard";
-import { Translation } from "@/types";
-import { Suspense } from "react";
-import CateroryDisplay from "../../../../_components/CateroryDisplay";
-import CategoryDisplay from "../../../../_components/CateroryDisplay";
+import type { Category, MenuItem } from '@prisma/client';
+import { Suspense } from 'react';
+import CategoryDisplay from '../../../../_components/CateroryDisplay';
+import { MenuItemCard } from './MenuItemCard';
 
 export async function MenuItems({
   categories,
@@ -29,12 +27,8 @@ export async function MenuItems({
       {Object.entries(menuItemsByCategory).map(
         ([categoryId, menuItems]) =>
           Object.entries(menuItems).length > 0 && (
-            <div
-              key={categoryId}
-              id={categoryId}
-              className="space-y-4 scroll-m-20"
-            >
-                <CategoryDisplay category={categories.find((c) => c.id === categoryId)}/>
+            <div key={categoryId} id={categoryId} className="space-y-4 scroll-m-20">
+              <CategoryDisplay category={categories.find((c) => c.id === categoryId)} />
               <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                 <Suspense>
                   {Object.entries(menuItems).map(([categoryId, product]) => {
@@ -43,7 +37,7 @@ export async function MenuItems({
                 </Suspense>
               </div>
             </div>
-          )
+          ),
       )}
     </div>
   );

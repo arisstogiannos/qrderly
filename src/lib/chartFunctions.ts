@@ -1,6 +1,6 @@
 export const chartTimePeriod = [
   {
-    text: "1 week",
+    text: '1 week',
     value: (() => {
       const now = new Date();
       const oneWeekAgo = new Date(now);
@@ -13,7 +13,7 @@ export const chartTimePeriod = [
     })(),
   },
   {
-    text: "1 month",
+    text: '1 month',
     value: (() => {
       const now = new Date();
       const oneMonthAgo = new Date(now);
@@ -26,7 +26,7 @@ export const chartTimePeriod = [
     })(),
   },
   {
-    text: "6 months",
+    text: '6 months',
     value: (() => {
       const now = new Date();
       const oneMonthAgo = new Date(now);
@@ -61,31 +61,30 @@ export function formatAndGroupData(
   groupByMonth: boolean,
 ) {
   const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   let formated;
 
   if (groupByMonth) {
     formated = chartData.map((item) => ({
       date: monthNames[new Date(item.createdAt).getMonth()],
-      income: item.pricePaidInCents ,
+      income: item.pricePaidInCents,
     }));
   } else {
     formated = chartData.map((item) => ({
-      date:
-        `${new Date(item.createdAt).getDate()}/${new Date(item.createdAt).getMonth() + 1}/${new Date(item.createdAt).getFullYear()}`,
-      income: item.pricePaidInCents ,
+      date: `${new Date(item.createdAt).getDate()}/${new Date(item.createdAt).getMonth() + 1}/${new Date(item.createdAt).getFullYear()}`,
+      income: item.pricePaidInCents,
     }));
   }
 
@@ -134,11 +133,9 @@ export function setDataDateRange(
 ) {
   // If no range is provided, default to entire dataset range
   const startDate =
-    createdAfter ||
-    new Date(Math.min(...chartData.map((d) => d.createdAt.getTime())));
+    createdAfter || new Date(Math.min(...chartData.map((d) => d.createdAt.getTime())));
   const endDate =
-    createdBefore ||
-    new Date(Math.max(...chartData.map((d) => d.createdAt.getTime())));
+    createdBefore || new Date(Math.max(...chartData.map((d) => d.createdAt.getTime())));
 
   const distanceBetweenDates =
     endDate.getMonth() < startDate.getMonth()
@@ -153,10 +150,7 @@ export function setDataDateRange(
     distanceBetweenDates,
   );
 
-  const formattedChartData = formatAndGroupData(
-    chartData,
-    distanceBetweenDates > 2,
-  );
+  const formattedChartData = formatAndGroupData(chartData, distanceBetweenDates > 2);
   const fullData = dateRange.map((date) => {
     const existing = formattedChartData.find((d) => d.date === date);
     return {
@@ -178,24 +172,20 @@ export function setDataDateRange(
 }
 
 // Utility export function to create an array of dates between two dates
-export function createDateRange(
-  start: Date,
-  end: Date,
-  distanceBetweenDates: number,
-): string[] {
+export function createDateRange(start: Date, end: Date, distanceBetweenDates: number): string[] {
   const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   const dateArray: string[] = [];
   const currentDate = new Date(start);
@@ -207,11 +197,7 @@ export function createDateRange(
       currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
     }
   } else {
-    for (
-      let i = start.getMonth() + 1;
-      i <= start.getMonth() + distanceBetweenDates;
-      i++
-    ) {
+    for (let i = start.getMonth() + 1; i <= start.getMonth() + distanceBetweenDates; i++) {
       dateArray.push(monthNames[i % 12]);
     }
   }
@@ -234,7 +220,7 @@ export function cropYear(
   }[],
 ) {
   data.map((item) => {
-    const splited = item.date.split("/");
+    const splited = item.date.split('/');
     const joined = `${splited[0]}/${splited[1]}`;
 
     item.date = joined;
@@ -243,10 +229,12 @@ export function cropYear(
   return data;
 }
 
-export function calculateAvg(data: {
-  date: string;
-  income: number;
-}[]) {
+export function calculateAvg(
+  data: {
+    date: string;
+    income: number;
+  }[],
+) {
   const sum = data.reduce((acc, item) => acc + item.income, 0);
   return sum / data.length;
 }

@@ -1,18 +1,23 @@
-"use server";
-import { cache } from "@/lib/cache";
-import type { Language } from "@/types";
-import * as deepl from "deepl-node";
-const authKey = "90e7ff7d-bb64-4e87-933c-931770bb27c9:fx";
+'use server';
+import * as deepl from 'deepl-node';
+import { cacheLife, cacheTag } from 'next/cache';
+import type { Language } from '@/types';
+
+const authKey = '90e7ff7d-bb64-4e87-933c-931770bb27c9:fx';
 const translator = new deepl.Translator(authKey);
 
 export async function translateTextDeepL(
   text: string,
   srcLang: deepl.SourceLanguageCode,
   targetLang: deepl.TargetLanguageCode,
-  context?:string
+  context?: string,
 ) {
+  'use cache';
+  cacheLife({ revalidate: 60 * 60 * 24 * 7 });
+  cacheTag(`deepl:${srcLang}:${targetLang}:${text}`);
+
   const start = new Date().getTime();
-  const result = await translator.translateText(text, srcLang, targetLang,{context:context});
+  const result = await translator.translateText(text, srcLang, targetLang, { context: context });
   const elapsed = new Date().getTime() - start;
   console.log(elapsed);
   return result.text;
@@ -22,99 +27,70 @@ export async function translateTextArrayToMultipleDeepL(
   text: string[],
   srcLang: deepl.SourceLanguageCode,
   targetLanguages: deepl.TargetLanguageCode[],
-  context?:string
-
+  context?: string,
 ) {
-  const translationsPromises = targetLanguages.map((l) => {
-    const translateTextDeepLCached = cache(
-      translateTextArrayDeepL,
-      [`${srcLang}-${l}-${text}`],
-      { revalidate: 604800,tags:[`${srcLang}-${l}-${text}`] } // Cache for 7 days
-    );
-    return translateTextDeepLCached(text, srcLang, l,context);
-  });
+  const translationsPromises = targetLanguages.map((l) =>
+    translateTextArrayDeepL(text, srcLang, l, context),
+  );
   const translations = await Promise.all(translationsPromises);
 
-  return translations
+  return translations;
 }
 export async function translateTextArrayDeepL(
   text: string[],
   srcLang: deepl.SourceLanguageCode,
   targetLang: deepl.TargetLanguageCode,
-  context?:string
+  context?: string,
 ) {
+  'use cache';
+  cacheLife({ revalidate: 60 * 60 * 24 * 7 });
+  cacheTag(`deepl-array:${srcLang}:${targetLang}:${text.join('|')}`);
+
   const start = new Date().getTime();
-  const result = await translator.translateText(text, srcLang, targetLang,{context:context});
+  const result = await translator.translateText(text, srcLang, targetLang, { context: context });
   const elapsed = new Date().getTime() - start;
   console.log(elapsed);
-  return result.map(r=>r.text);
+  return result.map((r) => r.text);
 }
 
 export async function translateTextToMultipleDeepL(
   text: string,
   srcLang: deepl.SourceLanguageCode,
   targetLanguages: deepl.TargetLanguageCode[],
-  context?:string
-
+  context?: string,
 ) {
-  const translationsPromises = targetLanguages.map((l) => {
-    const translateTextDeepLCached = cache(
-      translateTextDeepL,
-      [`${srcLang}-${l}-${text}`],
-      { revalidate: 604800,tags:[`${srcLang}-${l}-${text}`] } // Cache for 7 days
-    );
-    return translateTextDeepLCached(text, srcLang, l,context);
-  });
+  const translationsPromises = targetLanguages.map((l) =>
+    translateTextDeepL(text, srcLang, l, context),
+  );
   const translations = await Promise.all(translationsPromises);
 
   return translations as string[];
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export async function getSupportedSrcLanguagesDeepL() {
-  let result
-  try{
+  let result;
+  try {
     result = await translator.getSourceLanguages();
-  }catch(e){
+  } catch (e) {
     result = supportedSrcLanguages;
   }
   return result;
 }
 export async function getSupportedTargetLanguagesDeepL() {
-  let result
-  try{
+  let result;
+  try {
     result = await translator.getTargetLanguages();
-  }catch(e){
+  } catch (e) {
     result = supportedTrgtLanguages;
   }
 
   return result;
 }
 
-export async function translateTextToMultiple(
-  text: string,
-  srcLang: string,
-  languages: string[]
-) {
+export async function translateTextToMultiple(text: string, srcLang: string, languages: string[]) {
   // const formatedTranslations = [];
 
-  const translationsPromises = languages.map((l) =>
-    translateText(text, srcLang, l)
-  );
+  const translationsPromises = languages.map((l) => translateText(text, srcLang, l));
   const translations = await Promise.all(translationsPromises);
 
   // for(let i= 0; i<translations.length;i++){
@@ -126,31 +102,22 @@ export async function translateTextToMultiple(
 
 export async function getSupportedLanguages() {
   const response = await fetch(`https://lingva.ml/api/v1/languages/`, {
-    cache: "force-cache",
+    cache: 'force-cache',
   });
   const data = await response.json();
   return data.languages as Language[];
 }
-export async function translateText(
-  text: string,
-  srcLang: string,
-  targetLang: string
-) {
+export async function translateText(text: string, srcLang: string, targetLang: string) {
   const start = new Date().getTime();
   const response = await fetch(
     `https://lingva.ml/api/v1/${srcLang}/${targetLang}/${encodeURIComponent(text)}`,
-    { cache: "force-cache" }
+    { cache: 'force-cache' },
   );
   const elapsed = new Date().getTime() - start;
   const data = await response.json();
   console.log(elapsed);
   return data.translation;
 }
-
-
-
-
-
 
 const supportedSrcLanguages = [
   { name: 'arabic', code: 'ar' },
@@ -182,7 +149,7 @@ const supportedSrcLanguages = [
   { name: 'Swedish', code: 'sv' },
   { name: 'Turkish', code: 'tr' },
   { name: 'Ukrainian', code: 'uk' },
-  { name: 'Chinese', code: 'zh' }
+  { name: 'Chinese', code: 'zh' },
 ] as readonly deepl.Language[];
 
 const supportedTrgtLanguages = [
@@ -195,12 +162,12 @@ const supportedTrgtLanguages = [
   {
     name: 'English (British)',
     code: 'en-GB',
-    supportsFormality: false
+    supportsFormality: false,
   },
   {
     name: 'English (American)',
     code: 'en-US',
-    supportsFormality: false
+    supportsFormality: false,
   },
   { name: 'Spanish', code: 'es', supportsFormality: true },
   { name: 'Estonian', code: 'et', supportsFormality: false },
@@ -219,12 +186,12 @@ const supportedTrgtLanguages = [
   {
     name: 'Portuguese (Brazilian)',
     code: 'pt-BR',
-    supportsFormality: true
+    supportsFormality: true,
   },
   {
     name: 'Portuguese (European)',
     code: 'pt-PT',
-    supportsFormality: true
+    supportsFormality: true,
   },
   { name: 'Romanian', code: 'ro', supportsFormality: false },
   { name: 'Russian', code: 'ru', supportsFormality: true },
@@ -236,16 +203,16 @@ const supportedTrgtLanguages = [
   {
     name: 'Chinese (simplified)',
     code: 'zh',
-    supportsFormality: false
+    supportsFormality: false,
   },
   {
     name: 'Chinese (simplified)',
     code: 'zh-HANS',
-    supportsFormality: false
+    supportsFormality: false,
   },
   {
     name: 'Chinese (traditional)',
     code: 'zh-HANT',
-    supportsFormality: false
-  }
+    supportsFormality: false,
+  },
 ] as readonly deepl.Language[];

@@ -1,16 +1,10 @@
-import { Suspense } from "react";
-import { SearchBar } from "./Search";
-import LanguageSelect from "@/app/[locale]/(business)/[businessName]/(menus)/_components/LanguageSelect";
-import Cart from "../../../_components/Cart/Cart";
-import type { Menu } from "@prisma/client";
+import type { Menu } from '@prisma/client';
+import { Suspense } from 'react';
+import LanguageSelect from '@/app/[locale]/(business)/[businessName]/(menus)/_components/LanguageSelect';
+import Cart from '../../../_components/Cart/Cart';
+import { SearchBar } from './Search';
 
-export function Navbar({
-  businessName,
-  menu,
-}: {
-  businessName: string;
-  menu: Menu;
-}) {
+export function Navbar({ businessName, menu }: { businessName: string; menu: Menu }) {
   if (!menu.languages) return null;
   return (
     <nav className="my-container z-50 sticky  space-y-10 bg-background/70 py-5 text-foreground backdrop-blur-xl ">

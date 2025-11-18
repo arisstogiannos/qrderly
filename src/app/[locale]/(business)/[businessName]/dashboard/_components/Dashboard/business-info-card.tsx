@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import { Store } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { BusinessExtended } from "@/types"
+import { Store } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type { BusinessExtended } from '@/types';
 
-export function BusinessInfoCard({business}:{business:BusinessExtended}) {
+export function BusinessInfoCard({ business }: { business: BusinessExtended }) {
   const t = useTranslations('dashboard');
 
   return (

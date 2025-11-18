@@ -1,17 +1,13 @@
-"use server";
-import { deleteImage, uploadImage } from "@/cloudinary";
-import { db } from "@/db";
-import { revalidateTag } from "next/cache";
-import { z } from "zod";
-import {
-  translateTextArrayToMultipleDeepL,
-
-} from "@/app/translation";
-import type { MenuItemAI, Option, Translation, TranslationAI } from "@/types";
-import type { SourceLanguageCode, TargetLanguageCode } from "deepl-node";
-import { cache } from "@/lib/cache";
-import type { Category } from "@prisma/client";
-import { getMenuByBusinessName } from "./menu";
+'use server';
+import type { Category } from '@prisma/client';
+import type { SourceLanguageCode, TargetLanguageCode } from 'deepl-node';
+import { cacheLife, cacheTag, revalidateTag } from 'next/cache';
+import { z } from 'zod';
+import { translateTextArrayToMultipleDeepL } from '@/app/translation';
+import { deleteImage, uploadImage } from '@/cloudinary';
+import { db } from '@/db';
+import type { MenuItemAI, Option, Translation, TranslationAI } from '@/types';
+import { getMenuByBusinessName } from './menu';
 
 export async function getMenuItems(businessName: string) {
   const menuItems = await db.menuItem.findMany({
@@ -35,28 +31,29 @@ export async function getMenuItemsByMenuId(id: string) {
   return menuItems;
 }
 
-const fileSchema = z.instanceof(File, { message: "Required" });
-const imageSchema = fileSchema.refine(
-  (file) => file.size === 0 || file.type.startsWith("image/"),
-  { message: "Not a valid image file" }
-);
+const fileSchema = z.instanceof(File, { message: 'Required' });
+const imageSchema = fileSchema.refine((file) => file.size === 0 || file.type.startsWith('image/'), {
+  message: 'Not a valid image file',
+});
 
 // Function to extract text from options for translation
 function extractOptionText(options: string): string {
-  const parsed = JSON.parse(options) as Option[]
-  return parsed.map(option => {
-    const optionName = option.name;
-    const valueNames = option.values.map(value => value.name);
-    return `${optionName}-${valueNames.join("-")}`;
-  }).join("-");
+  const parsed = JSON.parse(options) as Option[];
+  return parsed
+    .map((option) => {
+      const optionName = option.name;
+      const valueNames = option.values.map((value) => value.name);
+      return `${optionName}-${valueNames.join('-')}`;
+    })
+    .join('-');
 }
 
 // Function to reconstruct options from translated text
 function reconstructOptions(translatedText: string, originalOptions: Option[]): Option[] {
-  const translatedParts = translatedText.split("-");
+  const translatedParts = translatedText.split('-');
   let currentIndex = 0;
 
-  return originalOptions.map(option => {
+  return originalOptions.map((option) => {
     // Get the translated option name
     const translatedName = translatedParts[currentIndex++];
 
@@ -72,12 +69,11 @@ function reconstructOptions(translatedText: string, originalOptions: Option[]): 
       type: option.type, // Preserve original type
       values: option.values.map((value, index) => ({
         name: translatedValues[index],
-        price: value.price // Preserve original price
-      }))
+        price: value.price, // Preserve original price
+      })),
     };
   });
 }
-
 
 const MenuItemSchema = z.object({
   name: z.string().min(1),
@@ -92,18 +88,24 @@ const MenuItemSchema = z.object({
 });
 type MenuItem = z.infer<typeof MenuItemSchema>;
 
+async function getCachedMenuByBusinessName(businessName: string) {
+  'use cache';
+  cacheTag(`menu${businessName}`);
+  cacheLife({ revalidate: 60 * 60 });
+
+  return getMenuByBusinessName(businessName);
+}
+
 export async function upsertMenuItem(
   businessName: string,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   prev: any,
-  formData: FormData
+  formData: FormData,
 ) {
   const result = MenuItemSchema.safeParse(Object.fromEntries(formData));
 
   if (!result.success) {
-    const rawData = Object.fromEntries(
-      formData
-    ) as unknown as Partial<MenuItem>;
+    const rawData = Object.fromEntries(formData) as unknown as Partial<MenuItem>;
     return {
       data: rawData,
       errors: result.error.flatten().fieldErrors,
@@ -122,56 +124,56 @@ export async function upsertMenuItem(
     categoryId,
   } = result.data;
   try {
-    const getCachedMenu = cache(
-      getMenuByBusinessName,
-      [`menu${businessName}`],
-      { tags: [`menu${businessName}`] }
-    );
-
-    const menu = await getCachedMenu(businessName);
+    const menu = await getCachedMenuByBusinessName(businessName);
 
     const translations: Translation = {};
 
     if (menu) {
-      const languages = menu.languages.split(",");
+      const languages = menu.languages.split(',');
       const srcLang = languages.reverse().pop();
 
-
       if (srcLang) {
-        const textArayToTranslate: string[] = []
+        const textArayToTranslate: string[] = [];
 
-        if (translateName) textArayToTranslate.push(name)
-        if (translateDescription && description) textArayToTranslate.push(description)
-        if (options) textArayToTranslate.push(extractOptionText(options))
-
-
+        if (translateName) textArayToTranslate.push(name);
+        if (translateDescription && description) textArayToTranslate.push(description);
+        if (options) textArayToTranslate.push(extractOptionText(options));
 
         if (textArayToTranslate.length > 0) {
-
           const translationResult = await translateTextArrayToMultipleDeepL(
             textArayToTranslate,
             srcLang as SourceLanguageCode,
-            languages as TargetLanguageCode[]
+            languages as TargetLanguageCode[],
           );
 
           for (let i = 0; i < translationResult.length; i++) {
-
-            const prefTranslation = options ? reconstructOptions(translationResult[i].findLast((el) => el.length > 0) ?? "", JSON.parse(options ?? "") as Option[]) as Option[] : null
+            const prefTranslation = options
+              ? (reconstructOptions(
+                  translationResult[i].findLast((el) => el.length > 0) ?? '',
+                  JSON.parse(options ?? '') as Option[],
+                ) as Option[])
+              : null;
 
             translations[languages[i]] = {
               name: translateName ? translationResult[i][0] : name,
-              description:
-                translateDescription ? (translateName ? translationResult[i][1] : translationResult[i][0]) : description,
-              preferences: prefTranslation?.map((pr) => ({ name: pr.name, values: pr.values.map((v) => v.name) })) ?? null
+              description: translateDescription
+                ? translateName
+                  ? translationResult[i][1]
+                  : translationResult[i][0]
+                : description,
+              preferences:
+                prefTranslation?.map((pr) => ({
+                  name: pr.name,
+                  values: pr.values.map((v) => v.name),
+                })) ?? null,
             };
-
           }
         } else {
           for (let i = 0; i < languages.length; i++) {
             translations[languages[i]] = {
               name: name,
               description: description,
-              preferences: null
+              preferences: null,
             };
           }
         }
@@ -208,14 +210,14 @@ export async function upsertMenuItem(
       }
 
       await db.menuItem.upsert({
-        where: { id: id ?? "" },
+        where: { id: id ?? '' },
         create: dataToUpsert,
         update: dataToUpsert,
       });
     } else {
       return {
         data: result.data,
-        error: "Something went wrong!",
+        error: 'Something went wrong!',
       };
     }
   } catch (error) {
@@ -223,12 +225,12 @@ export async function upsertMenuItem(
 
     return {
       data: result.data,
-      error: "Something went wrong!",
+      error: 'Something went wrong!',
     };
   }
 
-  revalidateTag(`menu-items${businessName}`);
-  revalidateTag(`categories${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
+  revalidateTag(`categories${businessName}`, 'max');
 
   return { success: true };
 }
@@ -247,16 +249,12 @@ type MenuItemTranslated = z.infer<typeof MenuItemSchema>;
 export async function updateItemTranslation(
   businessName: string,
   prev: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
-  const result = MenuItemTranslatedSchema.safeParse(
-    Object.fromEntries(formData)
-  );
+  const result = MenuItemTranslatedSchema.safeParse(Object.fromEntries(formData));
 
   if (!result.success) {
-    const rawData = Object.fromEntries(
-      formData
-    ) as unknown as Partial<MenuItemTranslated>;
+    const rawData = Object.fromEntries(formData) as unknown as Partial<MenuItemTranslated>;
     return {
       data: rawData,
       errors: result.error.flatten().fieldErrors,
@@ -280,39 +278,30 @@ export async function updateItemTranslation(
 
     return {
       data: result.data,
-      error: "Something went wrong!",
+      error: 'Something went wrong!',
     };
   }
 
-  revalidateTag(`menu-items${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
   return { success: true };
 }
 
 export async function createMenuItems(
   businessName: string,
   menuItems: MenuItemAI[],
-  categories: Category[]
+  categories: Category[],
 ) {
-  const getMenuCached = cache(getMenuByBusinessName, [`menu${businessName}`], {
-    tags: [`menu${businessName}`],
-  });
   try {
-    const menu = await getMenuByBusinessName(businessName);
+    const menu = await getCachedMenuByBusinessName(businessName);
 
     if (menu) {
       const data = menuItems.map((item, i) => {
-        const {
-          category,
-          preferences,
-          translations,
-          categoryDescription,
-          ...rest
-        } = item; // Destructure to exclude the 'category' field
+        const { category, preferences, translations, categoryDescription, ...rest } = item; // Destructure to exclude the 'category' field
         const matchiingCategory = categories.find((c) => c.name === category);
         return {
           ...rest, // Spread the remaining properties
           menuId: menu.id,
-          categoryId: matchiingCategory?.id ?? "",
+          categoryId: matchiingCategory?.id ?? '',
           translations: JSON.stringify(convertTranslationFormat(translations)),
           preferences: preferences ? JSON.stringify(preferences) : null,
         };
@@ -323,29 +312,27 @@ export async function createMenuItems(
       });
     } else {
       return {
-        error: "Something went wrong!",
+        error: 'Something went wrong!',
       };
     }
   } catch (error) {
     console.error(`create item er: ${error}`);
 
     return {
-      error: "Something went wrong!",
+      error: 'Something went wrong!',
     };
   }
 
-  revalidateTag(`menu-items${businessName}`);
-  revalidateTag(`categories${businessName}`);
-  revalidateTag(`generate-items${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
+  revalidateTag(`categories${businessName}`, 'max');
+  revalidateTag(`generate-items${businessName}`, 'max');
   return { success: true };
 }
 
-function convertTranslationFormat(
-  inputJson: TranslationAI[]
-): Translation | { error: string } {
+function convertTranslationFormat(inputJson: TranslationAI[]): Translation | { error: string } {
   try {
     if (!Array.isArray(inputJson)) {
-      return { error: "Input JSON is not an array." };
+      return { error: 'Input JSON is not an array.' };
     }
 
     const outputJson: Translation = {};
@@ -367,16 +354,15 @@ function convertTranslationFormat(
 export async function deleteMenuItem(id: string, businessName: string) {
   const menuItem = await db.menuItem.delete({ where: { id } });
 
-  revalidateTag(`menu-items${businessName}`);
-  revalidateTag(`categories${businessName}`);
+  revalidateTag(`menu-items${businessName}`, 'max');
+  revalidateTag(`categories${businessName}`, 'max');
 
   if (menuItem.imagePath) await deleteImage(menuItem.imagePath);
 
   return { success: true };
 }
 
-
 export async function toggleActive(id: string, active: boolean, businessName: string) {
-  await db.menuItem.update({ where: { id }, data: { isAvailable: active } })
-  revalidateTag(`menu-items${businessName}`)
+  await db.menuItem.update({ where: { id }, data: { isAvailable: active } });
+  revalidateTag(`menu-items${businessName}`, 'max');
 }

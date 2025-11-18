@@ -1,6 +1,6 @@
-"use client";
-import React, { useEffect } from "react";
-import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+'use client';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
+import React, { useEffect } from 'react';
 
 export default function Analytics() {
   const [loaded, setLoaded] = React.useState(false);

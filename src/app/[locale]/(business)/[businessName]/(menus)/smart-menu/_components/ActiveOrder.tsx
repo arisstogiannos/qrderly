@@ -1,19 +1,24 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import type { Product } from "@prisma/client";
+'use client';
+import type { Product } from '@prisma/client';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-export default function ActiveOrder({businessName,menuType}:{businessName:string;  menuType: Product;
+export default function ActiveOrder({
+  businessName,
+  menuType,
+}: {
+  businessName: string;
+  menuType: Product;
 }) {
-  const [activeOrder,setActiveOrder] = useState<string | undefined>(undefined);
+  const [activeOrder, setActiveOrder] = useState<string | undefined>(undefined);
   useEffect(() => {
     const orderCookie = document.cookie
-      .split("; ")
+      .split('; ')
       .find((row) => row.startsWith(`${businessName}order=`))
-      ?.split("=")[1];
+      ?.split('=')[1];
 
-    setActiveOrder(orderCookie)
+    setActiveOrder(orderCookie);
   });
   return activeOrder ? (
     <motion.div
@@ -23,11 +28,10 @@ export default function ActiveOrder({businessName,menuType}:{businessName:string
       dragConstraints={{ left: 0, right: 300, top: 0, bottom: 500 }}
     >
       <Link
-        href={`smart-menu/${menuType==="SELF_SERVICE_QR_MENU"?"order":"order-placed"}?order=${activeOrder}`}
+        href={`smart-menu/${menuType === 'SELF_SERVICE_QR_MENU' ? 'order' : 'order-placed'}?order=${activeOrder}`}
         className="size-full flex-center text-center "
       >
-        Active
-        Order
+        Active Order
       </Link>
     </motion.div>
   ) : null;

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useRef, useState } from "react";
-import { useTranslations } from "next-intl";
-import Loader from "@/components/Loader";
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { useRef, useState } from 'react';
+import Loader from '@/components/Loader';
 
 export default function Uploader({
   fileType,
@@ -25,7 +25,7 @@ export default function Uploader({
   const [previewImages, setPreviewImages] = useState<string[] | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null); // Reference to file input
   const hasFile = uploadedFile?.type.startsWith(fileType);
-  const t = useTranslations("uploader");
+  const t = useTranslations('uploader');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
@@ -34,7 +34,7 @@ export default function Uploader({
 
       const images = selectedFiles.map((file) => URL.createObjectURL(file));
 
-      if (selectedFiles[0].type.startsWith("image/")) {
+      if (selectedFiles[0].type.startsWith('image/')) {
         setPreviewImages(images);
       } else {
         setPreviewImages(null);
@@ -43,12 +43,14 @@ export default function Uploader({
   };
 
   if (fileInputRef.current && !hasFile) {
-    fileInputRef.current.value = "";
+    fileInputRef.current.value = '';
   }
 
   return (
     <div
-      className={"flex flex-col gap-4 p-4 border-2 border-accent hover:border-primary/50  transition-all duration-300 rounded-lg shadow-md hover:shadow-xl"}
+      className={
+        'flex flex-col gap-4 p-4 border-2 border-accent hover:border-primary/50  transition-all duration-300 rounded-lg shadow-md hover:shadow-xl'
+      }
     >
       <div className="space-y-1 mb-2">
         <h3 className="text-xl font-medium capitalize">{title}</h3>
@@ -87,36 +89,26 @@ export default function Uploader({
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <span className="text-gray-500 truncate max-w-xs">
-                📄 {uploadedFile?.name}
-              </span>
+              <span className="text-gray-500 truncate max-w-xs">📄 {uploadedFile?.name}</span>
               <span className="text-xs text-gray-400">(PDF uploaded)</span>
             </div>
           )
         ) : (
           <div className=" flex flex-col items-center gap-4 ">
-            <Image
-              src={placeholder}
-              quality={100}
-              width={150}
-              height={150}
-              alt="placeholder"
-            />
+            <Image src={placeholder} quality={100} width={150} height={150} alt="placeholder" />
             <span className="text-gray-500">Click to upload {title}</span>
           </div>
         )}
         <input
           ref={fileInputRef} // Reference input field
           type="file"
-          accept={fileType === "image/" ? "image/*" : "application/pdf"}
-          name={hasFile ? "file" : ""}
+          accept={fileType === 'image/' ? 'image/*' : 'application/pdf'}
+          name={hasFile ? 'file' : ''}
           multiple
           className="hidden"
           onChange={handleFileChange}
         />
       </label>
-
-  
     </div>
   );
 }
